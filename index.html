@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'/>
+    <link 
+        rel='stylesheet' 
+        href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
+    />
+    <script 
+        src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'>
+    </script>
+    <style>
+        body { margin:0; padding:0; }
+        #map { width:100%; height:100vh; }
+    </style>
+</head>
+<body>
+    <div id='map'></div>
+    <script>
+        // 1) Récupérer le paramètre 'points' depuis l'URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var pointsParam = urlParams.get('points');
+
+        // 2) Parser le JSON (ou utiliser des valeurs par défaut si aucun paramètre)
+        var points = [];
+        if (pointsParam) {
+            try {
+                points = JSON.parse(decodeURIComponent(pointsParam));
+            } catch (e) {
+                console.error("Erreur de parsing JSON:", e);
+                points = []; // fallback
+            }
+        }
+
+        // Si aucun point fourni, afficher un message ou des points par défaut
+        if (points.length === 0) {
+            points = [
+                { lat: 48.8566, lng: 2.3522, nom: 'Paris (défaut)', rayon: 3 }
+            ];
+        }
+
+        // 3) Initialiser la carte (centrage sur le premier point ou Paris par défaut)
+        var premierPoint = points[0];
+        var map = L.map('map').setView([premierPoint.lat, premierPoint.lng], 9);
+
+        L.tileLayer(
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            { attribution: '© OpenStreetMap' }
+        ).addTo(map);
+
+        // 4) Ajouter les marqueurs + cercles pour chaque point
+        points.forEach(function(p) {
+            L.marker([p.lat, p.lng])
+             .addTo(map)
+             .bindPopup('<b>' + p.nom + '</b><br>Rayon: ' + p.rayon + ' km');
+
+            L.circle([p.lat, p.lng], {
+                radius:      p.rayon * 1000,  // conversion km → mètres
+                color:       'blue',
+                fillColor:   '#3388ff',
+                fillOpacity: 0.15,
+                weight:      2
+            }).addTo(map);
+        });
+
+        // 5) Ajuster le zoom pour voir tous les points
+        if (points.length > 1) {
+            var bounds = L.latLngBounds(points.map(p => [p.lat, p.lng]));
+            map.fitBounds(bounds, { padding: [50, 50] });
+        }
+    </script>
+</body>
+</html>
