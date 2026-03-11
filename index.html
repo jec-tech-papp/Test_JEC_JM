@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 
 <meta charset="utf-8"/>
+
+<title>Carte Points PowerApps</title>
 
 <link
 rel="stylesheet"
@@ -30,21 +31,20 @@ height:100vh;
 
 </head>
 
-
 <body>
 
 <div id="map"></div>
 
 <script>
 
-/* RÉCUPÉRATION PARAMÈTRE URL */
+/* récupération paramètre URL */
 
 var urlParams = new URLSearchParams(window.location.search);
 var pointsParam = urlParams.get("points");
 
 var points = [];
 
-/* PARSE JSON */
+/* lecture JSON envoyé par PowerApps */
 
 if(pointsParam){
 
@@ -55,13 +55,13 @@ if(pointsParam){
     }
     catch(e){
 
-        console.error("Erreur parsing JSON",e);
+        console.error("Erreur JSON :",e);
 
     }
 
 }
 
-/* FILTRE COORDONNÉES INVALIDES */
+/* sécurité : suppression coordonnées invalides */
 
 points = points.filter(function(p){
 
@@ -72,32 +72,38 @@ points = points.filter(function(p){
 
 });
 
-/* POINT PAR DÉFAUT */
+/* point par défaut si rien reçu */
 
 if(points.length === 0){
 
     points = [
-        {lat:48.8566,lng:2.3522,nom:"Paris défaut",rayon:3}
+        {lat:48.8566,lng:2.3522,nom:"Paris"}
     ];
 
 }
 
-/* INITIALISATION CARTE */
+/* création carte */
 
 var map = L.map("map").setView(
     [points[0].lat,points[0].lng],
     9
 );
 
+/* fond de carte */
+
 L.tileLayer(
 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-{attribution:"© OpenStreetMap"}
+{
+attribution:"© OpenStreetMap contributors"
+}
 ).addTo(map);
 
 
-/* AJOUT POINTS */
+/* stockage des limites pour zoom auto */
 
 var bounds = [];
+
+/* ajout des points */
 
 points.forEach(function(p){
 
@@ -105,30 +111,15 @@ points.forEach(function(p){
     .addTo(map)
     .bindPopup("<b>"+p.nom+"</b>");
 
-    if(p.rayon){
-
-        L.circle([p.lat,p.lng],{
-
-            radius:p.rayon*1000,
-            color:"blue",
-            fillColor:"#3388ff",
-            fillOpacity:0.15,
-            weight:2
-
-        }).addTo(map);
-
-    }
-
     bounds.push([p.lat,p.lng]);
 
 });
 
+/* zoom automatique sur tous les points */
 
-/* ZOOM AUTOMATIQUE */
+if(bounds.length > 1){
 
-if(bounds.length>1){
-
-    map.fitBounds(bounds,{padding:[50,50]});
+    map.fitBounds(bounds,{padding:[40,40]});
 
 }
 
