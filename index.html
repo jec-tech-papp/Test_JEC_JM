@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <meta charset="utf-8"/>
@@ -51,17 +52,18 @@ if(pointsParam){
     try{
 
         points = JSON.parse(pointsParam);
+        console.log("Points reçus :", points);
 
     }
     catch(e){
 
-        console.error("Erreur JSON :",e);
+        console.error("Erreur JSON :", e);
 
     }
 
 }
 
-/* sécurité : suppression coordonnées invalides */
+/* suppression coordonnées invalides */
 
 points = points.filter(function(p){
 
@@ -77,7 +79,7 @@ points = points.filter(function(p){
 if(points.length === 0){
 
     points = [
-        {lat:48.8566,lng:2.3522,nom:"Paris"}
+        {lat:48.8566,lng:2.3522,nom:"Paris",distance:10}
     ];
 
 }
@@ -86,10 +88,10 @@ if(points.length === 0){
 
 var map = L.map("map").setView(
     [points[0].lat,points[0].lng],
-    9
+    8
 );
 
-/* fond de carte */
+/* fond OpenStreetMap */
 
 L.tileLayer(
 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -98,24 +100,39 @@ attribution:"© OpenStreetMap contributors"
 }
 ).addTo(map);
 
-
-/* stockage des limites pour zoom auto */
+/* limites pour zoom auto */
 
 var bounds = [];
 
-/* ajout des points */
+/* ajout points */
 
 points.forEach(function(p){
 
-    L.marker([p.lat,p.lng])
+    var marker = L.marker([p.lat,p.lng])
     .addTo(map)
-    .bindPopup("<b>"+p.nom+"</b>");
+    .bindPopup("<b>"+p.nom+"</b><br>Rayon : "+p.distance+" km");
 
     bounds.push([p.lat,p.lng]);
 
+    /* cercle distance */
+
+    if(p.distance && p.distance > 0){
+
+        L.circle(
+            [p.lat,p.lng],
+            {
+                radius: p.distance * 1000,
+                color: "blue",
+                fillColor: "#3f8cff",
+                fillOpacity: 0.2
+            }
+        ).addTo(map);
+
+    }
+
 });
 
-/* zoom automatique sur tous les points */
+/* zoom automatique */
 
 if(bounds.length > 1){
 
