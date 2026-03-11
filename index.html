@@ -111,13 +111,14 @@ points.forEach(function(p){
     var marker = L.marker([p.lat,p.lng])
     .addTo(map)
     .bindPopup(
-        "<b>"+p.nom+"</b><br>" +
-        "Rayon : "+p.distance+" km<br>" +
-        "Période : "+p.periode+"<br>" +
-        "Durée : "+p.duree+" jours<br>" +
-        "Nb Agents : "+p.nbAgents+"<br>" +
-        "UP : "+p.up
+        "<b>📍 "+p.nom+"</b><br>" +
+        "📏 Rayon : "+p.distance+" km<br>" +
+        "📅 Période : "+p.periode+"<br>" +
+        "⏱ Durée : "+p.duree+" jours<br>" +
+        "👷 Agents : "+p.nbAgents+"<br>" +
+        "🏢 UP : "+p.up
     );
+
 
 
     bounds.push([p.lat,p.lng]);
