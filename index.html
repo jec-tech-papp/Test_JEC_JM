@@ -1,73 +1,138 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset='utf-8'/>
-    <link 
-        rel='stylesheet' 
-        href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
-    />
-    <script 
-        src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'>
-    </script>
-    <style>
-        body { margin:0; padding:0; }
-        #map { width:100%; height:100vh; }
-    </style>
+
+<meta charset="utf-8"/>
+
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<script
+src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+<style>
+
+body{
+margin:0;
+padding:0;
+}
+
+#map{
+width:100%;
+height:100vh;
+}
+
+</style>
+
 </head>
+
+
 <body>
-    <div id='map'></div>
-    <script>
-        // 1) Récupérer le paramètre 'points' depuis l'URL
-        var urlParams = new URLSearchParams(window.location.search);
-        var pointsParam = urlParams.get('points');
 
-        // 2) Parser le JSON (ou utiliser des valeurs par défaut si aucun paramètre)
-        var points = [];
-        if (pointsParam) {
-            try {
-                points = JSON.parse(decodeURIComponent(pointsParam));
-            } catch (e) {
-                console.error("Erreur de parsing JSON:", e);
-                points = []; // fallback
-            }
-        }
+<div id="map"></div>
 
-        // Si aucun point fourni, afficher un message ou des points par défaut
-        if (points.length === 0) {
-            points = [
-                { lat: 48.8566, lng: 2.3522, nom: 'Paris (défaut)', rayon: 3 }
-            ];
-        }
+<script>
 
-        // 3) Initialiser la carte (centrage sur le premier point ou Paris par défaut)
-        var premierPoint = points[0];
-        var map = L.map('map').setView([premierPoint.lat, premierPoint.lng], 9);
+/* RÉCUPÉRATION PARAMÈTRE URL */
 
-        L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            { attribution: '© OpenStreetMap' }
-        ).addTo(map);
+var urlParams = new URLSearchParams(window.location.search);
+var pointsParam = urlParams.get("points");
 
-        // 4) Ajouter les marqueurs + cercles pour chaque point
-        points.forEach(function(p) {
-            L.marker([p.lat, p.lng])
-             .addTo(map)
-             .bindPopup('<b>' + p.nom + '</b><br>Rayon: ' + p.rayon + ' km');
+var points = [];
 
-            L.circle([p.lat, p.lng], {
-                radius:      p.rayon * 1000,  // conversion km → mètres
-                color:       'blue',
-                fillColor:   '#3388ff',
-                fillOpacity: 0.15,
-                weight:      2
-            }).addTo(map);
-        });
+/* PARSE JSON */
 
-        // 5) Ajuster le zoom pour voir tous les points
-        if (points.length > 1) {
-            var bounds = L.latLngBounds(points.map(p => [p.lat, p.lng]));
-            map.fitBounds(bounds, { padding: [50, 50] });
-        }
-    </script>
+if(pointsParam){
+
+    try{
+
+        points = JSON.parse(decodeURIComponent(pointsParam));
+
+    }
+    catch(e){
+
+        console.error("Erreur parsing JSON",e);
+
+    }
+
+}
+
+/* FILTRE COORDONNÉES INVALIDES */
+
+points = points.filter(function(p){
+
+    return p.lat !== null &&
+           p.lng !== null &&
+           !isNaN(p.lat) &&
+           !isNaN(p.lng);
+
+});
+
+/* POINT PAR DÉFAUT */
+
+if(points.length === 0){
+
+    points = [
+        {lat:48.8566,lng:2.3522,nom:"Paris défaut",rayon:3}
+    ];
+
+}
+
+/* INITIALISATION CARTE */
+
+var map = L.map("map").setView(
+    [points[0].lat,points[0].lng],
+    9
+);
+
+L.tileLayer(
+"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+{attribution:"© OpenStreetMap"}
+).addTo(map);
+
+
+/* AJOUT POINTS */
+
+var bounds = [];
+
+points.forEach(function(p){
+
+    L.marker([p.lat,p.lng])
+    .addTo(map)
+    .bindPopup("<b>"+p.nom+"</b>");
+
+    if(p.rayon){
+
+        L.circle([p.lat,p.lng],{
+
+            radius:p.rayon*1000,
+            color:"blue",
+            fillColor:"#3388ff",
+            fillOpacity:0.15,
+            weight:2
+
+        }).addTo(map);
+
+    }
+
+    bounds.push([p.lat,p.lng]);
+
+});
+
+
+/* ZOOM AUTOMATIQUE */
+
+if(bounds.length>1){
+
+    map.fitBounds(bounds,{padding:[50,50]});
+
+}
+
+</script>
+
 </body>
 </html>
