@@ -43,15 +43,21 @@ height:100vh;
 var urlParams = new URLSearchParams(window.location.search);
 var pointsParam = urlParams.get("points");
 
+/* si rien dans l'URL on regarde dans le LocalStorage */
+
+if(!pointsParam){
+    pointsParam = localStorage.getItem("mapPoints");
+}
+
 var points = [];
 
-/* lecture JSON envoyé par PowerApps */
+/* lecture JSON */
 
 if(pointsParam){
 
     try{
 
-        points = JSON.parse(pointsParam);
+        points = JSON.parse(decodeURIComponent(pointsParam));
         console.log("Points reçus :", points);
 
     }
@@ -118,8 +124,6 @@ points.forEach(function(p){
         "👷 Agents : "+p.nbAgents+"<br>" +
         "🏢 UP : "+p.up
     );
-
-
 
     bounds.push([p.lat,p.lng]);
 
