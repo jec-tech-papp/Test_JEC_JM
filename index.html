@@ -7,14 +7,13 @@
 
 <title>Carte Points PowerApps</title>
 
-<link
-rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
-<script
-src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-</script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
 <style>
 
@@ -43,61 +42,63 @@ height:100vh;
 var urlParams = new URLSearchParams(window.location.search);
 var pointsParam = urlParams.get("points");
 
-/* si rien dans l'URL on regarde dans le LocalStorage */
+/* sinon LocalStorage */
 
 if(!pointsParam){
-    pointsParam = localStorage.getItem("mapPoints");
+pointsParam = localStorage.getItem("mapPoints");
 }
 
 var points = [];
 
-/* lecture JSON */
-
 if(pointsParam){
 
-    try{
-
-        points = JSON.parse(decodeURIComponent(pointsParam));
-        console.log("Points reçus :", points);
-
-    }
-    catch(e){
-
-        console.error("Erreur JSON :", e);
-
-    }
+try{
+points = JSON.parse(decodeURIComponent(pointsParam));
+}
+catch(e){
+console.error("Erreur JSON :",e);
+}
 
 }
 
-/* suppression coordonnées invalides */
+/* filtrage coordonnées */
 
 points = points.filter(function(p){
 
-    return p.lat !== null &&
-           p.lng !== null &&
-           !isNaN(p.lat) &&
-           !isNaN(p.lng);
+return p.lat !== null &&
+p.lng !== null &&
+!isNaN(p.lat) &&
+!isNaN(p.lng);
 
 });
 
-/* point par défaut si rien reçu */
+/* point par défaut */
 
 if(points.length === 0){
 
-    points = [
-        {lat:48.8566,lng:2.3522,nom:"Paris",distance:10}
-    ];
+points = [
+{
+lat:48.8566,
+lng:2.3522,
+nom:"Paris",
+distance:20,
+nbAgents:3,
+periode:"Test",
+duree:5,
+up:"UP1"
+}
+];
 
 }
 
 /* création carte */
 
 var map = L.map("map").setView(
-    [points[0].lat,points[0].lng],
-    8
+[points[0].lat,points[0].lng],
+7
 );
 
-/* fond OpenStreetMap */
+/* fond de carte */
 
 L.tileLayer(
 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -106,7 +107,31 @@ attribution:"© OpenStreetMap contributors"
 }
 ).addTo(map);
 
-/* limites pour zoom auto */
+/* groupe cluster */
+
+var markers = L.markerClusterGroup();
+
+/* fonction couleur automatique */
+
+function getColor(p){
+
+if(p.color){
+return p.color;
+}
+
+if(p.nbAgents >= 10){
+return "#d73027";
+}
+
+if(p.nbAgents >= 5){
+return "#ff9800";
+}
+
+return "#2e7d32";
+
+}
+
+/* limites carte */
 
 var bounds = [];
 
@@ -114,46 +139,62 @@ var bounds = [];
 
 points.forEach(function(p){
 
-    var marker = L.marker([p.lat,p.lng])
-    .addTo(map)
-    .bindPopup(
-        "<b>📍 "+p.nom+"</b><br>" +
-        "📏 Rayon : "+p.distance+" km<br>" +
-        "📅 Période : "+p.periode+"<br>" +
-        "⏱ Durée : "+p.duree+" jours<br>" +
-        "👷 Agents : "+p.nbAgents+"<br>" +
-        "🏢 UP : "+p.up
-    );
+var color = getColor(p);
 
-    bounds.push([p.lat,p.lng]);
+var icon = L.divIcon({
+className:"custom-icon",
+html:'<div style="background:'+color+';width:14px;height:14px;border-radius:50%;border:2px solid white;"></div>',
+iconSize:[18,18]
+});
 
-    /* cercle distance */
+var marker = L.marker(
+[p.lat,p.lng],
+{icon:icon}
+).bindPopup(
 
-    if(p.distance && p.distance > 0){
+"<b>📍 "+(p.nom || "")+"</b><br>"+
+"📏 Rayon : "+(p.distance || 0)+" km<br>"+
+"📅 Période : "+(p.periode || "")+"<br>"+
+"⏱ Durée : "+(p.duree || "")+" jours<br>"+
+"👷 Agents : "+(p.nbAgents || "")+"<br>"+
+"🏢 UP : "+(p.up || "")
 
-        L.circle(
-            [p.lat,p.lng],
-            {
-                radius: p.distance * 1000,
-                color: "blue",
-                fillColor: "#3f8cff",
-                fillOpacity: 0.2
-            }
-        ).addTo(map);
+);
 
-    }
+markers.addLayer(marker);
+
+bounds.push([p.lat,p.lng]);
+
+/* cercle distance */
+
+if(p.distance && p.distance > 0){
+
+L.circle(
+[p.lat,p.lng],
+{
+radius:p.distance*1000,
+color:color,
+fillColor:color,
+fillOpacity:0.15
+}
+).addTo(map);
+
+}
 
 });
 
-/* zoom automatique */
+/* ajout cluster */
+
+map.addLayer(markers);
+
+/* zoom auto */
 
 if(bounds.length > 1){
-
-    map.fitBounds(bounds,{padding:[40,40]});
-
+map.fitBounds(bounds,{padding:[40,40]});
 }
 
 </script>
 
 </body>
+
 </html>
