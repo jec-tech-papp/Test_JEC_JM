@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Carlissanté : L'outil de gestion d'e-réputation pour les professionnels de santé. Simple, puissant et sécurisé.">
-  <title>Carlissanté | Gestion d'e-Réputation pour les Professionnels de Santé</title>
+  <meta name="description" content="Carlissanté : L'expérience ultime pour gérer votre e-réputation en tant que professionnel de santé. Immersion guidée, animations fluides et résultats immédiats.">
+  <title>Carlissanté | L'Expérience Ultime pour Votre e-Réputation</title>
   <style>
     /* ===== BASE STYLES ===== */
     :root {
-      --primary: #4361EE; /* Bleu doux */
-      --primary-light: #4895EF;
-      --secondary: #F8F9FA; /* Gris très clair */
-      --dark: #212529;
-      --gray: #6C757D;
-      --light: #F8F9FA;
+      --primary: #4F46E5; /* Bleu indigo profond */
+      --primary-light: #6366F1;
+      --secondary: #F8FAFC; /* Gris très clair */
+      --dark: #111827;
+      --gray: #6B7280;
+      --light: #F9FAFB;
       --white: #FFFFFF;
-      --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     * {
@@ -30,38 +30,50 @@
       color: var(--dark);
       line-height: 1.6;
       background: var(--white);
+      overflow-x: hidden;
     }
 
+    /* ===== TYPOGRAPHY ===== */
     h1, h2, h3 {
       font-family: 'Inter', sans-serif;
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.2;
     }
 
-    h1 { font-size: 3rem; }
-    h2 { font-size: 2.2rem; margin-bottom: 1.5rem; }
-    h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      background: linear-gradient(90deg, var(--dark), #374151);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 1.5rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
 
     p {
       font-size: 1.1rem;
       color: var(--gray);
-      margin-bottom: 1.5rem;
+      max-width: 600px;
     }
 
-    a {
-      text-decoration: none;
-      color: var(--primary);
-      transition: var(--transition);
-    }
-
-    a:hover {
-      color: var(--primary-light);
-    }
-
+    /* ===== LAYOUT ===== */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 2rem;
+    }
+
+    section {
+      padding: 6rem 0;
+      position: relative;
     }
 
     /* ===== BUTTONS ===== */
@@ -73,16 +85,19 @@
       transition: var(--transition);
       cursor: pointer;
       border: none;
+      font-size: 1rem;
     }
 
     .btn-primary {
       background: var(--primary);
       color: var(--white);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
     }
 
     .btn-primary:hover {
       background: var(--primary-light);
       transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
     }
 
     .btn-secondary {
@@ -92,17 +107,18 @@
     }
 
     .btn-secondary:hover {
-      background: rgba(67, 97, 238, 0.1);
+      background: rgba(79, 70, 229, 0.1);
     }
 
     /* ===== HEADER ===== */
     header {
-      padding: 2rem 0;
+      padding: 1.5rem 0;
       position: sticky;
       top: 0;
-      background: var(--white);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
       z-index: 100;
-      box-shadow: var(--shadow);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     nav {
@@ -115,6 +131,9 @@
       font-size: 1.5rem;
       font-weight: 700;
       color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .nav-links {
@@ -126,6 +145,7 @@
     .nav-links a {
       color: var(--dark);
       font-weight: 500;
+      transition: var(--transition);
     }
 
     .nav-links a:hover {
@@ -139,45 +159,70 @@
 
     /* ===== HERO SECTION ===== */
     .hero {
-      padding: 6rem 0;
-      display: flex;
-      align-items: center;
-      gap: 4rem;
+      padding: 8rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
     .hero-content {
-      flex: 1;
+      position: relative;
+      z-index: 2;
     }
 
-    .hero-content h1 {
+    .hero h1 {
       margin-bottom: 1.5rem;
     }
 
-    .hero-content p {
-      font-size: 1.2rem;
-      max-width: 500px;
+    .hero p {
+      margin: 0 auto 2rem;
     }
 
-    .hero-image {
-      flex: 1;
+    .hero-visual {
+      margin-top: 4rem;
+      position: relative;
+      height: 400px;
     }
 
-    .hero-image img {
-      width: 100%;
+    .hero-visual img {
+      position: absolute;
       border-radius: 12px;
       box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .hero-visual img:nth-child(1) {
+      width: 300px;
+      top: 0;
+      left: 20%;
+      z-index: 3;
+    }
+
+    .hero-visual img:nth-child(2) {
+      width: 350px;
+      top: 50px;
+      right: 20%;
+      z-index: 2;
+    }
+
+    .hero-visual img:nth-child(3) {
+      width: 250px;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
     }
 
     /* ===== FEATURES SECTION ===== */
     .features {
-      padding: 6rem 0;
       background: var(--secondary);
     }
 
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 3rem;
+      gap: 2rem;
+      margin-top: 3rem;
     }
 
     .feature-card {
@@ -186,16 +231,19 @@
       border-radius: 12px;
       box-shadow: var(--shadow);
       transition: var(--transition);
+      opacity: 0;
+      transform: translateY(20px);
     }
 
-    .feature-card:hover {
-      transform: translateY(-5px);
+    .feature-card.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .feature-icon {
       width: 50px;
       height: 50px;
-      background: rgba(67, 97, 238, 0.1);
+      background: rgba(79, 70, 229, 0.1);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -207,23 +255,31 @@
 
     /* ===== PROCESS SECTION ===== */
     .process {
-      padding: 6rem 0;
+      position: relative;
     }
 
-    .process-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
+    .process-timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .process-step {
-      text-align: center;
+      display: flex;
+      margin-bottom: 4rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: var(--transition);
+    }
+
+    .process-step.visible {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     .step-number {
-      width: 60px;
-      height: 60px;
+      width: 40px;
+      height: 40px;
       background: var(--primary);
       color: var(--white);
       border-radius: 50%;
@@ -231,20 +287,45 @@
       align-items: center;
       justify-content: center;
       font-weight: 600;
-      margin: 0 auto 1rem;
+      margin-right: 1.5rem;
+      flex-shrink: 0;
     }
 
-    /* ===== DASHBOARD PREVIEW ===== */
+    .step-content {
+      flex: 1;
+    }
+
+    .step-image {
+      flex: 1;
+      padding-left: 2rem;
+    }
+
+    .step-image img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    /* ===== DASHBOARD SECTION ===== */
     .dashboard {
-      padding: 6rem 0;
-      background: var(--secondary);
+      background: linear-gradient(135deg, var(--secondary), #E0E7FF);
+      position: relative;
+      overflow: hidden;
     }
 
     .dashboard-preview {
       background: var(--white);
-      border-radius: 12px;
-      box-shadow: var(--shadow);
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
       overflow: hidden;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .dashboard-preview.visible {
+      transform: scale(1);
+      opacity: 1;
     }
 
     .dashboard-preview img {
@@ -254,13 +335,26 @@
 
     /* ===== CTA SECTION ===== */
     .cta {
-      padding: 6rem 0;
       text-align: center;
+      position: relative;
     }
 
     .cta h2 {
       max-width: 600px;
       margin: 0 auto 2rem;
+    }
+
+    .cta-visual {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      background: conic-gradient(from 0deg, var(--primary), var(--primary-light), var(--primary));
+      border-radius: 50%;
+      opacity: 0.1;
+      z-index: -1;
     }
 
     /* ===== FOOTER ===== */
@@ -292,6 +386,7 @@
 
     .footer-section a {
       color: var(--gray);
+      transition: var(--transition);
     }
 
     .footer-section a:hover {
@@ -306,15 +401,32 @@
       font-size: 0.9rem;
     }
 
+    /* ===== ANIMATIONS ===== */
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .float {
+      animation: float 3s ease-in-out infinite;
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
-      .hero {
-        flex-direction: column;
-        text-align: center;
+      .hero-visual img {
+        position: static !important;
+        width: 100% !important;
+        margin-bottom: 1rem;
       }
 
-      .hero-content {
-        margin-bottom: 3rem;
+      .process-step {
+        flex-direction: column;
+      }
+
+      .step-image {
+        padding-left: 0;
+        margin-top: 1rem;
       }
 
       .nav-links {
@@ -324,31 +436,6 @@
       .mobile-menu {
         display: block;
       }
-
-      h1 {
-        font-size: 2.2rem;
-      }
-
-      h2 {
-        font-size: 1.8rem;
-      }
-    }
-
-    /* ===== ANIMATIONS ===== */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .animate-fade-in {
-      animation: fadeInUp 0.6s ease-out forwards;
-      opacity: 0;
     }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -361,14 +448,17 @@
   <header>
     <div class="container">
       <nav>
-        <div class="logo">Carlissanté</div>
+        <div class="logo">
+          <i class="fas fa-shield-alt" style="color: var(--primary);"></i>
+          Carlissanté
+        </div>
         <div class="mobile-menu">
           <i class="fas fa-bars fa-lg"></i>
         </div>
         <ul class="nav-links">
           <li><a href="#features">Fonctionnalités</a></li>
           <li><a href="#process">Processus</a></li>
-          <li><a href="#demo">Démonstration</a></li>
+          <li><a href="#dashboard">Tableau de bord</a></li>
         </ul>
       </nav>
     </div>
@@ -377,16 +467,15 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
-      <div class="hero-content animate-fade-in">
-        <h1>Gérez votre e-réputation en toute simplicité</h1>
-        <p>Carlissanté est l'outil conçu pour les professionnels de santé qui veulent maîtriser leur image en ligne sans y passer des heures.</p>
-        <div class="cta-buttons">
-          <a href="#demo" class="btn btn-primary">Voir une démo</a>
-          <a href="#features" class="btn btn-secondary">Découvrir</a>
-        </div>
+      <div class="hero-content">
+        <h1>Votre réputation mérite une expérience premium</h1>
+        <p>Carlissanté transforme la gestion de vos avis en un parcours fluide et intuitif. Conçu pour les professionnels de santé qui veulent gagner du temps sans sacrifier la qualité.</p>
+        <a href="#process" class="btn btn-primary">Découvrir le parcours</a>
       </div>
-      <div class="hero-image animate-fade-in" style="animation-delay: 0.2s;">
-        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tableau de bord Carlissanté">
+      <div class="hero-visual">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tableau de bord Carlissanté" class="float">
+        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Analyse des avis">
+        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Réponses automatiques">
       </div>
     </div>
   </section>
@@ -394,31 +483,31 @@
   <!-- Features Section -->
   <section class="features" id="features">
     <div class="container">
-      <div class="section-header animate-fade-in">
-        <h2>Des fonctionnalités conçues pour vous</h2>
-        <p>Tout ce dont vous avez besoin pour gérer votre réputation en ligne, sans complexité inutile.</p>
+      <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+        <h2>Une expérience pensée pour vous</h2>
+        <p>Des fonctionnalités conçues pour s'adapter à votre quotidien, sans courbe d'apprentissage.</p>
       </div>
       <div class="features-grid">
-        <div class="feature-card animate-fade-in" style="animation-delay: 0.1s;">
+        <div class="feature-card">
           <div class="feature-icon">
-            <i class="fas fa-chart-line"></i>
+            <i class="fas fa-chart-pie"></i>
           </div>
-          <h3>Analyse intelligente</h3>
-          <p>Notre algorithme analyse automatiquement le ton de chaque avis et vous alerte en cas de problème.</p>
+          <h3>Analyse en temps réel</h3>
+          <p>Recevez des insights précis sur vos avis dès leur publication. Notre IA détecte les tendances et les alertes critiques.</p>
         </div>
-        <div class="feature-card animate-fade-in" style="animation-delay: 0.2s;">
+        <div class="feature-card">
           <div class="feature-icon">
-            <i class="fas fa-reply-all"></i>
+            <i class="fas fa-robot"></i>
           </div>
-          <h3>Réponses optimisées</h3>
-          <p>Générez des réponses professionnelles en un clic, adaptées à chaque situation.</p>
+          <h3>Réponses intelligentes</h3>
+          <p>Générez des réponses personnalisées en un clic. Adaptez le ton selon le contexte (positif, négatif, neutre).</p>
         </div>
-        <div class="feature-card animate-fade-in" style="animation-delay: 0.3s;">
+        <div class="feature-card">
           <div class="feature-icon">
-            <i class="fas fa-shield-alt"></i>
+            <i class="fas fa-lock"></i>
           </div>
-          <h3>Sécurité totale</h3>
-          <p>Connexion sécurisée via l'API officielle de Google. Vos données sont protégées.</p>
+          <h3>Sécurité intégrée</h3>
+          <p>Connexion via l'API officielle de Google. Vos données sont chiffrées et protégées selon les standards les plus stricts.</p>
         </div>
       </div>
     </div>
@@ -427,39 +516,54 @@
   <!-- Process Section -->
   <section class="process" id="process">
     <div class="container">
-      <div class="section-header animate-fade-in">
-        <h2>Comment ça marche ?</h2>
-        <p>En 3 étapes simples, Carlissanté s'intègre à votre routine sans effort.</p>
+      <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+        <h2>Un parcours guidé, sans effort</h2>
+        <p>Suivez ces 3 étapes pour maîtriser votre e-réputation en moins de 5 minutes.</p>
       </div>
-      <div class="process-steps">
-        <div class="process-step animate-fade-in" style="animation-delay: 0.1s;">
+      <div class="process-timeline">
+        <div class="process-step">
           <div class="step-number">1</div>
-          <h3>Connectez-vous</h3>
-          <p>Liez votre compte Google My Business en quelques secondes.</p>
+          <div class="step-content">
+            <h3>Connectez votre compte</h3>
+            <p>Liez Carlissanté à votre fiche Google My Business en 30 secondes. Aucune compétence technique requise.</p>
+          </div>
+          <div class="step-image">
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Connexion Google My Business">
+          </div>
         </div>
-        <div class="process-step animate-fade-in" style="animation-delay: 0.2s;">
+        <div class="process-step">
           <div class="step-number">2</div>
-          <h3>Analysez</h3>
-          <p>Recevez des insights clairs sur votre réputation en ligne.</p>
+          <div class="step-content">
+            <h3>Analysez vos avis</h3>
+            <p>Notre algorithme classe vos avis par priorité et vous fournit des recommandations actionnables.</p>
+          </div>
+          <div class="step-image">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Analyse des avis">
+          </div>
         </div>
-        <div class="process-step animate-fade-in" style="animation-delay: 0.3s;">
+        <div class="process-step">
           <div class="step-number">3</div>
-          <h3>Répondez</h3>
-          <p>Validez ou personnalisez les réponses proposées par notre IA.</p>
+          <div class="step-content">
+            <h3>Répondez en un clic</h3>
+            <p>Validez ou modifiez les réponses générées par notre IA. Personnalisez le ton selon vos préférences.</p>
+          </div>
+          <div class="step-image">
+            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Réponse aux avis">
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Dashboard Preview -->
-  <section class="dashboard" id="demo">
+  <!-- Dashboard Section -->
+  <section class="dashboard" id="dashboard">
     <div class="container">
-      <div class="section-header animate-fade-in">
-        <h2>Un tableau de bord intuitif</h2>
-        <p>Visualisez l'essentiel en un coup d'œil et agissez rapidement.</p>
+      <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+        <h2>Un tableau de bord conçu pour l'action</h2>
+        <p>Visualisez l'essentiel en un coup d'œil et agissez en quelques secondes.</p>
       </div>
-      <div class="dashboard-preview animate-fade-in">
-        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Aperçu du tableau de bord Carlissanté">
+      <div class="dashboard-preview">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Tableau de bord Carlissanté">
       </div>
     </div>
   </section>
@@ -467,10 +571,9 @@
   <!-- CTA Section -->
   <section class="cta">
     <div class="container">
-      <div class="animate-fade-in">
-        <h2>Prêt à transformer votre gestion des avis ?</h2>
-        <a href="#" class="btn btn-primary">Demander une démo</a>
-      </div>
+      <div class="cta-visual"></div>
+      <h2>Prêt à transformer votre gestion des avis ?</h2>
+      <a href="#" class="btn btn-primary">Demander une démonstration</a>
     </div>
   </section>
 
@@ -479,15 +582,18 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
-          <div class="logo" style="color: var(--white);">Carlissanté</div>
-          <p style="color: var(--gray);">L'outil de gestion d'e-réputation pour les professionnels de santé.</p>
+          <div class="logo" style="color: var(--white);">
+            <i class="fas fa-shield-alt" style="color: var(--primary);"></i>
+            Carlissanté
+          </div>
+          <p style="color: var(--gray);">L'expérience ultime pour gérer votre e-réputation.</p>
         </div>
         <div class="footer-section">
           <h3>Produit</h3>
           <ul>
             <li><a href="#features">Fonctionnalités</a></li>
             <li><a href="#process">Processus</a></li>
-            <li><a href="#demo">Démonstration</a></li>
+            <li><a href="#dashboard">Tableau de bord</a></li>
           </ul>
         </div>
         <div class="footer-section">
@@ -526,19 +632,30 @@
 
     // Animate on Scroll
     const animateOnScroll = () => {
-      const elements = document.querySelectorAll('.animate-fade-in');
-      elements.forEach(element => {
+      const elements = document.querySelectorAll('.feature-card, .process-step, .dashboard-preview');
+      elements.forEach((element, index) => {
         const elementPosition = element.getBoundingClientRect().top;
         const windowHeight = window.innerHeight;
         if (elementPosition < windowHeight - 100) {
-          element.style.opacity = '1';
-          element.style.transform = 'translateY(0)';
+          element.classList.add('visible');
+          // Stagger animations
+          element.style.transitionDelay = `${index * 0.1}s`;
         }
       });
     };
 
     window.addEventListener('scroll', animateOnScroll);
     window.addEventListener('load', animateOnScroll);
+
+    // Smooth Scroll for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
   </script>
 </body>
 </html>
