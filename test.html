@@ -3,91 +3,199 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Carlissanté : Solution premium pour gérer votre e-réputation médicale avec une expérience immersive et des résultats immédiats.">
+  <meta name="description" content="Carlissanté : Solution premium pour gérer votre e-réputation médicale.">
   <title>Carlissanté | Gestion d'e-Réputation Premium</title>
-  <!-- GSAP pour les animations -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-  <!-- Font Awesome pour les icônes -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    /* ===== BASE STYLES ===== */
+    /* ============================================================
+       VARIABLES & RESET
+    ============================================================ */
     :root {
-      --primary: #3B82F6; /* Bleu corporate */
-      --primary-dark: #1D4ED8;
-      --secondary: #F8FAFC;
-      --gradient: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
-      --dark: #111827;
-      --gray: #6B7280;
-      --light: #F9FAFB;
-      --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-      --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --blue-50:  #EFF6FF;
+      --blue-100: #DBEAFE;
+      --blue-500: #3B82F6;
+      --blue-600: #2563EB;
+      --blue-700: #1D4ED8;
+      --blue-900: #1E3A8A;
+      --indigo:   #6366F1;
+      --cyan:     #06B6D4;
+      --dark:     #0F172A;
+      --dark-2:   #1E293B;
+      --gray-400: #94A3B8;
+      --gray-500: #64748B;
+      --gray-600: #475569;
+      --white:    #FFFFFF;
+      --light:    #F8FAFC;
+
+      --gradient-hero:   linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #1D4ED8 100%);
+      --gradient-accent: linear-gradient(90deg, var(--blue-500), var(--indigo));
+      --gradient-light:  linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 50%, #DBEAFE 100%);
+
+      --shadow-sm:   0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md:   0 8px 24px rgba(0,0,0,0.10);
+      --shadow-lg:   0 20px 48px rgba(0,0,0,0.14);
+      --shadow-xl:   0 32px 64px rgba(0,0,0,0.20);
+      --shadow-blue: 0 8px 32px rgba(59,130,246,0.35);
+
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+
+      --ease:       cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition: all 0.4s var(--ease);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       color: var(--dark);
-      line-height: 1.6;
-      background: var(--light);
+      background: var(--white);
       overflow-x: hidden;
+      line-height: 1.6;
     }
+    img { max-width:100%; display:block; }
+    a   { text-decoration:none; color:inherit; }
+    ul  { list-style:none; }
+    button { font-family:inherit; cursor:pointer; border:none; }
 
-    /* ===== TYPOGRAPHY ===== */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    ::-webkit-scrollbar       { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--blue-500); border-radius: 99px; }
 
-    h1, h2, h3 {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      background: linear-gradient(90deg, var(--dark), #374151);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    h2 {
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      margin-bottom: 1.5rem;
-      color: var(--dark);
-    }
-
-    p {
-      font-size: 1.1rem;
-      color: var(--gray);
-      margin-bottom: 1.5rem;
-    }
-
-    /* ===== LAYOUT ===== */
+    /* ============================================================
+       UTILITIES
+    ============================================================ */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 2rem;
     }
 
-    section {
-      padding: 6rem 0;
-      position: relative;
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: rgba(59,130,246,0.12);
+      color: var(--blue-500);
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
     }
 
-    /* ===== HEADER ===== */
+    .text-gradient {
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 620px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--gray-500);
+      line-height: 1.8;
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.12);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .btn:hover::after { opacity: 1; }
+
+    .btn-primary {
+      background: var(--gradient-accent);
+      color: var(--white);
+      box-shadow: var(--shadow-blue);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(59,130,246,0.50);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(8px);
+    }
+    .btn-outline:hover {
+      border-color: var(--white);
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .btn-dark {
+      background: var(--dark);
+      color: var(--white);
+      box-shadow: var(--shadow-md);
+    }
+    .btn-dark:hover {
+      background: var(--dark-2);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
     header {
-      padding: 1.5rem 0;
       position: fixed;
       width: 100%;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(10px);
+      top: 0;
       z-index: 1000;
-      box-shadow: var(--shadow);
+      padding: 1.2rem 0;
+      transition: var(--transition);
+    }
+
+    header.scrolled {
+      background: rgba(15,23,42,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 0.9rem 0;
     }
 
     .navbar {
@@ -99,456 +207,1670 @@
     .logo {
       display: flex;
       align-items: center;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--dark);
-      text-decoration: none;
+      gap: 0.6rem;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
     }
 
-    .logo i {
-      margin-right: 0.5rem;
-      color: var(--primary);
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--gradient-accent);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--white);
+      box-shadow: var(--shadow-blue);
     }
 
     .nav-links {
       display: flex;
-      list-style: none;
-    }
-
-    .nav-links li {
-      margin-left: 2rem;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .nav-links a {
-      text-decoration: none;
-      color: var(--gray);
+      padding: 0.5rem 0.9rem;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.9rem;
       font-weight: 500;
+      border-radius: var(--radius-sm);
       transition: var(--transition);
     }
-
     .nav-links a:hover {
-      color: var(--primary);
+      color: var(--white);
+      background: rgba(255,255,255,0.08);
     }
 
-    .cta-button {
-      padding: 0.75rem 1.5rem;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      cursor: pointer;
+    .nav-cta { margin-left: 0.8rem; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      padding: 0.4rem;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
       transition: var(--transition);
     }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    .cta-button:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.97);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
     }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--white);
+      font-size: 1.5rem;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    .mobile-menu a:hover { color: var(--blue-500); }
 
-    /* ===== HERO SECTION ===== */
+    /* ============================================================
+       HERO
+    ============================================================ */
     .hero {
-      background: var(--gradient);
-      padding-top: 8rem;
+      background: var(--gradient-hero);
       min-height: 100vh;
       display: flex;
       align-items: center;
       position: relative;
       overflow: hidden;
+      padding-top: 7rem;
+      padding-bottom: 5rem;
+    }
+
+    .parallax-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      background-image:
+        linear-gradient(rgba(59,130,246,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.07) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 0;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(59,130,246,0.4), transparent 70%);
+      top: -200px; right: -150px; z-index: 1;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(99,102,241,0.35), transparent 70%);
+      bottom: -100px; left: -100px; z-index: 1;
+    }
+    .orb-3 {
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(6,182,212,0.3), transparent 70%);
+      top: 40%; left: 40%; z-index: 1;
+    }
+
+    #particles-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      opacity: 0.6;
     }
 
     .hero-content {
+      position: relative;
+      z-index: 10;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      gap: 5rem;
       align-items: center;
     }
 
-    .hero-text h1 {
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1rem;
+      background: rgba(59,130,246,0.2);
+      border: 1px solid rgba(59,130,246,0.4);
+      border-radius: 99px;
+      color: #93C5FD;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       margin-bottom: 1.5rem;
     }
 
-    .hero-text p {
-      margin-bottom: 2rem;
-      max-width: 500px;
+    .pulse-dot {
+      width: 7px; height: 7px;
+      background: #22D3EE;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
     }
 
-    .hero-buttons {
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(34,211,238,0.5); }
+      50%      { box-shadow: 0 0 0 6px rgba(34,211,238,0); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title .highlight {
+      background: linear-gradient(90deg, #60A5FA, #818CF8, #22D3EE);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
       display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .hero-social-proof {
+      display: flex;
+      align-items: center;
       gap: 1rem;
     }
 
-    .btn-secondary {
-      padding: 0.75rem 1.5rem;
-      background: transparent;
-      color: var(--primary);
-      border: 2px solid var(--primary);
-      border-radius: 0.5rem;
+    .avatars { display: flex; }
+    .avatars img {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.2);
+      margin-left: -10px;
+      object-fit: cover;
+    }
+    .avatars img:first-child { margin-left: 0; }
+
+    .social-proof-text {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.85rem;
+    }
+    .social-proof-text strong {
+      color: var(--white);
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    /* Dashboard card hero */
+    .hero-visual { position: relative; }
+
+    .dashboard-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-xl), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .dash-title {
+      color: var(--white);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .dash-score {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 99px;
+      padding: 0.3rem 0.8rem;
+      color: #4ADE80;
+      font-size: 0.8rem;
       font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
     }
 
-    .btn-secondary:hover {
-      background: var(--primary);
-      color: white;
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
-    .hero-image {
-      position: relative;
-      z-index: 2;
+    .metric-box {
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      border: 1px solid rgba(255,255,255,0.07);
     }
 
-    .hero-image img {
-      width: 100%;
-      border-radius: 1rem;
-      box-shadow: var(--shadow);
-    }
+    .metric-label { color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-bottom: 0.4rem; }
+    .metric-value { color: var(--white); font-size: 1.5rem; font-weight: 700; }
+    .metric-trend { font-size: 0.75rem; color: #4ADE80; }
 
-    /* ===== PARALLAX EFFECTS ===== */
-    .parallax-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
+    .rating-bar-wrap { margin-bottom: 0.8rem; }
+    .rating-label {
+      display: flex;
+      justify-content: space-between;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.78rem;
+      margin-bottom: 0.3rem;
+    }
+    .rating-bar {
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .rating-fill {
       height: 100%;
-      z-index: 1;
-      background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center;
-      background-size: cover;
-      opacity: 0.1;
+      background: var(--gradient-accent);
+      border-radius: 99px;
+      width: 0;
+      transition: width 1.5s var(--ease);
     }
 
-    /* ===== FEATURES SECTION ===== */
+    .float-card {
+      position: absolute;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1.2rem;
+      backdrop-filter: blur(20px);
+      color: var(--white);
+      font-size: 0.82rem;
+      box-shadow: var(--shadow-lg);
+      white-space: nowrap;
+    }
+    .float-card .fc-icon { font-size: 1.1rem; margin-bottom: 0.3rem; }
+    .float-card .fc-val  { font-size: 1.2rem; font-weight: 700; }
+    .float-card .fc-label { color: rgba(255,255,255,0.55); font-size: 0.75rem; }
+
+    .fc-1 { top: -20px; left: -60px; }
+    .fc-2 { bottom: 40px; right: -50px; }
+
+    /* ============================================================
+       STATS STRIP
+    ============================================================ */
+    .stats-strip {
+      background: var(--dark);
+      padding: 3.5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label { color: var(--gray-400); font-size: 0.9rem; }
+
+    /* ============================================================
+       FEATURES
+    ============================================================ */
     .features {
-      background: var(--white);
+      background: var(--light);
+      padding: 7rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .features-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 600px 400px at 80% 50%, rgba(59,130,246,0.05), transparent);
+      pointer-events: none;
     }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gradient-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease);
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: transparent;
+    }
+    .feature-card:hover::before { transform: scaleX(1); }
+
+    .feature-icon-wrap {
+      width: 52px; height: 52px;
+      background: var(--gradient-accent);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: var(--white);
+      margin-bottom: 1.2rem;
+      box-shadow: var(--shadow-blue);
+    }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.6rem;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--gray-500);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ============================================================
+       HOW IT WORKS
+    ============================================================ */
+    .how-it-works {
+      background: var(--dark);
+      padding: 7rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .how-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 700px 500px at 20% 50%, rgba(59,130,246,0.08), transparent),
+        radial-gradient(ellipse 500px 400px at 80% 80%, rgba(99,102,241,0.06), transparent);
+      pointer-events: none;
+    }
+
+    .how-it-works .section-label {
+      background: rgba(59,130,246,0.15);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: #93C5FD;
+    }
+    .how-it-works .section-subtitle { color: var(--gray-400); }
+
+    .steps-container {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 2rem;
       margin-top: 3rem;
     }
 
-    .feature-card {
-      background: var(--light);
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
+    .steps-container::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(12.5% + 28px);
+      right: calc(12.5% + 28px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue-500), var(--indigo));
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    .step-item {
+      position: relative;
+      z-index: 1;
       text-align: center;
     }
 
-    .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    }
-
-    .feature-icon {
-      font-size: 2.5rem;
-      color: var(--primary);
-      margin-bottom: 1rem;
-    }
-
-    .feature-card h3 {
-      margin-bottom: 1rem;
-    }
-
-    /* ===== TIMELINE SECTION ===== */
-    .timeline {
-      background: var(--gradient);
-      position: relative;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      height: 100%;
-      background: var(--primary);
-      opacity: 0.3;
-    }
-
-    .timeline-item {
-      width: 50%;
-      padding: 1rem 3rem;
-      position: relative;
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      top: 2rem;
-      width: 20px;
-      height: 20px;
-      background: var(--primary);
+    .step-number {
+      width: 56px; height: 56px;
+      background: var(--gradient-accent);
       border-radius: 50%;
-      z-index: 2;
-    }
-
-    .timeline-item:nth-child(odd) {
-      left: 0;
-    }
-
-    .timeline-item:nth-child(odd)::before {
-      right: -10px;
-    }
-
-    .timeline-item:nth-child(even) {
-      left: 50%;
-    }
-
-    .timeline-item:nth-child(even)::before {
-      left: -10px;
-    }
-
-    .timeline-content {
-      background: var(--white);
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: var(--shadow);
-    }
-
-    /* ===== DASHBOARD SECTION ===== */
-    .dashboard {
-      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 800;
       color: var(--white);
+      margin: 0 auto 1.5rem;
+      box-shadow: var(--shadow-blue);
+      position: relative;
     }
 
-    .dashboard-content {
+    .step-number::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid rgba(59,130,246,0.3);
+    }
+
+    .step-item h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .step-item p {
+      font-size: 0.88rem;
+      color: var(--gray-400);
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       SHOWCASE
+    ============================================================ */
+    .showcase {
+      background: var(--gradient-light);
+      padding: 7rem 0;
+      overflow: hidden;
+    }
+
+    .showcase-content {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      gap: 5rem;
       align-items: center;
     }
 
-    .dashboard-text h2 {
-      color: var(--white);
+    .showcase-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      line-height: 1.2;
     }
 
-    .dashboard-text p {
-      color: #D1D5DB;
-    }
-
-    .dashboard-image {
-      position: relative;
-    }
-
-    .dashboard-image img {
-      width: 100%;
-      border-radius: 1rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      background: var(--dark);
-      color: var(--white);
-      padding: 4rem 0 2rem;
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
+    .showcase-desc {
+      font-size: 1.05rem;
+      color: var(--gray-500);
+      line-height: 1.8;
       margin-bottom: 2rem;
     }
 
-    .footer-logo {
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .feature-list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .check-icon {
+      width: 24px; height: 24px;
+      background: rgba(59,130,246,0.1);
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
+      justify-content: center;
+      color: var(--blue-500);
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      margin-top: 2px;
     }
 
-    .footer-logo i {
-      margin-right: 0.5rem;
-      color: var(--primary);
+    .feature-list-item p {
+      font-size: 0.95rem;
+      color: var(--gray-600);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .feature-list-item p strong { color: var(--dark); }
+
+    /* Browser mock */
+    .browser-mock {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.06);
     }
 
-    .footer-links h4 {
+    .browser-bar {
+      background: #F1F5F9;
+      padding: 0.8rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .browser-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+    }
+    .dot-red    { background: #FF5F57; }
+    .dot-yellow { background: #FFBD2E; }
+    .dot-green  { background: #28C840; }
+
+    .browser-url {
+      flex: 1;
+      background: var(--white);
+      border-radius: 6px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.75rem;
+      color: var(--gray-500);
+      margin-left: 0.5rem;
+    }
+
+    .browser-body { padding: 1.5rem; }
+
+    .mini-dash {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .mini-stat {
+      background: var(--light);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      text-align: center;
+    }
+    .mini-stat-label { font-size: 0.7rem; color: var(--gray-500); margin-bottom: 0.3rem; }
+    .mini-stat-val   { font-size: 1.4rem; font-weight: 800; color: var(--dark); }
+    .mini-stat-trend { font-size: 0.7rem; color: #16A34A; }
+
+    .chart-placeholder {
+      background: var(--light);
+      border-radius: var(--radius-sm);
+      height: 120px;
+      overflow: hidden;
+      padding: 0.5rem;
+    }
+    .chart-placeholder svg { width: 100%; height: 100%; }
+
+    /* ============================================================
+       TESTIMONIALS
+    ============================================================ */
+    .testimonials {
+      background: var(--dark);
+      padding: 7rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonials-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 500px 400px at 90% 20%, rgba(99,102,241,0.07), transparent),
+        radial-gradient(ellipse 400px 300px at 10% 80%, rgba(59,130,246,0.07), transparent);
+      pointer-events: none;
+    }
+
+    .testimonials .section-label {
+      background: rgba(59,130,246,0.15);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: #93C5FD;
+    }
+    .testimonials .section-subtitle { color: var(--gray-400); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .testimonial-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(59,130,246,0.3);
+    }
+
+    .quote-icon {
+      font-size: 2.5rem;
+      color: var(--blue-500);
+      opacity: 0.4;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    .testimonial-text {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.92rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-stars {
+      color: #FBBF24;
+      font-size: 0.85rem;
       margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(59,130,246,0.3);
+    }
+
+    .author-name {
       color: var(--white);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .author-title {
+      color: var(--gray-400);
+      font-size: 0.78rem;
     }
 
-    .footer-links ul {
-      list-style: none;
+    /* ============================================================
+       PRICING
+    ============================================================ */
+    .pricing {
+      background: var(--light);
+      padding: 7rem 0;
+      position: relative;
+      overflow: hidden;
     }
 
-    .footer-links li {
+    .pricing-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 700px 500px at 50% 100%, rgba(59,130,246,0.06), transparent);
+      pointer-events: none;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      position: relative;
+      z-index: 2;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      background: var(--gradient-hero);
+      border-color: transparent;
+      transform: scale(1.04);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradient-accent);
+      color: var(--white);
+      padding: 0.3rem 1rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .pricing-card:not(.featured):hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .plan-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--blue-500);
       margin-bottom: 0.5rem;
     }
 
-    .footer-links a {
-      color: #D1D5DB;
-      text-decoration: none;
+    .plan-name.white { color: #93C5FD; }
+
+    .plan-price {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .plan-price.white { color: var(--white); }
+
+    .plan-price sup {
+      font-size: 1.2rem;
+      font-weight: 600;
+      vertical-align: top;
+      margin-top: 0.6rem;
+      display: inline-block;
+    }
+
+    .plan-period {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      margin-bottom: 1.5rem;
+    }
+
+    .plan-period.white { color: rgba(255,255,255,0.55); }
+
+    .plan-desc {
+      font-size: 0.88rem;
+      color: var(--gray-500);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .plan-desc.white {
+      color: rgba(255,255,255,0.65);
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+
+    .plan-features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .plan-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.88rem;
+      color: var(--gray-600);
+    }
+
+    .plan-feature.white { color: rgba(255,255,255,0.75); }
+
+    .plan-feature i {
+      color: var(--blue-500);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .plan-feature i.white { color: #60A5FA; }
+
+    .btn-plan {
+      width: 100%;
+      justify-content: center;
+      padding: 0.9rem;
+    }
+
+    .btn-plan-outline {
+      background: transparent;
+      color: var(--dark);
+      border: 1.5px solid rgba(0,0,0,0.15);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: var(--transition);
+      width: 100%;
+      padding: 0.9rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .btn-plan-outline:hover {
+      border-color: var(--blue-500);
+      color: var(--blue-500);
+      transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       CTA SECTION
+    ============================================================ */
+    .cta-section {
+      background: var(--gradient-hero);
+      padding: 7rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at 30% 50%, rgba(59,130,246,0.15), transparent),
+        radial-gradient(ellipse 400px 300px at 70% 50%, rgba(99,102,241,0.12), transparent);
+      pointer-events: none;
+    }
+
+    .cta-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+
+    .cta-subtitle {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-note {
+      margin-top: 1.5rem;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.82rem;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: #080E1A;
+      padding: 5rem 0 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-brand .logo { margin-bottom: 1rem; }
+    .footer-brand p {
+      color: var(--gray-400);
+      font-size: 0.88rem;
+      line-height: 1.8;
+      margin: 0 0 1.5rem;
+    }
+
+    .footer-socials { display: flex; gap: 0.7rem; }
+
+    .social-btn {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-400);
+      font-size: 0.85rem;
       transition: var(--transition);
     }
-
-    .footer-links a:hover {
-      color: var(--primary);
+    .social-btn:hover {
+      background: var(--blue-600);
+      border-color: var(--blue-600);
+      color: var(--white);
+      transform: translateY(-2px);
     }
 
-    .copyright {
-      text-align: center;
+    .footer-col h5 {
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-col ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .footer-col a {
+      color: var(--gray-400);
+      font-size: 0.88rem;
+      transition: color 0.3s;
+    }
+    .footer-col a:hover { color: var(--white); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: #9CA3AF;
+      border-top: 1px solid rgba(255,255,255,0.06);
     }
 
-    /* ===== RESPONSIVE ===== */
+    .footer-bottom p {
+      color: var(--gray-500);
+      font-size: 0.82rem;
+      margin: 0;
+    }
+
+    .footer-bottom-links { display: flex; gap: 1.5rem; }
+    .footer-bottom-links a {
+      color: var(--gray-500);
+      font-size: 0.82rem;
+      transition: color 0.3s;
+    }
+    .footer-bottom-links a:hover { color: var(--white); }
+
+    /* ============================================================
+       SCROLL TOP
+    ============================================================ */
+    .scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      background: var(--gradient-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 1rem;
+      box-shadow: var(--shadow-blue);
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+      z-index: 999;
+    }
+    .scroll-top.visible { opacity:1; pointer-events:all; }
+    .scroll-top:hover   { transform: translateY(-3px); }
+
+    /* Reveal */
+    .reveal       { opacity:0; transform:translateY(40px); }
+    .reveal-left  { opacity:0; transform:translateX(-50px); }
+    .reveal-right { opacity:0; transform:translateX(50px); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .hero-content     { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-visual      { order: -1; }
+      .fc-1, .fc-2      { display: none; }
+      .stats-grid       { grid-template-columns: repeat(2,1fr); }
+      .features-grid    { grid-template-columns: repeat(2,1fr); }
+      .steps-container  { grid-template-columns: repeat(2,1fr); }
+      .steps-container::before { display: none; }
+      .showcase-content { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+      .pricing-grid     { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .pricing-card.featured { transform: scale(1); }
+      .footer-top       { grid-template-columns: 1fr 1fr; }
+    }
+
     @media (max-width: 768px) {
-      .hero-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
+      .nav-links        { display: none; }
+      .hamburger        { display: flex; }
+      .features-grid    { grid-template-columns: 1fr; }
+      .steps-container  { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-top       { grid-template-columns: 1fr; }
+      .footer-bottom    { flex-direction: column; gap: 1rem; text-align: center; }
+      .stats-grid       { grid-template-columns: 1fr 1fr; }
+      .mini-dash        { grid-template-columns: 1fr 1fr; }
+    }
 
-      .hero-text {
-        margin-bottom: 3rem;
-      }
-
-      .hero-buttons {
-        justify-content: center;
-      }
-
-      .timeline-item {
-        width: 100%;
-        left: 0 !important;
-        padding: 1rem 1.5rem;
-      }
-
-      .timeline-item::before {
-        left: -10px !important;
-      }
-
-      .dashboard-content {
-        grid-template-columns: 1fr;
-      }
-
-      .dashboard-text {
-        text-align: center;
-        margin-bottom: 3rem;
-      }
+    @media (max-width: 480px) {
+      .hero-actions  { flex-direction: column; }
+      .cta-actions   { flex-direction: column; align-items: center; }
+      .mini-dash     { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <!-- ===== HEADER ===== -->
-  <header>
+
+  <!-- SCROLL TOP -->
+  <button class="scroll-top" id="scrollTop" aria-label="Retour en haut">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#features"      onclick="closeMobile()">Fonctionnalités</a>
+    <a href="#how-it-works"  onclick="closeMobile()">Comment ça marche</a>
+    <a href="#testimonials"  onclick="closeMobile()">Témoignages</a>
+    <a href="#pricing"       onclick="closeMobile()">Tarifs</a>
+    <a href="#cta" class="btn btn-primary" onclick="closeMobile()">Démarrer gratuitement</a>
+  </div>
+
+  <!-- HEADER -->
+  <header id="header">
     <div class="container">
       <nav class="navbar">
         <a href="#" class="logo">
-          <i class="fas fa-shield-alt"></i>
+          <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
           Carlissanté
         </a>
         <ul class="nav-links">
-          <li><a href="#">Fonctionnalités</a></li>
-          <li><a href="#">Tarifs</a></li>
-          <li><a href="#">Ressources</a></li>
-          <li><a href="#" class="cta-button">Démarrer</a></li>
+          <li><a href="#features">Fonctionnalités</a></li>
+          <li><a href="#how-it-works">Comment ça marche</a></li>
+          <li><a href="#testimonials">Témoignages</a></li>
+          <li><a href="#pricing">Tarifs</a></li>
+          <li>
+            <a href="#cta" class="btn btn-primary nav-cta">
+              Démarrer <i class="fas fa-arrow-right"></i>
+            </a>
+          </li>
         </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
       </nav>
     </div>
   </header>
 
-  <!-- ===== HERO SECTION ===== -->
-  <section class="hero">
-    <div class="parallax-bg"></div>
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="parallax-layer hero-grid" id="parallaxGrid"></div>
+    <div class="orb orb-1" id="orb1"></div>
+    <div class="orb orb-2" id="orb2"></div>
+    <div class="orb orb-3" id="orb3"></div>
+    <canvas id="particles-canvas"></canvas>
+
     <div class="container">
       <div class="hero-content">
+
         <div class="hero-text">
-          <h1>Gérez votre e-réputation avec élégance</h1>
-          <p>La solution premium pour les professionnels de santé qui veulent contrôler leur image en ligne sans effort.</p>
-          <div class="hero-buttons">
-            <button class="cta-button">Essayer gratuitement</button>
-            <button class="btn-secondary">Voir une démo</button>
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            Nouveau — Tableau de bord v3.0 disponible
+          </div>
+          <h1 class="hero-title">
+            Maîtrisez votre<br>
+            <span class="highlight">e-réputation médicale</span><br>
+            sans effort
+          </h1>
+          <p class="hero-subtitle">
+            La plateforme tout-en-un qui surveille, analyse et améliore
+            votre réputation en ligne — pour que vous puissiez vous
+            concentrer sur vos patients.
+          </p>
+          <div class="hero-actions">
+            <a href="#cta" class="btn btn-primary">
+              Essayer gratuitement <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="#how-it-works" class="btn btn-outline">
+              <i class="fas fa-play-circle"></i> Voir la démo
+            </a>
+          </div>
+          <div class="hero-social-proof">
+            <div class="avatars">
+              <img src="https://i.pravatar.cc/40?img=1"  alt="Médecin 1">
+              <img src="https://i.pravatar.cc/40?img=5"  alt="Médecin 2">
+              <img src="https://i.pravatar.cc/40?img=12" alt="Médecin 3">
+              <img src="https://i.pravatar.cc/40?img=8"  alt="Médecin 4">
+            </div>
+            <div class="social-proof-text">
+              <strong>+2 400 médecins nous font confiance</strong>
+              Note moyenne : ⭐ 4,9 / 5
+            </div>
           </div>
         </div>
-        <div class="hero-image">
-          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tableau de bord Carlissanté">
+
+        <div class="hero-visual" id="heroVisual">
+          <div class="float-card fc-1" id="floatCard1">
+            <div class="fc-icon">📈</div>
+            <div class="fc-val">+47%</div>
+            <div class="fc-label">Nouveaux avis ce mois</div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="dash-header">
+              <div class="dash-title">Vue d'ensemble — Réputation</div>
+              <div class="dash-score">
+                <i class="fas fa-arrow-up"></i> Score 9.2 / 10
+              </div>
+            </div>
+            <div class="metrics-grid">
+              <div class="metric-box">
+                <div class="metric-label">Avis positifs</div>
+                <div class="metric-value">94%</div>
+                <div class="metric-trend">↑ +3% ce mois</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-label">Total avis</div>
+                <div class="metric-value">286</div>
+                <div class="metric-trend">↑ +12 nouveaux</div>
+              </div>
+            </div>
+            <div>
+              <div class="rating-bar-wrap">
+                <div class="rating-label"><span>Google My Business</span><span>4.9 ★</span></div>
+                <div class="rating-bar"><div class="rating-fill" data-width="97%"></div></div>
+              </div>
+              <div class="rating-bar-wrap">
+                <div class="rating-label"><span>Doctolib</span><span>4.8 ★</span></div>
+                <div class="rating-bar"><div class="rating-fill" data-width="90%"></div></div>
+              </div>
+              <div class="rating-bar-wrap">
+                <div class="rating-label"><span>Pages Jaunes</span><span>4.7 ★</span></div>
+                <div class="rating-bar"><div class="rating-fill" data-width="82%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="float-card fc-2" id="floatCard2">
+            <div class="fc-icon">🔔</div>
+            <div class="fc-val">3 nouveaux</div>
+            <div class="fc-label">avis à traiter</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATS STRIP ===== -->
+  <section class="stats-strip">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" data-target="2400" data-suffix="+">0</div>
+          <div class="stat-label">Professionnels de santé</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="98" data-suffix="%">0</div>
+          <div class="stat-label">Taux de satisfaction</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="150000" data-suffix="+">0</div>
+          <div class="stat-label">Avis analysés</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="12" data-suffix="">0</div>
+          <div class="stat-label">Plateformes intégrées</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== FEATURES SECTION ===== -->
-  <section class="features">
+  <!-- ===== FEATURES ===== -->
+  <section class="features" id="features">
+    <div class="features-bg"></div>
     <div class="container">
-      <h2 style="text-align: center; margin-bottom: 3rem;">Une expérience pensée pour vous</h2>
+      <div class="section-header">
+        <div class="section-label"><i class="fas fa-star"></i> Fonctionnalités</div>
+        <h2 class="section-title">
+          Tout ce dont vous avez besoin,<br>
+          <span class="text-gradient">au même endroit</span>
+        </h2>
+        <p class="section-subtitle">
+          Des outils puissants conçus spécifiquement pour les professionnels
+          de santé qui veulent garder le contrôle de leur image.
+        </p>
+      </div>
       <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-chart-line"></i>
-          </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap"><i class="fas fa-chart-line"></i></div>
           <h3>Analyse en temps réel</h3>
-          <p>Surveillez vos avis et mentions sur toutes les plateformes en un seul endroit.</p>
+          <p>Surveillance continue de vos avis sur Google, Doctolib, Facebook et +10 autres plateformes.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-bell"></i>
-          </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap"><i class="fas fa-bell"></i></div>
           <h3>Alertes intelligentes</h3>
-          <p>Recevez des notifications instantanées pour les nouveaux avis ou commentaires.</p>
+          <p>Notifications instantanées par email et SMS dès qu'un nouvel avis est publié.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-reply"></i>
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap"><i class="fas fa-robot"></i></div>
+          <h3>Réponses IA</h3>
+          <p>Générez des réponses professionnelles et personnalisées en un seul clic grâce à l'IA.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap"><i class="fas fa-shield-alt"></i></div>
+          <h3>Protection anti-fake</h3>
+          <p>Détectez et signalez automatiquement les faux avis et contenus abusifs.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap"><i class="fas fa-chart-pie"></i></div>
+          <h3>Rapports détaillés</h3>
+          <p>Tableaux de bord visuels avec tendances, comparatifs et recommandations actionnables.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap"><i class="fas fa-users"></i></div>
+          <h3>Multi-praticiens</h3>
+          <p>Gérez tous les profils de votre cabinet depuis un seul espace centralisé.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="how-bg"></div>
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label"><i class="fas fa-map-signs"></i> Processus</div>
+        <h2 class="section-title" style="color:#fff;">
+          Opérationnel en <span class="text-gradient">moins de 5 minutes</span>
+        </h2>
+        <p class="section-subtitle">
+          Pas besoin de compétences techniques. Notre parcours d'onboarding
+          guidé vous rend autonome immédiatement.
+        </p>
+      </div>
+      <div class="steps-container">
+        <div class="step-item reveal">
+          <div class="step-number">1</div>
+          <h3>Créez votre compte</h3>
+          <p>Inscription en 2 minutes, aucune carte bancaire requise pour l'essai gratuit.</p>
+        </div>
+        <div class="step-item reveal">
+          <div class="step-number">2</div>
+          <h3>Connectez vos plateformes</h3>
+          <p>Google, Doctolib, Facebook, Pages Jaunes — tout connecté en un seul clic.</p>
+        </div>
+        <div class="step-item reveal">
+          <div class="step-number">3</div>
+          <h3>Surveillance automatique</h3>
+          <p>Notre IA analyse votre réputation 24h/24 et vous alerte en temps réel.</p>
+        </div>
+        <div class="step-item reveal">
+          <div class="step-number">4</div>
+          <h3>Répondez & progressez</h3>
+          <p>Gérez vos avis, améliorez votre score et attirez de nouveaux patients.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SHOWCASE ===== -->
+  <section class="showcase" id="showcase">
+    <div class="container">
+      <div class="showcase-content">
+        <div class="showcase-text reveal-left">
+          <div class="section-label"><i class="fas fa-desktop"></i> Interface</div>
+          <h2 class="showcase-title">
+            Un tableau de bord<br>
+            <span class="text-gradient">pensé pour vous</span>
+          </h2>
+          <p class="showcase-desc">
+            Notre interface épurée vous donne une vue complète de votre
+            e-réputation. Tout est accessible en moins de 3 clics, sur tous vos appareils.
+          </p>
+          <div class="feature-list">
+            <div class="feature-list-item">
+              <div class="check-icon"><i class="fas fa-check"></i></div>
+              <p><strong>Vue consolidée</strong> de toutes vos plateformes en un seul écran</p>
+            </div>
+            <div class="feature-list-item">
+              <div class="check-icon"><i class="fas fa-check"></i></div>
+              <p><strong>Rapports PDF</strong> automatiques à envoyer à votre direction</p>
+            </div>
+            <div class="feature-list-item">
+              <div class="check-icon"><i class="fas fa-check"></i></div>
+              <p><strong>Application mobile</strong> pour gérer vos avis depuis votre smartphone</p>
+            </div>
+            <div class="feature-list-item">
+              <div class="check-icon"><i class="fas fa-check"></i></div>
+              <p><strong>API disponible</strong> pour intégration avec votre logiciel métier</p>
+            </div>
           </div>
-          <h3>Réponses automatisées</h3>
-          <p>Générez des réponses personnalisées et professionnelles en un clic.</p>
+          <a href="#cta" class="btn btn-dark">
+            Voir la démo complète <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
+
+        <!-- Mock navigateur -->
+        <div class="reveal-right">
+          <div class="browser-mock">
+            <div class="browser-bar">
+              <div class="browser-dot dot-red"></div>
+              <div class="browser-dot dot-yellow"></div>
+              <div class="browser-dot dot-green"></div>
+              <div class="browser-url">app.carlissante.fr/dashboard</div>
+            </div>
+            <div class="browser-body">
+              <div class="mini-dash">
+                <div class="mini-stat">
+                  <div class="mini-stat-label">Score global</div>
+                  <div class="mini-stat-val">9.2</div>
+                  <div class="mini-stat-trend">↑ +0.3 ce mois</div>
+                </div>
+                <div class="mini-stat">
+                  <div class="mini-stat-label">Avis totaux</div>
+                  <div class="mini-stat-val">286</div>
+                  <div class="mini-stat-trend">↑ +12 nouveaux</div>
+                </div>
+                <div class="mini-stat">
+                  <div class="mini-stat-label">Taux positif</div>
+                  <div class="mini-stat-val">94%</div>
+                  <div class="mini-stat-trend">↑ +3% ce mois</div>
+                </div>
+              </div>
+              <div class="chart-area">
+                <svg viewBox="0 0 400 120" preserveAspectRatio="none" style="width:100%;height:120px;">
+                  <defs>
+                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%"   stop-color="#3B82F6" stop-opacity="0.4"/>
+                      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M0,90 C40,85 60,70 100,60 C140,50 160,65 200,52 C240,39 260,25 300,28 C340,31 370,18 400,12 L400,120 L0,120 Z"
+                    fill="url(#chartGrad)"/>
+                  <path
+                    d="M0,90 C40,85 60,70 100,60 C140,50 160,65 200,52 C240,39 260,25 300,28 C340,31 370,18 400,12"
+                    fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ===== TIMELINE SECTION ===== -->
-  <section class="timeline">
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="testimonials" id="testimonials">
     <div class="container">
-      <h2 style="text-align: center; margin-bottom: 3rem;">Comment ça marche ?</h2>
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <h3>1. Inscription</h3>
-          <p>Créez votre compte en moins de 2 minutes et connectez vos plateformes (Google, Facebook, etc.).</p>
-        </div>
+      <div class="section-header">
+        <div class="section-label"><i class="fas fa-quote-left"></i> Témoignages</div>
+        <h2 class="section-title">
+          Ce que disent nos <span class="text-gradient">utilisateurs</span>
+        </h2>
+        <p class="section-subtitle">
+          Plus de 2 400 professionnels de santé nous font confiance
+          pour gérer leur réputation en ligne.
+        </p>
       </div>
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <h3>2. Configuration</h3>
-          <p>Personnalisez vos préférences et définissez vos alertes pour ne rien manquer.</p>
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p class="testimonial-text">
+            "Carlissanté a transformé ma pratique. En 3 mois, mon score Google
+            est passé de 3,8 à 4,9. Les alertes en temps réel me permettent
+            de répondre rapidement à chaque avis."
+          </p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/48?img=11" alt="Dr. Sophie Martin">
+            <div>
+              <div class="author-name">Dr. Sophie Martin</div>
+              <div class="author-role">Médecin généraliste — Paris 15e</div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <h3>3. Surveillance</h3>
-          <p>Notre système analyse en continu votre e-réputation et vous alerte en cas de besoin.</p>
+
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p class="testimonial-text">
+            "L'IA de réponse aux avis est bluffante. Elle comprend le contexte
+            médical et génère des réponses parfaitement adaptées. Un gain de
+            temps considérable au quotidien."
+          </p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/48?img=33" alt="Dr. Thomas Leroy">
+            <div>
+              <div class="author-name">Dr. Thomas Leroy</div>
+              <div class="author-role">Chirurgien-dentiste — Lyon</div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <h3>4. Réponse</h3>
-          <p>Répondez aux avis directement depuis notre interface, avec des templates personnalisables.</p>
+
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <p class="testimonial-text">
+            "Gérer 8 praticiens depuis un seul dashboard, c'est exactement
+            ce dont notre clinique avait besoin. La vue multi-profils est
+            une vraie révolution pour nous."
+          </p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/48?img=47" alt="Dr. Claire Dubois">
+            <div>
+              <div class="author-name">Dr. Claire Dubois</div>
+              <div class="author-role">Directrice — Clinique Saint-Michel</div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ===== DASHBOARD SECTION ===== -->
-  <section class="dashboard">
+  <!-- ===== PRICING ===== -->
+  <section class="pricing" id="pricing">
     <div class="container">
-      <div class="dashboard-content">
-        <div class="dashboard-text">
-          <h2>Un tableau de bord intuitif</h2>
-          <p>Visualisez toutes vos données en un coup d'œil avec notre interface conçue pour les professionnels occupés.</p>
-          <p>Accédez à des rapports détaillés, des tendances et des recommandations pour améliorer votre réputation en ligne.</p>
-          <button class="cta-button" style="margin-top: 1rem;">Découvrir le dashboard</button>
+      <div class="section-header">
+        <div class="section-label"><i class="fas fa-tag"></i> Tarifs</div>
+        <h2 class="section-title">
+          Des prix <span class="text-gradient">transparents</span>
+        </h2>
+        <p class="section-subtitle">
+          Sans engagement, sans frais cachés. Commencez gratuitement
+          et évoluez selon vos besoins.
+        </p>
+      </div>
+      <div class="pricing-grid">
+
+        <!-- Starter -->
+        <div class="pricing-card reveal">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price"><sup>€</sup>29</div>
+          <div class="plan-period">par mois, par praticien</div>
+          <p class="plan-desc">
+            Idéal pour les professionnels indépendants qui démarrent
+            la gestion de leur e-réputation.
+          </p>
+          <div class="plan-features">
+            <div class="plan-feature"><i class="fas fa-check-circle"></i> 3 plateformes connectées</div>
+            <div class="plan-feature"><i class="fas fa-check-circle"></i> Alertes email</div>
+            <div class="plan-feature"><i class="fas fa-check-circle"></i> Tableau de bord basique</div>
+            <div class="plan-feature"><i class="fas fa-check-circle"></i> Rapports mensuels</div>
+            <div class="plan-feature"><i class="fas fa-check-circle"></i> Support email</div>
+          </div>
+          <button class="btn-plan-outline">Commencer l'essai gratuit</button>
         </div>
-        <div class="dashboard-image">
-          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tableau de bord détaillé">
+
+        <!-- Pro (featured) -->
+        <div class="pricing-card featured reveal">
+          <div class="plan-badge">Le plus populaire</div>
+          <div class="plan-name white">Pro</div>
+          <div class="plan-price white"><sup>€</sup>79</div>
+          <div class="plan-period white">par mois, par praticien</div>
+          <p class="plan-desc white">
+            La solution complète pour les praticiens exigeants qui veulent
+            dominer leur e-réputation.
+          </p>
+          <div class="plan-features">
+            <div class="plan-feature white"><i class="fas fa-check-circle white"></i> 12 plateformes connectées</div>
+            <div class="plan-feature white"><i class="fas fa-check-circle white"></i> Alertes SMS + email</div>
+            <div class="plan-feature white"><i class="fas fa-check-circle white"></i> IA de réponse automatique</div>
+            <div class="plan-feature white"><i class="fas fa-check-circle white"></i> Rapports hebdomadaires</div>
+            <div class="plan-feature white"><i class="fas fa-check-circle white"></i> Protection anti-fake</div>
+            <div class="plan-feature white"><i class="fas fa-check-circle white"></i> Support prioritaire 7j/7</div>
+          </div>
+          <a href="#cta" class="btn btn-primary btn-plan">
+            Démarrer maintenant <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
+
+        <!-- Clinique -->
+        <div class="pricing-card reveal">
+          <div class="plan-name">Clinique</div>
+          <div class="plan-price"><sup>€</sup>199</div>
+          <div class="plan-period">par mois, jusqu'à 10 praticiens</div>
+          <p class="plan-desc">
+            Pour les cabinets de groupe et cliniques qui gèrent
+            plusieurs profils simultanément.
+          </p>
+          <div class="plan-features">
+            <div class="plan-feature"><i class="fas fa-check-circle"></i> Praticiens illimités</div>
+            <div class="plan-feature"><i class="fas fa-check-circle"></i> Toutes les plateformes</div>
+            <div class="plan-feature"><i class="fas fa-check-circle"></i> IA avancée + personnalisation</div>
+            <div class="plan-feature"><i class="fas fa-check-circle"></i> API & intégrations</div>
+            <div class="plan-feature"><i class="fas fa-check-circle"></i> Manager dédié</div>
+          </div>
+          <button class="btn-plan-outline">Contacter l'équipe</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta-section" id="cta">
+    <div class="cta-bg"></div>
+    <div class="cta-grid-bg"></div>
+    <div class="container">
+      <div class="cta-content reveal">
+        <div class="section-label" style="margin:0 auto 1.5rem;">
+          <i class="fas fa-rocket"></i> Prêt à commencer ?
+        </div>
+        <h2 class="cta-title">
+          Prenez le contrôle de votre<br>
+          <span class="highlight">réputation en ligne aujourd'hui</span>
+        </h2>
+        <p class="cta-subtitle">
+          Rejoignez 2 400 professionnels de santé qui font confiance
+          à Carlissanté. Essai gratuit 14 jours, sans carte bancaire.
+        </p>
+        <div class="cta-actions">
+          <a href="#" class="btn btn-primary">
+            Démarrer gratuitement <i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="#" class="btn btn-outline">
+            <i class="fas fa-calendar-alt"></i> Réserver une démo
+          </a>
+        </div>
+        <p class="cta-note">
+          ✓ Aucune carte bancaire &nbsp;·&nbsp;
+          ✓ 14 jours d'essai gratuit &nbsp;·&nbsp;
+          ✓ Résiliation à tout moment
+        </p>
       </div>
     </div>
   </section>
@@ -556,128 +1878,397 @@
   <!-- ===== FOOTER ===== -->
   <footer>
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo-section">
-          <div class="footer-logo">
-            <i class="fas fa-shield-alt"></i>
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
             Carlissanté
+          </a>
+          <p>
+            La solution premium de gestion d'e-réputation pour les
+            professionnels de santé. Simple, efficace, sécurisée.
+          </p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
           </div>
-          <p>La solution premium pour gérer votre e-réputation en tant que professionnel de santé.</p>
         </div>
-        <div class="footer-links">
-          <h4>Produit</h4>
+        <div class="footer-col">
+          <h5>Produit</h5>
           <ul>
-            <li><a href="#">Fonctionnalités</a></li>
-            <li><a href="#">Tarifs</a></li>
+            <li><a href="#features">Fonctionnalités</a></li>
+            <li><a href="#pricing">Tarifs</a></li>
+            <li><a href="#how-it-works">Comment ça marche</a></li>
             <li><a href="#">Intégrations</a></li>
+            <li><a href="#">Nouveautés</a></li>
           </ul>
         </div>
-        <div class="footer-links">
-          <h4>Ressources</h4>
+        <div class="footer-col">
+          <h5>Ressources</h5>
           <ul>
             <li><a href="#">Blog</a></li>
-            <li><a href="#">Guides</a></li>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Guides pratiques</a></li>
             <li><a href="#">FAQ</a></li>
+            <li><a href="#">Webinaires</a></li>
           </ul>
         </div>
-        <div class="footer-links">
-          <h4>Légal</h4>
+        <div class="footer-col">
+          <h5>Légal</h5>
           <ul>
             <li><a href="#">Politique de confidentialité</a></li>
             <li><a href="#">Conditions d'utilisation</a></li>
+            <li><a href="#">Mentions légales</a></li>
+            <li><a href="#">Cookies</a></li>
             <li><a href="#">Contact</a></li>
           </ul>
         </div>
       </div>
-      <div class="copyright">
-        <p>&copy; 2023 Carlissanté. Tous droits réservés.</p>
+      <div class="footer-bottom">
+        <p>© 2024 Carlissanté. Tous droits réservés.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Confidentialité</a>
+          <a href="#">CGU</a>
+          <a href="#">Contact</a>
+        </div>
       </div>
     </div>
   </footer>
 
-  <!-- ===== GSAP ANIMATIONS ===== -->
+  <!-- ===== STYLES MANQUANTS ===== -->
+  <style>
+    /* Showcase browser mock */
+    .browser-mock {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .browser-bar {
+      background: #F1F5F9;
+      padding: 0.8rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .browser-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+    }
+    .dot-red    { background: #FF5F57; }
+    .dot-yellow { background: #FEBC2E; }
+    .dot-green  { background: #28C840; }
+    .browser-url {
+      background: var(--white);
+      border-radius: 6px;
+      padding: 0.3rem 1rem;
+      font-size: 0.78rem;
+      color: var(--gray-500);
+      flex: 1;
+      margin-left: 0.5rem;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .browser-body { padding: 1.5rem; }
+    .mini-dash {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .mini-stat {
+      background: var(--light);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    .mini-stat-label { font-size: 0.72rem; color: var(--gray-500); margin-bottom: 0.3rem; }
+    .mini-stat-val   { font-size: 1.4rem; font-weight: 800; color: var(--dark); }
+    .mini-stat-trend { font-size: 0.72rem; color: #16A34A; margin-top: 0.2rem; }
+    .chart-area      { border-radius: var(--radius-sm); overflow: hidden; background: var(--light); }
+
+    /* Feature list */
+    .feature-list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+    .check-icon {
+      width: 22px; height: 22px;
+      background: var(--gradient-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 0.6rem;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+    .feature-list-item p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      background: var(--light);
+      padding: 7rem 0;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem;
+    }
+    .testimonial-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: var(--transition);
+    }
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    .testimonial-stars { color: #F59E0B; margin-bottom: 1rem; font-size: 0.9rem; gap: 2px; display:flex; }
+    .testimonial-text {
+      font-size: 0.92rem;
+      color: var(--gray-600);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 0.8rem; }
+    .testimonial-author img {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--blue-100);
+    }
+    .author-name { font-weight: 700; font-size: 0.88rem; color: var(--dark); }
+    .author-role { font-size: 0.78rem; color: var(--gray-400); }
+
+    /* Pricing */
+    .pricing {
+      background: var(--gradient-light);
+      padding: 7rem 0;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .pricing-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: var(--transition);
+      position: relative;
+    }
+    .pricing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    .pricing-card.featured {
+      background: var(--gradient-hero);
+      border-color: transparent;
+      transform: scale(1.04);
+      box-shadow: var(--shadow-xl), var(--shadow-blue);
+    }
+    .pricing-card.featured:hover { transform: scale(1.04) translateY(-5px); }
+    .plan-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradient-accent);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 1rem;
+      border-radius: 99px;
+      white-space: nowrap;
+      box-shadow: var(--shadow-blue);
+    }
+  </style>
+
+  <!-- ===== SCRIPTS ===== -->
   <script>
-    // Initialisation de GSAP
     gsap.registerPlugin(ScrollTrigger);
 
-    // Animation du header au scroll
-    gsap.to("header", {
-      backgroundColor: "rgba(255, 255, 255, 0.95)",
-      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-      scrollTrigger: {
-        trigger: "body",
-        start: "top -80",
-        end: "top -100",
-        scrub: true
+    /* ---------- Header scroll ---------- */
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      const scrollTop = document.getElementById('scrollTop');
+      if (window.scrollY > 60) {
+        header.classList.add('scrolled');
+        scrollTop.classList.add('visible');
+      } else {
+        header.classList.remove('scrolled');
+        scrollTop.classList.remove('visible');
       }
     });
 
-    // Animation des éléments au scroll
-    gsap.utils.toArray("section").forEach(section => {
-      gsap.from(section, {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        scrollTrigger: {
-          trigger: section,
-          start: "top 80%",
-          toggleActions: "play none none none"
+    document.getElementById('scrollTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /* ---------- Mobile menu ---------- */
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const hamburger = document.getElementById('hamburger');
+      menu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+    }
+    function closeMobile() {
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    }
+
+    /* ---------- Particles canvas ---------- */
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function createParticles() {
+      particles = [];
+      const count = Math.floor(window.innerWidth / 18);
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x:    Math.random() * canvas.width,
+          y:    Math.random() * canvas.height,
+          r:    Math.random() * 1.8 + 0.3,
+          dx:   (Math.random() - 0.5) * 0.4,
+          dy:   (Math.random() - 0.5) * 0.4,
+          alpha: Math.random() * 0.5 + 0.1
+        });
+      }
+    }
+    createParticles();
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(147, 197, 253, ${p.alpha})`;
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0 || p.x > canvas.width)  p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+      });
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+
+    /* ---------- Parallax orbs ---------- */
+    window.addEventListener('mousemove', e => {
+      const mx = (e.clientX / window.innerWidth  - 0.5) * 30;
+      const my = (e.clientY / window.innerHeight - 0.5) * 30;
+      gsap.to('#orb1', { x: mx * 1.2, y: my * 1.2, duration: 1.5, ease: 'power2.out' });
+      gsap.to('#orb2', { x: -mx * 0.8, y: -my * 0.8, duration: 1.5, ease: 'power2.out' });
+      gsap.to('#orb3', { x: mx * 0.5, y: my * 0.5, duration: 1.5, ease: 'power2.out' });
+    });
+
+    /* ---------- Parallax scroll layers ---------- */
+    gsap.to('#parallaxGrid', {
+      yPercent: 30,
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+    });
+    gsap.to('#heroVisual', {
+      yPercent: 15,
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+    });
+
+    /* ---------- Float cards animation ---------- */
+    gsap.to('#floatCard1', {
+      y: -15, duration: 2.5, yoyo: true, repeat: -1, ease: 'sine.inOut'
+    });
+    gsap.to('#floatCard2', {
+      y: 12, duration: 3, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 0.8
+    });
+
+    /* ---------- Hero text intro ---------- */
+    gsap.from('.hero-badge',       { opacity:0, y:30, duration:0.8, delay:0.2 });
+    gsap.from('.hero-title',       { opacity:0, y:40, duration:0.9, delay:0.4 });
+    gsap.from('.hero-subtitle',    { opacity:0, y:30, duration:0.8, delay:0.6 });
+    gsap.from('.hero-actions',     { opacity:0, y:30, duration:0.8, delay:0.8 });
+    gsap.from('.hero-social-proof',{ opacity:0, y:20, duration:0.7, delay:1.0 });
+    gsap.from('.dashboard-card',   { opacity:0, x:60, duration:1,   delay:0.6, ease:'power3.out' });
+    gsap.from('.fc-1',             { opacity:0, x:-40, duration:0.8, delay:1.2 });
+    gsap.from('.fc-2',             { opacity:0, x:40,  duration:0.8, delay:1.4 });
+
+    /* ---------- Scroll reveals ---------- */
+    gsap.utils.toArray('.reveal').forEach(el => {
+      gsap.from(el, {
+        opacity:0, y:50, duration:0.9,
+        scrollTrigger: { trigger:el, start:'top 85%', toggleActions:'play none none none' }
+      });
+    });
+    gsap.utils.toArray('.reveal-left').forEach(el => {
+      gsap.from(el, {
+        opacity:0, x:-60, duration:1,
+        scrollTrigger: { trigger:el, start:'top 80%', toggleActions:'play none none none' }
+      });
+    });
+    gsap.utils.toArray('.reveal-right').forEach(el => {
+      gsap.from(el, {
+        opacity:0, x:60, duration:1,
+        scrollTrigger: { trigger:el, start:'top 80%', toggleActions:'play none none none' }
+      });
+    });
+
+    /* ---------- Compteurs animés ---------- */
+    document.querySelectorAll('.stat-number').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        onEnter: () => {
+          gsap.to({ val: 0 }, {
+            val: target, duration: 2, ease: 'power2.out',
+            onUpdate: function() {
+              let v = Math.round(this.targets()[0].val);
+              el.textContent = (v >= 1000 ? (v/1000).toFixed(1)+'k' : v) + suffix;
+            }
+          });
         }
       });
     });
 
-    // Animation des cartes de fonctionnalités
-    gsap.from(".feature-card", {
-      opacity: 0,
-      y: 50,
-      duration: 0.8,
-      stagger: 0.2,
-      scrollTrigger: {
-        trigger: ".features-grid",
-        start: "top 80%",
-        toggleActions: "play none none none"
-      }
-    });
-
-    // Animation de la timeline
-    gsap.from(".timeline-item", {
-      opacity: 0,
-      x: -50,
-      duration: 0.8,
-      stagger: 0.3,
-      scrollTrigger: {
-        trigger: ".timeline",
-        start: "top 80%",
-        toggleActions: "play none none none"
-      }
-    });
-
-    // Animation du parallaxe
-    gsap.to(".parallax-bg", {
-      yPercent: 20,
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: true
-      }
-    });
-
-    // Animation des boutons au survol
-    document.querySelectorAll('.cta-button, .btn-secondary').forEach(button => {
-      button.addEventListener('mouseenter', () => {
-        gsap.to(button, {
-          scale: 1.05,
-          duration: 0.3
+    /* ---------- Rating bars ---------- */
+    ScrollTrigger.create({
+      trigger: '.dashboard-card',
+      start: 'top 80%',
+      onEnter: () => {
+        document.querySelectorAll('.rating-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width;
         });
-      });
+      }
+    });
 
-      button.addEventListener('mouseleave', () => {
-        gsap.to(button, {
-          scale: 1,
-          duration: 0.3
-        });
-      });
+    /* ---------- Hover buttons ---------- */
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('mouseenter', () => gsap.to(btn, { scale:1.04, duration:0.25 }));
+      btn.addEventListener('mouseleave', () => gsap.to(btn, { scale:1,    duration:0.25 }));
     });
   </script>
 </body>
