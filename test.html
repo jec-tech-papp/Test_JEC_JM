@@ -1,3 +1,1131 @@
-<html>
-Hello World
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Carlissanté : L'outil qui protège votre réputation en ligne. Analyse IA, réponses automatiques et benchmark pour les professionnels de santé.">
+  <title>Carlissanté | Maîtrisez Votre e-Réputation</title>
+  <style>
+    /* ===== BASE STYLES ===== */
+    :root {
+      --primary: #2E5A8C; /* Bleu du logo */
+      --secondary: #4CAF50; /* Vert du logo */
+      --accent: #8BC34A; /* Vert clair */
+      --light: #F5F7FA;
+      --dark: #1A1A1A;
+      --gray: #777;
+      --white: #FFFFFF;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+    h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+    h4 { font-size: 1.2rem; }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--gray);
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--primary);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--primary);
+      color: var(--white);
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: #1e3a5a;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--primary);
+      padding: 0.8rem 1.5rem;
+      border: 2px solid var(--primary);
+      border-radius: 50px;
+      font-weight: 600;
+      transition: var(--transition);
+      margin-left: 1rem;
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .highlight {
+      color: var(--secondary);
+    }
+
+    /* ===== HEADER ===== */
+    .parallax-header {
+      background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
+      padding: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .parallax-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.1;
+      z-index: -1;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo svg {
+      height: 50px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin-left: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--dark);
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .mobile-menu {
+      display: none;
+      cursor: pointer;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5rem 0;
+    }
+
+    .hero-text {
+      flex: 1;
+      padding-right: 2rem;
+    }
+
+    .hero-text h1 {
+      margin-bottom: 1rem;
+    }
+
+    .hero-text .highlight {
+      color: var(--secondary);
+    }
+
+    .hero-image {
+      flex: 1;
+    }
+
+    .hero-image img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
+
+    /* ===== PROBLEME SECTION ===== */
+    .probleme {
+      padding: 5rem 0;
+      background: var(--light);
+      text-align: center;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .card {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card img {
+      height: 80px;
+      margin-bottom: 1rem;
+    }
+
+    /* ===== SOLUTION SECTION ===== */
+    .solution {
+      padding: 5rem 0;
+      text-align: center;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .step {
+      position: relative;
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background: var(--secondary);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin: 0 auto 1rem;
+    }
+
+    .step img {
+      height: 60px;
+      margin-bottom: 1rem;
+    }
+
+    .dashboard-preview {
+      margin-top: 3rem;
+    }
+
+    .dashboard-preview img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
+
+    /* ===== FONCTIONNALITES ===== */
+    .fonctionnalites {
+      padding: 5rem 0;
+      background: var(--light);
+      text-align: center;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .feature:hover {
+      transform: translateY(-10px);
+    }
+
+    .feature img {
+      height: 60px;
+      margin-bottom: 1rem;
+    }
+
+    /* ===== BENCHMARK ===== */
+    .benchmark {
+      padding: 5rem 0;
+      text-align: center;
+    }
+
+    .map-mockup img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      margin-bottom: 3rem;
+    }
+
+    .benefits {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .benefit {
+      display: flex;
+      align-items: center;
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      width: 300px;
+    }
+
+    .benefit img {
+      height: 40px;
+      margin-right: 1rem;
+    }
+
+    /* ===== TEMOIGNAGES ===== */
+    .temoignages {
+      padding: 5rem 0;
+      background: var(--light);
+      text-align: center;
+    }
+
+    .testimonials {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .testimonial {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      width: 350px;
+    }
+
+    .testimonial img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    .stars {
+      color: #FFD700;
+      margin-bottom: 1rem;
+    }
+
+    /* ===== FAQ ===== */
+    .faq {
+      padding: 5rem 0;
+      text-align: center;
+    }
+
+    .faq-item {
+      background: var(--white);
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .faq-answer {
+      padding: 0 1.5rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-answer.active {
+      max-height: 200px;
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    /* ===== TARIFS ===== */
+    .tarifs {
+      padding: 5rem 0;
+      background: var(--light);
+      text-align: center;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .pricing-card {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .pricing-card.popular {
+      border: 2px solid var(--secondary);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      background: var(--secondary);
+      color: var(--white);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .price {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 1rem 0;
+    }
+
+    .price span {
+      font-size: 1rem;
+      color: var(--gray);
+    }
+
+    .features-list {
+      list-style: none;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .features-list li {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .features-list li::before {
+      content: '✓';
+      color: var(--secondary);
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+
+    /* ===== CONTACT ===== */
+    .contact {
+      padding: 5rem 0;
+      text-align: center;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--dark);
+      color: var(--white);
+      padding: 3rem 0 1rem;
+      text-align: center;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 1rem;
+      color: var(--white);
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-section a {
+      color: var(--gray);
+      transition: var(--transition);
+    }
+
+    .footer-section a:hover {
+      color: var(--white);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background: var(--secondary);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-text {
+        padding-right: 0;
+        margin-bottom: 2rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .mobile-menu.active + .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: var(--white);
+        padding: 1rem;
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links li {
+        margin: 1rem 0;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.7rem;
+      }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="parallax-header">
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <!-- Logo Carlissanté en SVG -->
+          <svg width="180" height="50" viewBox="0 0 180 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 25C12.5 18.0964 18.0964 12.5 25 12.5C31.9036 12.5 37.5 18.0964 37.5 25C37.5 31.9036 31.9036 37.5 25 37.5C18.0964 37.5 12.5 31.9036 12.5 25Z" fill="#2E5A8C"/>
+            <path d="M25 12.5C28.3333 12.5 31.6667 15.8333 31.6667 25C31.6667 34.1667 28.3333 37.5 25 37.5C21.6667 37.5 18.3333 34.1667 18.3333 25C18.3333 15.8333 21.6667 12.5 25 12.5Z" fill="white" fill-opacity="0.2"/>
+            <path d="M45 25L55 15V35L45 25Z" fill="#4CAF50"/>
+            <path d="M55 15L65 5V25L55 35V15Z" fill="#8BC34A"/>
+            <path d="M65 5C65 2.23858 67.2386 0 70 0V5H65Z" fill="#4CAF50"/>
+            <path d="M70 0C75.5228 0 80 4.47715 80 10C80 15.5228 75.5228 20 70 20C64.4772 20 60 15.5228 60 10C60 4.47715 64.4772 0 70 0Z" fill="#2E5A8C"/>
+            <path d="M85 10C85 10 90 5 95 10C100 15 95 20 90 20C85 20 80 15 85 10Z" fill="#2E5A8C"/>
+            <path d="M100 15C100 15 105 10 110 15C115 20 110 25 105 25C100 25 95 20 100 15Z" fill="#2E5A8C"/>
+            <text x="120" y="35" font-family="Poppins, sans-serif" font-size="24" font-weight="700" fill="#2E5A8C">Carlissanté</text>
+          </svg>
+        </div>
+        <div class="mobile-menu">
+          <i class="fas fa-bars fa-2x"></i>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#probleme">Problème</a></li>
+          <li><a href="#solution">Solution</a></li>
+          <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+          <li><a href="#tarifs">Tarifs</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="container">
+      <div class="hero">
+        <div class="hero-text fade-in">
+          <h1>Maîtrisez Votre <span class="highlight">e-Réputation</span> en 1 Clic</h1>
+          <p>Carlissanté analyse, répond et protège votre image en ligne. Spécialement conçu pour les professionnels de santé.</p>
+          <div class="cta-buttons">
+            <a href="#demo" class="btn-primary">Démonstration</a>
+            <a href="#tarifs" class="btn-secondary">Tarifs</a>
+          </div>
+        </div>
+        <div class="hero-image fade-in">
+          <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Médecin utilisant Carlissanté">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Problème Section -->
+  <section class="probleme" id="probleme">
+    <div class="container">
+      <h2 class="fade-in">Les 3 Problèmes Qui Vous Empêchent de Dormir</h2>
+      <div class="cards">
+        <div class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Avis négatif">
+          <h3>Une avalanche d’avis</h3>
+          <p>1 nouveau avis Google = 1 notification qui vous stresse. Et si vous en ratez un ?</p>
+        </div>
+        <div class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Réputation en danger">
+          <h3>Votre réputation en danger</h3>
+          <p>Un avis négatif peut faire fuir 22% de vos patients potentiels. Sans réponse, c'est pire.</p>
+        </div>
+        <div class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Concurrence">
+          <h3>Vos concurrents vous dépassent</h3>
+          <p>Ils ont 4,8/5 sur Google ? Vous aussi, vous voulez cette note, mais comment ?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution Section -->
+  <section class="solution" id="solution">
+    <div class="container">
+      <h2 class="fade-in">Notre Solution <span class="highlight">en 3 Étapes</span></h2>
+      <div class="steps">
+        <div class="step fade-in">
+          <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Connexion Google">
+          <div class="step-number">1</div>
+          <h3>Connectez votre compte Google</h3>
+          <p>En 1 clic, Carlissanté se connecte à votre fiche Google My Business.</p>
+        </div>
+        <div class="step fade-in">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Analyse IA">
+          <div class="step-number">2</div>
+          <h3>Laissez l'IA analyser</h3>
+          <p>Notre algorithme détecte les avis négatifs et suggère des réponses adaptées.</p>
+        </div>
+        <div class="step fade-in">
+          <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Réponses automatiques">
+          <div class="step-number">3</div>
+          <h3>Répondez en 1 clic</h3>
+          <p>Validez les réponses proposées ou personnalisez-les. C'est envoyé !</p>
+        </div>
+      </div>
+      <div class="dashboard-preview fade-in">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tableau de bord Carlissanté">
+      </div>
+    </div>
+  </section>
+
+  <!-- Fonctionnalités Section -->
+  <section class="fonctionnalites" id="fonctionnalites">
+    <div class="container">
+      <h2 class="fade-in">Fonctionnalités Clés</h2>
+      <div class="features-grid">
+        <div class="feature fade-in">
+          <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Analyse IA">
+          <h3>Analyse IA des avis</h3>
+          <p>Notre intelligence artificielle détecte le ton des avis (positif/négatif) et vous alerte en temps réel.</p>
+        </div>
+        <div class="feature fade-in">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Réponses automatiques">
+          <h3>Réponses automatiques</h3>
+          <p>Générez des réponses personnalisées en 1 clic, adaptées à chaque type d'avis.</p>
+        </div>
+        <div class="feature fade-in">
+          <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Benchmark">
+          <h3>Benchmark concurrentiel</h3>
+          <p>Comparez votre note et votre nombre d'avis avec ceux de vos concurrents locaux.</p>
+        </div>
+        <div class="feature fade-in">
+          <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Alertes">
+          <h3>Alertes en temps réel</h3>
+          <p>Recevez une notification dès qu'un nouvel avis est publié sur votre fiche Google.</p>
+        </div>
+        <div class="feature fade-in">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Rapports">
+          <h3>Rapports mensuels</h3>
+          <p>Suivez l'évolution de votre réputation avec des rapports détaillés envoyés chaque mois.</p>
+        </div>
+        <div class="feature fade-in">
+          <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Multi-comptes">
+          <h3>Gestion multi-comptes</h3>
+          <p>Gérez les avis de plusieurs établissements ou professionnels depuis un seul tableau de bord.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benchmark Section -->
+  <section class="benchmark">
+    <div class="container">
+      <h2 class="fade-in">Ne Laissez Plus Vos Concurrents Vous Dépasser</h2>
+      <p class="fade-in">Avec Carlissanté, comparez votre réputation en ligne avec celle de vos concurrents et identifiez les axes d'amélioration.</p>
+      <div class="map-mockup fade-in">
+        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Carte benchmark Carlissanté">
+      </div>
+      <div class="benefits">
+        <div class="benefit fade-in">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Analyse concurrentielle">
+          <div>
+            <h4>Analyse concurrentielle</h4>
+            <p>Comparez votre note et votre nombre d'avis avec ceux de vos concurrents.</p>
+          </div>
+        </div>
+        <div class="benefit fade-in">
+          <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Stratégie d'amélioration">
+          <div>
+            <h4>Stratégie d'amélioration</h4>
+            <p>Identifiez les points à améliorer pour dépasser vos concurrents.</p>
+          </div>
+        </div>
+        <div class="benefit fade-in">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Suivi de progression">
+          <div>
+            <h4>Suivi de progression</h4>
+            <p>Surveillez l'évolution de votre réputation au fil du temps.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Témoignages Section -->
+  <section class="temoignages">
+    <div class="container">
+      <h2 class="fade-in">Ils Nous Font Confiance</h2>
+      <div class="testimonials">
+        <div class="testimonial fade-in">
+          <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Dr. Martin">
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <h4>Dr. Martin - Dentiste</h4>
+          <p>"Carlissanté a transformé ma gestion des avis. Je gagne 2 heures par semaine et ma note est passée de 4,2 à 4,8 !"</p>
+        </div>
+        <div class="testimonial fade-in">
+          <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Sophie - Kinésithérapeute">
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <h4>Sophie - Kinésithérapeute</h4>
+          <p>"Les réponses automatiques sont bluffantes. Mes patients sentent que je prends le temps de répondre personnellement."</p>
+        </div>
+        <div class="testimonial fade-in">
+          <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Clinique Saint-Jean">
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <h4>Clinique Saint-Jean</h4>
+          <p>"Nous gérons 15 praticiens avec Carlissanté. La gestion multi-comptes est un vrai plus pour nous."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq">
+    <div class="container">
+      <h2 class="fade-in">Questions Fréquentes</h2>
+      <div class="faq-item fade-in">
+        <div class="faq-question">
+          <h3>Comment Carlissanté se connecte-t-il à mon compte Google ?</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Carlissanté utilise l'API officielle de Google My Business. La connexion est sécurisée et ne nécessite que votre autorisation. Nous ne stockons pas vos identifiants Google.</p>
+        </div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-question">
+          <h3>Est-ce que Carlissanté répond automatiquement aux avis ?</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Non. Carlissanté génère des propositions de réponses que vous pouvez personnaliser avant envoi. Vous gardez toujours le contrôle sur ce qui est publié.</p>
+        </div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-question">
+          <h3>Puis-je utiliser Carlissanté pour plusieurs établissements ?</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Oui ! Notre offre "Multi-comptes" vous permet de gérer jusqu'à 10 établissements depuis un seul tableau de bord. Contactez-nous pour une offre personnalisée.</p>
+        </div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-question">
+          <h3>Comment puis-je annuler mon abonnement ?</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Vous pouvez annuler votre abonnement à tout moment depuis votre tableau de bord. Aucune pénalité ni engagement à long terme.</p>
+        </div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-question">
+          <h3>Offrez-vous une période d'essai ?</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Oui ! Nous offrons une période d'essai de 14 jours sans engagement. Vous pouvez tester toutes nos fonctionnalités gratuitement.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tarifs Section -->
+  <section class="tarifs" id="tarifs">
+    <div class="container">
+      <h2 class="fade-in">Tarifs Simples et Transparents</h2>
+      <p class="fade-in">Choisissez l'offre qui correspond à vos besoins. Pas de frais cachés, pas d'engagement.</p>
+      <div class="pricing-grid">
+        <div class="pricing-card fade-in">
+          <h3>Starter</h3>
+          <div class="price">29€ <span>/mois</span></div>
+          <p>Pour les professionnels indépendants</p>
+          <ul class="features-list">
+            <li>Gestion d'1 compte Google My Business</li>
+            <li>Analyse IA des avis</li>
+            <li>Réponses automatiques (50/mois)</li>
+            <li>Alertes en temps réel</li>
+            <li>Rapports mensuels</li>
+          </ul>
+          <a href="#contact" class="btn-primary">Essayer gratuitement</a>
+        </div>
+        <div class="pricing-card popular fade-in">
+          <div class="popular-badge">Le plus populaire</div>
+          <h3>Pro</h3>
+          <div class="price">59€ <span>/mois</span></div>
+          <p>Pour les cabinets et petites cliniques</p>
+          <ul class="features-list">
+            <li>Gestion de 3 comptes Google My Business</li>
+            <li>Analyse IA des avis</li>
+            <li>Réponses automatiques (200/mois)</li>
+            <li>Benchmark concurrentiel</li>
+            <li>Alertes en temps réel</li>
+            <li>Rapports mensuels</li>
+            <li>Support prioritaire</li>
+          </ul>
+          <a href="#contact" class="btn-primary">Essayer gratuitement</a>
+        </div>
+        <div class="pricing-card fade-in">
+          <h3>Enterprise</h3>
+          <div class="price">Sur devis</div>
+          <p>Pour les grands groupes et réseaux</p>
+          <ul class="features-list">
+            <li>Gestion illimitée de comptes</li>
+            <li>Analyse IA avancée</li>
+            <li>Réponses automatiques illimitées</li>
+            <li>Benchmark concurrentiel étendu</li>
+            <li>Alertes en temps réel</li>
+            <li>Rapports personnalisés</li>
+            <li>Support dédié</li>
+            <li>Formation personnalisée</li>
+          </ul>
+          <a href="#contact" class="btn-secondary">Nous contacter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2 class="fade-in">Prêt à Booster Votre Réputation ?</h2>
+      <p class="fade-in">Essayez Carlissanté gratuitement pendant 14 jours. Aucune carte bancaire requise.</p>
+      <div class="contact-form fade-in">
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Nom</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Téléphone</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Envoyer</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo">
+            <svg width="180" height="50" viewBox="0 0 180 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 25C12.5 18.0964 18.0964 12.5 25 12.5C31.9036 12.5 37.5 18.0964 37.5 25C37.5 31.9036 31.9036 37.5 25 37.5C18.0964 37.5 12.5 31.9036 12.5 25Z" fill="#FFFFFF"/>
+              <path d="M25 12.5C28.3333 12.5 31.6667 15.8333 31.6667 25C31.6667 34.1667 28.3333 37.5 25 37.5C21.6667 37.5 18.3333 34.1667 18.3333 25C18.3333 15.8333 21.6667 12.5 25 12.5Z" fill="white" fill-opacity="0.2"/>
+              <path d="M45 25L55 15V35L45 25Z" fill="#4CAF50"/>
+              <path d="M55 15L65 5V25L55 35V15Z" fill="#8BC34A"/>
+              <path d="M65 5C65 2.23858 67.2386 0 70 0V5H65Z" fill="#4CAF50"/>
+              <path d="M70 0C75.5228 0 80 4.47715 80 10C80 15.5228 75.5228 20 70 20C64.4772 20 60 15.5228 60 10C60 4.47715 64.4772 0 70 0Z" fill="#FFFFFF"/>
+              <path d="M85 10C85 10 90 5 95 10C100 15 95 20 90 20C85 20 80 15 85 10Z" fill="#FFFFFF"/>
+              <path d="M100 15C100 15 105 10 110 15C115 20 110 25 105 25C100 25 95 20 100 15Z" fill="#FFFFFF"/>
+              <text x="120" y="35" font-family="Poppins, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">Carlissanté</text>
+            </svg>
+          </div>
+          <p>L'outil indispensable pour maîtriser votre e-réputation et attirer plus de patients.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Liens Utiles</h3>
+          <ul>
+            <li><a href="#probleme">Problème</a></li>
+            <li><a href="#solution">Solution</a></li>
+            <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+            <li><a href="#tarifs">Tarifs</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Légal</h3>
+          <ul>
+            <li><a href="#">Mentions légales</a></li>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Conditions générales</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i> 123 Rue de la Santé, 75000 Paris</li>
+            <li><i class="fas fa-phone"></i> 01 23 45 67 89</li>
+            <li><i class="fas fa-envelope"></i> contact@carlissante.fr</li>
+          </ul>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2023 Carlissanté. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    mobileMenu.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      mobileMenu.innerHTML = navLinks.classList.contains('active')
+        ? '<i class="fas fa-times fa-2x"></i>'
+        : '<i class="fas fa-bars fa-2x"></i>';
+    });
+
+    // FAQ Accordion
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const icon = question.querySelector('i');
+
+        answer.classList.toggle('active');
+        icon.classList.toggle('fa-chevron-down');
+        icon.classList.toggle('fa-chevron-up');
+      });
+    });
+
+    // Form Submission
+    const contactForm = document.getElementById('contactForm');
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.');
+      contactForm.reset();
+    });
+
+    // Fade-in Animation on Scroll
+    const fadeElements = document.querySelectorAll('.fade-in');
+
+    const fadeInOnScroll = () => {
+      fadeElements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (elementPosition < windowHeight - 100) {
+          element.classList.add('visible');
+        }
+      });
+    };
+
+    // Set initial state
+    fadeElements.forEach(element => {
+      element.classList.add('fade-in');
+    });
+
+    window.addEventListener('scroll', fadeInOnScroll);
+    window.addEventListener('load', fadeInOnScroll);
+
+    // Parallax Effect
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const parallax = document.querySelector('.parallax-header');
+      const speed = scrolled * 0.5;
+
+      if (parallax) {
+        parallax.style.transform = `translateY(${speed}px)`;
+      }
+    });
+  </script>
+</body>
 </html>
