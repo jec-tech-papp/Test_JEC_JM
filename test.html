@@ -1,1 +1,544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Carlissanté : L'outil de gestion d'e-réputation pour les professionnels de santé. Simple, puissant et sécurisé.">
+  <title>Carlissanté | Gestion d'e-Réputation pour les Professionnels de Santé</title>
+  <style>
+    /* ===== BASE STYLES ===== */
+    :root {
+      --primary: #4361EE; /* Bleu doux */
+      --primary-light: #4895EF;
+      --secondary: #F8F9FA; /* Gris très clair */
+      --dark: #212529;
+      --gray: #6C757D;
+      --light: #F8F9FA;
+      --white: #FFFFFF;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+      background: var(--white);
+    }
+
+    h1, h2, h3 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.2rem; margin-bottom: 1.5rem; }
+    h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+
+    p {
+      font-size: 1.1rem;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--primary);
+      transition: var(--transition);
+    }
+
+    a:hover {
+      color: var(--primary-light);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(67, 97, 238, 0.1);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      padding: 2rem 0;
+      position: sticky;
+      top: 0;
+      background: var(--white);
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--dark);
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .mobile-menu {
+      display: none;
+      cursor: pointer;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      padding: 6rem 0;
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    .hero-content {
+      flex: 1;
+    }
+
+    .hero-content h1 {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      max-width: 500px;
+    }
+
+    .hero-image {
+      flex: 1;
+    }
+
+    .hero-image img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    /* ===== FEATURES SECTION ===== */
+    .features {
+      padding: 6rem 0;
+      background: var(--secondary);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+    }
+
+    .feature-card {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      background: rgba(67, 97, 238, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    /* ===== PROCESS SECTION ===== */
+    .process {
+      padding: 6rem 0;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .process-step {
+      text-align: center;
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      margin: 0 auto 1rem;
+    }
+
+    /* ===== DASHBOARD PREVIEW ===== */
+    .dashboard {
+      padding: 6rem 0;
+      background: var(--secondary);
+    }
+
+    .dashboard-preview {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .dashboard-preview img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta {
+      padding: 6rem 0;
+      text-align: center;
+    }
+
+    .cta h2 {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--dark);
+      color: var(--white);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 1.5rem;
+      color: var(--white);
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-section a {
+      color: var(--gray);
+    }
+
+    .footer-section a:hover {
+      color: var(--white);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-content {
+        margin-bottom: 3rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Carlissanté</div>
+        <div class="mobile-menu">
+          <i class="fas fa-bars fa-lg"></i>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#features">Fonctionnalités</a></li>
+          <li><a href="#process">Processus</a></li>
+          <li><a href="#demo">Démonstration</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content animate-fade-in">
+        <h1>Gérez votre e-réputation en toute simplicité</h1>
+        <p>Carlissanté est l'outil conçu pour les professionnels de santé qui veulent maîtriser leur image en ligne sans y passer des heures.</p>
+        <div class="cta-buttons">
+          <a href="#demo" class="btn btn-primary">Voir une démo</a>
+          <a href="#features" class="btn btn-secondary">Découvrir</a>
+        </div>
+      </div>
+      <div class="hero-image animate-fade-in" style="animation-delay: 0.2s;">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tableau de bord Carlissanté">
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header animate-fade-in">
+        <h2>Des fonctionnalités conçues pour vous</h2>
+        <p>Tout ce dont vous avez besoin pour gérer votre réputation en ligne, sans complexité inutile.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card animate-fade-in" style="animation-delay: 0.1s;">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Analyse intelligente</h3>
+          <p>Notre algorithme analyse automatiquement le ton de chaque avis et vous alerte en cas de problème.</p>
+        </div>
+        <div class="feature-card animate-fade-in" style="animation-delay: 0.2s;">
+          <div class="feature-icon">
+            <i class="fas fa-reply-all"></i>
+          </div>
+          <h3>Réponses optimisées</h3>
+          <p>Générez des réponses professionnelles en un clic, adaptées à chaque situation.</p>
+        </div>
+        <div class="feature-card animate-fade-in" style="animation-delay: 0.3s;">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>Sécurité totale</h3>
+          <p>Connexion sécurisée via l'API officielle de Google. Vos données sont protégées.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-header animate-fade-in">
+        <h2>Comment ça marche ?</h2>
+        <p>En 3 étapes simples, Carlissanté s'intègre à votre routine sans effort.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step animate-fade-in" style="animation-delay: 0.1s;">
+          <div class="step-number">1</div>
+          <h3>Connectez-vous</h3>
+          <p>Liez votre compte Google My Business en quelques secondes.</p>
+        </div>
+        <div class="process-step animate-fade-in" style="animation-delay: 0.2s;">
+          <div class="step-number">2</div>
+          <h3>Analysez</h3>
+          <p>Recevez des insights clairs sur votre réputation en ligne.</p>
+        </div>
+        <div class="process-step animate-fade-in" style="animation-delay: 0.3s;">
+          <div class="step-number">3</div>
+          <h3>Répondez</h3>
+          <p>Validez ou personnalisez les réponses proposées par notre IA.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Preview -->
+  <section class="dashboard" id="demo">
+    <div class="container">
+      <div class="section-header animate-fade-in">
+        <h2>Un tableau de bord intuitif</h2>
+        <p>Visualisez l'essentiel en un coup d'œil et agissez rapidement.</p>
+      </div>
+      <div class="dashboard-preview animate-fade-in">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Aperçu du tableau de bord Carlissanté">
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="animate-fade-in">
+        <h2>Prêt à transformer votre gestion des avis ?</h2>
+        <a href="#" class="btn btn-primary">Demander une démo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo" style="color: var(--white);">Carlissanté</div>
+          <p style="color: var(--gray);">L'outil de gestion d'e-réputation pour les professionnels de santé.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Produit</h3>
+          <ul>
+            <li><a href="#features">Fonctionnalités</a></li>
+            <li><a href="#process">Processus</a></li>
+            <li><a href="#demo">Démonstration</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Légal</h3>
+          <ul>
+            <li><a href="#">Mentions légales</a></li>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Conditions générales</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <ul>
+            <li><i class="fas fa-envelope"></i> contact@carlissante.com</li>
+            <li><i class="fas fa-phone"></i> +33 1 23 45 67 89</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2023 Carlissanté. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    mobileMenu.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      const icon = mobileMenu.querySelector('i');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+
+    // Animate on Scroll
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('.animate-fade-in');
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        if (elementPosition < windowHeight - 100) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    };
+
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+  </script>
+</body>
+</html>
