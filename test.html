@@ -1937,144 +1937,116 @@
     </div>
   </footer>
 
-  <!-- ===== STYLES MANQUANTS ===== -->
+  <!-- ===== STYLES COMPLÉMENTAIRES ===== -->
   <style>
-    /* Showcase browser mock */
-    .browser-mock {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-xl);
-      overflow: hidden;
-      border: 1px solid rgba(0,0,0,0.08);
-    }
-    .browser-bar {
-      background: #F1F5F9;
-      padding: 0.8rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-    }
-    .browser-dot {
-      width: 12px; height: 12px;
-      border-radius: 50%;
-    }
-    .dot-red    { background: #FF5F57; }
-    .dot-yellow { background: #FEBC2E; }
-    .dot-green  { background: #28C840; }
-    .browser-url {
-      background: var(--white);
-      border-radius: 6px;
-      padding: 0.3rem 1rem;
-      font-size: 0.78rem;
-      color: var(--gray-500);
-      flex: 1;
-      margin-left: 0.5rem;
-      border: 1px solid rgba(0,0,0,0.08);
-    }
-    .browser-body { padding: 1.5rem; }
-    .mini-dash {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .mini-stat {
-      background: var(--light);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      text-align: center;
-      border: 1px solid rgba(0,0,0,0.05);
-    }
-    .mini-stat-label { font-size: 0.72rem; color: var(--gray-500); margin-bottom: 0.3rem; }
-    .mini-stat-val   { font-size: 1.4rem; font-weight: 800; color: var(--dark); }
-    .mini-stat-trend { font-size: 0.72rem; color: #16A34A; margin-top: 0.2rem; }
-    .chart-area      { border-radius: var(--radius-sm); overflow: hidden; background: var(--light); }
-
-    /* Feature list */
-    .feature-list-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-    }
-    .check-icon {
-      width: 22px; height: 22px;
-      background: var(--gradient-accent);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-size: 0.6rem;
-      flex-shrink: 0;
-      margin-top: 0.15rem;
-    }
-    .feature-list-item p {
-      font-size: 0.9rem;
-      color: var(--gray-600);
-      margin: 0;
-      line-height: 1.6;
-    }
-
-    /* Testimonials */
+    /* ── Section Témoignages (thème sombre) ─────────────────────── */
     .testimonials {
-      background: var(--light);
+      background: var(--dark);
       padding: 7rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonials-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 500px 400px at 90% 20%, rgba(99,102,241,0.07), transparent),
+        radial-gradient(ellipse 400px 300px at 10% 80%, rgba(59,130,246,0.07), transparent);
+      pointer-events: none;
+    }
+    .testimonials .section-title { color: var(--white); }
+    .testimonials .section-subtitle { color: var(--gray-400); }
+    .testimonials .section-label {
+      background: rgba(59,130,246,0.15);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: #93C5FD;
     }
     .testimonials-grid {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
+      position: relative;
+      z-index: 2;
     }
     .testimonial-card {
-      background: var(--white);
-      border: 1px solid rgba(0,0,0,0.06);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: var(--radius-lg);
       padding: 2rem;
       transition: var(--transition);
     }
     .testimonial-card:hover {
       transform: translateY(-5px);
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(59,130,246,0.3);
       box-shadow: var(--shadow-lg);
     }
-    .testimonial-stars { color: #F59E0B; margin-bottom: 1rem; font-size: 0.9rem; gap: 2px; display:flex; }
+    .testimonial-stars {
+      display: flex;
+      gap: 3px;
+      color: #FBBF24;
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+    }
     .testimonial-text {
       font-size: 0.92rem;
-      color: var(--gray-600);
+      color: rgba(255,255,255,0.72);
       line-height: 1.8;
       margin-bottom: 1.5rem;
       font-style: italic;
     }
-    .testimonial-author { display: flex; align-items: center; gap: 0.8rem; }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
     .testimonial-author img {
       width: 44px; height: 44px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--blue-100);
+      border: 2px solid rgba(59,130,246,0.35);
     }
-    .author-name { font-weight: 700; font-size: 0.88rem; color: var(--dark); }
-    .author-role { font-size: 0.78rem; color: var(--gray-400); }
+    .author-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--white);
+    }
+    .author-role {
+      font-size: 0.78rem;
+      color: var(--gray-400);
+      margin-top: 0.1rem;
+    }
 
-    /* Pricing */
+    /* ── Section Tarifs ──────────────────────────────────────────── */
     .pricing {
-      background: var(--gradient-light);
+      background: var(--light);
       padding: 7rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 700px 500px at 50% 100%, rgba(59,130,246,0.06), transparent);
+      pointer-events: none;
     }
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       align-items: start;
+      position: relative;
+      z-index: 2;
     }
     .pricing-card {
       background: var(--white);
       border: 1px solid rgba(0,0,0,0.07);
       border-radius: var(--radius-lg);
-      padding: 2rem;
+      padding: 2.5rem;
       transition: var(--transition);
       position: relative;
     }
-    .pricing-card:hover {
+    .pricing-card:not(.featured):hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-lg);
     }
@@ -2085,19 +2057,40 @@
       box-shadow: var(--shadow-xl), var(--shadow-blue);
     }
     .pricing-card.featured:hover { transform: scale(1.04) translateY(-5px); }
-    .plan-badge {
+    .pricing-badge {
       position: absolute;
-      top: -14px;
+      top: -13px;
       left: 50%;
       transform: translateX(-50%);
       background: var(--gradient-accent);
       color: var(--white);
       font-size: 0.75rem;
       font-weight: 700;
-      padding: 0.3rem 1rem;
+      padding: 0.3rem 1.1rem;
       border-radius: 99px;
       white-space: nowrap;
       box-shadow: var(--shadow-blue);
+    }
+    /* Textes dans la carte featured (fond sombre) */
+    .plan-name.white    { color: #93C5FD; }
+    .plan-price.white   { color: var(--white); }
+    .plan-period.white  { color: rgba(255,255,255,0.55); }
+    .plan-desc.white    { color: rgba(255,255,255,0.65); border-bottom-color: rgba(255,255,255,0.1); }
+    .plan-feature.white { color: rgba(255,255,255,0.80); }
+    .plan-feature i     { color: var(--blue-500); font-size: 0.8rem; flex-shrink: 0; }
+    .plan-feature.white i { color: #60A5FA; }
+
+    /* ── Showcase — mock navigateur ──────────────────────────────── */
+    .chart-area { border-radius: var(--radius-sm); overflow: hidden; background: var(--light); }
+
+    /* ── Responsive complémentaire ───────────────────────────────── */
+    @media (max-width: 1024px) {
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+      .pricing-grid      { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+      .pricing-card.featured { transform: scale(1); }
+    }
+    @media (max-width: 768px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
     }
   </style>
 
