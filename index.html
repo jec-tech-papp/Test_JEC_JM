@@ -27,14 +27,6 @@ width:100%;
 height:100vh;
 }
 
-.popup-site{
-font-family: Arial, sans-serif;
-}
-
-.popup-besoin{
-font-family: Arial, sans-serif;
-}
-
 </style>
 
 </head>
@@ -86,7 +78,6 @@ if(points.length === 0){
 
 points = [
 {
-type:"besoin",
 lat:48.8566,
 lng:2.3522,
 nom:"Paris",
@@ -120,7 +111,7 @@ attribution:"© OpenStreetMap contributors"
 
 var markers = L.markerClusterGroup();
 
-/* fonction couleur automatique */
+/* couleur automatique */
 
 function getColor(p){
 
@@ -140,33 +131,40 @@ return "#2e7d32";
 
 }
 
-/* fonction génération popup selon type */
+/* construction popup dynamique */
 
-function getPopupContent(p){
+function buildPopup(p){
 
-var type = p.type || "site";
+var html = "<b>📍 "+(p.nom || "")+"</b><br>";
 
-if(type === "besoin"){
-return "<div class='popup-besoin'>"+
-"<b>🎯 BESOIN - "+(p.nom || "")+"</b><br><br>"+
+/* POPUP BESOIN */
+
+if(p.nbAgents !== undefined){
+
+html +=
 "📏 Rayon : "+(p.distance || 0)+" km<br>"+
 "📅 Période : "+(p.periode || "")+"<br>"+
 "⏱ Durée : "+(p.duree || "")+" jours<br>"+
 "👷 Agents : "+(p.nbAgents || "")+"<br>"+
-"🏢 UP : "+(p.up || "")+
-"</div>";
+"🏢 UP : "+(p.up || "");
+
 }
-else{
-return "<div class='popup-site'>"+
-"<b>🏢 SITE - "+(p.nom || p.siteITIF || "")+"</b><br><br>"+
-"🆔 Site ITIF : "+(p.siteITIF || "")+"<br>"+
-"✅ Statut : "+(p.actif || "")+"<br>"+
-"👥 Effectif : "+(p.effectif || "")+"<br>"+
-"📐 Superficie : "+(p.superficie || "")+" m²<br>"+
-"🔢 ID IMMOSIS : "+(p.idImmosis || "")+"<br>"+
-"🏢 UP : "+(p.up || "")+
-"</div>";
+
+/* POPUP SITE IMMOBILIER */
+
+if(p.SiteITIF !== undefined){
+
+html +=
+"<br><b>🏢 Informations site</b><br>"+
+"🆔 IMMOSIS : "+(p.Immosis || "")+"<br>"+
+"📍 Site ITIF : "+(p.SiteITIF || "")+"<br>"+
+"⚙️ Statut : "+(p.Actif || "")+"<br>"+
+"👥 Effectif : "+(p.Effectif || "")+"<br>"+
+"📐 Superficie : "+(p.Superficie || "")+" m²";
+
 }
+
+return html;
 
 }
 
@@ -189,7 +187,9 @@ iconSize:[18,18]
 var marker = L.marker(
 [p.lat,p.lng],
 {icon:icon}
-).bindPopup(getPopupContent(p));
+).bindPopup(
+buildPopup(p)
+);
 
 markers.addLayer(marker);
 
