@@ -27,6 +27,14 @@ width:100%;
 height:100vh;
 }
 
+.popup-site{
+font-family: Arial, sans-serif;
+}
+
+.popup-besoin{
+font-family: Arial, sans-serif;
+}
+
 </style>
 
 </head>
@@ -78,6 +86,7 @@ if(points.length === 0){
 
 points = [
 {
+type:"besoin",
 lat:48.8566,
 lng:2.3522,
 nom:"Paris",
@@ -131,6 +140,36 @@ return "#2e7d32";
 
 }
 
+/* fonction génération popup selon type */
+
+function getPopupContent(p){
+
+var type = p.type || "site";
+
+if(type === "besoin"){
+return "<div class='popup-besoin'>"+
+"<b>🎯 BESOIN - "+(p.nom || "")+"</b><br><br>"+
+"📏 Rayon : "+(p.distance || 0)+" km<br>"+
+"📅 Période : "+(p.periode || "")+"<br>"+
+"⏱ Durée : "+(p.duree || "")+" jours<br>"+
+"👷 Agents : "+(p.nbAgents || "")+"<br>"+
+"🏢 UP : "+(p.up || "")+
+"</div>";
+}
+else{
+return "<div class='popup-site'>"+
+"<b>🏢 SITE - "+(p.nom || p.siteITIF || "")+"</b><br><br>"+
+"🆔 Site ITIF : "+(p.siteITIF || "")+"<br>"+
+"✅ Statut : "+(p.actif || "")+"<br>"+
+"👥 Effectif : "+(p.effectif || "")+"<br>"+
+"📐 Superficie : "+(p.superficie || "")+" m²<br>"+
+"🔢 ID IMMOSIS : "+(p.idImmosis || "")+"<br>"+
+"🏢 UP : "+(p.up || "")+
+"</div>";
+}
+
+}
+
 /* limites carte */
 
 var bounds = [];
@@ -150,16 +189,7 @@ iconSize:[18,18]
 var marker = L.marker(
 [p.lat,p.lng],
 {icon:icon}
-).bindPopup(
-
-"<b>📍 "+(p.nom || "")+"</b><br>"+
-"📏 Rayon : "+(p.distance || 0)+" km<br>"+
-"📅 Période : "+(p.periode || "")+"<br>"+
-"⏱ Durée : "+(p.duree || "")+" jours<br>"+
-"👷 Agents : "+(p.nbAgents || "")+"<br>"+
-"🏢 UP : "+(p.up || "")
-
-);
+).bindPopup(getPopupContent(p));
 
 markers.addLayer(marker);
 
