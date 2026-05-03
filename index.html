@@ -184,6 +184,61 @@
       transform: rotate(-8deg);
     }
 
+    .surprise-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .surprise {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      display: grid;
+      place-items: center;
+      width: var(--size);
+      height: var(--size);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      border-radius: 999px;
+      font-size: calc(var(--size) * 0.46);
+      background:
+        radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.22) 52%),
+        rgba(255, 255, 255, 0.14);
+      box-shadow: 0 1.25rem 3rem rgba(2, 8, 23, 0.22);
+      animation: float-surprise var(--duration) ease-in-out forwards;
+      transform: translate(-50%, -50%) scale(0.35) rotate(var(--rotation));
+      backdrop-filter: blur(10px);
+    }
+
+    @keyframes float-surprise {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -30%) scale(0.35) rotate(var(--rotation));
+      }
+
+      14%,
+      72% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform:
+          translate(calc(-50% + var(--drift-x)), calc(-120% + var(--drift-y)))
+          scale(1.1)
+          rotate(calc(var(--rotation) + 28deg));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .surprise {
+        animation: none;
+        opacity: 0;
+      }
+    }
+
     @media (max-width: 740px) {
       main {
         padding: 1rem;
@@ -213,6 +268,8 @@
   </style>
 </head>
 <body>
+  <div class="surprise-layer" aria-hidden="true"></div>
+
   <main>
     <section class="countdown-card" aria-labelledby="page-title">
       <p class="eyebrow">Cap sur le soleil</p>
@@ -293,6 +350,47 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    const surpriseLayer = document.querySelector(".surprise-layer");
+    const surpriseIcons = [
+      "&#127796;",
+      "&#127774;",
+      "&#9992;&#65039;",
+      "&#127754;",
+      "&#129419;",
+      "&#127802;"
+    ];
+
+    function randomBetween(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function launchSurprise() {
+      const surprise = document.createElement("span");
+      const duration = randomBetween(4.5, 6.5);
+
+      surprise.className = "surprise";
+      surprise.innerHTML = surpriseIcons[Math.floor(Math.random() * surpriseIcons.length)];
+      surprise.style.setProperty("--x", randomBetween(12, 88) + "vw");
+      surprise.style.setProperty("--y", randomBetween(14, 82) + "vh");
+      surprise.style.setProperty("--size", randomBetween(3.4, 5.6) + "rem");
+      surprise.style.setProperty("--duration", duration + "s");
+      surprise.style.setProperty("--rotation", randomBetween(-18, 18) + "deg");
+      surprise.style.setProperty("--drift-x", randomBetween(-5, 5) + "rem");
+      surprise.style.setProperty("--drift-y", randomBetween(-2, 3) + "rem");
+
+      surpriseLayer.appendChild(surprise);
+      window.setTimeout(() => surprise.remove(), duration * 1000);
+    }
+
+    function scheduleSurprise() {
+      window.setTimeout(() => {
+        launchSurprise();
+        scheduleSurprise();
+      }, randomBetween(10000, 15000));
+    }
+
+    scheduleSurprise();
   </script>
 </body>
 </html>
