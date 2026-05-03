@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compte &agrave; rebours - D&eacute;part &agrave; l'&icirc;le Maurice</title>
+  <style>
+    :root {
+      --bg-1: #052f4f;
+      --bg-2: #0891b2;
+      --bg-3: #f6c453;
+      --card: rgba(255, 255, 255, 0.18);
+      --card-border: rgba(255, 255, 255, 0.35);
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.78);
+      --shadow: rgba(2, 8, 23, 0.24);
+      --accent: #ffdd8a;
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text);
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255, 221, 138, 0.9), transparent 20rem),
+        radial-gradient(circle at 86% 12%, rgba(125, 211, 252, 0.78), transparent 22rem),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2) 55%, var(--bg-3));
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: 0;
+      width: 34rem;
+      height: 34rem;
+      border-radius: 999px;
+      content: "";
+      filter: blur(12px);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    body::before {
+      right: -12rem;
+      bottom: -16rem;
+      background: #ffedd5;
+    }
+
+    body::after {
+      top: -14rem;
+      left: -12rem;
+      background: #67e8f9;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .countdown-card {
+      width: min(100%, 68rem);
+      padding: clamp(1.5rem, 4vw, 3.5rem);
+      border: 1px solid var(--card-border);
+      border-radius: 2rem;
+      background: var(--card);
+      box-shadow: 0 2rem 5rem var(--shadow);
+      backdrop-filter: blur(26px);
+      overflow: hidden;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin: 0 0 1.25rem;
+      padding: 0.55rem 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    h1 {
+      max-width: 14ch;
+      margin: 0;
+      font-size: clamp(3rem, 9vw, 7.6rem);
+      line-height: 0.92;
+      letter-spacing: -0.08em;
+    }
+
+    .intro {
+      max-width: 42rem;
+      margin: 1.25rem 0 2.5rem;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 1.7;
+    }
+
+    .destination {
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .timer {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(0.75rem, 2vw, 1.25rem);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .time-box {
+      min-height: 9.25rem;
+      padding: clamp(1rem, 3vw, 1.4rem);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 1.35rem;
+      background: rgba(255, 255, 255, 0.14);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    }
+
+    .value {
+      display: block;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 850;
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .label {
+      display: block;
+      margin-top: 0.75rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .footer-note {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 2rem;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 0.95rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      gap: 0.45rem;
+      align-items: center;
+      padding: 0.7rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .island {
+      position: absolute;
+      right: clamp(-4rem, -2vw, -1rem);
+      bottom: clamp(-4rem, -3vw, -1.5rem);
+      z-index: -1;
+      width: min(38vw, 18rem);
+      min-width: 12rem;
+      opacity: 0.72;
+      transform: rotate(-8deg);
+    }
+
+    @media (max-width: 740px) {
+      main {
+        padding: 1rem;
+      }
+
+      .countdown-card {
+        border-radius: 1.35rem;
+      }
+
+      .timer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .time-box {
+        min-height: 7.5rem;
+      }
+
+      .footer-note {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .pill {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="countdown-card" aria-labelledby="page-title">
+      <p class="eyebrow">Cap sur le soleil</p>
+      <h1 id="page-title">D&eacute;part &agrave; l'&icirc;le Maurice</h1>
+      <p class="intro">
+        Le compte &agrave; rebours est lanc&eacute; jusqu'au
+        <strong>6 novembre 2026</strong> : lagon turquoise, sable chaud et vacances
+        tropicales se rapprochent.
+      </p>
+
+      <ul class="timer" aria-live="polite" aria-label="Compte &agrave; rebours">
+        <li class="time-box">
+          <span class="value" id="days">--</span>
+          <span class="label">jours</span>
+        </li>
+        <li class="time-box">
+          <span class="value" id="hours">--</span>
+          <span class="label">heures</span>
+        </li>
+        <li class="time-box">
+          <span class="value" id="minutes">--</span>
+          <span class="label">minutes</span>
+        </li>
+        <li class="time-box">
+          <span class="value" id="seconds">--</span>
+          <span class="label">secondes</span>
+        </li>
+      </ul>
+
+      <div class="footer-note">
+        <span class="pill">&#127796; Destination : <strong class="destination">&Icirc;le Maurice</strong></span>
+        <span class="pill">&#9992;&#65039; Date de d&eacute;part : <strong>06/11/2026</strong></span>
+      </div>
+
+      <svg class="island" viewBox="0 0 240 180" aria-hidden="true">
+        <path fill="rgba(255,255,255,.42)" d="M25 146c26-28 57-41 94-39 39 1 72 14 99 39H25Z"></path>
+        <path fill="rgba(255,221,138,.72)" d="M45 150c22-16 47-23 74-22 29 1 55 8 78 22H45Z"></path>
+        <path fill="none" stroke="rgba(255,255,255,.7)" stroke-linecap="round" stroke-width="9" d="M121 121c3-43 17-75 43-96"></path>
+        <path fill="rgba(255,255,255,.62)" d="M164 24c-30 1-50 10-61 29 30 1 51-9 61-29Z"></path>
+        <path fill="rgba(255,255,255,.52)" d="M169 24c3 29-6 50-27 63-3-30 6-51 27-63Z"></path>
+        <path fill="rgba(255,255,255,.56)" d="M163 22c-24-17-47-21-70-11 23 18 47 22 70 11Z"></path>
+      </svg>
+    </section>
+  </main>
+
+  <script>
+    const targetDate = new Date("2026-11-06T00:00:00");
+    const elements = {
+      days: document.querySelector("#days"),
+      hours: document.querySelector("#hours"),
+      minutes: document.querySelector("#minutes"),
+      seconds: document.querySelector("#seconds")
+    };
+
+    function pad(value) {
+      return String(value).padStart(2, "0");
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = Math.max(targetDate - now, 0);
+
+      const seconds = Math.floor(diff / 1000) % 60;
+      const minutes = Math.floor(diff / (1000 * 60)) % 60;
+      const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+      elements.days.textContent = days;
+      elements.hours.textContent = pad(hours);
+      elements.minutes.textContent = pad(minutes);
+      elements.seconds.textContent = pad(seconds);
+
+      if (diff === 0) {
+        document.querySelector(".intro").textContent =
+          "Bon voyage ! Le depart pour l'ile Maurice est arrive.";
+      }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
