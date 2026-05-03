@@ -6,14 +6,18 @@
   <title>Compte &agrave; rebours - D&eacute;part &agrave; l'&icirc;le Maurice</title>
   <style>
     :root {
-      --bg-1: #052f4f;
-      --bg-2: #0891b2;
-      --bg-3: #f6c453;
-      --card: rgba(255, 255, 255, 0.18);
-      --card-border: rgba(255, 255, 255, 0.35);
+      --bg-1: #031b2f;
+      --bg-2: #075985;
+      --bg-3: #0e7490;
+      --sun: #ffd166;
+      --coral: #ff8a7a;
+      --lagoon: #67e8f9;
+      --card: rgba(255, 255, 255, 0.16);
+      --card-strong: rgba(255, 255, 255, 0.24);
+      --card-border: rgba(255, 255, 255, 0.34);
       --text: #ffffff;
-      --muted: rgba(255, 255, 255, 0.78);
-      --shadow: rgba(2, 8, 23, 0.24);
+      --muted: rgba(255, 255, 255, 0.76);
+      --shadow: rgba(2, 8, 23, 0.32);
       --accent: #ffdd8a;
       font-family:
         Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -30,9 +34,10 @@
       color: var(--text);
       overflow-x: hidden;
       background:
-        radial-gradient(circle at 18% 18%, rgba(255, 221, 138, 0.9), transparent 20rem),
-        radial-gradient(circle at 86% 12%, rgba(125, 211, 252, 0.78), transparent 22rem),
-        linear-gradient(135deg, var(--bg-1), var(--bg-2) 55%, var(--bg-3));
+        radial-gradient(circle at 18% 16%, rgba(255, 209, 102, 0.9), transparent 18rem),
+        radial-gradient(circle at 82% 18%, rgba(103, 232, 249, 0.72), transparent 23rem),
+        radial-gradient(circle at 68% 86%, rgba(255, 138, 122, 0.34), transparent 24rem),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2) 52%, var(--bg-3));
     }
 
     body::before,
@@ -44,8 +49,9 @@
       border-radius: 999px;
       content: "";
       filter: blur(12px);
-      opacity: 0.35;
+      opacity: 0.32;
       pointer-events: none;
+      animation: breathe 9s ease-in-out infinite alternate;
     }
 
     body::before {
@@ -58,6 +64,17 @@
       top: -14rem;
       left: -12rem;
       background: #67e8f9;
+      animation-delay: -4s;
+    }
+
+    @keyframes breathe {
+      from {
+        transform: scale(0.96);
+      }
+
+      to {
+        transform: scale(1.08);
+      }
     }
 
     main {
@@ -66,26 +83,65 @@
       display: grid;
       place-items: center;
       min-height: 100vh;
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
     }
 
     .countdown-card {
-      width: min(100%, 68rem);
-      padding: clamp(1.5rem, 4vw, 3.5rem);
+      position: relative;
+      width: min(100%, 76rem);
+      padding: clamp(1.1rem, 3vw, 2rem);
       border: 1px solid var(--card-border);
-      border-radius: 2rem;
-      background: var(--card);
-      box-shadow: 0 2rem 5rem var(--shadow);
-      backdrop-filter: blur(26px);
+      border-radius: clamp(1.5rem, 4vw, 2.6rem);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
+        var(--card);
+      box-shadow:
+        0 2.2rem 6rem var(--shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(28px);
       overflow: hidden;
+    }
+
+    .countdown-card::before {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      content: "";
+      background:
+        linear-gradient(115deg, transparent 0 36%, rgba(255, 255, 255, 0.22) 42%, transparent 48% 100%);
+      transform: translateX(-70%);
+      animation: glass-sheen 8s ease-in-out infinite;
+    }
+
+    @keyframes glass-sheen {
+      0%,
+      46% {
+        transform: translateX(-74%);
+      }
+
+      72%,
+      100% {
+        transform: translateX(74%);
+      }
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+      gap: clamp(1.2rem, 3vw, 2rem);
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      padding: clamp(0.35rem, 1vw, 0.75rem);
     }
 
     .eyebrow {
       display: inline-flex;
-      gap: 0.5rem;
+      gap: 0.6rem;
       align-items: center;
       margin: 0 0 1.25rem;
-      padding: 0.55rem 0.85rem;
+      padding: 0.58rem 0.95rem;
       border: 1px solid rgba(255, 255, 255, 0.28);
       border-radius: 999px;
       color: var(--accent);
@@ -93,20 +149,30 @@
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.11);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
     }
 
     h1 {
-      max-width: 14ch;
+      max-width: 12ch;
       margin: 0;
-      font-size: clamp(3rem, 9vw, 7.6rem);
-      line-height: 0.92;
+      font-size: clamp(3.2rem, 8vw, 7.7rem);
+      line-height: 0.88;
       letter-spacing: -0.08em;
+      text-wrap: balance;
+    }
+
+    .highlight {
+      display: inline-block;
+      color: transparent;
+      background: linear-gradient(90deg, #ffffff, var(--accent) 42%, #bff7ff);
+      background-clip: text;
+      -webkit-background-clip: text;
     }
 
     .intro {
-      max-width: 42rem;
-      margin: 1.25rem 0 2.5rem;
+      max-width: 46rem;
+      margin: 1.35rem 0 2rem;
       color: var(--muted);
       font-size: clamp(1rem, 2vw, 1.25rem);
       line-height: 1.7;
@@ -121,18 +187,45 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: clamp(0.75rem, 2vw, 1.25rem);
-      margin: 0;
+      margin: 0 0 1.35rem;
       padding: 0;
       list-style: none;
     }
 
     .time-box {
-      min-height: 9.25rem;
+      position: relative;
+      min-height: 9.4rem;
       padding: clamp(1rem, 3vw, 1.4rem);
       border: 1px solid rgba(255, 255, 255, 0.28);
-      border-radius: 1.35rem;
-      background: rgba(255, 255, 255, 0.14);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      border-radius: 1.45rem;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)),
+        rgba(255, 255, 255, 0.13);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.24),
+        0 1rem 2.5rem rgba(2, 8, 23, 0.16);
+      overflow: hidden;
+      transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        background 180ms ease;
+    }
+
+    .time-box::after {
+      position: absolute;
+      right: -1.4rem;
+      bottom: -1.4rem;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 999px;
+      content: "";
+      background: rgba(255, 221, 138, 0.22);
+    }
+
+    .time-box:hover {
+      transform: translateY(-0.25rem);
+      border-color: rgba(255, 255, 255, 0.52);
+      background: rgba(255, 255, 255, 0.2);
     }
 
     .value {
@@ -141,6 +234,7 @@
       font-weight: 850;
       line-height: 1;
       letter-spacing: -0.06em;
+      text-shadow: 0 0.8rem 2.2rem rgba(2, 8, 23, 0.22);
     }
 
     .label {
@@ -159,7 +253,7 @@
       gap: 0.75rem 1rem;
       align-items: center;
       justify-content: space-between;
-      margin-top: 2rem;
+      margin-top: 1rem;
       color: rgba(255, 255, 255, 0.84);
       font-size: 0.95rem;
     }
@@ -170,7 +264,128 @@
       align-items: center;
       padding: 0.7rem 0.9rem;
       border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .progress-card {
+      margin-bottom: 1.35rem;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 1.25rem;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .progress-meta {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .progress-track {
+      height: 0.7rem;
+      border-radius: 999px;
       background: rgba(255, 255, 255, 0.16);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      display: block;
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--sun), var(--coral), var(--lagoon));
+      box-shadow: 0 0 1.4rem rgba(255, 221, 138, 0.55);
+      transition: width 600ms ease;
+    }
+
+    .travel-panel {
+      position: relative;
+      display: grid;
+      align-content: space-between;
+      min-height: 100%;
+      padding: clamp(1.25rem, 3vw, 1.65rem);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 1.8rem;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(255, 221, 138, 0.32), transparent 9rem),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      overflow: hidden;
+    }
+
+    .travel-panel::before {
+      position: absolute;
+      inset: auto -10% 10% -10%;
+      height: 8rem;
+      content: "";
+      background:
+        radial-gradient(ellipse at center, rgba(255, 255, 255, 0.2) 0 34%, transparent 35%),
+        linear-gradient(180deg, transparent, rgba(103, 232, 249, 0.24));
+      opacity: 0.9;
+      transform: rotate(-4deg);
+    }
+
+    .ticket {
+      position: relative;
+      z-index: 1;
+      padding: 1.05rem;
+      border: 1px dashed rgba(255, 255, 255, 0.36);
+      border-radius: 1.35rem;
+      background: rgba(3, 27, 47, 0.2);
+    }
+
+    .ticket-label {
+      display: block;
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .ticket-route {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1rem 0;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-weight: 850;
+      letter-spacing: -0.06em;
+    }
+
+    .ticket-route span:nth-child(2) {
+      color: var(--accent);
+      font-size: 1.2rem;
+      letter-spacing: 0;
+    }
+
+    .ticket-date {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.95rem;
+    }
+
+    .weather-chip {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 0.35rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 1.25rem;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .weather-chip strong {
+      font-size: 1.2rem;
     }
 
     .island {
@@ -253,6 +468,16 @@
       }
     }
 
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .travel-panel {
+        min-height: 18rem;
+      }
+    }
+
     @media (max-width: 740px) {
       main {
         padding: 1rem;
@@ -262,12 +487,24 @@
         border-radius: 1.35rem;
       }
 
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 10ch;
+      }
+
       .timer {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .time-box {
         min-height: 7.5rem;
+      }
+
+      .travel-panel {
+        min-height: 18rem;
       }
 
       .footer-note {
@@ -286,46 +523,80 @@
 
   <main>
     <section class="countdown-card" aria-labelledby="page-title">
-      <p class="eyebrow">Cap sur le soleil</p>
-      <h1 id="page-title">D&eacute;part &agrave; l'&icirc;le Maurice</h1>
-      <p class="intro">
-        Le compte &agrave; rebours est lanc&eacute; jusqu'au
-        <strong>6 novembre 2026</strong> : lagon turquoise, sable chaud et vacances
-        tropicales se rapprochent.
-      </p>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">&#10024; Cap sur le soleil</p>
+          <h1 id="page-title">D&eacute;part &agrave; <span class="highlight">l'&icirc;le Maurice</span></h1>
+          <p class="intro">
+            Le compte &agrave; rebours est lanc&eacute; jusqu'au
+            <strong>6 novembre 2026</strong> : lagon turquoise, sable chaud et vacances
+            tropicales se rapprochent.
+          </p>
 
-      <ul class="timer" aria-live="polite" aria-label="Compte &agrave; rebours">
-        <li class="time-box">
-          <span class="value" id="days">--</span>
-          <span class="label">jours</span>
-        </li>
-        <li class="time-box">
-          <span class="value" id="hours">--</span>
-          <span class="label">heures</span>
-        </li>
-        <li class="time-box">
-          <span class="value" id="minutes">--</span>
-          <span class="label">minutes</span>
-        </li>
-        <li class="time-box">
-          <span class="value" id="seconds">--</span>
-          <span class="label">secondes</span>
-        </li>
-      </ul>
+          <div class="progress-card" aria-label="Progression vers le d&eacute;part">
+            <div class="progress-meta">
+              <span>Objectif vacances</span>
+              <span id="progressPercent">--%</span>
+            </div>
+            <div class="progress-track">
+              <span class="progress-fill" id="progressFill"></span>
+            </div>
+          </div>
 
-      <div class="footer-note">
-        <span class="pill">&#127796; Destination : <strong class="destination">&Icirc;le Maurice</strong></span>
-        <span class="pill">&#9992;&#65039; Date de d&eacute;part : <strong>06/11/2026</strong></span>
+          <ul class="timer" aria-live="polite" aria-label="Compte &agrave; rebours">
+            <li class="time-box">
+              <span class="value" id="days">--</span>
+              <span class="label">jours</span>
+            </li>
+            <li class="time-box">
+              <span class="value" id="hours">--</span>
+              <span class="label">heures</span>
+            </li>
+            <li class="time-box">
+              <span class="value" id="minutes">--</span>
+              <span class="label">minutes</span>
+            </li>
+            <li class="time-box">
+              <span class="value" id="seconds">--</span>
+              <span class="label">secondes</span>
+            </li>
+          </ul>
+
+          <div class="footer-note">
+            <span class="pill">&#127796; Destination : <strong class="destination">&Icirc;le Maurice</strong></span>
+            <span class="pill">&#9992;&#65039; Date de d&eacute;part : <strong>06/11/2026</strong></span>
+          </div>
+        </div>
+
+        <aside class="travel-panel" aria-label="Billet de voyage">
+          <div class="ticket">
+            <span class="ticket-label">Boarding pass</span>
+            <div class="ticket-route">
+              <span>Home</span>
+              <span>&#9992;&#65039;</span>
+              <span>MRU</span>
+            </div>
+            <div class="ticket-date">
+              <span>D&eacute;part</span>
+              <strong>06 NOV 2026</strong>
+            </div>
+          </div>
+
+          <div class="weather-chip">
+            <span>&#127774; Ambiance attendue</span>
+            <strong>Lagon, soleil &amp; sable chaud</strong>
+          </div>
+
+          <svg class="island" viewBox="0 0 240 180" aria-hidden="true">
+            <path fill="rgba(255,255,255,.42)" d="M25 146c26-28 57-41 94-39 39 1 72 14 99 39H25Z"></path>
+            <path fill="rgba(255,221,138,.72)" d="M45 150c22-16 47-23 74-22 29 1 55 8 78 22H45Z"></path>
+            <path fill="none" stroke="rgba(255,255,255,.7)" stroke-linecap="round" stroke-width="9" d="M121 121c3-43 17-75 43-96"></path>
+            <path fill="rgba(255,255,255,.62)" d="M164 24c-30 1-50 10-61 29 30 1 51-9 61-29Z"></path>
+            <path fill="rgba(255,255,255,.52)" d="M169 24c3 29-6 50-27 63-3-30 6-51 27-63Z"></path>
+            <path fill="rgba(255,255,255,.56)" d="M163 22c-24-17-47-21-70-11 23 18 47 22 70 11Z"></path>
+          </svg>
+        </aside>
       </div>
-
-      <svg class="island" viewBox="0 0 240 180" aria-hidden="true">
-        <path fill="rgba(255,255,255,.42)" d="M25 146c26-28 57-41 94-39 39 1 72 14 99 39H25Z"></path>
-        <path fill="rgba(255,221,138,.72)" d="M45 150c22-16 47-23 74-22 29 1 55 8 78 22H45Z"></path>
-        <path fill="none" stroke="rgba(255,255,255,.7)" stroke-linecap="round" stroke-width="9" d="M121 121c3-43 17-75 43-96"></path>
-        <path fill="rgba(255,255,255,.62)" d="M164 24c-30 1-50 10-61 29 30 1 51-9 61-29Z"></path>
-        <path fill="rgba(255,255,255,.52)" d="M169 24c3 29-6 50-27 63-3-30 6-51 27-63Z"></path>
-        <path fill="rgba(255,255,255,.56)" d="M163 22c-24-17-47-21-70-11 23 18 47 22 70 11Z"></path>
-      </svg>
     </section>
   </main>
 
@@ -335,8 +606,11 @@
       days: document.querySelector("#days"),
       hours: document.querySelector("#hours"),
       minutes: document.querySelector("#minutes"),
-      seconds: document.querySelector("#seconds")
+      seconds: document.querySelector("#seconds"),
+      progressFill: document.querySelector("#progressFill"),
+      progressPercent: document.querySelector("#progressPercent")
     };
+    const journeyStart = new Date("2026-05-03T00:00:00");
 
     function pad(value) {
       return String(value).padStart(2, "0");
@@ -355,6 +629,13 @@
       elements.hours.textContent = pad(hours);
       elements.minutes.textContent = pad(minutes);
       elements.seconds.textContent = pad(seconds);
+      const progress = Math.min(
+        Math.max(((now - journeyStart) / (targetDate - journeyStart)) * 100, 0),
+        100
+      );
+
+      elements.progressFill.style.width = progress + "%";
+      elements.progressPercent.textContent = Math.round(progress) + "%";
 
       if (diff === 0) {
         document.querySelector(".intro").textContent =
