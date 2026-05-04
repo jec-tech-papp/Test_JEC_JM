@@ -250,7 +250,17 @@
 </head>
 <body>
   <main class="app">
-    <section class="screen center active" id="screenStart">
+    <section class="screen center active" id="screenController">
+      <p class="kicker">Controleur</p>
+      <h1 id="controllerTitle">Bienvenue</h1>
+      <p class="muted" id="controllerHelp">Renseigne ton nom une seule fois. Il sera garde sur cet appareil.</p>
+      <form class="actions" id="controllerForm">
+        <textarea id="controllerName" placeholder="Nom du controleur"></textarea>
+        <button class="primary" type="submit" id="controllerSubmit">Continuer</button>
+      </form>
+    </section>
+
+    <section class="screen center" id="screenStart">
       <p class="kicker">Controle QR</p>
       <h1>Lecture QR Code</h1>
       <p class="muted">Choisis une methode de lecture. Les codes valides restent stockes sur cet appareil jusqu'a export CSV.</p>
@@ -311,7 +321,9 @@
   </script>
   <script>
     const STORAGE_KEY = "qr-control-records";
+    const CONTROLLER_KEY = "qr-control-controller";
     const screens = {
+      controller: document.querySelector("#screenController"),
       start: document.querySelector("#screenStart"),
       camera: document.querySelector("#screenCamera"),
       review: document.querySelector("#screenReview")
@@ -330,11 +342,18 @@
     const postActions = document.querySelector("#postActions");
     const chooseFavorable = document.querySelector("#chooseFavorable");
     const chooseDefavorable = document.querySelector("#chooseDefavorable");
+    const controllerForm = document.querySelector("#controllerForm");
+    const controllerInput = document.querySelector("#controllerName");
+    const controllerTitle = document.querySelector("#controllerTitle");
+    const controllerHelp = document.querySelector("#controllerHelp");
+    const controllerSubmit = document.querySelector("#controllerSubmit");
     let records = [];
     let stream = null;
     let frameId = null;
     let currentQr = "";
     let currentDecision = "";
+    let currentScannedAt = "";
+    let controllerName = "";
     let lastValue = "";
     let lastAt = 0;
     let shouldResumeCamera = false;
@@ -342,6 +361,25 @@
     function setScreen(name) {
       Object.values(screens).forEach((screen) => screen.classList.remove("active"));
       screens[name].classList.add("active");
+    }
+
+    function loadController() {
+      return localStorage.getItem(CONTROLLER_KEY) || "";
+    }
+
+    function saveControllerName(name) {
+      controllerName = name.trim();
+      localStorage.setItem(CONTROLLER_KEY, controllerName);
+    }
+
+    function initController() {
+      controllerName = loadController();
+      if (controllerName) {
+        controllerTitle.textContent = "Bonjour " + controllerName;
+        controllerHelp.textContent = "Ton nom est deja enregistre sur cet appareil.";
+        controllerInput.hidden = true;
+        controllerSubmit.textContent = "Continuer";
+      }
     }
 
     function loadRecords() {
@@ -359,13 +397,26 @@
 
     function escapeCsv(value) { return '"' + String(value).replaceAll('"', '""') + '"'; }
 
+    function formatScanDate(date) {
+      return new Intl.DateTimeFormat("fr-FR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      }).format(date);
+    }
+
     function exportCsv() {
       const rows = records.map((record) => [
         escapeCsv(record.id),
         escapeCsv(record.decision === "defavorable" ? "D\u00e9favorable" : "Favorable"),
-        escapeCsv(record.comment)
+        escapeCsv(record.comment),
+        escapeCsv(record.scannedAt || ""),
+        escapeCsv(record.controller || "")
       ].join(","));
-      const csv = ["ID,Favorable/D\u00e9favorable,Commentaire", ...rows].join("\n");
+      const csv = ["ID,Favorable/D\u00e9favorable,Commentaire,Date/Heure/Seconde Scan,Controleur", ...rows].join("\n");
       const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -405,6 +456,7 @@
     function resetReview() {
       currentQr = "";
       currentDecision = "";
+      currentScannedAt = "";
       comment.value = "";
       commentWrap.hidden = true;
       postActions.hidden = true;
@@ -421,10 +473,10 @@
       lastValue = cleaned;
       lastAt = now;
       pauseDetection();
-      currentQr = cleaned;
-      qrValue.textContent = cleaned;
       resetReview();
       currentQr = cleaned;
+      currentScannedAt = formatScanDate(new Date());
+      qrValue.textContent = cleaned;
       setScreen("review");
     }
 
@@ -513,7 +565,8 @@
         id: currentQr,
         decision: currentDecision,
         comment: currentDecision === "defavorable" ? note : "",
-        createdAt: new Date().toISOString()
+        scannedAt: currentScannedAt || formatScanDate(new Date()),
+        controller: controllerName
       });
       saveRecords();
       updateCounts();
@@ -547,9 +600,22 @@
       saveRecords();
       updateCounts();
     });
+    controllerForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!controllerName) {
+        if (!controllerInput.value.trim()) {
+          controllerHelp.textContent = "Renseigne un nom de controleur pour continuer.";
+          controllerInput.focus();
+          return;
+        }
+        saveControllerName(controllerInput.value);
+      }
+      setScreen("start");
+    });
 
     records = loadRecords();
     updateCounts();
+    initController();
   </script>
 </body>
 </html>
