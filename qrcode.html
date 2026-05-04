@@ -195,6 +195,10 @@
       object-fit: cover;
     }
 
+    canvas.frozen-preview {
+      background: rgba(2, 8, 23, 0.38);
+    }
+
     .camera-placeholder {
       position: absolute;
       inset: 0;
@@ -205,7 +209,8 @@
       text-align: center;
     }
 
-    video:not([hidden]) + .camera-placeholder { display: none; }
+    video:not([hidden]) + .camera-placeholder,
+    canvas:not([hidden]) + .camera-placeholder { display: none; }
     .file-input { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; pointer-events: none; }
 
     .current-card {
@@ -390,6 +395,7 @@
     let lastDetected = "";
     let lastDetectedAt = 0;
     let justSaved = false;
+    let restartAfterSave = false;
 
     function loadRecords() {
       try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
@@ -431,6 +437,10 @@
       if (!cleaned) return false;
       if (cleaned === currentQr) return false;
       if (cleaned === lastDetected && now - lastDetectedAt < 1800) return false;
+      const shouldRestart = Boolean(stream);
+      freezePreview();
+      stopCamera(false);
+      restartAfterSave = shouldRestart;
       currentQr = cleaned;
       lastDetected = cleaned;
       lastDetectedAt = now;
@@ -439,7 +449,7 @@
       currentCard.classList.add("has-code");
       saveCurrent.disabled = false;
       resetCurrent.disabled = false;
-      statusText.textContent = "Code lu : valide-le pour l'ajouter a la liste.";
+      statusText.textContent = "Code lu : image figee, valide-le pour l'ajouter a la liste.";
       return true;
     }
 
@@ -451,8 +461,23 @@
       resetCurrent.disabled = true;
       comment.value = "";
       commentWrap.hidden = true;
+      canvas.hidden = true;
+      canvas.classList.remove("frozen-preview");
       document.querySelector('input[name="decision"][value="favorable"]').checked = true;
       statusText.textContent = message;
+    }
+
+    function freezePreview() {
+      if (video.hidden || !video.videoWidth || !video.videoHeight) {
+        canvas.classList.add("frozen-preview");
+        canvas.hidden = false;
+        return;
+      }
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.classList.add("frozen-preview");
+      canvas.hidden = false;
     }
 
     function selectedDecision() {
@@ -479,6 +504,7 @@
       renderRecords();
       justSaved = true;
       clearCurrentQr("Code enregistre. Presente le suivant.");
+      if (restartAfterSave) startCamera();
     }
 
     function escapeCsv(value) { return '"' + String(value).replaceAll('"', '""') + '"'; }
@@ -509,7 +535,7 @@
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const result = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "attemptBoth" });
-      if (result) showCurrentQr(result.data);
+      if (result && showCurrentQr(result.data)) return;
       frameId = requestAnimationFrame(decodeCurrentFrame);
     }
 
@@ -522,6 +548,9 @@
         stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
         video.srcObject = stream;
         video.hidden = false;
+        canvas.hidden = true;
+        canvas.classList.remove("frozen-preview");
+        restartAfterSave = true;
         startButton.disabled = true;
         stopButton.disabled = false;
         statusText.textContent = "Camera active : presente un QR Code.";
@@ -532,7 +561,7 @@
       }
     }
 
-    function stopCamera() {
+    function stopCamera(updateStatus = true) {
       if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
       if (stream) { stream.getTracks().forEach((track) => track.stop()); }
       stream = null;
@@ -540,7 +569,10 @@
       video.hidden = true;
       startButton.disabled = false;
       stopButton.disabled = true;
-      statusText.textContent = "Scan arrete.";
+      if (updateStatus) {
+        restartAfterSave = false;
+        statusText.textContent = "Scan arrete.";
+      }
     }
 
     function decodeImageFile(file) {
@@ -553,7 +585,12 @@
           ctx.drawImage(image, 0, 0);
           const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
           const result = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "attemptBoth" });
-          if (result) showCurrentQr(result.data);
+          if (result) {
+            canvas.classList.add("frozen-preview");
+            canvas.hidden = false;
+            restartAfterSave = false;
+            showCurrentQr(result.data);
+          }
           else statusText.textContent = "Aucun QR Code detecte sur cette image.";
         };
         image.src = reader.result;
