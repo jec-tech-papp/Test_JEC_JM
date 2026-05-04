@@ -2,29 +2,29 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Controle QR Code</title>
   <style>
     :root {
       --bg-1: #041827;
       --bg-2: #0f766e;
       --bg-3: #f8c76c;
-      --card: rgba(255, 255, 255, 0.14);
+      --card: rgba(255, 255, 255, 0.15);
       --border: rgba(255, 255, 255, 0.28);
       --text: #ffffff;
-      --muted: rgba(255, 255, 255, 0.72);
+      --muted: rgba(255, 255, 255, 0.74);
       --accent: #ffdd8a;
       --danger: #fecaca;
-      --success: #bbf7d0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     * { box-sizing: border-box; }
 
     body {
-      min-height: 100vh;
+      min-height: 100dvh;
       margin: 0;
       color: var(--text);
+      overflow: hidden;
       background:
         radial-gradient(circle at 14% 12%, rgba(255, 221, 138, 0.72), transparent 20rem),
         radial-gradient(circle at 88% 18%, rgba(103, 232, 249, 0.44), transparent 24rem),
@@ -43,99 +43,72 @@
       mask-image: linear-gradient(to bottom, rgba(0,0,0,.75), transparent);
     }
 
-    main {
+    .app {
       position: relative;
       z-index: 1;
-      width: min(100%, 78rem);
+      width: min(100%, 58rem);
+      height: 100dvh;
       margin: 0 auto;
-      padding: clamp(0.75rem, 2vw, 1.4rem);
+      padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+      display: grid;
+      place-items: center;
     }
 
-    .shell {
-      padding: clamp(1rem, 2.5vw, 1.6rem);
+    .screen {
+      display: none;
+      width: 100%;
+      max-height: 100%;
       border: 1px solid var(--border);
-      border-radius: clamp(1.2rem, 3vw, 2rem);
+      border-radius: clamp(1.25rem, 4vw, 2rem);
       background: linear-gradient(145deg, rgba(255,255,255,.22), rgba(255,255,255,.08)), var(--card);
       box-shadow: 0 2rem 6rem rgba(2, 8, 23, 0.32);
       backdrop-filter: blur(24px);
+      overflow: hidden;
     }
 
-    .hero {
+    .screen.active {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
       gap: 1rem;
-      align-items: end;
-      margin-bottom: 0.9rem;
+      padding: clamp(1rem, 4vw, 2rem);
     }
+
+    .screen.center { text-align: center; }
 
     .kicker {
-      margin: 0 0 0.45rem;
+      margin: 0;
       color: var(--accent);
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       font-weight: 850;
       letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
-    h1 {
+    h1, h2 {
       margin: 0;
-      font-size: clamp(2rem, 5vw, 4.2rem);
+      font-size: clamp(2.2rem, 8vw, 5rem);
       line-height: 0.92;
       letter-spacing: -0.07em;
     }
 
+    h2 { font-size: clamp(1.8rem, 6vw, 3.5rem); }
+
+    p { margin: 0; }
     .muted { color: var(--muted); line-height: 1.55; }
-    .hero p { margin: 0.75rem 0 0; max-width: 46rem; }
 
-    .count-pill {
-      display: inline-flex;
-      padding: 0.72rem 0.95rem;
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: 999px;
-      color: var(--accent);
-      font-weight: 850;
-      white-space: nowrap;
-      background: rgba(255,255,255,.1);
+    .actions {
+      display: grid;
+      gap: 0.75rem;
+      width: min(100%, 28rem);
+      margin: 0 auto;
     }
-
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-      align-items: center;
-      margin: 0.75rem 0;
-    }
-
-    label {
-      color: var(--accent);
-      font-size: 0.76rem;
-      font-weight: 850;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    textarea,
-    select {
-      width: 100%;
-      border: 1px solid rgba(255,255,255,.22);
-      border-radius: 0.9rem;
-      color: var(--text);
-      font: inherit;
-      background: rgba(255,255,255,.12);
-      outline: none;
-    }
-
-    textarea { min-height: 5.2rem; padding: 0.85rem; resize: vertical; }
-    select { padding: 0.8rem 0.9rem; }
-    option { color: #082f49; }
 
     button,
     .file-button {
       display: inline-flex;
-      gap: 0.45rem;
-      align-items: center;
       justify-content: center;
-      padding: 0.78rem 0.95rem;
+      align-items: center;
+      min-height: 3.2rem;
+      padding: 0.9rem 1.1rem;
       border: 1px solid rgba(255,255,255,.22);
       border-radius: 999px;
       color: #ffffff;
@@ -156,35 +129,35 @@
     button.danger { color: var(--danger); }
     button:disabled { cursor: not-allowed; opacity: 0.5; }
 
-    .status {
-      min-height: 1.4rem;
-      margin: 0.4rem 0 0.8rem;
-      color: rgba(255,255,255,.82);
+    .file-input { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; pointer-events: none; }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
     }
 
-    .scan-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
-      gap: 0.9rem;
-      align-items: stretch;
-    }
-
-    .card {
-      display: grid;
-      gap: 0.75rem;
-      padding: 0.9rem;
+    .pill {
+      display: inline-flex;
+      padding: 0.6rem 0.85rem;
       border: 1px solid rgba(255,255,255,.18);
-      border-radius: 1.2rem;
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.92rem;
+      font-weight: 850;
       background: rgba(255,255,255,.1);
+      white-space: nowrap;
     }
 
     .camera-box {
       position: relative;
-      height: min(46vh, 24rem);
-      min-height: 16rem;
+      width: 100%;
+      height: min(62dvh, 34rem);
+      min-height: 18rem;
       overflow: hidden;
-      border-radius: 1rem;
-      background: rgba(2, 8, 23, 0.38);
+      border-radius: 1.2rem;
+      background: rgba(2, 8, 23, 0.45);
     }
 
     video,
@@ -193,10 +166,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-
-    canvas.frozen-preview {
-      background: rgba(2, 8, 23, 0.38);
     }
 
     .camera-placeholder {
@@ -209,156 +178,129 @@
       text-align: center;
     }
 
-    video:not([hidden]) + .camera-placeholder,
+    video:not([hidden]) + canvas + .camera-placeholder,
     canvas:not([hidden]) + .camera-placeholder { display: none; }
-    .file-input { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; pointer-events: none; }
 
-    .current-card {
-      align-content: start;
-      transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    .status {
+      min-height: 1.4rem;
+      color: rgba(255,255,255,.82);
+      text-align: center;
     }
 
-    .current-card.has-code {
-      border-color: rgba(187, 247, 208, 0.72);
-      box-shadow: 0 0 0 0.2rem rgba(187, 247, 208, 0.12), 0 1rem 2rem rgba(2, 8, 23, 0.18);
-      transform: translateY(-0.1rem);
-    }
-
-    .read-confirmation {
-      display: none;
-      margin: 0;
-      color: var(--success);
-      font-weight: 850;
-    }
-
-    .current-card.has-code .read-confirmation { display: block; }
-
-    .current-value {
-      min-height: 4rem;
-      max-height: 8rem;
-      overflow: auto;
+    .qr-value {
+      max-height: 7rem;
       padding: 0.85rem;
-      border-radius: 0.9rem;
-      color: rgba(255,255,255,.92);
+      border-radius: 1rem;
+      overflow: auto;
       overflow-wrap: anywhere;
-      background: rgba(2, 8, 23, 0.22);
+      background: rgba(2, 8, 23, 0.25);
+      text-align: left;
     }
 
     .choice {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.55rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
     }
 
-    .choice input { position: absolute; opacity: 0; pointer-events: none; }
-    .choice span { display: block; padding: 0.78rem; border: 1px solid rgba(255,255,255,.2); border-radius: 0.9rem; text-align: center; cursor: pointer; background: rgba(255,255,255,.1); }
-    .choice input:checked + span { color: #082f49; background: linear-gradient(90deg, var(--accent), #67e8f9); }
-    .comment-wrap[hidden] { display: none; }
-
-    .list-card { margin-top: 0.9rem; }
-    .list-head,
-    .row { display: grid; gap: 0.7rem; align-items: center; }
-    .list-head { grid-template-columns: 1fr auto; margin-bottom: 0.75rem; }
-    .items { display: grid; gap: 0.65rem; max-height: 34vh; overflow: auto; padding-right: 0.2rem; }
-    .empty { margin: 0; color: rgba(255,255,255,.66); }
-
-    .row {
-      grid-template-columns: minmax(0, 1fr) 11rem auto;
-      padding: 0.78rem;
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: 0.95rem;
-      background: rgba(255,255,255,.08);
+    .choice button.is-selected {
+      color: #082f49;
+      border: 0;
+      background: linear-gradient(90deg, var(--accent), #67e8f9);
     }
 
-    .value { overflow-wrap: anywhere; font-weight: 850; }
-    .date { display: block; margin-top: 0.3rem; color: rgba(255,255,255,.56); font-size: 0.78rem; }
-    .comment { display: block; margin-top: 0.35rem; color: rgba(255,255,255,.72); font-size: 0.9rem; }
-    .badge { color: var(--accent); font-weight: 850; }
-    .delete { width: 2.35rem; height: 2.35rem; padding: 0; color: var(--danger); }
-    [hidden] { display: none !important; }
+    .comment-wrap { display: grid; gap: 0.5rem; }
+    .comment-wrap[hidden], .post-actions[hidden] { display: none; }
 
-    @media (max-width: 820px) {
-      main { padding: 0.65rem; }
-      .hero,
-      .scan-layout,
-      .row,
-      .list-head,
-      .choice { grid-template-columns: 1fr; }
-      .camera-box { height: 38vh; min-height: 14rem; }
-      .items { max-height: 42vh; }
+    label {
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: left;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 6rem;
+      padding: 0.9rem;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 1rem;
+      color: var(--text);
+      font: inherit;
+      background: rgba(255,255,255,.12);
+      outline: none;
+      resize: none;
+    }
+
+    .post-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 640px) {
+      .screen.active { padding: 1rem; }
+      .camera-box { height: 58dvh; min-height: 18rem; }
+      .choice, .post-actions { grid-template-columns: 1fr; }
+      .topbar { align-items: start; flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <main>
-    <section class="shell">
-      <div class="hero">
-        <div>
-          <p class="kicker">Espace controle</p>
-          <h1>Lecture QR Code</h1>
-          <p class="muted">Lis un QR Code, verifie le code detecte, choisis l'avis, puis enregistre-le dans la liste sans quitter l'ecran.</p>
-        </div>
-        <span class="count-pill" id="count">0 lu</span>
-      </div>
-
-      <div class="toolbar">
-        <button class="primary" id="start" type="button">Ouvrir le scan</button>
-        <button class="primary" id="capture" type="button" disabled>Valider la lecture</button>
-        <button id="stop" type="button" disabled>Arreter</button>
-        <label class="file-button primary" for="imageInput">Scanner une photo</label>
+  <main class="app">
+    <section class="screen center active" id="screenStart">
+      <p class="kicker">Controle QR</p>
+      <h1>Lecture QR Code</h1>
+      <p class="muted">Choisis une methode de lecture. Les codes valides restent stockes sur cet appareil jusqu'a export CSV.</p>
+      <div class="actions">
+        <button class="primary" id="scanCamera" type="button">Scanner un Code</button>
+        <label class="file-button primary" for="imageInput">Scanner le code sur une image de ma gallerie</label>
         <input class="file-input" id="imageInput" type="file" accept="image/*" capture="environment">
-        <button id="export" type="button" disabled>Exporter CSV</button>
-        <button class="danger" id="clear" type="button" disabled>Vider</button>
+        <button id="exportFromStart" type="button">Export vers CSV</button>
+        <button class="danger" id="clearRecords" type="button">Vider les codes</button>
       </div>
-      <p class="status" id="status">Ouvre le scan et presente un QR Code devant la camera.</p>
+      <span class="pill" id="countStart">0 code</span>
+    </section>
 
-      <div class="scan-layout">
-        <div class="card">
-          <label>Lecture directe</label>
-          <div class="camera-box" id="cameraBox">
-            <video id="video" muted playsinline hidden></video>
-            <canvas id="canvas" hidden></canvas>
-            <div class="camera-placeholder">Presente un QR Code devant la camera.</div>
-          </div>
+    <section class="screen" id="screenCamera">
+      <div class="topbar">
+        <div>
+          <p class="kicker">Scan en cours</p>
+          <h2>Vise le QR Code</h2>
         </div>
-
-        <section class="card current-card" id="currentCard" aria-live="polite">
-          <p class="read-confirmation">Code QR lu - pret a etre enregistre</p>
-          <label>Code detecte</label>
-          <div class="current-value" id="currentValue">Aucun code lu pour le moment.</div>
-          <label>Avis</label>
-          <div class="choice">
-            <label>
-              <input type="radio" name="decision" value="favorable" checked>
-              <span>Favorable</span>
-            </label>
-            <label>
-              <input type="radio" name="decision" value="defavorable">
-              <span>Defavorable</span>
-            </label>
-          </div>
-          <div class="comment-wrap" id="commentWrap" hidden>
-            <label for="comment">Commentaire</label>
-            <textarea id="comment" placeholder="Pourquoi ce QR Code est defavorable ?"></textarea>
-          </div>
-          <button class="primary" id="saveCurrent" type="button" disabled>Enregistrer ce code</button>
-          <button id="resetCurrent" type="button" disabled>Ignorer / scanner un autre</button>
-        </section>
+        <button id="cancelScan" type="button">Retour</button>
       </div>
+      <div class="camera-box">
+        <video id="video" muted playsinline hidden></video>
+        <canvas id="canvas" hidden></canvas>
+        <div class="camera-placeholder">Ouverture de la camera...</div>
+      </div>
+      <p class="status" id="status">Detection automatique en cours.</p>
+    </section>
 
-      <form class="card manual-form" id="manualForm">
-        <label for="manualValue">Ajout manuel</label>
-        <textarea id="manualValue" placeholder="Contenu du QR Code"></textarea>
-        <button class="primary" type="submit">Utiliser ce code</button>
-      </form>
-
-      <div class="card list-card">
-        <div class="list-head">
-          <strong>Codes enregistres</strong>
-          <small class="muted">CSV : ID, Favorable/Defavorable, Commentaire</small>
+    <section class="screen" id="screenReview">
+      <div class="topbar">
+        <div>
+          <p class="kicker">QR Code lu</p>
+          <h2>Avis ?</h2>
         </div>
-        <div class="items" id="items" aria-live="polite"></div>
-        <p class="empty" id="empty">Aucun QR Code enregistre pour le moment.</p>
+        <span class="pill" id="countReview">0 code</span>
+      </div>
+      <div class="qr-value" id="qrValue"></div>
+      <div class="choice">
+        <button id="chooseFavorable" type="button">Favorable</button>
+        <button id="chooseDefavorable" type="button">D&eacute;favorable</button>
+      </div>
+      <div class="comment-wrap" id="commentWrap" hidden>
+        <label for="comment">Commentaire</label>
+        <textarea id="comment" placeholder="Pourquoi ce QR Code est defavorable ?"></textarea>
+      </div>
+      <p class="status" id="reviewStatus">Selectionne un avis pour continuer.</p>
+      <div class="post-actions" id="postActions" hidden>
+        <button class="primary" id="nextCode" type="button">Code suivant</button>
+        <button id="exportCsv" type="button">Export vers CSV</button>
       </div>
     </section>
   </main>
@@ -369,34 +311,37 @@
   </script>
   <script>
     const STORAGE_KEY = "qr-control-records";
+    const screens = {
+      start: document.querySelector("#screenStart"),
+      camera: document.querySelector("#screenCamera"),
+      review: document.querySelector("#screenReview")
+    };
     const video = document.querySelector("#video");
     const canvas = document.querySelector("#canvas");
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     const statusText = document.querySelector("#status");
-    const startButton = document.querySelector("#start");
-    const captureButton = document.querySelector("#capture");
-    const stopButton = document.querySelector("#stop");
     const imageInput = document.querySelector("#imageInput");
-    const exportButton = document.querySelector("#export");
-    const clearButton = document.querySelector("#clear");
-    const manualForm = document.querySelector("#manualForm");
-    const manualValue = document.querySelector("#manualValue");
-    const items = document.querySelector("#items");
-    const empty = document.querySelector("#empty");
-    const count = document.querySelector("#count");
-    const currentCard = document.querySelector("#currentCard");
-    const currentValue = document.querySelector("#currentValue");
-    const saveCurrent = document.querySelector("#saveCurrent");
-    const resetCurrent = document.querySelector("#resetCurrent");
+    const countStart = document.querySelector("#countStart");
+    const countReview = document.querySelector("#countReview");
+    const qrValue = document.querySelector("#qrValue");
     const commentWrap = document.querySelector("#commentWrap");
     const comment = document.querySelector("#comment");
+    const reviewStatus = document.querySelector("#reviewStatus");
+    const postActions = document.querySelector("#postActions");
+    const chooseFavorable = document.querySelector("#chooseFavorable");
+    const chooseDefavorable = document.querySelector("#chooseDefavorable");
     let records = [];
     let stream = null;
     let frameId = null;
     let currentQr = "";
-    let lastDetected = "";
-    let lastDetectedAt = 0;
-    let isReviewing = false;
+    let currentDecision = "";
+    let lastValue = "";
+    let lastAt = 0;
+
+    function setScreen(name) {
+      Object.values(screens).forEach((screen) => screen.classList.remove("active"));
+      screens[name].classList.add("active");
+    }
 
     function loadRecords() {
       try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
@@ -405,138 +350,10 @@
 
     function saveRecords() { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); }
 
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function renderRecords() {
-      count.textContent = records.length + (records.length > 1 ? " lus" : " lu");
-      exportButton.disabled = records.length === 0;
-      clearButton.disabled = records.length === 0;
-      empty.hidden = records.length > 0;
-      items.innerHTML = records.map((record) => `
-        <article class="row" data-id="${record.rowId}">
-          <div>
-            <span class="value">${escapeHtml(record.id)}</span>
-            <span class="date">${escapeHtml(new Date(record.createdAt).toLocaleString("fr-FR"))}</span>
-            ${record.comment ? `<span class="comment">${escapeHtml(record.comment)}</span>` : ""}
-          </div>
-          <span class="badge">${record.decision === "defavorable" ? "Defavorable" : "Favorable"}</span>
-          <button class="delete" type="button" aria-label="Supprimer ce QR Code">&times;</button>
-        </article>
-      `).join("");
-    }
-
-    function showCurrentQr(value) {
-      const cleaned = String(value || "").trim();
-      const now = Date.now();
-      if (!cleaned) return false;
-      if (cleaned === currentQr) return false;
-      if (cleaned === lastDetected && now - lastDetectedAt < 1800) return false;
-      freezePreview();
-      isReviewing = true;
-      currentQr = cleaned;
-      lastDetected = cleaned;
-      lastDetectedAt = now;
-      currentValue.textContent = cleaned;
-      currentCard.classList.add("has-code");
-      saveCurrent.disabled = false;
-      resetCurrent.disabled = false;
-      statusText.textContent = "Code lu : image figee, valide-le pour l'ajouter a la liste.";
-      return true;
-    }
-
-    function clearCurrentQr(message = "Pret pour un nouveau QR Code.") {
-      currentQr = "";
-      currentValue.textContent = "Aucun code lu pour le moment.";
-      currentCard.classList.remove("has-code");
-      saveCurrent.disabled = true;
-      resetCurrent.disabled = true;
-      comment.value = "";
-      commentWrap.hidden = true;
-      canvas.hidden = true;
-      canvas.classList.remove("frozen-preview");
-      video.hidden = !stream;
-      isReviewing = false;
-      document.querySelector('input[name="decision"][value="favorable"]').checked = true;
-      statusText.textContent = message;
-      if (stream && !frameId) {
-        frameId = requestAnimationFrame(decodeCurrentFrame);
-      }
-    }
-
-    function freezePreview() {
-      if (video.hidden || !video.videoWidth || !video.videoHeight) {
-        canvas.classList.add("frozen-preview");
-        canvas.hidden = false;
-        return;
-      }
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      canvas.classList.add("frozen-preview");
-      canvas.hidden = false;
-    }
-
-    function captureVideoFrame() {
-      if (video.hidden || !video.videoWidth || !video.videoHeight) {
-        return null;
-      }
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      return ctx.getImageData(0, 0, canvas.width, canvas.height);
-    }
-
-    function decodeImageData(imageData) {
-      return jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "attemptBoth" });
-    }
-
-    function validateCurrentFrame() {
-      if (!stream) {
-        statusText.textContent = "Ouvre le scan avant de valider une lecture.";
-        return;
-      }
-      const imageData = captureVideoFrame();
-      if (!imageData) {
-        statusText.textContent = "Image camera indisponible, rapproche le QR Code ou relance le scan.";
-        return;
-      }
-      const result = decodeImageData(imageData);
-      if (result && showCurrentQr(result.data)) {
-        return;
-      }
-      statusText.textContent = "QR visible mais pas encore lu : stabilise l'image puis revalide.";
-    }
-
-    function selectedDecision() {
-      return document.querySelector('input[name="decision"]:checked').value;
-    }
-
-    function saveCurrentQr() {
-      if (!currentQr) return;
-      const decision = selectedDecision();
-      const note = comment.value.trim();
-      if (decision === "defavorable" && !note) {
-        statusText.textContent = "Ajoute un commentaire pour un avis defavorable.";
-        comment.focus();
-        return;
-      }
-      records.unshift({
-        rowId: String(Date.now()) + "-" + Math.random().toString(16).slice(2),
-        id: currentQr,
-        decision,
-        comment: decision === "defavorable" ? note : "",
-        createdAt: new Date().toISOString()
-      });
-      saveRecords();
-      renderRecords();
-      clearCurrentQr("Code enregistre. Presente le suivant.");
+    function updateCounts() {
+      const label = records.length + (records.length > 1 ? " codes" : " code");
+      countStart.textContent = label;
+      countReview.textContent = label;
     }
 
     function escapeCsv(value) { return '"' + String(value).replaceAll('"', '""') + '"'; }
@@ -557,60 +374,74 @@
       URL.revokeObjectURL(url);
     }
 
-    function decodeCurrentFrame() {
-      if (isReviewing) {
-        frameId = null;
-        return;
-      }
-      if (!stream || video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
-        frameId = requestAnimationFrame(decodeCurrentFrame);
-        return;
-      }
-      const imageData = captureVideoFrame();
-      if (!imageData) {
-        frameId = requestAnimationFrame(decodeCurrentFrame);
-        return;
-      }
-      const result = decodeImageData(imageData);
-      if (result && showCurrentQr(result.data)) return;
-      frameId = requestAnimationFrame(decodeCurrentFrame);
-    }
-
-    async function startCamera() {
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        statusText.textContent = "Camera non disponible ici. Utilise le bouton Scanner une photo.";
-        return;
-      }
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
-        video.srcObject = stream;
-        video.hidden = false;
-        canvas.hidden = true;
-        canvas.classList.remove("frozen-preview");
-        isReviewing = false;
-        startButton.disabled = true;
-        stopButton.disabled = false;
-        captureButton.disabled = false;
-        statusText.textContent = "Camera active : presente un QR Code.";
-        await video.play();
-        decodeCurrentFrame();
-      } catch {
-        statusText.textContent = "Impossible d'ouvrir la camera. Essaie Scanner une photo.";
-      }
-    }
-
-    function stopCamera(updateStatus = true) {
+    function stopCamera() {
       if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
       if (stream) { stream.getTracks().forEach((track) => track.stop()); }
       stream = null;
       video.srcObject = null;
       video.hidden = true;
-      startButton.disabled = false;
-      stopButton.disabled = true;
-      captureButton.disabled = true;
-      if (updateStatus) {
-        isReviewing = false;
-        statusText.textContent = "Scan arrete.";
+    }
+
+    function resetReview() {
+      currentQr = "";
+      currentDecision = "";
+      comment.value = "";
+      commentWrap.hidden = true;
+      postActions.hidden = true;
+      reviewStatus.textContent = "Selectionne un avis pour continuer.";
+      chooseFavorable.classList.remove("is-selected");
+      chooseDefavorable.classList.remove("is-selected");
+    }
+
+    function openReview(value) {
+      const cleaned = String(value || "").trim();
+      const now = Date.now();
+      if (!cleaned) return;
+      if (cleaned === lastValue && now - lastAt < 1800) return;
+      lastValue = cleaned;
+      lastAt = now;
+      stopCamera();
+      currentQr = cleaned;
+      qrValue.textContent = cleaned;
+      resetReview();
+      currentQr = cleaned;
+      setScreen("review");
+    }
+
+    function captureFrame() {
+      if (!stream || video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA || !video.videoWidth || !video.videoHeight) {
+        return null;
+      }
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      return ctx.getImageData(0, 0, canvas.width, canvas.height);
+    }
+
+    function detectLoop() {
+      const imageData = captureFrame();
+      if (imageData) {
+        const result = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "attemptBoth" });
+        if (result) {
+          openReview(result.data);
+          return;
+        }
+      }
+      frameId = requestAnimationFrame(detectLoop);
+    }
+
+    async function startCamera() {
+      resetReview();
+      setScreen("camera");
+      statusText.textContent = "Detection automatique en cours.";
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
+        video.srcObject = stream;
+        video.hidden = false;
+        await video.play();
+        detectLoop();
+      } catch {
+        statusText.textContent = "Impossible d'ouvrir la camera. Reviens et essaie la gallerie.";
       }
     }
 
@@ -623,56 +454,75 @@
           canvas.height = image.naturalHeight;
           ctx.drawImage(image, 0, 0);
           const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          const result = decodeImageData(imageData);
-          if (result) {
-            canvas.classList.add("frozen-preview");
-            canvas.hidden = false;
-            showCurrentQr(result.data);
-          }
-          else statusText.textContent = "Aucun QR Code detecte sur cette image.";
+          const result = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "attemptBoth" });
+          if (result) openReview(result.data);
+          else alert("Aucun QR Code detecte sur cette image.");
         };
         image.src = reader.result;
       };
       reader.readAsDataURL(file);
     }
 
-    startButton.addEventListener("click", startCamera);
-    captureButton.addEventListener("click", validateCurrentFrame);
-    stopButton.addEventListener("click", stopCamera);
+    function selectDecision(decision) {
+      currentDecision = decision;
+      chooseFavorable.classList.toggle("is-selected", decision === "favorable");
+      chooseDefavorable.classList.toggle("is-selected", decision === "defavorable");
+      commentWrap.hidden = decision !== "defavorable";
+      postActions.hidden = false;
+      reviewStatus.textContent = decision === "defavorable"
+        ? "Ajoute un commentaire puis choisis la suite."
+        : "Avis favorable selectionne. Choisis la suite.";
+      if (decision === "defavorable") comment.focus();
+    }
+
+    function saveCurrentRecord() {
+      if (!currentQr || !currentDecision) return false;
+      const note = comment.value.trim();
+      if (currentDecision === "defavorable" && !note) {
+        reviewStatus.textContent = "Commentaire obligatoire pour un avis defavorable.";
+        comment.focus();
+        return false;
+      }
+      records.unshift({
+        id: currentQr,
+        decision: currentDecision,
+        comment: currentDecision === "defavorable" ? note : "",
+        createdAt: new Date().toISOString()
+      });
+      saveRecords();
+      updateCounts();
+      return true;
+    }
+
+    document.querySelector("#scanCamera").addEventListener("click", startCamera);
+    document.querySelector("#cancelScan").addEventListener("click", () => { stopCamera(); setScreen("start"); });
     imageInput.addEventListener("change", () => {
       const file = imageInput.files && imageInput.files[0];
       if (file) decodeImageFile(file);
       imageInput.value = "";
     });
-    exportButton.addEventListener("click", exportCsv);
-    clearButton.addEventListener("click", () => {
+    chooseFavorable.addEventListener("click", () => selectDecision("favorable"));
+    chooseDefavorable.addEventListener("click", () => selectDecision("defavorable"));
+    document.querySelector("#nextCode").addEventListener("click", () => {
+      if (!saveCurrentRecord()) return;
+      resetReview();
+      setScreen("start");
+    });
+    document.querySelector("#exportCsv").addEventListener("click", () => {
+      if (!saveCurrentRecord()) return;
+      exportCsv();
+      resetReview();
+      setScreen("start");
+    });
+    document.querySelector("#exportFromStart").addEventListener("click", exportCsv);
+    document.querySelector("#clearRecords").addEventListener("click", () => {
       records = [];
       saveRecords();
-      renderRecords();
-      statusText.textContent = "Liste videe.";
-    });
-    manualForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      showCurrentQr(manualValue.value);
-      manualValue.value = "";
-    });
-    saveCurrent.addEventListener("click", saveCurrentQr);
-    resetCurrent.addEventListener("click", () => clearCurrentQr());
-    document.querySelectorAll('input[name="decision"]').forEach((input) => {
-      input.addEventListener("change", () => {
-        commentWrap.hidden = selectedDecision() !== "defavorable";
-      });
-    });
-    items.addEventListener("click", (event) => {
-      if (event.target.matches(".delete")) {
-        records = records.filter((record) => record.rowId !== event.target.closest(".row").dataset.id);
-        saveRecords();
-        renderRecords();
-      }
+      updateCounts();
     });
 
     records = loadRecords();
-    renderRecords();
+    updateCounts();
   </script>
 </body>
 </html>
