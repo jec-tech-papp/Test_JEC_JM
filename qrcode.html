@@ -303,6 +303,7 @@
 
       <div class="toolbar">
         <button class="primary" id="start" type="button">Ouvrir le scan</button>
+        <button class="primary" id="capture" type="button" disabled>Valider la lecture</button>
         <button id="stop" type="button" disabled>Arreter</button>
         <label class="file-button primary" for="imageInput">Scanner une photo</label>
         <input class="file-input" id="imageInput" type="file" accept="image/*" capture="environment">
@@ -373,6 +374,7 @@
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     const statusText = document.querySelector("#status");
     const startButton = document.querySelector("#start");
+    const captureButton = document.querySelector("#capture");
     const stopButton = document.querySelector("#stop");
     const imageInput = document.querySelector("#imageInput");
     const exportButton = document.querySelector("#export");
@@ -481,6 +483,37 @@
       canvas.hidden = false;
     }
 
+    function captureVideoFrame() {
+      if (video.hidden || !video.videoWidth || !video.videoHeight) {
+        return null;
+      }
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      return ctx.getImageData(0, 0, canvas.width, canvas.height);
+    }
+
+    function decodeImageData(imageData) {
+      return jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "attemptBoth" });
+    }
+
+    function validateCurrentFrame() {
+      if (!stream) {
+        statusText.textContent = "Ouvre le scan avant de valider une lecture.";
+        return;
+      }
+      const imageData = captureVideoFrame();
+      if (!imageData) {
+        statusText.textContent = "Image camera indisponible, rapproche le QR Code ou relance le scan.";
+        return;
+      }
+      const result = decodeImageData(imageData);
+      if (result && showCurrentQr(result.data)) {
+        return;
+      }
+      statusText.textContent = "QR visible mais pas encore lu : stabilise l'image puis revalide.";
+    }
+
     function selectedDecision() {
       return document.querySelector('input[name="decision"]:checked').value;
     }
@@ -533,11 +566,12 @@
         frameId = requestAnimationFrame(decodeCurrentFrame);
         return;
       }
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const result = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "attemptBoth" });
+      const imageData = captureVideoFrame();
+      if (!imageData) {
+        frameId = requestAnimationFrame(decodeCurrentFrame);
+        return;
+      }
+      const result = decodeImageData(imageData);
       if (result && showCurrentQr(result.data)) return;
       frameId = requestAnimationFrame(decodeCurrentFrame);
     }
@@ -556,6 +590,7 @@
         isReviewing = false;
         startButton.disabled = true;
         stopButton.disabled = false;
+        captureButton.disabled = false;
         statusText.textContent = "Camera active : presente un QR Code.";
         await video.play();
         decodeCurrentFrame();
@@ -572,6 +607,7 @@
       video.hidden = true;
       startButton.disabled = false;
       stopButton.disabled = true;
+      captureButton.disabled = true;
       if (updateStatus) {
         isReviewing = false;
         statusText.textContent = "Scan arrete.";
@@ -587,7 +623,7 @@
           canvas.height = image.naturalHeight;
           ctx.drawImage(image, 0, 0);
           const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          const result = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "attemptBoth" });
+          const result = decodeImageData(imageData);
           if (result) {
             canvas.classList.add("frozen-preview");
             canvas.hidden = false;
@@ -601,6 +637,7 @@
     }
 
     startButton.addEventListener("click", startCamera);
+    captureButton.addEventListener("click", validateCurrentFrame);
     stopButton.addEventListener("click", stopCamera);
     imageInput.addEventListener("change", () => {
       const file = imageInput.files && imageInput.files[0];
