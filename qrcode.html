@@ -314,11 +314,11 @@
       <div class="scan-layout">
         <div class="card">
           <label>Lecture directe</label>
-          <div class="camera-box">
+          <div class="camera-box" id="cameraBox">
             <video id="video" muted playsinline hidden></video>
+            <canvas id="canvas" hidden></canvas>
             <div class="camera-placeholder">Presente un QR Code devant la camera.</div>
           </div>
-          <canvas id="canvas" hidden></canvas>
         </div>
 
         <section class="card current-card" id="currentCard" aria-live="polite">
@@ -394,8 +394,7 @@
     let currentQr = "";
     let lastDetected = "";
     let lastDetectedAt = 0;
-    let justSaved = false;
-    let restartAfterSave = false;
+    let isReviewing = false;
 
     function loadRecords() {
       try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
@@ -437,14 +436,11 @@
       if (!cleaned) return false;
       if (cleaned === currentQr) return false;
       if (cleaned === lastDetected && now - lastDetectedAt < 1800) return false;
-      const shouldRestart = Boolean(stream);
       freezePreview();
-      stopCamera(false);
-      restartAfterSave = shouldRestart;
+      isReviewing = true;
       currentQr = cleaned;
       lastDetected = cleaned;
       lastDetectedAt = now;
-      justSaved = false;
       currentValue.textContent = cleaned;
       currentCard.classList.add("has-code");
       saveCurrent.disabled = false;
@@ -463,8 +459,13 @@
       commentWrap.hidden = true;
       canvas.hidden = true;
       canvas.classList.remove("frozen-preview");
+      video.hidden = !stream;
+      isReviewing = false;
       document.querySelector('input[name="decision"][value="favorable"]').checked = true;
       statusText.textContent = message;
+      if (stream && !frameId) {
+        frameId = requestAnimationFrame(decodeCurrentFrame);
+      }
     }
 
     function freezePreview() {
@@ -502,9 +503,7 @@
       });
       saveRecords();
       renderRecords();
-      justSaved = true;
       clearCurrentQr("Code enregistre. Presente le suivant.");
-      if (restartAfterSave) startCamera();
     }
 
     function escapeCsv(value) { return '"' + String(value).replaceAll('"', '""') + '"'; }
@@ -526,6 +525,10 @@
     }
 
     function decodeCurrentFrame() {
+      if (isReviewing) {
+        frameId = null;
+        return;
+      }
       if (!stream || video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
         frameId = requestAnimationFrame(decodeCurrentFrame);
         return;
@@ -550,7 +553,7 @@
         video.hidden = false;
         canvas.hidden = true;
         canvas.classList.remove("frozen-preview");
-        restartAfterSave = true;
+        isReviewing = false;
         startButton.disabled = true;
         stopButton.disabled = false;
         statusText.textContent = "Camera active : presente un QR Code.";
@@ -570,7 +573,7 @@
       startButton.disabled = false;
       stopButton.disabled = true;
       if (updateStatus) {
-        restartAfterSave = false;
+        isReviewing = false;
         statusText.textContent = "Scan arrete.";
       }
     }
@@ -588,7 +591,6 @@
           if (result) {
             canvas.classList.add("frozen-preview");
             canvas.hidden = false;
-            restartAfterSave = false;
             showCurrentQr(result.data);
           }
           else statusText.textContent = "Aucun QR Code detecte sur cette image.";
