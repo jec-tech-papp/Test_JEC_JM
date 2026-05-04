@@ -801,6 +801,162 @@
       }
     }
 
+    .secret-trigger {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 15;
+      width: 2.75rem;
+      height: 2.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 1rem;
+      background: rgba(3, 27, 47, 0.18);
+      box-shadow: 0 1rem 2rem rgba(2, 8, 23, 0.16);
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      transition:
+        transform 180ms ease,
+        color 180ms ease,
+        background 180ms ease,
+        border-color 180ms ease;
+    }
+
+    .secret-trigger:hover,
+    .secret-trigger:focus-visible {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.16);
+      transform: translateY(-0.12rem);
+      outline: none;
+    }
+
+    .secret-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(2, 8, 23, 0.58);
+      opacity: 0;
+      pointer-events: none;
+      backdrop-filter: blur(12px);
+      transition: opacity 180ms ease;
+    }
+
+    .secret-modal.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .secret-dialog {
+      position: relative;
+      width: min(100%, 34rem);
+      min-height: 21rem;
+      padding: clamp(1.25rem, 4vw, 2rem);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 1.6rem;
+      color: #ffffff;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08)),
+        rgba(3, 27, 47, 0.72);
+      box-shadow: 0 2rem 5rem rgba(2, 8, 23, 0.38);
+    }
+
+    .secret-close {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      color: inherit;
+      background: rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+    }
+
+    .secret-login,
+    .secret-empty {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .secret-login h2,
+    .secret-empty h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      letter-spacing: -0.04em;
+    }
+
+    .secret-login p,
+    .secret-empty p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.6;
+    }
+
+    .secret-form {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 0.35rem;
+    }
+
+    .secret-form label {
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .secret-form input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 0.95rem;
+      color: #ffffff;
+      font: inherit;
+      background: rgba(255, 255, 255, 0.12);
+      outline: none;
+    }
+
+    .secret-form input:focus {
+      border-color: rgba(255, 221, 138, 0.74);
+      box-shadow: 0 0 0 0.2rem rgba(255, 221, 138, 0.14);
+    }
+
+    .secret-submit {
+      justify-self: start;
+      padding: 0.85rem 1.1rem;
+      border: 0;
+      border-radius: 999px;
+      color: #082f49;
+      font-weight: 850;
+      background: linear-gradient(90deg, var(--sun), var(--lagoon));
+      cursor: pointer;
+    }
+
+    .secret-error {
+      min-height: 1.4rem;
+      margin: 0;
+      color: #fecaca;
+      font-size: 0.92rem;
+    }
+
+    .secret-empty {
+      min-height: 16rem;
+      place-content: center;
+      text-align: center;
+    }
+
+    .secret-empty[hidden],
+    .secret-login[hidden] {
+      display: none;
+    }
+
     @media (max-width: 900px) {
       .hero-grid {
         grid-template-columns: 1fr;
@@ -863,6 +1019,32 @@
     </div>
   </div>
   <div class="surprise-layer" aria-hidden="true"></div>
+
+  <button class="secret-trigger" id="secretAccess" type="button" aria-controls="secretModal">
+    Espace priv&eacute;
+  </button>
+
+  <div class="secret-modal" id="secretModal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="secretTitle">
+    <div class="secret-dialog">
+      <button class="secret-close" id="secretClose" type="button" aria-label="Fermer la fen&ecirc;tre">&times;</button>
+      <div class="secret-login" id="secretGate">
+        <p class="secret-kicker">Acc&egrave;s discret</p>
+        <h2 id="secretTitle">Fen&ecirc;tre prot&eacute;g&eacute;e</h2>
+        <p class="secret-help">Entre le mot de passe pour ouvrir cet espace.</p>
+        <form class="secret-form" id="secretForm">
+          <label for="secretPassword">Mot de passe</label>
+          <input id="secretPassword" type="password" autocomplete="off" inputmode="text">
+          <button class="secret-submit" type="submit">Entrer</button>
+          <p class="secret-error" id="secretError" role="alert"></p>
+        </form>
+      </div>
+      <div class="secret-empty" id="secretEmpty" hidden tabindex="-1">
+        <p class="secret-kicker">Espace ouvert</p>
+        <h2>Rien ici pour le moment</h2>
+        <div class="empty-placeholder" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
 
   <main>
     <section class="countdown-card" aria-labelledby="page-title">
@@ -1015,7 +1197,15 @@
       intro: document.querySelector(".intro"),
       themeButtons: document.querySelectorAll(".theme-button"),
       checklistItems: document.querySelectorAll(".checklist input"),
-      airplane: document.querySelector(".flying-plane")
+      airplane: document.querySelector(".flying-plane"),
+      secretAccess: document.querySelector("#secretAccess"),
+      secretModal: document.querySelector("#secretModal"),
+      secretClose: document.querySelector("#secretClose"),
+      secretForm: document.querySelector("#secretForm"),
+      secretPassword: document.querySelector("#secretPassword"),
+      secretError: document.querySelector("#secretError"),
+      secretGate: document.querySelector("#secretGate"),
+      secretEmpty: document.querySelector("#secretEmpty")
     };
     const surpriseSvgs = [
       '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#0f766e" d="M30 24c-5-9-13-13-24-12 7 8 15 12 24 12Z"/><path fill="#14b8a6" d="M34 24c7-7 15-9 24-5-8 5-16 7-24 5Z"/><path fill="#7c4a1e" d="M29 22h7l-4 34h-7l4-34Z"/><path fill="#fde68a" d="M12 54h40l-6 5H18l-6-5Z"/></svg>',
@@ -1161,8 +1351,54 @@
       }, randomBetween(10000, 15000));
     }
 
+    function openSecretModal() {
+      elements.secretModal.hidden = false;
+      elements.secretModal.classList.add("is-open");
+      elements.secretGate.hidden = false;
+      elements.secretEmpty.hidden = true;
+      elements.secretError.textContent = "";
+      elements.secretPassword.value = "";
+      window.setTimeout(() => elements.secretPassword.focus(), 50);
+    }
+
+    function closeSecretModal() {
+      elements.secretModal.classList.remove("is-open");
+      elements.secretModal.hidden = true;
+    }
+
+    function unlockSecretModal() {
+      elements.secretGate.hidden = true;
+      elements.secretEmpty.hidden = false;
+      elements.secretError.textContent = "";
+    }
+
+    function initSecretAccess() {
+      elements.secretAccess.addEventListener("click", openSecretModal);
+      elements.secretClose.addEventListener("click", closeSecretModal);
+      elements.secretModal.addEventListener("click", (event) => {
+        if (event.target === elements.secretModal) {
+          closeSecretModal();
+        }
+      });
+      elements.secretForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (elements.secretPassword.value === "A2026E") {
+          unlockSecretModal();
+          return;
+        }
+        elements.secretError.textContent = "Mot de passe incorrect.";
+        elements.secretPassword.select();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !elements.secretModal.hidden) {
+          closeSecretModal();
+        }
+      });
+    }
+
     initThemes();
     initChecklist();
+    initSecretAccess();
     updateCountdown();
     setInterval(updateCountdown, 1000);
     launchSurprise();
