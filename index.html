@@ -959,179 +959,6 @@
       display: none;
     }
 
-    .qr-toolbar,
-    .qr-scanner-grid,
-    .qr-list-head,
-    .qr-row {
-      display: grid;
-      gap: 0.8rem;
-    }
-
-    .qr-toolbar {
-      grid-template-columns: repeat(4, minmax(0, auto));
-      justify-content: start;
-      margin: 0.5rem 0;
-    }
-
-    .qr-button,
-    .qr-manual button {
-      padding: 0.78rem 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 999px;
-      color: #ffffff;
-      font: inherit;
-      font-weight: 800;
-      background: rgba(255, 255, 255, 0.12);
-      cursor: pointer;
-    }
-
-    .qr-button.primary,
-    .qr-manual button {
-      color: #082f49;
-      border: 0;
-      background: linear-gradient(90deg, var(--sun), var(--lagoon));
-    }
-
-    .qr-button.danger {
-      color: #fecaca;
-    }
-
-    .qr-status {
-      min-height: 1.4rem;
-      margin: 0;
-      color: rgba(255, 255, 255, 0.78);
-      font-size: 0.92rem;
-    }
-
-    .qr-scanner-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.85fr);
-      align-items: stretch;
-    }
-
-    .qr-camera,
-    .qr-manual,
-    .qr-list {
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 1.15rem;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .qr-camera {
-      min-height: 18rem;
-      overflow: hidden;
-    }
-
-    .qr-camera video {
-      display: block;
-      width: 100%;
-      height: 100%;
-      min-height: 18rem;
-      object-fit: cover;
-      background: rgba(2, 8, 23, 0.38);
-    }
-
-    .qr-manual {
-      display: grid;
-      gap: 0.75rem;
-      padding: 1rem;
-    }
-
-    .qr-manual label,
-    .qr-control-label {
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 850;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .qr-manual textarea,
-    .qr-manual select,
-    .qr-row select {
-      width: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 0.9rem;
-      color: #ffffff;
-      font: inherit;
-      background: rgba(255, 255, 255, 0.12);
-      outline: none;
-    }
-
-    .qr-manual textarea {
-      min-height: 8rem;
-      padding: 0.9rem;
-      resize: vertical;
-    }
-
-    .qr-manual select,
-    .qr-row select {
-      padding: 0.78rem 0.9rem;
-    }
-
-    .qr-manual option,
-    .qr-row option {
-      color: #082f49;
-    }
-
-    .qr-list {
-      display: grid;
-      gap: 0.8rem;
-      margin-top: 1rem;
-      padding: 1rem;
-    }
-
-    .qr-list-head {
-      grid-template-columns: 1fr auto;
-      align-items: center;
-    }
-
-    .qr-list-head span {
-      color: var(--accent);
-      font-weight: 850;
-    }
-
-    .qr-items {
-      display: grid;
-      gap: 0.7rem;
-    }
-
-    .qr-empty {
-      margin: 0;
-      color: rgba(255, 255, 255, 0.68);
-    }
-
-    .qr-row {
-      grid-template-columns: minmax(0, 1fr) 9rem auto;
-      align-items: center;
-      padding: 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 1rem;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .qr-value {
-      overflow-wrap: anywhere;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 0.95rem;
-    }
-
-    .qr-date {
-      display: block;
-      margin-top: 0.25rem;
-      color: rgba(255, 255, 255, 0.55);
-      font-size: 0.78rem;
-    }
-
-    .qr-delete {
-      width: 2.35rem;
-      height: 2.35rem;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 999px;
-      color: #fecaca;
-      background: rgba(255, 255, 255, 0.08);
-      cursor: pointer;
-    }
-
     @media (max-width: 900px) {
       .hero-grid {
         grid-template-columns: 1fr;
@@ -1219,48 +1046,11 @@
           <p class="secret-error" id="secretError" role="alert"></p>
         </form>
       </div>
-      <div class="secret-empty qr-workspace" id="secretEmpty" hidden tabindex="-1">
-        <div class="qr-heading">
-          <div>
-            <p class="secret-kicker">Espace contr&ocirc;le</p>
-            <h2>Scan QR Code</h2>
-          </div>
-          <span id="qrCount">0 lu</span>
-        </div>
-
-        <div class="qr-toolbar">
-          <button class="qr-button primary" id="qrStart" type="button">D&eacute;marrer le scan</button>
-          <button class="qr-button" id="qrStop" type="button" disabled>Arr&ecirc;ter</button>
-          <button class="qr-button" id="qrExport" type="button" disabled>Exporter CSV</button>
-          <button class="qr-button danger" id="qrClear" type="button" disabled>Vider</button>
-        </div>
-        <p class="qr-status" id="qrStatus">Appuie sur "D&eacute;marrer le scan" pour activer la cam&eacute;ra.</p>
-
-        <div class="qr-scanner-grid">
-          <div class="qr-camera">
-            <video id="qrVideo" muted playsinline hidden></video>
-          </div>
-
-          <form class="qr-manual" id="qrManualForm">
-            <label for="qrManualValue">Ajout manuel si le scan n'est pas disponible</label>
-            <textarea id="qrManualValue" placeholder="Contenu du QR Code"></textarea>
-            <label class="qr-control-label" for="qrManualControl">Contr&ocirc;le</label>
-            <select id="qrManualControl">
-              <option value="favorable">Favorable</option>
-              <option value="refuse">Refus&eacute;</option>
-            </select>
-            <button type="submit">Ajouter</button>
-          </form>
-        </div>
-
-        <div class="qr-list">
-          <div class="qr-list-head">
-            <span>QR Codes lus</span>
-            <small>Contr&ocirc;le modifiable avant export</small>
-          </div>
-          <div class="qr-items" id="qrList" aria-live="polite"></div>
-          <p class="qr-empty" id="qrEmptyState">Aucun QR Code enregistr&eacute; pour le moment.</p>
-        </div>
+      <div class="secret-empty" id="secretEmpty" hidden tabindex="-1">
+        <p class="secret-kicker">Espace ouvert</p>
+        <h2>Contr&ocirc;le QR Code</h2>
+        <p>La lecture QR Code est maintenant s&eacute;par&eacute;e du compte &agrave; rebours.</p>
+        <a class="secret-submit" href="qrcode.html">Ouvrir la page QR Code</a>
       </div>
     </div>
   </div>
@@ -1401,8 +1191,7 @@
     const journeyStart = new Date("2026-05-03T00:00:00");
     const storageKeys = {
       theme: "mauritius-countdown-theme",
-      checklist: "mauritius-countdown-checklist",
-      qrRecords: "mauritius-countdown-qr-records"
+      checklist: "mauritius-countdown-checklist"
     };
     const elements = {
       days: document.querySelector("#days"),
@@ -1425,27 +1214,8 @@
       secretPassword: document.querySelector("#secretPassword"),
       secretError: document.querySelector("#secretError"),
       secretGate: document.querySelector("#secretGate"),
-      secretEmpty: document.querySelector("#secretEmpty"),
-      qrVideo: document.querySelector("#qrVideo"),
-      qrStart: document.querySelector("#qrStart"),
-      qrStop: document.querySelector("#qrStop"),
-      qrStatus: document.querySelector("#qrStatus"),
-      qrManualForm: document.querySelector("#qrManualForm"),
-      qrManualValue: document.querySelector("#qrManualValue"),
-      qrManualControl: document.querySelector("#qrManualControl"),
-      qrList: document.querySelector("#qrList"),
-      qrEmptyState: document.querySelector("#qrEmptyState"),
-      qrCount: document.querySelector("#qrCount"),
-      qrExport: document.querySelector("#qrExport"),
-      qrClear: document.querySelector("#qrClear")
+      secretEmpty: document.querySelector("#secretEmpty")
     };
-    let qrRecords = [];
-    let qrStream = null;
-    let qrDetector = null;
-    let qrScanFrame = null;
-    let lastQrValue = "";
-    let lastQrAt = 0;
-    let qrToolsInitialized = false;
     const surpriseSvgs = [
       '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#0f766e" d="M30 24c-5-9-13-13-24-12 7 8 15 12 24 12Z"/><path fill="#14b8a6" d="M34 24c7-7 15-9 24-5-8 5-16 7-24 5Z"/><path fill="#7c4a1e" d="M29 22h7l-4 34h-7l4-34Z"/><path fill="#fde68a" d="M12 54h40l-6 5H18l-6-5Z"/></svg>',
       '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="13" fill="#facc15"/><g stroke="#fde68a" stroke-linecap="round" stroke-width="5"><path d="M32 5v9M32 50v9M5 32h9M50 32h9M13 13l7 7M44 44l7 7M51 13l-7 7M20 44l-7 7"/></g></svg>',
@@ -1513,215 +1283,6 @@
       setTheme(savedTheme);
       elements.themeButtons.forEach((button) => {
         button.addEventListener("click", () => setTheme(button.dataset.theme));
-      });
-    }
-
-    function loadQrRecords() {
-      try {
-        return JSON.parse(localStorage.getItem(storageKeys.qrRecords)) || [];
-      } catch {
-        return [];
-      }
-    }
-
-    function saveQrRecords() {
-      localStorage.setItem(storageKeys.qrRecords, JSON.stringify(qrRecords));
-    }
-
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function renderQrRecords() {
-      elements.qrCount.textContent =
-        qrRecords.length + (qrRecords.length > 1 ? " lus" : " lu");
-      elements.qrExport.disabled = qrRecords.length === 0;
-      elements.qrClear.disabled = qrRecords.length === 0;
-
-      if (qrRecords.length === 0) {
-        elements.qrList.innerHTML =
-          '<p class="qr-empty">Aucun QR Code enregistr&eacute; pour le moment.</p>';
-        return;
-      }
-
-      elements.qrList.innerHTML = qrRecords.map((record) => `
-        <article class="qr-row" data-id="${record.id}">
-          <div>
-            <strong class="qr-value">${escapeHtml(record.value)}</strong>
-            <span class="qr-date">${escapeHtml(new Date(record.createdAt).toLocaleString("fr-FR"))}</span>
-          </div>
-          <select aria-label="Information de controle">
-            <option value="favorable"${record.control === "favorable" ? " selected" : ""}>Favorable</option>
-            <option value="refuse"${record.control === "refuse" ? " selected" : ""}>Refus&eacute;</option>
-          </select>
-          <button class="qr-delete" type="button" aria-label="Supprimer ce QR Code">&times;</button>
-        </article>
-      `).join("");
-    }
-
-    function addQrRecord(value, control = "favorable") {
-      const cleanedValue = value.trim();
-      const now = Date.now();
-
-      if (!cleanedValue) {
-        elements.qrStatus.textContent = "QR Code vide ignore.";
-        return false;
-      }
-
-      if (cleanedValue === lastQrValue && now - lastQrAt < 2500) {
-        elements.qrStatus.textContent = "QR Code deja lu a l'instant.";
-        return false;
-      }
-
-      lastQrValue = cleanedValue;
-      lastQrAt = now;
-      qrRecords.unshift({
-        id: String(now) + "-" + Math.random().toString(16).slice(2),
-        value: cleanedValue,
-        control,
-        createdAt: new Date().toISOString()
-      });
-      saveQrRecords();
-      renderQrRecords();
-      elements.qrStatus.textContent = "QR Code enregistre.";
-      return true;
-    }
-
-    function updateQrControl(id, control) {
-      qrRecords = qrRecords.map((record) => (
-        record.id === id ? { ...record, control } : record
-      ));
-      saveQrRecords();
-      renderQrRecords();
-    }
-
-    function deleteQrRecord(id) {
-      qrRecords = qrRecords.filter((record) => record.id !== id);
-      saveQrRecords();
-      renderQrRecords();
-    }
-
-    function escapeCsv(value) {
-      return '"' + String(value).replaceAll('"', '""') + '"';
-    }
-
-    function exportQrCsv() {
-      const header = ["qr_code", "controle", "date_lecture"];
-      const rows = qrRecords.map((record) => [
-        escapeCsv(record.value),
-        escapeCsv(record.control === "refus\u00e9" ? "refus\u00e9" : "favorable"),
-        escapeCsv(record.createdAt)
-      ].join(","));
-      const csv = [header.join(","), ...rows].join("\n");
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-
-      link.href = url;
-      link.download = "qr_records.csv";
-      link.click();
-      URL.revokeObjectURL(url);
-    }
-
-    async function scanQrFrame() {
-      if (!qrStream || !qrDetector) {
-        return;
-      }
-
-      try {
-        const codes = await qrDetector.detect(elements.qrVideo);
-        if (codes.length > 0) {
-          addQrRecord(codes[0].rawValue, elements.qrManualControl.value);
-        }
-      } catch {
-        elements.qrStatus.textContent = "Scan impossible sur cette image.";
-      }
-
-      qrScanFrame = window.requestAnimationFrame(scanQrFrame);
-    }
-
-    async function startQrScanner() {
-      if (!("BarcodeDetector" in window)) {
-        elements.qrStatus.textContent =
-          "Scan camera non supporte par ce navigateur. Utilise l'ajout manuel.";
-        return;
-      }
-
-      try {
-        qrDetector = new BarcodeDetector({ formats: ["qr_code"] });
-        qrStream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" }
-        });
-        elements.qrVideo.srcObject = qrStream;
-        elements.qrVideo.hidden = false;
-        elements.qrStart.disabled = true;
-        elements.qrStop.disabled = false;
-        elements.qrStatus.textContent = "Camera active : presente un QR Code.";
-        await elements.qrVideo.play();
-        scanQrFrame();
-      } catch {
-        elements.qrStatus.textContent =
-          "Impossible d'ouvrir la camera. Verifie les permissions ou utilise l'ajout manuel.";
-      }
-    }
-
-    function stopQrScanner() {
-      if (qrScanFrame) {
-        window.cancelAnimationFrame(qrScanFrame);
-        qrScanFrame = null;
-      }
-
-      if (qrStream) {
-        qrStream.getTracks().forEach((track) => track.stop());
-      }
-      qrStream = null;
-      elements.qrVideo.srcObject = null;
-      elements.qrVideo.hidden = true;
-      elements.qrStart.disabled = false;
-      elements.qrStop.disabled = true;
-      elements.qrStatus.textContent = "Scan arrete.";
-    }
-
-    function initQrTools() {
-      if (qrToolsInitialized) {
-        renderQrRecords();
-        return;
-      }
-
-      qrToolsInitialized = true;
-      qrRecords = loadQrRecords();
-      renderQrRecords();
-      elements.qrStop.disabled = true;
-
-      elements.qrStart.addEventListener("click", startQrScanner);
-      elements.qrStop.addEventListener("click", stopQrScanner);
-      elements.qrExport.addEventListener("click", exportQrCsv);
-      elements.qrClear.addEventListener("click", () => {
-        qrRecords = [];
-        saveQrRecords();
-        renderQrRecords();
-        elements.qrStatus.textContent = "Liste videe.";
-      });
-      elements.qrManualForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        if (addQrRecord(elements.qrManualValue.value, elements.qrManualControl.value)) {
-          elements.qrManualValue.value = "";
-        }
-      });
-      elements.qrList.addEventListener("change", (event) => {
-        if (event.target.matches("select")) {
-          updateQrControl(event.target.closest(".qr-row").dataset.id, event.target.value);
-        }
-      });
-      elements.qrList.addEventListener("click", (event) => {
-        if (event.target.matches(".qr-delete")) {
-          deleteQrRecord(event.target.closest(".qr-row").dataset.id);
-        }
       });
     }
 
@@ -1810,7 +1371,6 @@
     }
 
     function closeSecretModal() {
-      stopQrScanner();
       elements.secretModal.classList.remove("is-open");
       elements.secretModal.hidden = true;
     }
@@ -1819,7 +1379,6 @@
       elements.secretGate.hidden = true;
       elements.secretEmpty.hidden = false;
       elements.secretError.textContent = "";
-      initQrTools();
     }
 
     function initSecretAccess() {
