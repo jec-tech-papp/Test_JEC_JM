@@ -279,21 +279,7 @@
   </style>
 </head>
 <body>
-  <section class="gate" id="gate">
-    <div class="gate-card">
-      <p class="kicker">Acc&egrave;s prot&eacute;g&eacute;</p>
-      <h1>Contr&ocirc;le QR Code</h1>
-      <p class="muted">Entre le mot de passe pour ouvrir l'espace de lecture QR.</p>
-      <form class="gate-form" id="gateForm">
-        <label for="password">Mot de passe</label>
-        <input id="password" type="password" autocomplete="off" inputmode="text">
-        <button class="primary" type="submit">Entrer</button>
-        <p class="error" id="passwordError" role="alert"></p>
-      </form>
-    </div>
-  </section>
-
-  <main id="app" hidden>
+  <main id="app">
     <section class="shell">
       <div class="hero">
         <div>
@@ -352,13 +338,8 @@
 
   </script>
   <script>
-    const PASSWORD = "A2026E";
     const STORAGE_KEY = "qr-control-records";
-    const gate = document.querySelector("#gate");
     const app = document.querySelector("#app");
-    const gateForm = document.querySelector("#gateForm");
-    const password = document.querySelector("#password");
-    const passwordError = document.querySelector("#passwordError");
     const video = document.querySelector("#video");
     const canvas = document.querySelector("#canvas");
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -553,18 +534,6 @@
       reader.readAsDataURL(file);
     }
 
-    gateForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      if (password.value === PASSWORD) {
-        gate.hidden = true;
-        app.hidden = false;
-        records = loadRecords();
-        renderRecords();
-        return;
-      }
-      passwordError.textContent = "Mot de passe incorrect.";
-      password.select();
-    });
 
     startButton.addEventListener("click", startCamera);
     stopButton.addEventListener("click", stopCamera);
