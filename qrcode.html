@@ -337,6 +337,7 @@
     let currentDecision = "";
     let lastValue = "";
     let lastAt = 0;
+    let shouldResumeCamera = false;
 
     function setScreen(name) {
       Object.values(screens).forEach((screen) => screen.classList.remove("active"));
@@ -380,6 +381,25 @@
       stream = null;
       video.srcObject = null;
       video.hidden = true;
+      shouldResumeCamera = false;
+    }
+
+    function pauseDetection() {
+      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+      shouldResumeCamera = Boolean(stream);
+    }
+
+    function resumeDetection() {
+      if (!shouldResumeCamera || !stream) {
+        setScreen("start");
+        return;
+      }
+      shouldResumeCamera = false;
+      setScreen("camera");
+      statusText.textContent = "Detection automatique en cours.";
+      if (!frameId) {
+        frameId = requestAnimationFrame(detectLoop);
+      }
     }
 
     function resetReview() {
@@ -400,7 +420,7 @@
       if (cleaned === lastValue && now - lastAt < 1800) return;
       lastValue = cleaned;
       lastAt = now;
-      stopCamera();
+      pauseDetection();
       currentQr = cleaned;
       qrValue.textContent = cleaned;
       resetReview();
@@ -431,6 +451,12 @@
     }
 
     async function startCamera() {
+      if (stream) {
+        setScreen("camera");
+        statusText.textContent = "Detection automatique en cours.";
+        if (!frameId) frameId = requestAnimationFrame(detectLoop);
+        return;
+      }
       resetReview();
       setScreen("camera");
       statusText.textContent = "Detection automatique en cours.";
@@ -506,12 +532,13 @@
     document.querySelector("#nextCode").addEventListener("click", () => {
       if (!saveCurrentRecord()) return;
       resetReview();
-      setScreen("start");
+      resumeDetection();
     });
     document.querySelector("#exportCsv").addEventListener("click", () => {
       if (!saveCurrentRecord()) return;
       exportCsv();
       resetReview();
+      stopCamera();
       setScreen("start");
     });
     document.querySelector("#exportFromStart").addEventListener("click", exportCsv);
