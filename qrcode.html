@@ -6,14 +6,20 @@
   <title>Controle QR Code</title>
   <style>
     :root {
-      --bg-1: #041827;
-      --bg-2: #0f766e;
-      --bg-3: #f8c76c;
-      --card: rgba(255, 255, 255, 0.15);
+      --bg-1: #171717;
+      --bg-2: #3b3f45;
+      --bg-3: #e2001a;
+      --sncf-red: #e2001a;
+      --sncf-plum: #4f0b45;
+      --sncf-gray: #4a4f55;
+      --sncf-dark: #202226;
+      --success: #138a36;
+      --reject: #c5162e;
+      --card: rgba(255, 255, 255, 0.16);
       --border: rgba(255, 255, 255, 0.28);
       --text: #ffffff;
       --muted: rgba(255, 255, 255, 0.74);
-      --accent: #ffdd8a;
+      --accent: #ffffff;
       --danger: #fecaca;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
@@ -26,8 +32,8 @@
       color: var(--text);
       overflow: hidden;
       background:
-        radial-gradient(circle at 14% 12%, rgba(255, 221, 138, 0.72), transparent 20rem),
-        radial-gradient(circle at 88% 18%, rgba(103, 232, 249, 0.44), transparent 24rem),
+        radial-gradient(circle at 12% 14%, rgba(226, 0, 26, 0.5), transparent 20rem),
+        radial-gradient(circle at 88% 18%, rgba(255, 255, 255, 0.18), transparent 24rem),
         linear-gradient(135deg, var(--bg-1), var(--bg-2) 60%, var(--bg-3));
     }
 
@@ -60,7 +66,10 @@
       max-height: 100%;
       border: 1px solid var(--border);
       border-radius: clamp(1.25rem, 4vw, 2rem);
-      background: linear-gradient(145deg, rgba(255,255,255,.22), rgba(255,255,255,.08)), var(--card);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.22), rgba(255,255,255,.08)),
+        linear-gradient(180deg, rgba(226,0,26,.12), transparent 38%),
+        var(--card);
       box-shadow: 0 2rem 6rem rgba(2, 8, 23, 0.32);
       backdrop-filter: blur(24px);
       overflow: hidden;
@@ -73,6 +82,53 @@
     }
 
     .screen.center { text-align: center; }
+
+    .brand {
+      position: fixed;
+      top: max(0.75rem, env(safe-area-inset-top));
+      left: max(0.75rem, env(safe-area-inset-left));
+      z-index: 5;
+      display: inline-flex;
+      gap: 0.55rem;
+      align-items: center;
+      padding: 0.45rem 0.65rem;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 0.9rem;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      background: rgba(32, 34, 38, 0.74);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand svg {
+      display: block;
+      width: 4.2rem;
+      height: auto;
+    }
+
+    .sncf-logo {
+      display: inline-grid;
+      place-items: center;
+      min-width: 4.1rem;
+      min-height: 2rem;
+      padding: 0.22rem 0.45rem;
+      border-radius: 0.22rem;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 950;
+      letter-spacing: -0.08em;
+      background: linear-gradient(135deg, var(--sncf-red), var(--sncf-plum));
+      transform: skew(-10deg);
+    }
+
+    .brand-text {
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 950;
+      letter-spacing: 0.14em;
+    }
 
     .kicker {
       margin: 0;
@@ -113,17 +169,20 @@
       border-radius: 999px;
       color: #ffffff;
       font: inherit;
+      font-size: 0.95rem;
       font-weight: 850;
+      letter-spacing: 0.04em;
       background: rgba(255,255,255,.13);
       cursor: pointer;
       text-decoration: none;
+      text-transform: none;
     }
 
     button.primary,
     .file-button.primary {
-      color: #082f49;
+      color: #ffffff;
       border: 0;
-      background: linear-gradient(90deg, var(--accent), #67e8f9);
+      background: linear-gradient(90deg, var(--sncf-red), #b00020);
     }
 
     button.danger { color: var(--danger); }
@@ -204,9 +263,35 @@
     }
 
     .choice button.is-selected {
-      color: #082f49;
+      color: #ffffff;
       border: 0;
-      background: linear-gradient(90deg, var(--accent), #67e8f9);
+    }
+
+    #chooseFavorable {
+      border-color: rgba(19, 138, 54, 0.6);
+      color: #d7fbe2;
+      background: rgba(19, 138, 54, 0.2);
+    }
+
+    #chooseFavorable.is-selected {
+      background: linear-gradient(90deg, #16a34a, #86efac);
+    }
+
+    #chooseDefavorable {
+      border-color: rgba(197, 22, 46, 0.7);
+      color: #ffd7dc;
+      background: rgba(197, 22, 46, 0.22);
+    }
+
+    #chooseDefavorable.is-selected {
+      background: linear-gradient(90deg, #dc2626, #fca5a5);
+    }
+
+    #nextCode {
+      color: #202226;
+      border: 0;
+      background: linear-gradient(90deg, #ffffff, #dfe3e8);
+      box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.18);
     }
 
     .comment-wrap { display: grid; gap: 0.5rem; }
@@ -251,24 +336,34 @@
 <body>
   <main class="app">
     <section class="screen center active" id="screenController">
+      <div class="brand" aria-label="SNCF Reseau">
+        <span class="sncf-logo">SNCF</span>
+        <span class="brand-text">RESEAU</span>
+      </div>
       <p class="kicker">Controleur</p>
       <h1 id="controllerTitle">Bienvenue</h1>
       <p class="muted" id="controllerHelp">Renseigne ton nom une seule fois. Il sera garde sur cet appareil.</p>
       <form class="actions" id="controllerForm">
         <textarea id="controllerName" placeholder="Nom du controleur"></textarea>
         <button class="primary" type="submit" id="controllerSubmit">Continuer</button>
+        <button type="button" id="editController" hidden>modifier le controleur</button>
       </form>
     </section>
 
     <section class="screen center" id="screenStart">
+      <div class="brand" aria-label="SNCF Reseau">
+        <span class="sncf-logo">SNCF</span>
+        <span class="brand-text">RESEAU</span>
+      </div>
       <p class="kicker">Controle QR</p>
       <h1>Lecture QR Code</h1>
       <p class="muted">Choisis une methode de lecture. Les codes valides restent stockes sur cet appareil jusqu'a export CSV.</p>
       <div class="actions">
         <button class="primary" id="scanCamera" type="button">Scanner un Code</button>
-        <label class="file-button primary" for="imageInput">Scanner le code sur une image de ma gallerie</label>
+        <label class="file-button primary" for="imageInput">scanner le code sur une image de ma gallerie</label>
         <input class="file-input" id="imageInput" type="file" accept="image/*" capture="environment">
         <button id="exportFromStart" type="button">Export vers CSV</button>
+        <button id="editControllerStart" type="button">modifier le controleur</button>
         <button class="danger" id="clearRecords" type="button">Vider les codes</button>
       </div>
       <span class="pill" id="countStart">0 code</span>
@@ -309,7 +404,7 @@
       </div>
       <p class="status" id="reviewStatus">Selectionne un avis pour continuer.</p>
       <div class="post-actions" id="postActions" hidden>
-        <button class="primary" id="nextCode" type="button">Code suivant</button>
+        <button class="next-action" id="nextCode" type="button">Code suivant &#8594;</button>
         <button id="exportCsv" type="button">Export vers CSV</button>
       </div>
     </section>
@@ -347,6 +442,8 @@
     const controllerTitle = document.querySelector("#controllerTitle");
     const controllerHelp = document.querySelector("#controllerHelp");
     const controllerSubmit = document.querySelector("#controllerSubmit");
+    const editController = document.querySelector("#editController");
+    const editControllerStart = document.querySelector("#editControllerStart");
     let records = [];
     let stream = null;
     let frameId = null;
@@ -379,7 +476,17 @@
         controllerHelp.textContent = "Ton nom est deja enregistre sur cet appareil.";
         controllerInput.hidden = true;
         controllerSubmit.textContent = "Continuer";
+        editController.hidden = false;
       }
+    }
+
+    function editControllerName() {
+      controllerInput.hidden = false;
+      controllerInput.value = controllerName;
+      controllerSubmit.textContent = "Enregistrer";
+      controllerHelp.textContent = "Modifie le nom du controleur puis enregistre.";
+      editController.hidden = true;
+      controllerInput.focus();
     }
 
     function loadRecords() {
@@ -600,15 +707,22 @@
       saveRecords();
       updateCounts();
     });
+    editController.addEventListener("click", editControllerName);
+    editControllerStart.addEventListener("click", editControllerName);
     controllerForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      if (!controllerName) {
+      if (!controllerInput.hidden || !controllerName) {
         if (!controllerInput.value.trim()) {
           controllerHelp.textContent = "Renseigne un nom de controleur pour continuer.";
           controllerInput.focus();
           return;
         }
         saveControllerName(controllerInput.value);
+        controllerTitle.textContent = "Bonjour " + controllerName;
+        controllerHelp.textContent = "Ton nom est enregistre sur cet appareil.";
+        controllerInput.hidden = true;
+        controllerSubmit.textContent = "Continuer";
+        editController.hidden = false;
       }
       setScreen("start");
     });
