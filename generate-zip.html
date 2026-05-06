@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <title>Génération ZIP QR Codes</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
@@ -11,12 +13,26 @@
 
     let qrData;
     try {
-      // URLSearchParams.get() décode déjà une fois, pas besoin de decodeURIComponent()
       qrData = JSON.parse(urlParams.get('data'));
     } catch(e) {
       document.body.innerHTML = '<p>Erreur JSON : ' + e.message + '</p>';
       throw e;
     }
+
+    // Récupération des paramètres de lot
+    const batchNum   = urlParams.get('batchNum')   || '1';
+    const batchTotal = urlParams.get('batchTotal') || '1';
+
+    // Nom du bâtiment (nettoyé pour un nom de fichier valide)
+    const nmBatiment      = qrData.length > 0 ? qrData[0].NmBatiment : "QR_Codes";
+    const nmBatimentClean = nmBatiment.replace(/[^a-zA-Z0-9]/g, '_');
+
+    // Suffixe de lot uniquement s'il y a plusieurs ZIP
+    const batchSuffix = parseInt(batchTotal) > 1 ? `_${batchNum}sur${batchTotal}` : '';
+    const zipFileName = `QR_${nmBatimentClean}${batchSuffix}.zip`;
+
+    document.querySelector('p').textContent =
+      `Génération de ${zipFileName} en cours (${qrData.length} QR code(s))...`;
 
     const zip = new JSZip();
 
@@ -24,13 +40,16 @@
       qrData.map(async (item) => {
         const response = await fetch(item.QrUrl);
         const blob = await response.blob();
-        zip.file(item.ID + '.png', blob);
+        zip.file(`${item.ID}.png`, blob);
       })
     )
     .then(() => zip.generateAsync({ type: 'blob' }))
-    .then((content) => saveAs(content, 'qr_codes.zip'))
+    .then((content) => {
+      saveAs(content, zipFileName);
+      document.querySelector('p').textContent = `✅ ${zipFileName} téléchargé !`;
+    })
     .catch(err => {
-      document.body.innerHTML = '<p>Erreur téléchargement : ' + err.message + '</p>';
+      document.body.innerHTML = '<p>❌ Erreur : ' + err.message + '</p>';
     });
   </script>
 </body>
