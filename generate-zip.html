@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+  <script>
+    // Récupérer les données depuis l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const qrData = JSON.parse(decodeURIComponent(urlParams.get('data')));
+
+    // Créer le ZIP
+    const zip = new JSZip();
+
+    // Télécharger chaque image et l'ajouter au ZIP
+    Promise.all(
+      qrData.map(async (item) => {
+        const response = await fetch(item.QrUrl);
+        const blob = await response.blob();
+        zip.file(`${item.ID}.png`, blob);
+      })
+    ).then(() => {
+      // Générer et télécharger le ZIP
+      zip.generateAsync({ type: 'blob' }).then((content) => {
+        saveAs(content, 'qr_codes.zip');
+      });
+    });
+  </script>
+</body>
+</html>
