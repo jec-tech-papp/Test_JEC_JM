@@ -5,26 +5,32 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
+  <p>Génération du ZIP en cours...</p>
   <script>
-    // Récupérer les données depuis l'URL
     const urlParams = new URLSearchParams(window.location.search);
-    const qrData = JSON.parse(decodeURIComponent(urlParams.get('data')));
 
-    // Créer le ZIP
+    let qrData;
+    try {
+      // URLSearchParams.get() décode déjà une fois, pas besoin de decodeURIComponent()
+      qrData = JSON.parse(urlParams.get('data'));
+    } catch(e) {
+      document.body.innerHTML = '<p>Erreur JSON : ' + e.message + '</p>';
+      throw e;
+    }
+
     const zip = new JSZip();
 
-    // Télécharger chaque image et l'ajouter au ZIP
     Promise.all(
       qrData.map(async (item) => {
         const response = await fetch(item.QrUrl);
         const blob = await response.blob();
-        zip.file(`${item.ID}.png`, blob);
+        zip.file(item.ID + '.png', blob);
       })
-    ).then(() => {
-      // Générer et télécharger le ZIP
-      zip.generateAsync({ type: 'blob' }).then((content) => {
-        saveAs(content, 'qr_codes.zip');
-      });
+    )
+    .then(() => zip.generateAsync({ type: 'blob' }))
+    .then((content) => saveAs(content, 'qr_codes.zip'))
+    .catch(err => {
+      document.body.innerHTML = '<p>Erreur téléchargement : ' + err.message + '</p>';
     });
   </script>
 </body>
