@@ -167,6 +167,31 @@ export async function deleteWishlistItem(userId: string, id: string): Promise<vo
 
 // --- Care Events ---
 
+export function subscribeCareEvents(
+  userId: string,
+  callback: (events: CareEvent[]) => void
+): Unsubscribe {
+  if (isFirebaseConfigured && db) {
+    const q = query(collection(db, 'careEvents'), where('userId', '==', userId));
+    return onSnapshot(q, (snap) => {
+      callback(snap.docs.map((d) => ({ id: d.id, ...d.data() } as CareEvent)));
+    });
+  }
+  callback(readLS<CareEvent>(userId, 'careEvents'));
+  const handler = (e: Event) => {
+    const detail = (e as CustomEvent).detail;
+    if (!detail || (detail.userId === userId && detail.collection === 'careEvents')) {
+      callback(readLS<CareEvent>(userId, 'careEvents'));
+    }
+  };
+  window.addEventListener('plantaddict-storage', handler);
+  window.addEventListener('storage', handler);
+  return () => {
+    window.removeEventListener('plantaddict-storage', handler);
+    window.removeEventListener('storage', handler);
+  };
+}
+
 export async function addCareEvent(
   data: Omit<CareEvent, 'id'>
 ): Promise<CareEvent> {

@@ -12,6 +12,7 @@ import { UserPlantDetailPage } from './pages/UserPlantDetailPage';
 import { WishlistPage } from './pages/WishlistPage';
 import { RemindersPage } from './pages/RemindersPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { StatsPage } from './pages/StatsPage';
 import { setupForegroundNotifications } from './lib/notifications';
 
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/portfolio/:id" element={<UserPlantDetailPage />} />
             <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/reminders" element={<RemindersPage />} />
+            <Route path="/stats" element={<StatsPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/library" replace />} />

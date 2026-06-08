@@ -37,6 +37,7 @@ export function WishlistPage() {
       acquiredDate: new Date().toISOString().split('T')[0],
       lastFertilized: null,
       nextFertilizerDate: null,
+      lastWatered: null,
       photoUrl: null,
     });
     await deleteWishlistItem(getUserId(user), item.id);

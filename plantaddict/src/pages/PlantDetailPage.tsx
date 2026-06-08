@@ -78,6 +78,7 @@ export function PlantDetailPage() {
       acquiredDate: new Date().toISOString().split('T')[0],
       lastFertilized: null,
       nextFertilizerDate: null,
+      lastWatered: null,
       photoUrl: null,
     });
     setAdding(null);

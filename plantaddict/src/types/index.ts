@@ -78,6 +78,7 @@ export interface UserPlant {
   acquiredDate: string;
   lastFertilized: string | null;
   nextFertilizerDate: string | null;
+  lastWatered: string | null;
   photoUrl: string | null;
   createdAt: string;
 }

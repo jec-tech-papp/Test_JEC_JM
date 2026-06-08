@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Leaf, BookOpen, Home, Heart, Bell, Settings, LogOut } from 'lucide-react';
+import { Leaf, BookOpen, Home, Heart, Bell, BarChart3, Settings, LogOut } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
@@ -9,6 +9,7 @@ const navItems = [
   { to: '/portfolio', icon: Home, labelKey: 'nav.portfolio' },
   { to: '/wishlist', icon: Heart, labelKey: 'nav.wishlist' },
   { to: '/reminders', icon: Bell, labelKey: 'nav.reminders' },
+  { to: '/stats', icon: BarChart3, labelKey: 'nav.stats' },
   { to: '/settings', icon: Settings, labelKey: 'nav.settings' },
 ];
 

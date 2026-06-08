@@ -5,10 +5,12 @@ import { ArrowLeft, Trash2 } from 'lucide-react';
 import { useAuth, getUserId } from '../contexts/AuthContext';
 import {
   subscribeUserPlants,
+  subscribeCareEvents,
   updateUserPlant,
   deleteUserPlant,
   addCareEvent,
 } from '../lib/storage';
+import { suggestWaterVolumeMl } from '../lib/watering';
 import { getPlant } from '../data/plants';
 import { calculateDose, computeNextFertilizerDate } from '../lib/fertilizer';
 import { SubstrateSelector } from '../components/SubstrateSelector';
@@ -22,7 +24,7 @@ import {
   addUserVariety,
   getAllVarietiesForPlant,
 } from '../lib/varieties';
-import type { UserPlant, SubstrateMixComponent, CustomFertilizer } from '../types';
+import type { UserPlant, SubstrateMixComponent, CustomFertilizer, CareEvent } from '../types';
 
 export function UserPlantDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -45,10 +47,18 @@ export function UserPlantDetailPage() {
   const [variety, setVariety] = useState('');
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [userVarietyMap, setUserVarietyMap] = useState<Record<string, string[]>>({});
+  const [careEvents, setCareEvents] = useState<CareEvent[]>([]);
+  const [waterDate, setWaterDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const [waterVolumeMl, setWaterVolumeMl] = useState(0);
 
   useEffect(() => {
     if (!user) return;
     return subscribeUserVarieties(getUserId(user), setUserVarietyMap);
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
+    return subscribeCareEvents(getUserId(user), setCareEvents);
   }, [user]);
 
   useEffect(() => {
@@ -68,9 +78,19 @@ export function UserPlantDetailPage() {
         setCustomFertilizer(found.customFertilizer);
         setLocation(found.location);
         setPhotoUrl(found.photoUrl);
+        setWaterVolumeMl(suggestWaterVolumeMl(found.potVolumeL));
       }
     });
   }, [user, id]);
+
+  const waterHistory = useMemo(
+    () =>
+      careEvents
+        .filter((e) => e.userPlantId === plant?.id && e.type === 'water')
+        .sort((a, b) => (a.date < b.date ? 1 : -1))
+        .slice(0, 5),
+    [careEvents, plant?.id]
+  );
 
   const catalog = plant ? getPlant(plant.plantId) : undefined;
   const allVarieties = useMemo(
@@ -119,6 +139,21 @@ export function UserPlantDetailPage() {
     });
     setEditing(false);
     setSaving(false);
+  };
+
+  const handleMarkWatered = async () => {
+    if (!user) return;
+    await updateUserPlant(getUserId(user), plant.id, {
+      lastWatered: waterDate,
+    });
+    await addCareEvent({
+      userId: getUserId(user),
+      userPlantId: plant.id,
+      type: 'water',
+      date: waterDate,
+      doseMl: waterVolumeMl,
+      notes: '',
+    });
   };
 
   const handleMarkFertilized = async () => {
@@ -301,6 +336,12 @@ export function UserPlantDetailPage() {
                   <p className="font-semibold">{plant.nextFertilizerDate}</p>
                 </div>
               )}
+              {plant.lastWatered && (
+                <div className="rounded-lg bg-soil-50 p-3">
+                  <p className="text-xs text-soil-500">{t('portfolio.lastWatered')}</p>
+                  <p className="font-semibold">{plant.lastWatered}</p>
+                </div>
+              )}
             </div>
             {user && (
               <PlantPhotoUpload
@@ -321,6 +362,51 @@ export function UserPlantDetailPage() {
             >
               {t('portfolio.markFertilized')}
             </button>
+
+            <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-4">
+              <h3 className="mb-3 font-semibold text-soil-900">{t('portfolio.waterHistory')}</h3>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div>
+                  <label className="mb-1 block text-sm font-medium">{t('portfolio.waterDate')}</label>
+                  <input
+                    type="date"
+                    value={waterDate}
+                    onChange={(e) => setWaterDate(e.target.value)}
+                    className="w-full rounded-lg border border-leaf-200 px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium">{t('portfolio.waterVolume')}</label>
+                  <input
+                    type="number"
+                    min={0}
+                    step={10}
+                    value={waterVolumeMl}
+                    onChange={(e) => setWaterVolumeMl(Number(e.target.value))}
+                    className="w-full rounded-lg border border-leaf-200 px-3 py-2 text-sm"
+                  />
+                  <p className="mt-1 text-xs text-soil-500">
+                    {t('portfolio.suggestedWater', { ml: suggestWaterVolumeMl(plant.potVolumeL) })}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={handleMarkWatered}
+                className="mt-3 rounded-lg bg-blue-600 px-6 py-2 text-sm font-medium text-white hover:bg-blue-700"
+              >
+                {t('portfolio.markWatered')}
+              </button>
+              {waterHistory.length > 0 && (
+                <ul className="mt-4 space-y-1 border-t border-blue-200 pt-3 text-sm text-soil-600">
+                  {waterHistory.map((e) => (
+                    <li key={e.id} className="flex justify-between">
+                      <span>{e.date}</span>
+                      <span>{e.doseMl ?? 0} ml</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
         )}
       </div>
