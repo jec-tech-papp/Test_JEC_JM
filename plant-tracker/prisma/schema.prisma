@@ -1,0 +1,197 @@
+// Plant Tracker — Prisma schema
+//
+// Database: SQLite for local dev (file at ./prisma/dev.db).
+//   To migrate to Postgres later, switch the provider + DATABASE_URL and
+//   re-add the proper `enum` declarations (SQLite doesn't support enums).
+//
+// All "enum-like" columns are stored as TEXT and validated at the app layer
+// via the literal unions in src/lib/plant-types.ts.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Users & auth
+// ─────────────────────────────────────────────────────────────────────────────
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  collection    UserPlant[]
+  wishlist      WishlistItem[]
+  pushSubs      PushSubscription[]
+  notifications Notification[]
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Plant library
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Plant {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  commonName  String
+  latinName   String
+  family      String?
+  category    String  // "Aroïde", "Cactée", "Fougère", "Orchidée"…
+  description String
+  imageUrl    String?
+
+  // Care — see src/lib/plant-types.ts for the allowed literal values.
+  light       String  // LightLevel
+  minTempC    Int
+  maxTempC    Int
+  humidity    String  // HumidityLevel
+  feeder      String  // FeederLevel
+  difficulty  String  // Difficulty
+  toxicToPets Boolean @default(false)
+
+  wateringNotes      String?
+  wateringDaysSummer Int
+  wateringDaysWinter Int
+
+  // mL of standard liquid fertilizer (NPK ~6-3-6 at 1g/L) per L of irrigation
+  // water for a healthy plant in a "neutral" substrate.
+  baseDoseMlPerLiter      Float @default(1.0)
+  fertFrequencyDaysSummer Int   @default(14)
+  fertFrequencyDaysWinter Int   @default(60)
+  recommendedNPK          String @default("balanced") // "balanced" | "high-N" | "high-P" | "high-K" | "low-EC"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userPlants    UserPlant[]
+  wishlistItems WishlistItem[]
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Substrate library
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Substrate {
+  id          String @id @default(cuid())
+  slug        String @unique
+  name        String
+  description String
+
+  // Applied to the plant's base fert dose.
+  //   inert/aerated substrates (LECA, pon, pumice) → > 1
+  //   peat / coco / classic potting mix            → 1.0
+  //   pre-fertilized / soil-rich mixes             → < 1
+  fertMultiplier         Float @default(1.0)
+  // Days subtracted from the plant's fert frequency.
+  //   inert substrates need more frequent feeding (negative shift)
+  fertFrequencyShiftDays Int   @default(0)
+  dryingSpeed            Float @default(1.0)
+
+  userPlants UserPlant[]
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Collection (portfolio)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model UserPlant {
+  id          String @id @default(cuid())
+  userId      String
+  plantId     String
+  substrateId String
+
+  nickname   String?
+  potVolumeL Float
+  location   String?
+  acquiredAt DateTime @default(now())
+  notes      String?
+  archived   Boolean  @default(false)
+
+  lastFertilizedAt DateTime?
+  nextFertilizeAt  DateTime?
+  lastWateredAt    DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plant     Plant     @relation(fields: [plantId], references: [id])
+  substrate Substrate @relation(fields: [substrateId], references: [id])
+
+  events        CareEvent[]
+  notifications Notification[]
+
+  @@index([userId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Wishlist
+// ─────────────────────────────────────────────────────────────────────────────
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  plantId   String
+  priority  Int      @default(2) // 1 = high, 2 = medium, 3 = low
+  notes     String?
+  createdAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plant Plant @relation(fields: [plantId], references: [id])
+
+  @@unique([userId, plantId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Care events & notifications
+// ─────────────────────────────────────────────────────────────────────────────
+
+model CareEvent {
+  id            String   @id @default(cuid())
+  userPlantId   String
+  type          String   // CareEventType: FERTILIZE | WATER | REPOT | PRUNE | TREATMENT | NOTE
+  occurredAt    DateTime @default(now())
+  doseMl        Float?
+  waterAmountMl Float?
+  notes         String?
+
+  userPlant UserPlant @relation(fields: [userPlantId], references: [id], onDelete: Cascade)
+
+  @@index([userPlantId, occurredAt])
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  userId      String
+  userPlantId String?
+  title       String
+  body        String
+  dueAt       DateTime
+  type        String   // CareEventType
+  status      String   @default("PENDING") // PENDING | SENT | DISMISSED | DONE
+  createdAt   DateTime @default(now())
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userPlant UserPlant? @relation(fields: [userPlantId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status, dueAt])
+}
