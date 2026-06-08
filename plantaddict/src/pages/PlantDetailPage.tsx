@@ -1,10 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Heart, Plus } from 'lucide-react';
-import { getPlant } from '../data/plants';
+import { ArrowLeft, Heart, Plus, Sparkles } from 'lucide-react';
+import { getPlant, getPlantCategory } from '../data/plants';
 import { useAuth, getUserId } from '../contexts/AuthContext';
 import { addUserPlant, addWishlistItem } from '../lib/storage';
+import {
+  subscribeUserVarieties,
+  addUserVariety,
+  getAllVarietiesForPlant,
+} from '../lib/varieties';
+import { VarietySelector } from '../components/VarietySelector';
+
+function buildNickname(baseName: string, variety: string): string {
+  return variety ? `${baseName} — ${variety}` : baseName;
+}
 
 export function PlantDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -12,14 +22,21 @@ export function PlantDetailPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [adding, setAdding] = useState<'portfolio' | 'wishlist' | null>(null);
+  const [variety, setVariety] = useState('');
+  const [userVarietyMap, setUserVarietyMap] = useState<Record<string, string[]>>({});
 
   const plant = id ? getPlant(id) : undefined;
   const lang = i18n.language as 'en' | 'fr';
 
+  useEffect(() => {
+    if (!user) return;
+    return subscribeUserVarieties(getUserId(user), setUserVarietyMap);
+  }, [user]);
+
   if (!plant) {
     return (
       <div className="md:ml-48 text-center py-12">
-        <p>Plant not found</p>
+        <p>{t('library.plantNotFound')}</p>
         <Link to="/library" className="text-leaf-600 hover:underline">
           {t('common.back')}
         </Link>
@@ -28,16 +45,30 @@ export function PlantDetailPage() {
   }
 
   const name = lang === 'fr' ? plant.nameFr : plant.nameEn;
+  const isRare = getPlantCategory(plant) === 'rare';
+  const allVarieties = getAllVarietiesForPlant(
+    plant.varieties,
+    userVarietyMap[plant.id] ?? [],
+    plant.id,
+    userVarietyMap
+  );
+
+  const handleAddCustomVariety = async (v: string) => {
+    if (!user) return;
+    await addUserVariety(getUserId(user), plant.id, v);
+  };
 
   const handleAddToPortfolio = async () => {
     if (!user) return;
     setAdding('portfolio');
+    if (variety) await addUserVariety(getUserId(user), plant.id, variety);
     await addUserPlant({
       userId: getUserId(user),
       plantId: plant.id,
-      nickname: name,
+      nickname: buildNickname(name, variety),
+      variety: variety || null,
       potVolumeL: 3,
-      substrateId: 'universal',
+      substrateId: isRare ? 'aroid' : 'universal',
       customSubstrateMix: [],
       fertilizerId: 'biobizz-grow',
       customFertilizer: null,
@@ -54,10 +85,12 @@ export function PlantDetailPage() {
   const handleAddToWishlist = async () => {
     if (!user) return;
     setAdding('wishlist');
+    if (variety) await addUserVariety(getUserId(user), plant.id, variety);
     await addWishlistItem({
       userId: getUserId(user),
       plantId: plant.id,
-      notes: '',
+      variety: variety || null,
+      notes: variety ? `${t('library.variety')}: ${variety}` : '',
       addedAt: new Date().toISOString(),
     });
     setAdding(null);
@@ -74,11 +107,23 @@ export function PlantDetailPage() {
         {t('common.back')}
       </Link>
 
-      <div className="rounded-2xl border border-leaf-200 bg-white p-6 shadow-sm">
+      <div
+        className={`rounded-2xl border bg-white p-6 shadow-sm ${
+          isRare ? 'border-violet-200' : 'border-leaf-200'
+        }`}
+      >
         <div className="flex items-start gap-4">
           <span className="text-5xl">{plant.emoji}</span>
           <div className="flex-1">
-            <h2 className="text-2xl font-bold">{name}</h2>
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-2xl font-bold">{name}</h2>
+              {isRare && (
+                <span className="flex items-center gap-1 rounded-full bg-violet-100 px-2.5 py-0.5 text-xs font-medium text-violet-700">
+                  <Sparkles className="h-3 w-3" />
+                  {t('library.rareBadge')}
+                </span>
+              )}
+            </div>
             <p className="italic text-soil-500">{plant.scientificName}</p>
             <p className="text-sm text-soil-400">{plant.family}</p>
           </div>
@@ -131,6 +176,15 @@ export function PlantDetailPage() {
               {lang === 'fr' ? plant.fertilizerNotesFr : plant.fertilizerNotesEn}
             </p>
           </div>
+        </div>
+
+        <div className="mt-6 rounded-xl border border-leaf-100 bg-soil-50 p-4">
+          <VarietySelector
+            varieties={allVarieties}
+            value={variety}
+            onChange={setVariety}
+            onAddCustom={user ? handleAddCustomVariety : undefined}
+          />
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">

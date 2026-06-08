@@ -42,7 +42,19 @@
     "safe": "Pet safe",
     "careNotes": "Care notes",
     "fertilizerNotes": "Fertilizer notes",
-    "frequency": "Every {{days}} days"
+    "frequency": "Every {{days}} days",
+    "tabAll": "All",
+    "tabCommon": "Classic",
+    "tabRare": "Rare & Exotic",
+    "rareBadge": "Rare",
+    "rarePanelHint": "Rare and exotic indoor plants for collectors. Often requires high humidity and airy substrates.",
+    "variety": "Variety",
+    "noVariety": "No variety",
+    "addVariety": "Add custom variety",
+    "addVarietyButton": "Add",
+    "customVarietyPlaceholder": "e.g. Albo, Sport, Dark form…",
+    "noResults": "No results",
+    "plantNotFound": "Plant not found"
   },
   "light": {
     "low": "Low",
@@ -69,6 +81,7 @@
     "editPlant": "Edit",
     "deletePlant": "Delete",
     "nickname": "Nickname",
+    "variety": "Variety",
     "potVolume": "Pot volume (L)",
     "substrate": "Substrate",
     "substrateMix": "Custom mix",

@@ -22,10 +22,12 @@ export function WishlistPage() {
     if (!user) return;
     const catalog = getPlant(item.plantId);
     const name = catalog ? (lang === 'fr' ? catalog.nameFr : catalog.nameEn) : item.plantId;
+    const displayName = item.variety ? `${name} — ${item.variety}` : name;
     await addUserPlant({
       userId: getUserId(user),
       plantId: item.plantId,
-      nickname: name,
+      nickname: displayName,
+      variety: item.variety,
       potVolumeL: 3,
       substrateId: 'universal',
       customSubstrateMix: [],
@@ -93,7 +95,12 @@ export function WishlistPage() {
                   {catalog && (
                     <p className="text-sm italic text-soil-500">{catalog.scientificName}</p>
                   )}
-                  {item.notes && (
+                  {item.variety && (
+                    <span className="mt-1 inline-block rounded-full bg-violet-100 px-2 py-0.5 text-xs text-violet-700">
+                      {item.variety}
+                    </span>
+                  )}
+                  {item.notes && !item.variety && (
                     <p className="mt-1 text-sm text-soil-600">{item.notes}</p>
                   )}
                 </div>

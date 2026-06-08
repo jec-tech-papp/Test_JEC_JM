@@ -66,6 +66,11 @@ export function PortfolioPage() {
                     {catalog && (
                       <p className="text-sm italic text-soil-500">{catalog.scientificName}</p>
                     )}
+                    {up.variety && (
+                      <span className="mt-1 inline-block rounded-full bg-violet-100 px-2 py-0.5 text-xs text-violet-700">
+                        {up.variety}
+                      </span>
+                    )}
                     <div className="mt-2 flex flex-wrap gap-2 text-xs text-soil-600">
                       <span className="rounded bg-soil-100 px-2 py-0.5">
                         {up.potVolumeL} L

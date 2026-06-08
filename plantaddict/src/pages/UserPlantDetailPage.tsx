@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Trash2 } from 'lucide-react';
@@ -14,6 +14,12 @@ import { calculateDose, computeNextFertilizerDate } from '../lib/fertilizer';
 import { SubstrateSelector } from '../components/SubstrateSelector';
 import { FertilizerSelector } from '../components/FertilizerSelector';
 import { DoseCalculator } from '../components/DoseCalculator';
+import { VarietySelector } from '../components/VarietySelector';
+import {
+  subscribeUserVarieties,
+  addUserVariety,
+  getAllVarietiesForPlant,
+} from '../lib/varieties';
 import type { UserPlant, SubstrateMixComponent, CustomFertilizer } from '../types';
 
 export function UserPlantDetailPage() {
@@ -34,6 +40,13 @@ export function UserPlantDetailPage() {
   const [useCustomFertilizer, setUseCustomFertilizer] = useState(false);
   const [customFertilizer, setCustomFertilizer] = useState<CustomFertilizer | null>(null);
   const [location, setLocation] = useState('');
+  const [variety, setVariety] = useState('');
+  const [userVarietyMap, setUserVarietyMap] = useState<Record<string, string[]>>({});
+
+  useEffect(() => {
+    if (!user) return;
+    return subscribeUserVarieties(getUserId(user), setUserVarietyMap);
+  }, [user]);
 
   useEffect(() => {
     if (!user || !id) return;
@@ -42,6 +55,7 @@ export function UserPlantDetailPage() {
       if (found) {
         setPlant(found);
         setNickname(found.nickname);
+        setVariety(found.variety ?? '');
         setPotVolumeL(found.potVolumeL);
         setSubstrateId(found.substrateId);
         setUseCustomMix(found.customSubstrateMix.length > 0);
@@ -54,6 +68,20 @@ export function UserPlantDetailPage() {
     });
   }, [user, id]);
 
+  const catalog = plant ? getPlant(plant.plantId) : undefined;
+  const allVarieties = useMemo(
+    () =>
+      catalog && plant
+        ? getAllVarietiesForPlant(
+            catalog.varieties,
+            userVarietyMap[plant.plantId] ?? [],
+            plant.plantId,
+            userVarietyMap
+          )
+        : [],
+    [catalog, plant, userVarietyMap]
+  );
+
   if (!plant) {
     return (
       <div className="md:ml-48 py-12 text-center">
@@ -62,7 +90,6 @@ export function UserPlantDetailPage() {
     );
   }
 
-  const catalog = getPlant(plant.plantId);
   const dose = calculateDose(
     potVolumeL,
     useCustomFertilizer ? null : fertilizerId,
@@ -74,8 +101,10 @@ export function UserPlantDetailPage() {
   const handleSave = async () => {
     if (!user) return;
     setSaving(true);
+    if (variety && user) await addUserVariety(getUserId(user), plant.plantId, variety);
     await updateUserPlant(getUserId(user), plant.id, {
       nickname,
+      variety: variety || null,
       potVolumeL,
       substrateId: useCustomMix ? null : substrateId,
       customSubstrateMix: useCustomMix ? customMix : [],
@@ -130,6 +159,9 @@ export function UserPlantDetailPage() {
               {catalog && (
                 <p className="text-sm italic text-soil-500">{catalog.scientificName}</p>
               )}
+              {plant.variety && (
+                <p className="text-sm text-violet-600">{plant.variety}</p>
+              )}
             </div>
           </div>
           <div className="flex gap-2">
@@ -177,6 +209,18 @@ export function UserPlantDetailPage() {
                 className="w-full rounded-lg border border-leaf-200 px-3 py-2 text-sm"
               />
             </div>
+            {catalog && (
+              <VarietySelector
+                varieties={allVarieties}
+                value={variety}
+                onChange={setVariety}
+                onAddCustom={
+                  user
+                    ? (v) => addUserVariety(getUserId(user), plant.plantId, v)
+                    : undefined
+                }
+              />
+            )}
             <SubstrateSelector
               substrateId={substrateId}
               customMix={customMix}

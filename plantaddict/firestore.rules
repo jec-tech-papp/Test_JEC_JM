@@ -23,5 +23,11 @@ service cloud.firestore {
       allow create: if isOwner(request.resource.data.userId);
       allow update, delete: if isOwner(resource.data.userId);
     }
+
+    match /customVarieties/{docId} {
+      allow read: if isOwner(resource.data.userId);
+      allow create, update: if isOwner(request.resource.data.userId);
+      allow delete: if isOwner(resource.data.userId);
+    }
   }
 }

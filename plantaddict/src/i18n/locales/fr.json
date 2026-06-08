@@ -42,7 +42,19 @@
     "safe": "Sans danger pour les animaux",
     "careNotes": "Conseils d'entretien",
     "fertilizerNotes": "Conseils engrais",
-    "frequency": "Tous les {{days}} jours"
+    "frequency": "Tous les {{days}} jours",
+    "tabAll": "Toutes",
+    "tabCommon": "Classiques",
+    "tabRare": "Rares & Exotiques",
+    "rareBadge": "Rare",
+    "rarePanelHint": "Collection de plantes d'intérieur rares et exotiques pour passionnés. Humidité élevée et substrats drainants souvent requis.",
+    "variety": "Variété",
+    "noVariety": "Aucune variété",
+    "addVariety": "Ajouter une variété personnalisée",
+    "addVarietyButton": "Ajouter",
+    "customVarietyPlaceholder": "Ex. Albo, Sport, Dark form…",
+    "noResults": "Aucun résultat",
+    "plantNotFound": "Plante introuvable"
   },
   "light": {
     "low": "Faible",
@@ -69,6 +81,7 @@
     "editPlant": "Modifier",
     "deletePlant": "Supprimer",
     "nickname": "Surnom",
+    "variety": "Variété",
     "potVolume": "Volume du pot (L)",
     "substrate": "Substrat",
     "substrateMix": "Mix personnalisé",

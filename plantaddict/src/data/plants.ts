@@ -1,12 +1,15 @@
-import type { Plant } from '../types';
+import type { Plant, PlantCategory } from '../types';
+import { rarePlants } from './plants-rare';
 
-export const plants: Plant[] = [
+const commonPlants: Plant[] = [
   {
     id: 'monstera-deliciosa',
     nameEn: 'Swiss Cheese Plant',
     nameFr: 'Monstera deliciosa',
     scientificName: 'Monstera deliciosa',
     family: 'Araceae',
+    category: 'common',
+    varieties: ['Standard', 'Thai Constellation', 'Albo Variegata', 'Aurea', 'Sport'],
     light: 'bright_indirect',
     watering: 'when_dry',
     humidity: { min: 50, max: 70 },
@@ -300,26 +303,6 @@ export const plants: Plant[] = [
     difficulty: 'medium',
     toxicToPets: true,
     emoji: '❤️',
-  },
-  {
-    id: 'anthurium-warocqueanum',
-    nameEn: 'Queen Anthurium',
-    nameFr: 'Anthurium warocqueanum',
-    scientificName: 'Anthurium warocqueanum',
-    family: 'Araceae',
-    light: 'bright_indirect',
-    watering: 'moist',
-    humidity: { min: 70, max: 85 },
-    temperature: { min: 20, max: 28 },
-    fertilizerFrequencyDays: 21,
-    fertilizerNpk: '3-1-2',
-    fertilizerNotesEn: 'Very light feeding only. Quarter to half strength every 3 weeks in growing season. Stop in winter.',
-    fertilizerNotesFr: 'Engrais très léger uniquement. Quart à demi-dose toutes les 3 semaines en croissance. Arrêter en hiver.',
-    careNotesEn: 'Velvet leaves — no direct sun. Needs very high humidity, airy aroid mix and excellent drainage. Support mature leaves to avoid tearing.',
-    careNotesFr: 'Feuilles veloutées — pas de soleil direct. Humidité très élevée, substrat aroïde drainant. Soutenir les feuilles adultes pour éviter les déchirures.',
-    difficulty: 'hard',
-    toxicToPets: true,
-    emoji: '👑',
   },
   {
     id: 'hoya-carnosa',
@@ -623,18 +606,34 @@ export const plants: Plant[] = [
   },
 ];
 
+export const plants: Plant[] = [...commonPlants, ...rarePlants];
+
+export function getPlantCategory(plant: Plant): PlantCategory {
+  return plant.category ?? 'common';
+}
+
+export function getPlantsByCategory(category: PlantCategory | 'all'): Plant[] {
+  if (category === 'all') return plants;
+  return plants.filter((p) => getPlantCategory(p) === category);
+}
+
 export function getPlant(id: string): Plant | undefined {
   return plants.find((p) => p.id === id);
 }
 
-export function searchPlants(query: string, _lang?: 'en' | 'fr'): Plant[] {
+export function searchPlants(
+  query: string,
+  category: PlantCategory | 'all' = 'all'
+): Plant[] {
   const q = query.toLowerCase().trim();
-  if (!q) return plants;
-  return plants.filter(
+  const pool = getPlantsByCategory(category);
+  if (!q) return pool;
+  return pool.filter(
     (p) =>
       p.nameEn.toLowerCase().includes(q) ||
       p.nameFr.toLowerCase().includes(q) ||
       p.scientificName.toLowerCase().includes(q) ||
-      p.family.toLowerCase().includes(q)
+      p.family.toLowerCase().includes(q) ||
+      (p.varieties?.some((v) => v.toLowerCase().includes(q)) ?? false)
   );
 }

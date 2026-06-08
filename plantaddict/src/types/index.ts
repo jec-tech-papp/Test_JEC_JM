@@ -3,6 +3,7 @@ export type WateringFrequency = 'weekly' | 'biweekly' | 'when_dry' | 'moist';
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type FertilizerType = 'liquid' | 'granular' | 'slow_release';
 export type CareEventType = 'fertilize' | 'water' | 'repot';
+export type PlantCategory = 'common' | 'rare';
 
 export interface Plant {
   id: string;
@@ -10,6 +11,8 @@ export interface Plant {
   nameFr: string;
   scientificName: string;
   family: string;
+  category?: PlantCategory;
+  varieties?: string[];
   light: LightLevel;
   watering: WateringFrequency;
   humidity: { min: number; max: number };
@@ -58,6 +61,7 @@ export interface UserPlant {
   userId: string;
   plantId: string;
   nickname: string;
+  variety: string | null;
   potVolumeL: number;
   substrateId: string | null;
   customSubstrateMix: SubstrateMixComponent[];
@@ -82,6 +86,7 @@ export interface WishlistItem {
   id: string;
   userId: string;
   plantId: string;
+  variety: string | null;
   notes: string;
   addedAt: string;
 }
