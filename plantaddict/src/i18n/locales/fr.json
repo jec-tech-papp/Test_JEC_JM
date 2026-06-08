@@ -99,7 +99,7 @@
     "waterVolume": "Volume d'eau (ml)",
     "waterDate": "Date d'arrosage",
     "waterHistory": "Historique d'arrosage",
-    "suggestedWater": "Volume suggéré : {{ml}} ml",
+    "suggestedWater": "Volume suggéré (selon pot et substrat) : {{ml}} ml",
     "dose": "Dose calculée",
     "customFertilizer": "Engrais personnalisé",
     "fertilizerName": "Nom de l'engrais",

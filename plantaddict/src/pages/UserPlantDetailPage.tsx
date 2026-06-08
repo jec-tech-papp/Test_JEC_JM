@@ -10,7 +10,7 @@ import {
   deleteUserPlant,
   addCareEvent,
 } from '../lib/storage';
-import { suggestWaterVolumeMl } from '../lib/watering';
+import { suggestWaterVolumeForPlant } from '../lib/watering';
 import { getPlant } from '../data/plants';
 import { calculateDose, computeNextFertilizerDate } from '../lib/fertilizer';
 import { SubstrateSelector } from '../components/SubstrateSelector';
@@ -78,7 +78,7 @@ export function UserPlantDetailPage() {
         setCustomFertilizer(found.customFertilizer);
         setLocation(found.location);
         setPhotoUrl(found.photoUrl);
-        setWaterVolumeMl(suggestWaterVolumeMl(found.potVolumeL));
+        setWaterVolumeMl(suggestWaterVolumeForPlant(found));
       }
     });
   }, [user, id]);
@@ -386,7 +386,7 @@ export function UserPlantDetailPage() {
                     className="w-full rounded-lg border border-leaf-200 px-3 py-2 text-sm"
                   />
                   <p className="mt-1 text-xs text-soil-500">
-                    {t('portfolio.suggestedWater', { ml: suggestWaterVolumeMl(plant.potVolumeL) })}
+                    {t('portfolio.suggestedWater', { ml: suggestWaterVolumeForPlant(plant) })}
                   </p>
                 </div>
               </div>
