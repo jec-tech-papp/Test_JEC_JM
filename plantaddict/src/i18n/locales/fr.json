@@ -29,7 +29,8 @@
   "library": {
     "title": "Bibliothèque de plantes",
     "search": "Rechercher une plante...",
-    "plants": "{{count}} plantes d'intérieur",
+    "plants": "{{count}} plantes",
+    "catalogHint": "catalogue commerce légal (intérieur, exotique, succulentes, orchidées…)",
     "addToPortfolio": "Ajouter à mon jardin",
     "addToWishlist": "Ajouter à la wishlist",
     "light": "Luminosité",

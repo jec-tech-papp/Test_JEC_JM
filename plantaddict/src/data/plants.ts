@@ -1,5 +1,19 @@
 import type { Plant, PlantCategory } from '../types';
 import { rarePlants } from './plants-rare';
+import { araceaePlants } from './plants-araceae';
+import { assortedPlants } from './plants-assorted';
+
+function mergeCatalog(...groups: Plant[][]): Plant[] {
+  const byId = new Map<string, Plant>();
+  for (const group of groups) {
+    for (const p of group) {
+      if (!byId.has(p.id)) byId.set(p.id, p);
+    }
+  }
+  return Array.from(byId.values()).sort((a, b) =>
+    a.scientificName.localeCompare(b.scientificName)
+  );
+}
 
 const commonPlants: Plant[] = [
   {
@@ -606,7 +620,12 @@ const commonPlants: Plant[] = [
   },
 ];
 
-export const plants: Plant[] = [...commonPlants, ...rarePlants];
+export const plants: Plant[] = mergeCatalog(
+  commonPlants,
+  rarePlants,
+  araceaePlants,
+  assortedPlants
+);
 
 export function getPlantCategory(plant: Plant): PlantCategory {
   return plant.category ?? 'common';

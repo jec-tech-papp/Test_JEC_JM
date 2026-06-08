@@ -29,7 +29,8 @@
   "library": {
     "title": "Plant library",
     "search": "Search plants...",
-    "plants": "{{count}} indoor plants",
+    "plants": "{{count}} plants",
+    "catalogHint": "legal trade catalog (indoor, exotic, succulents, orchids…)",
     "addToPortfolio": "Add to my garden",
     "addToWishlist": "Add to wishlist",
     "light": "Light",

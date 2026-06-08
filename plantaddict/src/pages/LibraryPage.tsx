@@ -29,7 +29,9 @@ export function LibraryPage() {
     <div className="md:ml-48">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-soil-900">{t('library.title')}</h2>
-        <p className="text-soil-500">{t('library.plants', { count: plants.length })}</p>
+        <p className="text-soil-500">
+          {t('library.plants', { count: plants.length })} — {t('library.catalogHint')}
+        </p>
       </div>
 
       <div className="mb-4 flex flex-wrap gap-2">
