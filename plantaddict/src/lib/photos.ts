@@ -65,12 +65,12 @@ export async function uploadPlantPhoto(
 
   if (isFirebaseConfigured && storage) {
     try {
-      const path = `users/${userId}/plants/${userPlantId}.jpg`;
+      const path = `users/${userId}/plants/${userPlantId}`;
       const storageRef = ref(storage, path);
       await uploadBytes(storageRef, compressed, { contentType: 'image/jpeg' });
       return getDownloadURL(storageRef);
     } catch {
-      // Storage not enabled yet — fallback to local until console setup
+      // Storage unavailable — fallback to local
     }
   }
 
@@ -86,7 +86,7 @@ export async function deletePlantPhoto(
 ): Promise<void> {
   if (isFirebaseConfigured && storage && photoUrl.startsWith('https://')) {
     try {
-      const storageRef = ref(storage, `users/${userId}/plants/${userPlantId}.jpg`);
+      const storageRef = ref(storage, `users/${userId}/plants/${userPlantId}`);
       await deleteObject(storageRef);
     } catch {
       // file may already be gone
