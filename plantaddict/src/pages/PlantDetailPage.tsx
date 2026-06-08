@@ -10,6 +10,8 @@ import {
   addUserVariety,
   getAllVarietiesForPlant,
 } from '../lib/varieties';
+import { getPlantReferenceImage } from '../data/variety-images';
+import { PlantAvatar } from '../components/PlantAvatar';
 import { VarietySelector } from '../components/VarietySelector';
 
 function buildNickname(baseName: string, variety: string): string {
@@ -112,8 +114,21 @@ export function PlantDetailPage() {
           isRare ? 'border-violet-200' : 'border-leaf-200'
         }`}
       >
+        {getPlantReferenceImage(plant.id) && (
+          <div className="mb-6 flex justify-center">
+            <PlantAvatar
+              photoUrl={getPlantReferenceImage(plant.id)}
+              emoji={plant.emoji}
+              alt={name}
+              size="xl"
+              className="aspect-video max-h-56 w-full max-w-lg"
+            />
+          </div>
+        )}
         <div className="flex items-start gap-4">
-          <span className="text-5xl">{plant.emoji}</span>
+          {!getPlantReferenceImage(plant.id) && (
+            <span className="text-5xl">{plant.emoji}</span>
+          )}
           <div className="flex-1">
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="text-2xl font-bold">{name}</h2>
@@ -184,6 +199,7 @@ export function PlantDetailPage() {
             value={variety}
             onChange={setVariety}
             onAddCustom={user ? handleAddCustomVariety : undefined}
+            plantEmoji={plant.emoji}
           />
         </div>
 

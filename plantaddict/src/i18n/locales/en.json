@@ -55,7 +55,8 @@
     "addVarietyButton": "Add",
     "customVarietyPlaceholder": "e.g. Albo, Sport, Dark form…",
     "noResults": "No results",
-    "plantNotFound": "Plant not found"
+    "plantNotFound": "Plant not found",
+    "varietyPhotoHint": "Select a variety to see its typical appearance (reference photos)"
   },
   "light": {
     "low": "Low",
@@ -101,7 +102,15 @@
     "addComponent": "Add component",
     "percentage": "Percentage",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "photo": "My plant photo",
+    "addPhoto": "Take / add photo",
+    "changePhoto": "Change photo",
+    "uploadPhoto": "Upload from gallery",
+    "removePhoto": "Remove photo",
+    "photoHint": "JPG, PNG — max 10 MB. Photo is automatically resized.",
+    "photoError": "Could not upload photo",
+    "photoTooLarge": "Image too large (max 10 MB)"
   },
   "wishlist": {
     "title": "Wishlist",

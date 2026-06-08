@@ -15,6 +15,8 @@ import { SubstrateSelector } from '../components/SubstrateSelector';
 import { FertilizerSelector } from '../components/FertilizerSelector';
 import { DoseCalculator } from '../components/DoseCalculator';
 import { VarietySelector } from '../components/VarietySelector';
+import { PlantPhotoUpload } from '../components/PlantPhotoUpload';
+import { PlantAvatar } from '../components/PlantAvatar';
 import {
   subscribeUserVarieties,
   addUserVariety,
@@ -41,6 +43,7 @@ export function UserPlantDetailPage() {
   const [customFertilizer, setCustomFertilizer] = useState<CustomFertilizer | null>(null);
   const [location, setLocation] = useState('');
   const [variety, setVariety] = useState('');
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [userVarietyMap, setUserVarietyMap] = useState<Record<string, string[]>>({});
 
   useEffect(() => {
@@ -64,6 +67,7 @@ export function UserPlantDetailPage() {
         setUseCustomFertilizer(!!found.customFertilizer);
         setCustomFertilizer(found.customFertilizer);
         setLocation(found.location);
+        setPhotoUrl(found.photoUrl);
       }
     });
   }, [user, id]);
@@ -111,6 +115,7 @@ export function UserPlantDetailPage() {
       fertilizerId: useCustomFertilizer ? null : fertilizerId,
       customFertilizer: useCustomFertilizer ? customFertilizer : null,
       location,
+      photoUrl,
     });
     setEditing(false);
     setSaving(false);
@@ -151,9 +156,23 @@ export function UserPlantDetailPage() {
       </Link>
 
       <div className="rounded-2xl border border-leaf-200 bg-white p-6 shadow-sm">
+        {!editing && (
+          <div className="mb-6 flex justify-center">
+            <PlantAvatar
+              photoUrl={plant.photoUrl}
+              emoji={catalog?.emoji}
+              alt={nickname}
+              size="xl"
+              className="aspect-square max-h-72 w-full max-w-sm"
+            />
+          </div>
+        )}
+
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-4xl">{catalog?.emoji ?? '🌱'}</span>
+            {editing && (
+              <span className="text-4xl">{catalog?.emoji ?? '🌱'}</span>
+            )}
             <div>
               <h2 className="text-2xl font-bold">{nickname}</h2>
               {catalog && (
@@ -182,6 +201,16 @@ export function UserPlantDetailPage() {
 
         {editing ? (
           <div className="mt-6 space-y-4">
+            {user && (
+              <PlantPhotoUpload
+                userId={getUserId(user)}
+                userPlantId={plant.id}
+                photoUrl={photoUrl}
+                emoji={catalog?.emoji}
+                plantName={nickname}
+                onPhotoChange={setPhotoUrl}
+              />
+            )}
             <div>
               <label className="mb-1 block text-sm font-medium">{t('portfolio.nickname')}</label>
               <input
@@ -219,6 +248,7 @@ export function UserPlantDetailPage() {
                     ? (v) => addUserVariety(getUserId(user), plant.plantId, v)
                     : undefined
                 }
+                plantEmoji={catalog?.emoji}
               />
             )}
             <SubstrateSelector
@@ -272,6 +302,18 @@ export function UserPlantDetailPage() {
                 </div>
               )}
             </div>
+            {user && (
+              <PlantPhotoUpload
+                userId={getUserId(user)}
+                userPlantId={plant.id}
+                photoUrl={plant.photoUrl}
+                emoji={catalog?.emoji}
+                plantName={nickname}
+                onPhotoChange={async (url) => {
+                  await updateUserPlant(getUserId(user), plant.id, { photoUrl: url });
+                }}
+              />
+            )}
             <DoseCalculator dose={dose} />
             <button
               onClick={handleMarkFertilized}

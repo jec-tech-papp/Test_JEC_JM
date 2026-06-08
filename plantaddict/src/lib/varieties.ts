@@ -9,6 +9,8 @@ import {
   type Unsubscribe,
 } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from './firebase';
+import { getVarietyReferenceImage } from '../data/variety-images';
+import type { PlantVariety } from '../types';
 
 const LS_PREFIX = 'plantaddict_varieties_';
 
@@ -93,8 +95,14 @@ export function getAllVarietiesForPlant(
   userVarieties: string[],
   plantId: string,
   userPlantMap: Record<string, string[]>
-): string[] {
+): PlantVariety[] {
   const custom = userPlantMap[plantId] ?? userVarieties;
-  const merged = [...(catalogVarieties ?? []), ...custom];
-  return [...new Set(merged)];
+  const catalogNames = catalogVarieties ?? [];
+  const allNames = [...new Set([...catalogNames, ...custom])];
+
+  return allNames.map((name) => ({
+    name,
+    imageUrl: getVarietyReferenceImage(plantId, name),
+    isCustom: !catalogNames.includes(name),
+  }));
 }

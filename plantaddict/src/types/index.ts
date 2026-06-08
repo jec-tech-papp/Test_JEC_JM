@@ -5,6 +5,12 @@ export type FertilizerType = 'liquid' | 'granular' | 'slow_release';
 export type CareEventType = 'fertilize' | 'water' | 'repot';
 export type PlantCategory = 'common' | 'rare';
 
+export interface PlantVariety {
+  name: string;
+  imageUrl?: string | null;
+  isCustom?: boolean;
+}
+
 export interface Plant {
   id: string;
   nameEn: string;
@@ -13,6 +19,7 @@ export interface Plant {
   family: string;
   category?: PlantCategory;
   varieties?: string[];
+  imageUrl?: string;
   light: LightLevel;
   watering: WateringFrequency;
   humidity: { min: number; max: number };

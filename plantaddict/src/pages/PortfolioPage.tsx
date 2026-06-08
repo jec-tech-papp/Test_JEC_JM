@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Plus, Droplets, MapPin } from 'lucide-react';
+import { PlantAvatar } from '../components/PlantAvatar';
 import { useAuth, getUserId } from '../contexts/AuthContext';
 import { subscribeUserPlants } from '../lib/storage';
 import { getPlant } from '../data/plants';
@@ -57,10 +58,26 @@ export function PortfolioPage() {
               <Link
                 key={up.id}
                 to={`/portfolio/${up.id}`}
-                className="rounded-xl border border-leaf-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
+                className="overflow-hidden rounded-xl border border-leaf-200 bg-white shadow-sm transition-shadow hover:shadow-md"
               >
-                <div className="flex items-start gap-3">
-                  <span className="text-3xl">{catalog?.emoji ?? '🌱'}</span>
+                {up.photoUrl && (
+                  <PlantAvatar
+                    photoUrl={up.photoUrl}
+                    emoji={catalog?.emoji}
+                    alt={name}
+                    size="xl"
+                    className="!rounded-none aspect-[16/9] max-h-40 w-full"
+                  />
+                )}
+                <div className="flex items-start gap-3 p-4">
+                  {!up.photoUrl && (
+                    <PlantAvatar
+                      photoUrl={null}
+                      emoji={catalog?.emoji}
+                      alt={name}
+                      size="sm"
+                    />
+                  )}
                   <div className="flex-1">
                     <h3 className="font-semibold">{name}</h3>
                     {catalog && (

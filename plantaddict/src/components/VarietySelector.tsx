@@ -1,12 +1,65 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Plus } from 'lucide-react';
+import { Plus, Check } from 'lucide-react';
+import type { PlantVariety } from '../types';
 
 interface VarietySelectorProps {
-  varieties: string[];
+  varieties: PlantVariety[];
   value: string;
   onChange: (variety: string) => void;
   onAddCustom?: (variety: string) => void;
+  plantEmoji?: string;
+}
+
+function VarietyImage({
+  variety,
+  plantEmoji,
+  selected,
+}: {
+  variety: PlantVariety;
+  plantEmoji: string;
+  selected: boolean;
+}) {
+  const [failed, setFailed] = useState(false);
+
+  return (
+    <div
+      className={`relative overflow-hidden rounded-xl border-2 transition-all ${
+        selected
+          ? 'border-leaf-600 ring-2 ring-leaf-200'
+          : 'border-leaf-100 hover:border-leaf-300'
+      }`}
+    >
+      <div className="aspect-[4/3] w-full bg-gradient-to-br from-soil-100 to-leaf-50">
+        {variety.imageUrl && !failed ? (
+          <img
+            src={variety.imageUrl}
+            alt={variety.name}
+            onError={() => setFailed(true)}
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
+        ) : (
+          <div className="flex h-full flex-col items-center justify-center gap-1 p-2 text-center">
+            <span className="text-3xl">{plantEmoji}</span>
+            {variety.isCustom && (
+              <span className="text-[10px] uppercase tracking-wide text-soil-400">perso</span>
+            )}
+          </div>
+        )}
+      </div>
+      <div className="border-t border-leaf-100 bg-white px-2 py-2">
+        <p className="truncate text-center text-xs font-medium text-soil-800">
+          {variety.name}
+        </p>
+      </div>
+      {selected && (
+        <div className="absolute right-2 top-2 rounded-full bg-leaf-600 p-1 text-white shadow">
+          <Check className="h-3 w-3" />
+        </div>
+      )}
+    </div>
+  );
 }
 
 export function VarietySelector({
@@ -14,6 +67,7 @@ export function VarietySelector({
   value,
   onChange,
   onAddCustom,
+  plantEmoji = '🌱',
 }: VarietySelectorProps) {
   const { t } = useTranslation();
   const [custom, setCustom] = useState('');
@@ -31,24 +85,40 @@ export function VarietySelector({
   if (varieties.length === 0 && !onAddCustom) return null;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <label className="block text-sm font-medium text-soil-700">
         {t('library.variety')}
       </label>
+      <p className="text-xs text-soil-500">{t('library.varietyPhotoHint')}</p>
 
       {varieties.length > 0 && (
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full rounded-lg border border-leaf-200 px-3 py-2 text-sm"
-        >
-          <option value="">{t('library.noVariety')}</option>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+          <button
+            type="button"
+            onClick={() => onChange('')}
+            className={`rounded-xl border-2 border-dashed p-4 text-center text-xs transition-colors ${
+              value === ''
+                ? 'border-leaf-600 bg-leaf-50 text-leaf-700'
+                : 'border-soil-200 text-soil-500 hover:border-leaf-300'
+            }`}
+          >
+            {t('library.noVariety')}
+          </button>
           {varieties.map((v) => (
-            <option key={v} value={v}>
-              {v}
-            </option>
+            <button
+              key={v.name}
+              type="button"
+              onClick={() => onChange(v.name)}
+              className="text-left"
+            >
+              <VarietyImage
+                variety={v}
+                plantEmoji={plantEmoji}
+                selected={value === v.name}
+              />
+            </button>
           ))}
-        </select>
+        </div>
       )}
 
       {onAddCustom && (
