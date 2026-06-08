@@ -1,13 +1,17 @@
 {
-  "name": "plant-tracker",
+  "name": "plantaddict",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "setup:firebase": "bash scripts/setup-firebase.sh",
+    "deploy": "npm run build && npx -y firebase-tools@latest deploy",
+    "deploy:hosting": "npm run build && npx -y firebase-tools@latest deploy --only hosting",
+    "deploy:rules": "npx -y firebase-tools@latest deploy --only firestore:rules"
   },
   "dependencies": {
     "date-fns": "^4.4.0",
