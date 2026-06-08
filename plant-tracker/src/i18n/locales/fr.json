@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "PlantAddict",
+    "tagline": "Votre compagnon plantes d'intérieur"
+  },
+  "nav": {
+    "library": "Bibliothèque",
+    "portfolio": "Mon jardin",
+    "wishlist": "Wishlist",
+    "reminders": "Rappels",
+    "settings": "Paramètres",
+    "logout": "Déconnexion"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Créer un compte",
+    "email": "Email",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "loginButton": "Se connecter",
+    "registerButton": "S'inscrire",
+    "noAccount": "Pas encore de compte ?",
+    "hasAccount": "Déjà un compte ?",
+    "loginError": "Email ou mot de passe incorrect",
+    "registerError": "Impossible de créer le compte",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "demoMode": "Mode démo (Firebase non configuré)"
+  },
+  "library": {
+    "title": "Bibliothèque de plantes",
+    "search": "Rechercher une plante...",
+    "plants": "{{count}} plantes d'intérieur",
+    "addToPortfolio": "Ajouter à mon jardin",
+    "addToWishlist": "Ajouter à la wishlist",
+    "light": "Luminosité",
+    "watering": "Arrosage",
+    "humidity": "Humidité",
+    "temperature": "Température",
+    "fertilizer": "Engrais",
+    "difficulty": "Difficulté",
+    "toxic": "Toxique pour les animaux",
+    "safe": "Sans danger pour les animaux",
+    "careNotes": "Conseils d'entretien",
+    "fertilizerNotes": "Conseils engrais",
+    "frequency": "Tous les {{days}} jours"
+  },
+  "light": {
+    "low": "Faible",
+    "medium": "Moyenne",
+    "bright_indirect": "Vive indirecte",
+    "direct": "Directe"
+  },
+  "watering": {
+    "weekly": "Hebdomadaire",
+    "biweekly": "Bihebdomadaire",
+    "when_dry": "Quand sec",
+    "moist": "Toujours humide"
+  },
+  "difficulty": {
+    "easy": "Facile",
+    "medium": "Moyen",
+    "hard": "Difficile"
+  },
+  "portfolio": {
+    "title": "Mon jardin",
+    "empty": "Votre jardin est vide",
+    "emptyHint": "Parcourez la bibliothèque pour ajouter vos premières plantes",
+    "addPlant": "Ajouter une plante",
+    "editPlant": "Modifier",
+    "deletePlant": "Supprimer",
+    "nickname": "Surnom",
+    "potVolume": "Volume du pot (L)",
+    "substrate": "Substrat",
+    "substrateMix": "Mix personnalisé",
+    "fertilizer": "Engrais",
+    "location": "Emplacement",
+    "acquiredDate": "Date d'acquisition",
+    "lastFertilized": "Dernier engrais",
+    "nextFertilizer": "Prochain engrais",
+    "markFertilized": "Marquer comme fertilisé",
+    "dose": "Dose calculée",
+    "customFertilizer": "Engrais personnalisé",
+    "fertilizerName": "Nom de l'engrais",
+    "npk": "NPK",
+    "dilution": "Dilution (ml/L)",
+    "selectSubstrate": "Choisir un substrat",
+    "addComponent": "Ajouter un composant",
+    "percentage": "Pourcentage",
+    "save": "Enregistrer",
+    "cancel": "Annuler"
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "empty": "Votre wishlist est vide",
+    "emptyHint": "Ajoutez des plantes depuis la bibliothèque",
+    "remove": "Retirer",
+    "moveToPortfolio": "Ajouter au jardin",
+    "notes": "Notes"
+  },
+  "reminders": {
+    "title": "Rappels engrais",
+    "empty": "Aucun rappel en attente",
+    "overdue": "En retard",
+    "today": "Aujourd'hui",
+    "inDays": "Dans {{days}} jours",
+    "dose": "{{dose}} ml pour {{water}} ml d'eau",
+    "markDone": "Fait",
+    "enableNotifications": "Activer les notifications",
+    "notificationsEnabled": "Notifications activées",
+    "notificationsDenied": "Notifications refusées"
+  },
+  "dose": {
+    "calculated": "Dose ajustée selon le substrat (facteur ×{{factor}})",
+    "slowRelease": "Engrais à libération lente — voir instructions produit"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "language": "Langue",
+    "notifications": "Notifications push",
+    "enablePush": "Activer les rappels navigateur",
+    "firebaseSetup": "Configuration Firebase",
+    "firebaseConfigured": "Firebase connecté",
+    "firebaseNotConfigured": "Firebase non configuré — mode démo actif"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "confirm": "Confirmer",
+    "delete": "Supprimer",
+    "back": "Retour"
+  },
+  "fertilizerType": {
+    "liquid": "Liquide",
+    "granular": "Granulé",
+    "slow_release": "Libération lente"
+  },
+  "retention": {
+    "low": "Faible",
+    "medium": "Moyenne",
+    "high": "Élevée"
+  }
+}

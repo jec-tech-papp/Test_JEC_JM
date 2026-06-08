@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "PlantAddict",
+    "tagline": "Your indoor plant companion"
+  },
+  "nav": {
+    "library": "Library",
+    "portfolio": "My Garden",
+    "wishlist": "Wishlist",
+    "reminders": "Reminders",
+    "settings": "Settings",
+    "logout": "Log out"
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Create account",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "loginButton": "Log in",
+    "registerButton": "Sign up",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginError": "Invalid email or password",
+    "registerError": "Could not create account",
+    "passwordMismatch": "Passwords do not match",
+    "demoMode": "Demo mode (Firebase not configured)"
+  },
+  "library": {
+    "title": "Plant library",
+    "search": "Search plants...",
+    "plants": "{{count}} indoor plants",
+    "addToPortfolio": "Add to my garden",
+    "addToWishlist": "Add to wishlist",
+    "light": "Light",
+    "watering": "Watering",
+    "humidity": "Humidity",
+    "temperature": "Temperature",
+    "fertilizer": "Fertilizer",
+    "difficulty": "Difficulty",
+    "toxic": "Toxic to pets",
+    "safe": "Pet safe",
+    "careNotes": "Care notes",
+    "fertilizerNotes": "Fertilizer notes",
+    "frequency": "Every {{days}} days"
+  },
+  "light": {
+    "low": "Low",
+    "medium": "Medium",
+    "bright_indirect": "Bright indirect",
+    "direct": "Direct"
+  },
+  "watering": {
+    "weekly": "Weekly",
+    "biweekly": "Biweekly",
+    "when_dry": "When dry",
+    "moist": "Keep moist"
+  },
+  "difficulty": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard"
+  },
+  "portfolio": {
+    "title": "My garden",
+    "empty": "Your garden is empty",
+    "emptyHint": "Browse the library to add your first plants",
+    "addPlant": "Add a plant",
+    "editPlant": "Edit",
+    "deletePlant": "Delete",
+    "nickname": "Nickname",
+    "potVolume": "Pot volume (L)",
+    "substrate": "Substrate",
+    "substrateMix": "Custom mix",
+    "fertilizer": "Fertilizer",
+    "location": "Location",
+    "acquiredDate": "Acquired date",
+    "lastFertilized": "Last fertilized",
+    "nextFertilizer": "Next fertilizer",
+    "markFertilized": "Mark as fertilized",
+    "dose": "Calculated dose",
+    "customFertilizer": "Custom fertilizer",
+    "fertilizerName": "Fertilizer name",
+    "npk": "NPK",
+    "dilution": "Dilution (ml/L)",
+    "selectSubstrate": "Select substrate",
+    "addComponent": "Add component",
+    "percentage": "Percentage",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "empty": "Your wishlist is empty",
+    "emptyHint": "Add plants from the library",
+    "remove": "Remove",
+    "moveToPortfolio": "Add to garden",
+    "notes": "Notes"
+  },
+  "reminders": {
+    "title": "Fertilizer reminders",
+    "empty": "No pending reminders",
+    "overdue": "Overdue",
+    "today": "Today",
+    "inDays": "In {{days}} days",
+    "dose": "{{dose}} ml per {{water}} ml water",
+    "markDone": "Done",
+    "enableNotifications": "Enable notifications",
+    "notificationsEnabled": "Notifications enabled",
+    "notificationsDenied": "Notifications denied"
+  },
+  "dose": {
+    "calculated": "Dose adjusted for substrate (factor ×{{factor}})",
+    "slowRelease": "Slow-release fertilizer — see product instructions"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "notifications": "Push notifications",
+    "enablePush": "Enable browser reminders",
+    "firebaseSetup": "Firebase configuration",
+    "firebaseConfigured": "Firebase connected",
+    "firebaseNotConfigured": "Firebase not configured — demo mode active"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "back": "Back"
+  },
+  "fertilizerType": {
+    "liquid": "Liquid",
+    "granular": "Granular",
+    "slow_release": "Slow release"
+  },
+  "retention": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
+  }
+}

@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-leaf-50: #f0fdf4;
+  --color-leaf-100: #dcfce7;
+  --color-leaf-200: #bbf7d0;
+  --color-leaf-300: #86efac;
+  --color-leaf-400: #4ade80;
+  --color-leaf-500: #22c55e;
+  --color-leaf-600: #16a34a;
+  --color-leaf-700: #15803d;
+  --color-leaf-800: #166534;
+  --color-leaf-900: #14532d;
+  --color-soil-50: #faf6f1;
+  --color-soil-100: #f0e8db;
+  --color-soil-200: #e0d0b8;
+  --color-soil-700: #6b5344;
+  --color-soil-800: #4a3a30;
+  --color-soil-900: #2d231c;
+}
+
+body {
+  @apply bg-soil-50 text-soil-900 antialiased;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
