@@ -26,7 +26,7 @@ npx -y firebase-tools@latest login --no-localhost
 npm run setup:firebase
 ```
 
-Par défaut, le projet Firebase `plantaddict-app` sera créé. Pour un ID personnalisé :
+Le projet Firebase configuré est `plantaddict-apps`. Pour un autre ID :
 
 ```bash
 ./scripts/setup-firebase.sh mon-plantaddict-unique

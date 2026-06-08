@@ -43,6 +43,8 @@ npm run dev
 npm run deploy
 ```
 
+**En ligne :** https://plantaddict-apps.web.app
+
 ## Stack
 
 - React 19 + TypeScript + Vite + Tailwind CSS 4

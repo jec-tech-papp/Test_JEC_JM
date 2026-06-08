@@ -5,7 +5,7 @@ set -euo pipefail
 # Usage: ./scripts/setup-firebase.sh [project-id]
 
 CLI="npx -y firebase-tools@latest"
-PROJECT_ID="${1:-plantaddict-app}"
+PROJECT_ID="${1:-plantaddict-apps}"
 DISPLAY_NAME="PlantAddict"
 DIR="$(cd "$(dirname "$0")/.." && pwd)"
 

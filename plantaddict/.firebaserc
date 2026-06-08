@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "plantaddict-app"
-  }
+    "default": "plantaddict-apps"
+  },
+  "targets": {},
+  "etags": {}
 }
