@@ -1,0 +1,185 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  portfolio     UserPlant[]
+  wishlist      WishlistItem[]
+  notifications Notification[]
+}
+
+model PlantCategory {
+  id    String  @id @default(cuid())
+  name  String  @unique
+  icon  String?
+  plants Plant[]
+}
+
+model Plant {
+  id              String   @id @default(cuid())
+  commonName      String
+  scientificName  String
+  family          String?
+  description     String?
+  imageUrl        String?
+  difficulty      String   @default("medium") // easy, medium, hard
+  toxicity        String?  // none, mild, moderate, severe
+  growthRate      String?  // slow, medium, fast
+  maxHeight       String?
+  origin          String?
+
+  // Light requirements
+  lightMin        Int      @default(2) // 1-5 scale
+  lightMax        Int      @default(4)
+  lightDescription String?
+
+  // Watering
+  wateringFrequency   String? // description
+  wateringFreqDays    Int     @default(7)
+  humidityMin         Int?
+  humidityMax         Int?
+
+  // Temperature
+  tempMin         Int?  // Celsius
+  tempMax         Int?
+  tempIdealMin    Int?
+  tempIdealMax    Int?
+
+  // Fertilizer
+  fertilizerType      String?
+  fertilizerFreqDays  Int       @default(14)
+  fertilizerNPK       String?   // e.g. "10-10-10"
+  fertilizerNotes     String?
+  fertilizerDoseMLPerLiter Float @default(1.0)
+
+  // Substrate preferences
+  preferredSubstrate  String?
+  soilPH              String?
+  drainageNeeds       String? // low, medium, high
+
+  categoryId      String?
+  category        PlantCategory? @relation(fields: [categoryId], references: [id])
+
+  createdAt       DateTime @default(now())
+  userPlants      UserPlant[]
+  wishlistItems   WishlistItem[]
+}
+
+model SubstrateComponent {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  description String?
+  retentionFactor Float @default(1.0) // water retention multiplier
+  drainageFactor  Float @default(1.0) // drainage multiplier
+  nutrientFactor  Float @default(1.0) // nutrient retention multiplier
+  phEffect        String? // acidic, neutral, alkaline
+}
+
+model UserSubstrate {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  composition String  // JSON: [{componentId, percentage}]
+  retentionScore Float @default(1.0)
+  drainageScore  Float @default(1.0)
+  nutrientScore  Float @default(1.0)
+  userPlants  UserPlant[]
+  createdAt   DateTime @default(now())
+}
+
+model UserPlant {
+  id              String   @id @default(cuid())
+  nickname        String?
+  notes           String?
+  potVolumeLiters Float    @default(2.0)
+  potType         String?  // terracotta, plastic, ceramic, fabric
+  location        String?
+  acquisitionDate DateTime @default(now())
+  imageUrl        String?
+
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  plantId         String
+  plant           Plant    @relation(fields: [plantId], references: [id])
+
+  substrateId     String?
+  substrate       UserSubstrate? @relation(fields: [substrateId], references: [id])
+
+  fertilizerLogs  FertilizerLog[]
+  wateringLogs    WateringLog[]
+  schedules       FertilizerSchedule[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model FertilizerSchedule {
+  id              String   @id @default(cuid())
+  userPlantId     String
+  userPlant       UserPlant @relation(fields: [userPlantId], references: [id], onDelete: Cascade)
+  fertilizerName  String
+  fertilizerNPK   String?
+  doseMLPerLiter  Float
+  frequencyDays   Int
+  nextDueDate     DateTime
+  isActive        Boolean  @default(true)
+  notifications   Notification[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model FertilizerLog {
+  id              String   @id @default(cuid())
+  userPlantId     String
+  userPlant       UserPlant @relation(fields: [userPlantId], references: [id], onDelete: Cascade)
+  fertilizerName  String
+  doseML          Float
+  notes           String?
+  appliedAt       DateTime @default(now())
+}
+
+model WateringLog {
+  id          String   @id @default(cuid())
+  userPlantId String
+  userPlant   UserPlant @relation(fields: [userPlantId], references: [id], onDelete: Cascade)
+  amount      String?
+  notes       String?
+  wateredAt   DateTime @default(now())
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plantId   String
+  plant     Plant    @relation(fields: [plantId], references: [id])
+  priority  Int      @default(3) // 1-5
+  notes     String?
+  createdAt DateTime @default(now())
+
+  @@unique([userId, plantId])
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  message     String
+  type        String   // fertilizer, watering, general
+  isRead      Boolean  @default(false)
+  scheduleId  String?
+  schedule    FertilizerSchedule? @relation(fields: [scheduleId], references: [id])
+  createdAt   DateTime @default(now())
+}
