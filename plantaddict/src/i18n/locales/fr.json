@@ -133,14 +133,14 @@
     "overdue": "En retard",
     "today": "Aujourd'hui",
     "inDays": "Dans {{days}} jours",
-    "dose": "{{dose}} ml pour {{water}} ml d'eau",
+    "dose": "{{dose}} ml d'engrais pour {{water}} ml d'eau d'arrosage",
     "markDone": "Fait",
     "enableNotifications": "Activer les notifications",
     "notificationsEnabled": "Notifications activées",
     "notificationsDenied": "Notifications refusées"
   },
   "dose": {
-    "calculated": "Dose ajustée selon le substrat (facteur ×{{factor}})",
+    "calculated": "Basé sur le volume d'eau d'arrosage conseillé, ajusté selon le substrat (×{{factor}})",
     "slowRelease": "Engrais à libération lente — voir instructions produit"
   },
   "stats": {

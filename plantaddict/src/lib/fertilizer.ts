@@ -1,5 +1,6 @@
 import { getSubstrate } from '../data/substrates';
 import { getFertilizer } from '../data/fertilizers';
+import { suggestWaterVolumeMl } from './watering';
 import type { CustomFertilizer, DoseResult, SubstrateMixComponent } from '../types';
 
 export function computeSubstrateFactor(
@@ -39,19 +40,19 @@ export function calculateDose(
 ): DoseResult {
   const dilution = getDilution(fertilizerId, customFertilizer);
   const substrateFactor = computeSubstrateFactor(substrateId, customMix);
+  const waterMl = suggestWaterVolumeMl(potVolumeL, substrateId, customMix);
 
   if (dilution === 0) {
     return {
       doseMl: 0,
-      waterMl: potVolumeL * 1000,
+      waterMl,
       substrateFactor,
       explanationKey: 'dose.slowRelease',
     };
   }
 
-  const baseDose = potVolumeL * dilution;
-  const doseMl = Math.round(baseDose * substrateFactor * 10) / 10;
-  const waterMl = potVolumeL * 1000;
+  const waterL = waterMl / 1000;
+  const doseMl = Math.round(waterL * dilution * substrateFactor * 10) / 10;
 
   return {
     doseMl,

@@ -133,14 +133,14 @@
     "overdue": "Overdue",
     "today": "Today",
     "inDays": "In {{days}} days",
-    "dose": "{{dose}} ml per {{water}} ml water",
+    "dose": "{{dose}} ml fertilizer per {{water}} ml watering water",
     "markDone": "Done",
     "enableNotifications": "Enable notifications",
     "notificationsEnabled": "Notifications enabled",
     "notificationsDenied": "Notifications denied"
   },
   "dose": {
-    "calculated": "Dose adjusted for substrate (factor ×{{factor}})",
+    "calculated": "Based on suggested watering volume, adjusted for substrate (×{{factor}})",
     "slowRelease": "Slow-release fertilizer — see product instructions"
   },
   "stats": {
