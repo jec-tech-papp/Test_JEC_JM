@@ -405,10 +405,15 @@ a { color: #ffffff; text-decoration: none; }
 
 .info-row span { color: var(--text-muted); font-size: 0.84rem; }
 
-.day-card-footer { padding: 0 1rem 1rem; }
+.day-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0 1rem 1rem;
+}
 
 .map-focus-btn {
-  width: 100%;
+  flex: 1 1 10rem;
   padding: 0.6rem 0.8rem;
   border: 1px solid var(--card-border);
   border-radius: 0.65rem;
@@ -562,6 +567,288 @@ a { color: #ffffff; text-decoration: none; }
 .map-panel { margin-bottom: 0; padding: 1rem; }
 .tips-panel { margin-top: 1.25rem; }
 
+.day-summary p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.65rem;
+}
+
+.day-photo {
+  margin: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  background: rgba(3, 27, 47, 0.7);
+}
+
+.day-photo img {
+  display: block;
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.day-photo figcaption {
+  padding: 0.45rem 0.55rem;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--text-muted);
+}
+
+.links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.useful-link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.15rem 0.5rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 0.75rem;
+  background: rgba(7, 89, 133, 0.45);
+  color: #ffffff;
+  text-decoration: none;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.useful-link:hover {
+  background: rgba(14, 116, 144, 0.7);
+  border-color: rgba(103, 232, 249, 0.55);
+}
+
+.useful-link-label {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #bae6fd;
+}
+
+.useful-link-desc {
+  grid-column: 1;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.useful-link-arrow {
+  grid-row: 1 / span 2;
+  align-self: center;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.activity-link {
+  color: #bae6fd;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.activity-link:hover { color: #ffffff; }
+
+.edit-day-btn {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(255, 209, 102, 0.45);
+  border-radius: 0.65rem;
+  background: rgba(255, 209, 102, 0.15);
+  color: #fde68a;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.edit-day-btn:hover { background: rgba(255, 209, 102, 0.28); }
+
+body.is-edit-mode .day-card {
+  outline: 1px dashed rgba(255, 209, 102, 0.35);
+  outline-offset: 2px;
+}
+
+.editor-fab {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 120;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 209, 102, 0.45);
+  border-radius: 999px;
+  background: rgba(3, 27, 47, 0.95);
+  color: #fde68a;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.editor-fab:hover { background: rgba(7, 89, 133, 0.95); }
+
+.editor-toolbar {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 110;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 209, 102, 0.35);
+  border-radius: var(--radius-lg);
+  background: rgba(3, 27, 47, 0.96);
+  box-shadow: var(--shadow);
+}
+
+.editor-toolbar-title {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #fde68a;
+}
+
+.editor-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.btn-editor {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: rgba(7, 89, 133, 0.65);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-editor:hover { background: rgba(14, 116, 144, 0.8); }
+
+.btn-editor-primary {
+  border-color: rgba(255, 209, 102, 0.45);
+  background: rgba(255, 209, 102, 0.2);
+  color: #fde68a;
+}
+
+.btn-editor-danger {
+  border-color: rgba(248, 113, 113, 0.45);
+  color: #fecaca;
+}
+
+.editor-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 4.5rem;
+  z-index: 130;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: rgba(3, 27, 47, 0.96);
+  border: 1px solid var(--card-border);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+}
+
+.editor-modal[hidden] { display: none !important; }
+
+.editor-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.editor-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 8, 23, 0.72);
+}
+
+.editor-modal-card {
+  position: relative;
+  width: min(100%, 26rem);
+  max-height: min(90vh, 720px);
+  overflow: auto;
+  padding: 1.1rem;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  background: #031b2f;
+  box-shadow: var(--shadow);
+}
+
+.editor-modal-card-wide { width: min(100%, 40rem); }
+
+.editor-modal-card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+.editor-modal-help {
+  margin: 0 0 1rem;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+.editor-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.editor-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.editor-field-full { grid-column: 1 / -1; }
+
+.editor-field span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.editor-field input,
+.editor-field textarea {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--card-border);
+  border-radius: 0.6rem;
+  background: rgba(7, 89, 133, 0.35);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.86rem;
+}
+
+.editor-field textarea { resize: vertical; min-height: 3rem; }
+
+.editor-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
 @media (max-width: 640px) {
   .page { padding-top: 4rem; }
   .back-link { left: 0.5rem; top: 0.5rem; font-size: 0.78rem; }
@@ -573,6 +860,13 @@ a { color: #ffffff; text-decoration: none; }
   .map-wrap {
     height: min(48vh, 360px);
     min-height: 280px;
+  }
+  .editor-form-grid { grid-template-columns: 1fr; }
+  .editor-fab {
+    right: 0.65rem;
+    bottom: 0.65rem;
+    font-size: 0.78rem;
+    padding: 0.65rem 0.85rem;
   }
 }
 
@@ -594,7 +888,18 @@ a { color: #ffffff; text-decoration: none; }
 </head>
 <body>
   <a class="back-link" href="index.html">&larr; Compte à rebours</a>
+  <button type="button" class="editor-fab" id="editorUnlockBtn" title="Modifier le programme">✏️ Modifier le programme</button>
+  <p class="editor-toast" id="editorToast" hidden role="status"></p>
   <main class="page">
+    <div class="editor-toolbar" id="editorToolbar" hidden>
+    <p class="editor-toolbar-title">Mode édition</p>
+    <div class="editor-toolbar-actions">
+      <button type="button" class="btn-editor" id="editorSaveBtn">💾 Sauvegarder</button>
+      <button type="button" class="btn-editor" id="editorExportBtn">⬇️ Exporter</button>
+      <button type="button" class="btn-editor" id="editorImportBtn">⬆️ Importer</button>
+      <input type="file" id="editorImportFile" accept="application/json" hidden>
+      <button type="button" class="btn-editor btn-editor-danger" id="editorResetBtn">↩️ Réinitialiser</button>
+    </div>
     <header class="panel hero">
       <p class="hero-kicker">🌴 Itinéraire détaillé</p>
       <h1>Île Maurice — 14 jours</h1>
@@ -626,7 +931,7 @@ a { color: #ffffff; text-decoration: none; }
     <div class="layout-with-map">
       <section aria-label="Programme jour par jour">
         <h2 class="section-title">📅 Programme jour par jour</h2>
-        <div id="daysGrid" class="days-list"><article class="day-card" id="day-1" data-day="1" data-categories="repos plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 1</p><h2>Arrivée &amp; détente</h2><p class="day-date">Vendredi 7 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Arrivée à l'aéroport SSR et installation à New Grove</li><li>Courses alimentaires et premiers repas locaux</li><li>Première baignade en fin d'après-midi</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Plage de Blue Bay — eau turquoise, snorkeling léger depuis la plage</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Récupérez la voiture à l'aéroport puis rejoignez New Grove. Blue Bay est à 15 min : parfait pour une première mise en jambes.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-2" data-day="2" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 2</p><h2>Sud sauvage &amp; falaises</h2><p class="day-date">Samedi 8 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Gris Gris — falaises battues par les vagues (vue sans descente difficile)</li><li>Roche Qui Pleure — spectacle naturel du sud</li><li>Village de Souillac et promenade côtière</li><li>Déjeuner local dans le sud</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Plage de Riambel — sable, baignade tranquille loin de la foule</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~30 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Restez sur les points de vue aménagés à Gris Gris. Pas de baignade aux falaises — la plage de Riambel est plus sûre.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-3" data-day="3" data-categories="culture plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 3</p><h2>Mahébourg &amp; marché</h2><p class="day-date">Dimanche 9 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-culture">🏛️ Culture</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Marché de Mahébourg (ambiance locale, fruits, épices)</li><li>Musée naval de Mahébourg — histoire maritime mauricienne</li><li>Balade dans le vieux quartier et café face au port</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Retour à Blue Bay pour snorkeling ou farniente</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~10 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Le marché est animé le lundi matin. Le musée est accessible et peu exigeant physiquement.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-4" data-day="4" data-categories="repos plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 4</p><h2>Journée repos</h2><p class="day-date">Lundi 10 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Matinée libre à la maison — lecture, sieste, piscine</li><li>Petite balade douce dans le quartier</li><li>Barbecue ou repas simple à New Grove</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pointe d'Esny — plage calme et peu fréquentée, accès facile</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~10 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée volontairement légère après deux jours actifs. Pointe d'Esny est proche et très agréable.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-5" data-day="5" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 5</p><h2>Île aux Cerfs</h2><p class="day-date">Mardi 11 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Départ en bateau depuis Trou d'Eau Douce</li><li>Journée sur l'île aux Cerfs — baignade, transat, déjeuner les pieds dans l'eau</li><li>Option snorkeling dans le lagon (sans effort intense)</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Île aux Cerfs — plages de sable blanc et eau cristalline</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~45 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Réservez le bateau la veille. Prévoyez de partir tôt pour profiter d'une plage moins bondée.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-6" data-day="6" data-categories="culture nature"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 6</p><h2>Grand Bassin &amp; thé</h2><p class="day-date">Mercredi 12 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-culture">🏛️ Culture</span><span class="cat-badge cat-nature">🌿 Nature</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Grand Bassin (Ganga Talao) — lac sacré hindou, visite respectueuse</li><li>Route des plages du sud puis ascension douce vers le plateau</li><li>Bois Chéri — visite de plantation de thé et dégustation</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pas de plage principale — journée culture &amp; nature en altitude</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~50 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Couvrez-vous légèrement au Grand Bassin (site religieux). La visite de la rhumerie Bois Chéri est accessible.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-7" data-day="7" data-categories="plage repos"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 7</p><h2>Plages de l'est</h2><p class="day-date">Jeudi 13 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-plage">🏖️ Plage</span><span class="cat-badge cat-repos">😌 Repos</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Route vers la côte est — paysages de canne à sucre</li><li>Belle Mare — longue plage de sable fin</li><li>Palmar — baignade et déjeuner en bord de mer</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Belle Mare &amp; Palmar — parmi les plus belles plages de l'île</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~50 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée plage pure. Louez des transats sur place et alternez ombre / soleil.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-8" data-day="8" data-categories="nature culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 8</p><h2>Chamarel &amp; rhumerie</h2><p class="day-date">Vendredi 14 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Terres des 7 couleurs de Chamarel — site géologique unique</li><li>Cascade de Chamarel (vue depuis le belvédère, sans randonnée)</li><li>Rhumerie de Chamarel — visite et dégustation</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Option plage de Tamarin en fin de journée si envie</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée la plus longue en voiture. Partez tôt. La cascade se voit sans descendre les marches.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-9" data-day="9" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 9</p><h2>Le Morne sans randonnée</h2><p class="day-date">Samedi 15 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Route vers Le Morne — panorama sur le Morne Brabant (UNESCO)</li><li>Photo depuis la plage publique, sans ascension</li><li>Déjeuner face au lagon du sud-ouest</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Plage du Morne — vue spectaculaire sur la montagne</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 10 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Ne pas tenter la randonnée pour les genoux sensibles. La plage offre déjà une vue magnifique.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-10" data-day="10" data-categories="repos plage culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 10</p><h2>Repos &amp; Flic en Flac</h2><p class="day-date">Dimanche 16 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Matinée détente à New Grove</li><li>Shopping souvenirs ou supermarché</li><li>Après-midi à Flic en Flac — longue plage animée</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Flic en Flac — plage populaire, restaurants et boutiques à proximité</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée chill idéale pour ralentir le rythme. Flic en Flac est parfait pour un coucher de soleil.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-11" data-day="11" data-categories="culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 11</p><h2>Port-Louis &amp; capitale</h2><p class="day-date">Lundi 17 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Marché central de Port-Louis — épices, légumes, street food</li><li>Aapravasi Ghat (UNESCO) — histoire de l'immigration</li><li>Waterfront Caudan — boutiques, cafés, vue sur le port</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pas de plage — journée urbaine et culturelle</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Garez-vous au Caudan. Marchez entre les sites : tout est proche. Goûtez les gâteaux piments au marché.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-12" data-day="12" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 12</p><h2>Pamplemousses &amp; nord-ouest</h2><p class="day-date">Mardi 18 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Jardin botanique de Pamplemousses — lotus géants, palmiers royaux</li><li>Route vers le nord-ouest</li><li>Après-midi à Mont Choisy — plage familiale</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Mont Choisy — longue plage ombragée, eau calme</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 20 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Visitez le jardin tôt (chaleur + foule). Mont Choisy est l'une des plages les plus accessibles.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-13" data-day="13" data-categories="plage culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 13</p><h2>Grand Baie &amp; Pereybère</h2><p class="day-date">Mercredi 19 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-plage">🏖️ Plage</span><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Grand Baie — boutiques, galeries, ambiance animée</li><li>Déjeuner en bord de lagon</li><li>Pereybère — baignade dans une eau calme et protégée</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pereybère — petite plage idéale pour une baignade tranquille</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Pereybère est moins agitée que Grand Baie : parfait pour le groupe et les genoux sensibles.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-14" data-day="14" data-categories="repos plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 14</p><h2>Journée libre &amp; départ</h2><p class="day-date">Jeudi 20 – Vendredi 21 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Jeudi 20 : matinée libre sur votre plage favorite</li><li>Derniers achats et préparation des valises</li><li>Vendredi 21 : dernière baignade, check-out et départ vers l'aéroport le soir</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Votre plage favorite (Blue Bay, Pereybère ou Pointe d'Esny)</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Prévoyez 2 h avant le vol du 21/11 au soir pour le retour de la voiture. Un dernier dip dans le lagon !</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article></div>
+        <div id="daysGrid" class="days-list"><article class="day-card" id="day-1" data-day="1" data-categories="repos plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 1</p><h2>Arrivée &amp; détente</h2><p class="day-date">Vendredi 7 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block day-summary"><h3>En bref</h3><p>Journée d'installation : récupérer la voiture, s'installer à New Grove, puis première baignade à Blue Bay.</p></section><section class="day-block day-photos"><h3>📷 Photos</h3><div class="photo-grid"><figure class="day-photo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Blue_Bay%2C_Mauritius.jpg/640px-Blue_Bay%2C_Mauritius.jpg" alt="Blue Bay — eau turquoise idéale pour débuter" loading="lazy"><figcaption>Blue Bay — eau turquoise idéale pour débuter</figcaption></figure></div></section><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li><a class="activity-link" href="https://www.google.com/maps/search/?api=1&amp;query=Sir+Seewoosagur+Ramgoolam+International+Airport" target="_blank" rel="noopener noreferrer">Arrivée à l'aéroport SSR et installation à New Grove ↗</a></li><li>Courses alimentaires et premiers repas locaux</li><li><a class="activity-link" href="https://www.google.com/maps/search/?api=1&amp;query=Blue+Bay+Beach+Mauritius" target="_blank" rel="noopener noreferrer">Première baignade en fin d'après-midi ↗</a></li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Plage de Blue Bay — eau turquoise, snorkeling léger depuis la plage</p></section><section class="day-block day-links"><h3>🔗 Liens utiles</h3><div class="links-list"><a class="useful-link" href="https://www.google.com/maps/search/?api=1&amp;query=Blue+Bay+Beach+Mauritius" target="_blank" rel="noopener noreferrer"><span class="useful-link-label">Blue Bay sur Google Maps</span><span class="useful-link-desc">Itinéraire et avis sur la plage</span><span class="useful-link-arrow" aria-hidden="true">↗</span></a><a class="useful-link" href="https://www.google.com/maps/search/?api=1&amp;query=SSR+Airport+Mauritius" target="_blank" rel="noopener noreferrer"><span class="useful-link-label">Aéroport SSR</span><span class="useful-link-desc">Point d'arrivée et location de voiture</span><span class="useful-link-arrow" aria-hidden="true">↗</span></a></div></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Récupérez la voiture à l'aéroport puis rejoignez New Grove. Blue Bay est à 15 min : parfait pour une première mise en jambes.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-2" data-day="2" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 2</p><h2>Sud sauvage &amp; falaises</h2><p class="day-date">Samedi 8 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Gris Gris — falaises battues par les vagues (vue sans descente difficile)</li><li>Roche Qui Pleure — spectacle naturel du sud</li><li>Village de Souillac et promenade côtière</li><li>Déjeuner local dans le sud</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Plage de Riambel — sable, baignade tranquille loin de la foule</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~30 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Restez sur les points de vue aménagés à Gris Gris. Pas de baignade aux falaises — la plage de Riambel est plus sûre.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-3" data-day="3" data-categories="culture plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 3</p><h2>Mahébourg &amp; marché</h2><p class="day-date">Dimanche 9 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-culture">🏛️ Culture</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Marché de Mahébourg (ambiance locale, fruits, épices)</li><li>Musée naval de Mahébourg — histoire maritime mauricienne</li><li>Balade dans le vieux quartier et café face au port</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Retour à Blue Bay pour snorkeling ou farniente</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~10 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Le marché est animé le lundi matin. Le musée est accessible et peu exigeant physiquement.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-4" data-day="4" data-categories="repos plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 4</p><h2>Journée repos</h2><p class="day-date">Lundi 10 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Matinée libre à la maison — lecture, sieste, piscine</li><li>Petite balade douce dans le quartier</li><li>Barbecue ou repas simple à New Grove</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pointe d'Esny — plage calme et peu fréquentée, accès facile</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~10 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée volontairement légère après deux jours actifs. Pointe d'Esny est proche et très agréable.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-5" data-day="5" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 5</p><h2>Île aux Cerfs</h2><p class="day-date">Mardi 11 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block day-summary"><h3>En bref</h3><p>Excursion en bateau depuis Trou d'Eau Douce vers l'île aux Cerfs : journée plage et lagon.</p></section><section class="day-block day-photos"><h3>📷 Photos</h3><div class="photo-grid"><figure class="day-photo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Ile_aux_Cerfs.jpg/640px-Ile_aux_Cerfs.jpg" alt="Île aux Cerfs — sable blanc et lagon" loading="lazy"><figcaption>Île aux Cerfs — sable blanc et lagon</figcaption></figure></div></section><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li><a class="activity-link" href="https://www.google.com/maps/search/?api=1&amp;query=Trou+d'Eau+Douce+Mauritius" target="_blank" rel="noopener noreferrer">Départ en bateau depuis Trou d'Eau Douce ↗</a></li><li>Journée sur l'île aux Cerfs — baignade, transat, déjeuner les pieds dans l'eau</li><li>Option snorkeling dans le lagon (sans effort intense)</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Île aux Cerfs — plages de sable blanc et eau cristalline</p></section><section class="day-block day-links"><h3>🔗 Liens utiles</h3><div class="links-list"><a class="useful-link" href="https://www.google.com/maps/search/?api=1&amp;query=Trou+d'Eau+Douce+Mauritius" target="_blank" rel="noopener noreferrer"><span class="useful-link-label">Trou d'Eau Douce (embarquement)</span><span class="useful-link-desc">Village de départ des bateaux</span><span class="useful-link-arrow" aria-hidden="true">↗</span></a><a class="useful-link" href="https://fr.wikipedia.org/wiki/%C3%8Ele_aux_Cerfs" target="_blank" rel="noopener noreferrer"><span class="useful-link-label">Île aux Cerfs — Wikipédia</span><span class="useful-link-desc">Présentation du site</span><span class="useful-link-arrow" aria-hidden="true">↗</span></a></div></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~45 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Réservez le bateau la veille. Prévoyez de partir tôt pour profiter d'une plage moins bondée.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-6" data-day="6" data-categories="culture nature"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 6</p><h2>Grand Bassin &amp; thé</h2><p class="day-date">Mercredi 12 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-culture">🏛️ Culture</span><span class="cat-badge cat-nature">🌿 Nature</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Grand Bassin (Ganga Talao) — lac sacré hindou, visite respectueuse</li><li>Route des plages du sud puis ascension douce vers le plateau</li><li>Bois Chéri — visite de plantation de thé et dégustation</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pas de plage principale — journée culture &amp; nature en altitude</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~50 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Couvrez-vous légèrement au Grand Bassin (site religieux). La visite de la rhumerie Bois Chéri est accessible.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-7" data-day="7" data-categories="plage repos"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 7</p><h2>Plages de l'est</h2><p class="day-date">Jeudi 13 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-plage">🏖️ Plage</span><span class="cat-badge cat-repos">😌 Repos</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Route vers la côte est — paysages de canne à sucre</li><li>Belle Mare — longue plage de sable fin</li><li>Palmar — baignade et déjeuner en bord de mer</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Belle Mare &amp; Palmar — parmi les plus belles plages de l'île</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~50 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée plage pure. Louez des transats sur place et alternez ombre / soleil.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-8" data-day="8" data-categories="nature culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 8</p><h2>Chamarel &amp; rhumerie</h2><p class="day-date">Vendredi 14 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block day-summary"><h3>En bref</h3><p>Découverte du sud-ouest : terres colorées, cascade et rhumerie de Chamarel.</p></section><section class="day-block day-photos"><h3>📷 Photos</h3><div class="photo-grid"><figure class="day-photo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Chamarel_Seven_Coloured_Earth%2C_Mauritius.JPG/640px-Chamarel_Seven_Coloured_Earth%2C_Mauritius.JPG" alt="Terres des 7 couleurs de Chamarel" loading="lazy"><figcaption>Terres des 7 couleurs de Chamarel</figcaption></figure></div></section><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li><a class="activity-link" href="https://www.google.com/maps/search/?api=1&amp;query=Chamarel+Seven+Coloured+Earth" target="_blank" rel="noopener noreferrer">Terres des 7 couleurs de Chamarel ↗</a></li><li>Cascade de Chamarel (vue depuis le belvédère, sans randonnée)</li><li><a class="activity-link" href="https://www.rhumeriedechamarel.com/" target="_blank" rel="noopener noreferrer">Rhumerie de Chamarel — visite et dégustation ↗</a></li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Option plage de Tamarin en fin de journée si envie</p></section><section class="day-block day-links"><h3>🔗 Liens utiles</h3><div class="links-list"><a class="useful-link" href="https://www.rhumeriedechamarel.com/" target="_blank" rel="noopener noreferrer"><span class="useful-link-label">Rhumerie de Chamarel</span><span class="useful-link-desc">Horaires et réservation visite</span><span class="useful-link-arrow" aria-hidden="true">↗</span></a><a class="useful-link" href="https://www.google.com/maps/search/?api=1&amp;query=Chamarel+Mauritius" target="_blank" rel="noopener noreferrer"><span class="useful-link-label">Chamarel sur Google Maps</span><span class="useful-link-desc">Itinéraire depuis New Grove</span><span class="useful-link-arrow" aria-hidden="true">↗</span></a></div></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée la plus longue en voiture. Partez tôt. La cascade se voit sans descendre les marches.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-9" data-day="9" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 9</p><h2>Le Morne sans randonnée</h2><p class="day-date">Samedi 15 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Route vers Le Morne — panorama sur le Morne Brabant (UNESCO)</li><li>Photo depuis la plage publique, sans ascension</li><li>Déjeuner face au lagon du sud-ouest</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Plage du Morne — vue spectaculaire sur la montagne</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 10 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Ne pas tenter la randonnée pour les genoux sensibles. La plage offre déjà une vue magnifique.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-10" data-day="10" data-categories="repos plage culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 10</p><h2>Repos &amp; Flic en Flac</h2><p class="day-date">Dimanche 16 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Matinée détente à New Grove</li><li>Shopping souvenirs ou supermarché</li><li>Après-midi à Flic en Flac — longue plage animée</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Flic en Flac — plage populaire, restaurants et boutiques à proximité</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée chill idéale pour ralentir le rythme. Flic en Flac est parfait pour un coucher de soleil.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-11" data-day="11" data-categories="culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 11</p><h2>Port-Louis &amp; capitale</h2><p class="day-date">Lundi 17 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Marché central de Port-Louis — épices, légumes, street food</li><li>Aapravasi Ghat (UNESCO) — histoire de l'immigration</li><li>Waterfront Caudan — boutiques, cafés, vue sur le port</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pas de plage — journée urbaine et culturelle</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Garez-vous au Caudan. Marchez entre les sites : tout est proche. Goûtez les gâteaux piments au marché.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-12" data-day="12" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 12</p><h2>Pamplemousses &amp; nord-ouest</h2><p class="day-date">Mardi 18 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Jardin botanique de Pamplemousses — lotus géants, palmiers royaux</li><li>Route vers le nord-ouest</li><li>Après-midi à Mont Choisy — plage familiale</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Mont Choisy — longue plage ombragée, eau calme</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 20 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Visitez le jardin tôt (chaleur + foule). Mont Choisy est l'une des plages les plus accessibles.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-13" data-day="13" data-categories="plage culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 13</p><h2>Grand Baie &amp; Pereybère</h2><p class="day-date">Mercredi 19 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-plage">🏖️ Plage</span><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Grand Baie — boutiques, galeries, ambiance animée</li><li>Déjeuner en bord de lagon</li><li>Pereybère — baignade dans une eau calme et protégée</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pereybère — petite plage idéale pour une baignade tranquille</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Pereybère est moins agitée que Grand Baie : parfait pour le groupe et les genoux sensibles.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article><article class="day-card" id="day-14" data-day="14" data-categories="repos plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 14</p><h2>Journée libre &amp; départ</h2><p class="day-date">Jeudi 20 – Vendredi 21 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Jeudi 20 : matinée libre sur votre plage favorite</li><li>Derniers achats et préparation des valises</li><li>Vendredi 21 : dernière baignade, check-out et départ vers l'aéroport le soir</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Votre plage favorite (Blue Bay, Pereybère ou Pointe d'Esny)</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Prévoyez 2 h avant le vol du 21/11 au soir pour le retour de la voiture. Un dernier dip dans le lagon !</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button><button type="button" class="edit-day-btn" hidden>Modifier ce jour</button></footer></article></div>
       </section>
       <aside class="map-sticky" id="mapSection">
         <div class="panel map-panel">
@@ -648,6 +953,45 @@ a { color: #ffffff; text-decoration: none; }
       <div id="tipsGrid" class="tips-grid"><div class="tip-card"><span class="tip-icon" aria-hidden="true">🚗</span><h3>Conduite à Maurice</h3><p>Circulation à gauche. Routes côtières parfois sinueuses : prévoir 15 à 20 min de marge. Stationnez à l'ombre quand c'est possible.</p></div><div class="tip-card"><span class="tip-icon" aria-hidden="true">🏖️</span><h3>Plages incontournables</h3><p>Blue Bay (snorkeling), Belle Mare (sable fin), Pereybère (eau calme), Le Morne (vue spectaculaire), Mont Choisy (familiale).</p></div><div class="tip-card"><span class="tip-icon" aria-hidden="true">🍛</span><h3>Spécialités locales</h3><p>Dholl puri, boulettes, cari de poisson, alouda, gâteau patate. Essayez un déjeuner créole à Mahébourg ou Port-Louis.</p></div><div class="tip-card"><span class="tip-icon" aria-hidden="true">🧴</span><h3>Soleil &amp; récifs</h3><p>Crème solaire indice 50+, chapeau et eau en permanence. Chaussures d'eau utiles sur les récifs coralliens.</p></div><div class="tip-card"><span class="tip-icon" aria-hidden="true">🦵</span><h3>Genoux sensibles</h3><p>Privilégier les accès plage faciles (Blue Bay, Pereybère, Mont Choisy). Éviter la montée du Morne : profiter de la plage en contrebas.</p></div><div class="tip-card"><span class="tip-icon" aria-hidden="true">⏰</span><h3>Horaires utiles</h3><p>Marché de Mahébourg : lundi. Marché central Port-Louis : tôt le matin. Grand Bassin : calme en matinée.</p></div></div>
     </section>
   </main>
+  <div class="editor-modal" id="passwordModal" hidden>
+    <div class="editor-modal-backdrop" data-close-modal></div>
+    <div class="editor-modal-card" role="dialog" aria-labelledby="passwordModalTitle">
+      <h2 id="passwordModalTitle">Accès édition</h2>
+      <p class="editor-modal-help">Entrez le mot de passe pour modifier le programme, ajouter des photos et des liens.</p>
+      <label class="editor-field">
+        <span>Mot de passe</span>
+        <input type="password" id="editorPassword" autocomplete="current-password">
+      </label>
+      <div class="editor-modal-actions">
+        <button type="button" class="btn-editor" id="passwordCancelBtn">Annuler</button>
+        <button type="button" class="btn-editor btn-editor-primary" id="passwordSubmitBtn">Déverrouiller</button>
+      </div>
+    </div>
+  </div>
+  <div class="editor-modal" id="dayEditorModal" hidden>
+    <div class="editor-modal-backdrop" data-close-modal></div>
+    <div class="editor-modal-card editor-modal-card-wide" role="dialog" aria-labelledby="editDayTitle">
+      <h2 id="editDayTitle">Modifier le jour</h2>
+      <form id="dayEditorForm">
+        <input type="hidden" id="editDayNum">
+        <div class="editor-form-grid">
+          <label class="editor-field"><span>Titre</span><input type="text" id="editTitle" required></label>
+          <label class="editor-field"><span>Date</span><input type="text" id="editDate" required></label>
+          <label class="editor-field editor-field-full"><span>En bref (résumé pour néophyte)</span><textarea id="editSummary" rows="2"></textarea></label>
+          <label class="editor-field editor-field-full"><span>Activités (une par ligne, option lien : texte | https://...)</span><textarea id="editActivities" rows="5"></textarea></label>
+          <label class="editor-field editor-field-full"><span>Plage du jour</span><textarea id="editBeach" rows="2"></textarea></label>
+          <label class="editor-field editor-field-full"><span>Photos (une par ligne : url | légende)</span><textarea id="editPhotos" rows="3" placeholder="https://... | Légende de la photo"></textarea></label>
+          <label class="editor-field editor-field-full"><span>Liens utiles (label | url | description)</span><textarea id="editLinks" rows="3" placeholder="Google Maps | https://... | Itinéraire"></textarea></label>
+          <label class="editor-field"><span>Conseil</span><textarea id="editTips" rows="2"></textarea></label>
+          <label class="editor-field"><span>Trajet (min)</span><input type="number" id="editDrive" min="0" step="5"></label>
+        </div>
+        <div class="editor-modal-actions">
+          <button type="button" class="btn-editor" id="dayEditorCancelBtn">Annuler</button>
+          <button type="submit" class="btn-editor btn-editor-primary">Enregistrer le jour</button>
+        </div>
+      </form>
+    </div>
+  </div>
   <script>window.ITINERARY_DATA = {
   BASE: {
     name: "New Grove",
@@ -711,12 +1055,31 @@ a { color: #ffffff; text-decoration: none; }
       rhythm: "chill",
       effort: "facile",
       categories: ["repos", "plage"],
+      summary: "Journée d'installation : récupérer la voiture, s'installer à New Grove, puis première baignade à Blue Bay.",
       activities: [
-        "Arrivée à l'aéroport SSR et installation à New Grove",
+        { text: "Arrivée à l'aéroport SSR et installation à New Grove", link: "https://www.google.com/maps/search/?api=1&query=Sir+Seewoosagur+Ramgoolam+International+Airport" },
         "Courses alimentaires et premiers repas locaux",
-        "Première baignade en fin d'après-midi"
+        { text: "Première baignade en fin d'après-midi", link: "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius" }
       ],
       beach: "Plage de Blue Bay — eau turquoise, snorkeling léger depuis la plage",
+      photos: [
+        {
+          url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Blue_Bay%2C_Mauritius.jpg/640px-Blue_Bay%2C_Mauritius.jpg",
+          caption: "Blue Bay — eau turquoise idéale pour débuter"
+        }
+      ],
+      links: [
+        {
+          label: "Blue Bay sur Google Maps",
+          url: "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius",
+          description: "Itinéraire et avis sur la plage"
+        },
+        {
+          label: "Aéroport SSR",
+          url: "https://www.google.com/maps/search/?api=1&query=SSR+Airport+Mauritius",
+          description: "Point d'arrivée et location de voiture"
+        }
+      ],
       locations: [
         { name: "New Grove", lat: -20.408611, lng: 57.613611, type: "base" },
         { name: "Blue Bay", lat: -20.4442, lng: 57.7189, type: "plage" }
@@ -795,12 +1158,31 @@ a { color: #ffffff; text-decoration: none; }
       rhythm: "actif",
       effort: "modéré",
       categories: ["nature", "plage"],
+      summary: "Excursion en bateau depuis Trou d'Eau Douce vers l'île aux Cerfs : journée plage et lagon.",
       activities: [
-        "Départ en bateau depuis Trou d'Eau Douce",
+        { text: "Départ en bateau depuis Trou d'Eau Douce", link: "https://www.google.com/maps/search/?api=1&query=Trou+d'Eau+Douce+Mauritius" },
         "Journée sur l'île aux Cerfs — baignade, transat, déjeuner les pieds dans l'eau",
         "Option snorkeling dans le lagon (sans effort intense)"
       ],
       beach: "Île aux Cerfs — plages de sable blanc et eau cristalline",
+      photos: [
+        {
+          url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Ile_aux_Cerfs.jpg/640px-Ile_aux_Cerfs.jpg",
+          caption: "Île aux Cerfs — sable blanc et lagon"
+        }
+      ],
+      links: [
+        {
+          label: "Trou d'Eau Douce (embarquement)",
+          url: "https://www.google.com/maps/search/?api=1&query=Trou+d'Eau+Douce+Mauritius",
+          description: "Village de départ des bateaux"
+        },
+        {
+          label: "Île aux Cerfs — Wikipédia",
+          url: "https://fr.wikipedia.org/wiki/%C3%8Ele_aux_Cerfs",
+          description: "Présentation du site"
+        }
+      ],
       locations: [
         { name: "Trou d'Eau Douce", lat: -20.2569, lng: 57.7878, type: "culture" },
         { name: "Île aux Cerfs", lat: -20.2747, lng: 57.8008, type: "plage" }
@@ -855,12 +1237,31 @@ a { color: #ffffff; text-decoration: none; }
       rhythm: "actif",
       effort: "modéré",
       categories: ["nature", "culture"],
+      summary: "Découverte du sud-ouest : terres colorées, cascade et rhumerie de Chamarel.",
       activities: [
-        "Terres des 7 couleurs de Chamarel — site géologique unique",
+        { text: "Terres des 7 couleurs de Chamarel", link: "https://www.google.com/maps/search/?api=1&query=Chamarel+Seven+Coloured+Earth" },
         "Cascade de Chamarel (vue depuis le belvédère, sans randonnée)",
-        "Rhumerie de Chamarel — visite et dégustation"
+        { text: "Rhumerie de Chamarel — visite et dégustation", link: "https://www.rhumeriedechamarel.com/" }
       ],
       beach: "Option plage de Tamarin en fin de journée si envie",
+      photos: [
+        {
+          url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Chamarel_Seven_Coloured_Earth%2C_Mauritius.JPG/640px-Chamarel_Seven_Coloured_Earth%2C_Mauritius.JPG",
+          caption: "Terres des 7 couleurs de Chamarel"
+        }
+      ],
+      links: [
+        {
+          label: "Rhumerie de Chamarel",
+          url: "https://www.rhumeriedechamarel.com/",
+          description: "Horaires et réservation visite"
+        },
+        {
+          label: "Chamarel sur Google Maps",
+          url: "https://www.google.com/maps/search/?api=1&query=Chamarel+Mauritius",
+          description: "Itinéraire depuis New Grove"
+        }
+      ],
       locations: [
         { name: "Terres 7 couleurs", lat: -20.4397, lng: 57.3736, type: "nature" },
         { name: "Cascade Chamarel", lat: -20.4453, lng: 57.3858, type: "nature" },
@@ -1008,6 +1409,629 @@ a { color: #ffffff; text-decoration: none; }
   }
 };
 </script>
+  <script>(function (global) {
+  "use strict";
+
+  function esc(text) {
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function formatDriveTime(minutes) {
+    var m = Number(minutes) || 0;
+    if (m < 60) {
+      return "~" + m + " min";
+    }
+    var h = Math.floor(m / 60);
+    var r = m % 60;
+    return r ? "~" + h + " h " + r + " min" : "~" + h + " h";
+  }
+
+  function activityText(activity) {
+    if (!activity) {
+      return "";
+    }
+    if (typeof activity === "string") {
+      return activity;
+    }
+    return activity.text || "";
+  }
+
+  function activityLink(activity) {
+    if (!activity || typeof activity === "string") {
+      return "";
+    }
+    return activity.link || "";
+  }
+
+  function renderActivityItem(activity) {
+    var text = activityText(activity);
+    var link = activityLink(activity);
+    if (link) {
+      return (
+        '<li><a class="activity-link" href="' +
+        esc(link) +
+        '" target="_blank" rel="noopener noreferrer">' +
+        esc(text) +
+        " ↗</a></li>"
+      );
+    }
+    return "<li>" + esc(text) + "</li>";
+  }
+
+  function renderPhotos(photos) {
+    if (!photos || !photos.length) {
+      return "";
+    }
+    var items = photos
+      .filter(function (p) {
+        return p && p.url;
+      })
+      .map(function (photo) {
+        return (
+          '<figure class="day-photo">' +
+          '<img src="' +
+          esc(photo.url) +
+          '" alt="' +
+          esc(photo.caption || "Photo du jour") +
+          '" loading="lazy">' +
+          (photo.caption ? '<figcaption>' + esc(photo.caption) + "</figcaption>" : "") +
+          "</figure>"
+        );
+      })
+      .join("");
+    if (!items) {
+      return "";
+    }
+    return '<section class="day-block day-photos"><h3>📷 Photos</h3><div class="photo-grid">' + items + "</div></section>";
+  }
+
+  function renderLinks(links) {
+    if (!links || !links.length) {
+      return "";
+    }
+    var items = links
+      .filter(function (l) {
+        return l && l.url;
+      })
+      .map(function (link) {
+        return (
+          '<a class="useful-link" href="' +
+          esc(link.url) +
+          '" target="_blank" rel="noopener noreferrer">' +
+          '<span class="useful-link-label">' +
+          esc(link.label || link.url) +
+          "</span>" +
+          (link.description ? '<span class="useful-link-desc">' + esc(link.description) + "</span>" : "") +
+          '<span class="useful-link-arrow" aria-hidden="true">↗</span></a>'
+        );
+      })
+      .join("");
+    if (!items) {
+      return "";
+    }
+    return '<section class="day-block day-links"><h3>🔗 Liens utiles</h3><div class="links-list">' + items + "</div></section>";
+  }
+
+  function renderDayCard(day, meta) {
+    var CATEGORY_META = meta.CATEGORY_META;
+    var RHYTHM_META = meta.RHYTHM_META;
+    var EFFORT_META = meta.EFFORT_META;
+    var rhythm = RHYTHM_META[day.rhythm] || { icon: "📅", label: day.rhythm };
+    var effort = EFFORT_META[day.effort] || { label: day.effort };
+    var effortClass = day.effort === "modéré" ? "modere" : day.effort;
+    var cats = (day.categories || [])
+      .map(function (c) {
+        var cat = CATEGORY_META[c] || { icon: "•", label: c };
+        return '<span class="cat-badge cat-' + c + '">' + cat.icon + " " + esc(cat.label) + "</span>";
+      })
+      .join("");
+    var activities = (day.activities || []).map(renderActivityItem).join("");
+    var summary = day.summary
+      ? '<section class="day-block day-summary"><h3>En bref</h3><p>' + esc(day.summary) + "</p></section>"
+      : "";
+
+    return (
+      '<article class="day-card" id="day-' +
+      day.day +
+      '" data-day="' +
+      day.day +
+      '" data-categories="' +
+      (day.categories || []).join(" ") +
+      '">' +
+      '<header class="day-card-top">' +
+      '<div class="day-title-block">' +
+      '<p class="day-kicker">Jour ' +
+      day.day +
+      "</p>" +
+      "<h2>" +
+      esc(day.title) +
+      "</h2>" +
+      '<p class="day-date">' +
+      esc(day.date) +
+      "</p>" +
+      "</div>" +
+      '<div class="day-meta-badges">' +
+      '<span class="meta-badge rhythm-' +
+      day.rhythm +
+      '">' +
+      rhythm.icon +
+      " " +
+      esc(rhythm.label) +
+      "</span>" +
+      '<span class="meta-badge effort-' +
+      effortClass +
+      '">' +
+      esc(effort.label) +
+      "</span>" +
+      "</div></header>" +
+      '<div class="cat-badges">' +
+      cats +
+      "</div>" +
+      '<div class="day-card-body">' +
+      summary +
+      renderPhotos(day.photos) +
+      '<section class="day-block"><h3>Activités</h3><ul class="activity-list">' +
+      activities +
+      "</ul></section>" +
+      '<section class="day-block highlight-beach"><h3>Plage du jour</h3><p>' +
+      esc(day.beach) +
+      "</p></section>" +
+      renderLinks(day.links) +
+      '<div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>' +
+      formatDriveTime(day.driveMinutes) +
+      " aller simple</span></div></div>" +
+      '<section class="day-block highlight-tip"><h3>Conseil</h3><p>' +
+      esc(day.tips) +
+      "</p></section>" +
+      "</div>" +
+      '<footer class="day-card-footer">' +
+      '<button type="button" class="map-focus-btn">Voir sur la carte</button>' +
+      '<button type="button" class="edit-day-btn" hidden>Modifier ce jour</button>' +
+      "</footer></article>"
+    );
+  }
+
+  function renderAllDays(itinerary, meta) {
+    return itinerary.map(function (day) {
+      return renderDayCard(day, meta);
+    }).join("");
+  }
+
+  global.ItineraryRender = {
+    esc: esc,
+    formatDriveTime: formatDriveTime,
+    activityText: activityText,
+    renderDayCard: renderDayCard,
+    renderAllDays: renderAllDays
+  };
+})(window);
+</script>
+  <script>(function () {
+  "use strict";
+
+  if (typeof window.ITINERARY_DATA === "undefined") {
+    return;
+  }
+
+  var D = window.ITINERARY_DATA;
+  var R = window.ItineraryRender;
+  var STORAGE_KEY = "maurice-itinerary-custom-v1";
+  var SESSION_KEY = "maurice-itinerary-edit-session";
+  var PASSWORD_HASH = "789c48f0b88c19679eb272cb20a4762fab975b3ade350bd30f02d6f33a2636d5";
+
+  var originalSnapshot = null;
+  var editMode = false;
+
+  function $(id) {
+    return document.getElementById(id);
+  }
+
+  function sha256(text) {
+    if (!window.crypto || !window.crypto.subtle) {
+      return Promise.resolve(text === "eddy1989" ? PASSWORD_HASH : "");
+    }
+    var encoder = new TextEncoder();
+    return window.crypto.subtle.digest("SHA-256", encoder.encode(text)).then(function (buf) {
+      return Array.prototype.map
+        .call(new Uint8Array(buf), function (b) {
+          return ("00" + b.toString(16)).slice(-2);
+        })
+        .join("");
+    });
+  }
+
+  function cloneData(data) {
+    return JSON.parse(JSON.stringify(data));
+  }
+
+  function loadCustomData() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        return null;
+      }
+      return JSON.parse(raw);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function applyCustomData(custom) {
+    if (!custom) {
+      return false;
+    }
+    if (custom.ITINERARY) {
+      D.ITINERARY = custom.ITINERARY;
+    }
+    if (custom.PRACTICAL_TIPS) {
+      D.PRACTICAL_TIPS = custom.PRACTICAL_TIPS;
+    }
+    if (custom.TRIP_META) {
+      Object.assign(D.TRIP_META, custom.TRIP_META);
+    }
+    return true;
+  }
+
+  function saveCustomData() {
+    var payload = {
+      ITINERARY: D.ITINERARY,
+      PRACTICAL_TIPS: D.PRACTICAL_TIPS,
+      TRIP_META: D.TRIP_META,
+      savedAt: new Date().toISOString()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    showToast("Programme sauvegardé sur cet appareil.");
+  }
+
+  function resetCustomData() {
+    if (!originalSnapshot) {
+      return;
+    }
+    D.ITINERARY = cloneData(originalSnapshot.ITINERARY);
+    D.PRACTICAL_TIPS = cloneData(originalSnapshot.PRACTICAL_TIPS);
+    D.TRIP_META = cloneData(originalSnapshot.TRIP_META);
+    localStorage.removeItem(STORAGE_KEY);
+    refreshView();
+    showToast("Programme d'origine restauré.");
+  }
+
+  function isAuthenticated() {
+    return sessionStorage.getItem(SESSION_KEY) === "1";
+  }
+
+  function setAuthenticated(value) {
+    if (value) {
+      sessionStorage.setItem(SESSION_KEY, "1");
+    } else {
+      sessionStorage.removeItem(SESSION_KEY);
+    }
+  }
+
+  function showToast(message) {
+    var toast = $("editorToast");
+    if (!toast) {
+      return;
+    }
+    toast.textContent = message;
+    toast.hidden = false;
+    window.clearTimeout(showToast._timer);
+    showToast._timer = window.setTimeout(function () {
+      toast.hidden = true;
+    }, 2800);
+  }
+
+  function setEditMode(active) {
+    editMode = active;
+    document.body.classList.toggle("is-edit-mode", active);
+    var toolbar = $("editorToolbar");
+    if (toolbar) {
+      toolbar.hidden = !active;
+    }
+    Array.prototype.forEach.call(document.querySelectorAll(".edit-day-btn"), function (btn) {
+      btn.hidden = !active;
+    });
+    var unlockBtn = $("editorUnlockBtn");
+    if (unlockBtn) {
+      unlockBtn.textContent = active ? "🔒 Verrouiller" : "✏️ Modifier le programme";
+    }
+  }
+
+  function refreshView() {
+    var grid = $("daysGrid");
+    if (grid && R) {
+      grid.innerHTML = R.renderAllDays(D.ITINERARY, D);
+    }
+    if (window.MauriceItineraryApp && window.MauriceItineraryApp.refresh) {
+      window.MauriceItineraryApp.refresh();
+    }
+  }
+
+  function linesToActivities(text) {
+    return text
+      .split("\n")
+      .map(function (line) {
+        return line.trim();
+      })
+      .filter(Boolean)
+      .map(function (line) {
+        var parts = line.split("|");
+        if (parts.length > 1) {
+          return { text: parts[0].trim(), link: parts[1].trim() };
+        }
+        return line;
+      });
+  }
+
+  function activitiesToLines(activities) {
+    return (activities || [])
+      .map(function (a) {
+        if (typeof a === "string") {
+          return a;
+        }
+        if (a.link) {
+          return a.text + " | " + a.link;
+        }
+        return a.text || "";
+      })
+      .join("\n");
+  }
+
+  function parsePhotos(text) {
+    return text
+      .split("\n")
+      .map(function (line) {
+        return line.trim();
+      })
+      .filter(Boolean)
+      .map(function (line) {
+        var parts = line.split("|");
+        return { url: parts[0].trim(), caption: (parts[1] || "").trim() };
+      });
+  }
+
+  function photosToLines(photos) {
+    return (photos || [])
+      .map(function (p) {
+        return p.caption ? p.url + " | " + p.caption : p.url;
+      })
+      .join("\n");
+  }
+
+  function parseLinks(text) {
+    return text
+      .split("\n")
+      .map(function (line) {
+        return line.trim();
+      })
+      .filter(Boolean)
+      .map(function (line) {
+        var parts = line.split("|");
+        return {
+          label: parts[0].trim(),
+          url: (parts[1] || "").trim(),
+          description: (parts[2] || "").trim()
+        };
+      })
+      .filter(function (l) {
+        return l.label && l.url;
+      });
+  }
+
+  function linksToLines(links) {
+    return (links || [])
+      .map(function (l) {
+        var line = l.label + " | " + l.url;
+        if (l.description) {
+          line += " | " + l.description;
+        }
+        return line;
+      })
+      .join("\n");
+  }
+
+  function openDayEditor(dayNum) {
+    var day = D.ITINERARY.find(function (d) {
+      return d.day === dayNum;
+    });
+    if (!day) {
+      return;
+    }
+    $("editDayTitle").textContent = "Modifier le jour " + day.day;
+    $("editDayNum").value = String(day.day);
+    $("editTitle").value = day.title || "";
+    $("editDate").value = day.date || "";
+    $("editSummary").value = day.summary || "";
+    $("editActivities").value = activitiesToLines(day.activities);
+    $("editBeach").value = day.beach || "";
+    $("editTips").value = day.tips || "";
+    $("editDrive").value = day.driveMinutes || 0;
+    $("editPhotos").value = photosToLines(day.photos);
+    $("editLinks").value = linksToLines(day.links);
+    $("dayEditorModal").hidden = false;
+  }
+
+  function closeDayEditor() {
+    $("dayEditorModal").hidden = true;
+  }
+
+  function saveDayEditor() {
+    var dayNum = Number($("editDayNum").value);
+    var day = D.ITINERARY.find(function (d) {
+      return d.day === dayNum;
+    });
+    if (!day) {
+      return;
+    }
+    day.title = $("editTitle").value.trim();
+    day.date = $("editDate").value.trim();
+    day.summary = $("editSummary").value.trim();
+    day.activities = linesToActivities($("editActivities").value);
+    day.beach = $("editBeach").value.trim();
+    day.tips = $("editTips").value.trim();
+    day.driveMinutes = Number($("editDrive").value) || 0;
+    day.photos = parsePhotos($("editPhotos").value);
+    day.links = parseLinks($("editLinks").value);
+    saveCustomData();
+    closeDayEditor();
+    refreshView();
+    setEditMode(true);
+  }
+
+  function exportData() {
+    var blob = new Blob([JSON.stringify({ ITINERARY: D.ITINERARY, PRACTICAL_TIPS: D.PRACTICAL_TIPS, TRIP_META: D.TRIP_META }, null, 2)], {
+      type: "application/json"
+    });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "programme-maurice.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function importData(file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(reader.result);
+        applyCustomData(data);
+        saveCustomData();
+        refreshView();
+        showToast("Import réussi.");
+      } catch (e) {
+        showToast("Fichier invalide.");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function openPasswordModal() {
+    $("passwordModal").hidden = false;
+    $("editorPassword").value = "";
+    window.setTimeout(function () {
+      $("editorPassword").focus();
+    }, 50);
+  }
+
+  function closePasswordModal() {
+    $("passwordModal").hidden = true;
+  }
+
+  function tryUnlock() {
+    var password = $("editorPassword").value;
+    sha256(password).then(function (hash) {
+      if (hash === PASSWORD_HASH) {
+        setAuthenticated(true);
+        closePasswordModal();
+        setEditMode(true);
+        showToast("Mode édition activé.");
+      } else {
+        showToast("Mot de passe incorrect.");
+      }
+    });
+  }
+
+  function lockEditor() {
+    setAuthenticated(false);
+    setEditMode(false);
+    showToast("Mode édition verrouillé.");
+  }
+
+  function toggleEditor() {
+    if (editMode) {
+      lockEditor();
+      return;
+    }
+    if (isAuthenticated()) {
+      setEditMode(true);
+      return;
+    }
+    openPasswordModal();
+  }
+
+  function bindUi() {
+    $("editorUnlockBtn").addEventListener("click", toggleEditor);
+    $("editorSaveBtn").addEventListener("click", saveCustomData);
+    $("editorExportBtn").addEventListener("click", exportData);
+    $("editorImportBtn").addEventListener("click", function () {
+      $("editorImportFile").click();
+    });
+    $("editorImportFile").addEventListener("change", function (event) {
+      var file = event.target.files && event.target.files[0];
+      if (file) {
+        importData(file);
+      }
+      event.target.value = "";
+    });
+    $("editorResetBtn").addEventListener("click", function () {
+      if (window.confirm("Restaurer le programme d'origine ? Vos modifications locales seront perdues.")) {
+        resetCustomData();
+      }
+    });
+    $("passwordSubmitBtn").addEventListener("click", tryUnlock);
+    $("passwordCancelBtn").addEventListener("click", closePasswordModal);
+    $("editorPassword").addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        tryUnlock();
+      }
+    });
+    $("dayEditorForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      saveDayEditor();
+    });
+    $("dayEditorCancelBtn").addEventListener("click", closeDayEditor);
+
+    document.addEventListener("click", function (event) {
+      var editBtn = event.target.closest(".edit-day-btn");
+      if (editBtn) {
+        event.stopPropagation();
+        var card = editBtn.closest(".day-card");
+        if (card) {
+          openDayEditor(Number(card.getAttribute("data-day")));
+        }
+      }
+    });
+
+    document.querySelectorAll("[data-close-modal]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        var modal = el.closest(".editor-modal");
+        if (modal) {
+          modal.hidden = true;
+        }
+      });
+    });
+  }
+
+  originalSnapshot = {
+    ITINERARY: cloneData(D.ITINERARY),
+    PRACTICAL_TIPS: cloneData(D.PRACTICAL_TIPS),
+    TRIP_META: cloneData(D.TRIP_META)
+  };
+
+  if (applyCustomData(loadCustomData())) {
+    window.__ITINERARY_CUSTOM_LOADED__ = true;
+  }
+
+  function initEditor() {
+    bindUi();
+    if (isAuthenticated()) {
+      setEditMode(true);
+    }
+  }
+
+  window.ItineraryEditor = { init: initEditor, refreshView: refreshView, isEditMode: function () { return editMode; } };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initEditor);
+  } else {
+    initEditor();
+  }
+})();
+</script>
   <script>(function () {
   "use strict";
 
@@ -1017,7 +2041,10 @@ a { color: #ffffff; text-decoration: none; }
 
   var D = window.ITINERARY_DATA;
   var BASE = D.BASE;
-  var ITINERARY = D.ITINERARY;
+
+  function getItinerary() {
+    return D.ITINERARY;
+  }
 
   var state = { filter: "all", showDriveTimes: true, selectedDay: null };
   var map = null;
@@ -1043,6 +2070,7 @@ a { color: #ffffff; text-decoration: none; }
     els.mapFallback = $("mapFallback");
     els.dayCards = document.querySelectorAll(".day-card");
     els.driveRows = document.querySelectorAll(".drive-row");
+    els.daysGrid = $("daysGrid");
   }
 
   function matchesFilter(card) {
@@ -1054,7 +2082,7 @@ a { color: #ffffff; text-decoration: none; }
   }
 
   function getVisibleDays() {
-    return ITINERARY.filter(function (day) {
+    return getItinerary().filter(function (day) {
       if (state.filter !== "all" && day.categories.indexOf(state.filter) === -1) {
         return false;
       }
@@ -1117,6 +2145,8 @@ a { color: #ffffff; text-decoration: none; }
   }
 
   function initDayCards() {
+    els.dayCards = document.querySelectorAll(".day-card");
+    els.driveRows = document.querySelectorAll(".drive-row");
     Array.prototype.forEach.call(els.dayCards, function (card) {
       card.addEventListener("click", function (event) {
         if (event.target.closest(".map-focus-btn")) {
@@ -1416,7 +2446,7 @@ a { color: #ffffff; text-decoration: none; }
       section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     if (mapReady && map) {
-      var day = ITINERARY.find(function (d) {
+      var day = getItinerary().find(function (d) {
         return d.day === dayNum;
       });
       if (!day) {
@@ -1439,7 +2469,25 @@ a { color: #ffffff; text-decoration: none; }
     );
   }
 
+  function refresh() {
+    cacheElements();
+    initDayCards();
+    applyFilter();
+    applyDriveToggle();
+    updateMap();
+    if (mapReady && map) {
+      window.setTimeout(function () {
+        map.invalidateSize();
+      }, 200);
+    }
+  }
+
+  window.MauriceItineraryApp = { refresh: refresh };
+
   function boot() {
+    if (window.__ITINERARY_CUSTOM_LOADED__ && window.ItineraryRender && $("daysGrid")) {
+      $("daysGrid").innerHTML = window.ItineraryRender.renderAllDays(getItinerary(), D);
+    }
     cacheElements();
     initFilters();
     initRhythm();

@@ -7,7 +7,10 @@
 
   var D = window.ITINERARY_DATA;
   var BASE = D.BASE;
-  var ITINERARY = D.ITINERARY;
+
+  function getItinerary() {
+    return D.ITINERARY;
+  }
 
   var state = { filter: "all", showDriveTimes: true, selectedDay: null };
   var map = null;
@@ -33,6 +36,7 @@
     els.mapFallback = $("mapFallback");
     els.dayCards = document.querySelectorAll(".day-card");
     els.driveRows = document.querySelectorAll(".drive-row");
+    els.daysGrid = $("daysGrid");
   }
 
   function matchesFilter(card) {
@@ -44,7 +48,7 @@
   }
 
   function getVisibleDays() {
-    return ITINERARY.filter(function (day) {
+    return getItinerary().filter(function (day) {
       if (state.filter !== "all" && day.categories.indexOf(state.filter) === -1) {
         return false;
       }
@@ -107,6 +111,8 @@
   }
 
   function initDayCards() {
+    els.dayCards = document.querySelectorAll(".day-card");
+    els.driveRows = document.querySelectorAll(".drive-row");
     Array.prototype.forEach.call(els.dayCards, function (card) {
       card.addEventListener("click", function (event) {
         if (event.target.closest(".map-focus-btn")) {
@@ -406,7 +412,7 @@
       section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     if (mapReady && map) {
-      var day = ITINERARY.find(function (d) {
+      var day = getItinerary().find(function (d) {
         return d.day === dayNum;
       });
       if (!day) {
@@ -429,7 +435,25 @@
     );
   }
 
+  function refresh() {
+    cacheElements();
+    initDayCards();
+    applyFilter();
+    applyDriveToggle();
+    updateMap();
+    if (mapReady && map) {
+      window.setTimeout(function () {
+        map.invalidateSize();
+      }, 200);
+    }
+  }
+
+  window.MauriceItineraryApp = { refresh: refresh };
+
   function boot() {
+    if (window.__ITINERARY_CUSTOM_LOADED__ && window.ItineraryRender && $("daysGrid")) {
+      $("daysGrid").innerHTML = window.ItineraryRender.renderAllDays(getItinerary(), D);
+    }
     cacheElements();
     initFilters();
     initRhythm();

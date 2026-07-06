@@ -61,12 +61,31 @@ window.ITINERARY_DATA = {
       rhythm: "chill",
       effort: "facile",
       categories: ["repos", "plage"],
+      summary: "Journée d'installation : récupérer la voiture, s'installer à New Grove, puis première baignade à Blue Bay.",
       activities: [
-        "Arrivée à l'aéroport SSR et installation à New Grove",
+        { text: "Arrivée à l'aéroport SSR et installation à New Grove", link: "https://www.google.com/maps/search/?api=1&query=Sir+Seewoosagur+Ramgoolam+International+Airport" },
         "Courses alimentaires et premiers repas locaux",
-        "Première baignade en fin d'après-midi"
+        { text: "Première baignade en fin d'après-midi", link: "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius" }
       ],
       beach: "Plage de Blue Bay — eau turquoise, snorkeling léger depuis la plage",
+      photos: [
+        {
+          url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Blue_Bay%2C_Mauritius.jpg/640px-Blue_Bay%2C_Mauritius.jpg",
+          caption: "Blue Bay — eau turquoise idéale pour débuter"
+        }
+      ],
+      links: [
+        {
+          label: "Blue Bay sur Google Maps",
+          url: "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius",
+          description: "Itinéraire et avis sur la plage"
+        },
+        {
+          label: "Aéroport SSR",
+          url: "https://www.google.com/maps/search/?api=1&query=SSR+Airport+Mauritius",
+          description: "Point d'arrivée et location de voiture"
+        }
+      ],
       locations: [
         { name: "New Grove", lat: -20.408611, lng: 57.613611, type: "base" },
         { name: "Blue Bay", lat: -20.4442, lng: 57.7189, type: "plage" }
@@ -145,12 +164,31 @@ window.ITINERARY_DATA = {
       rhythm: "actif",
       effort: "modéré",
       categories: ["nature", "plage"],
+      summary: "Excursion en bateau depuis Trou d'Eau Douce vers l'île aux Cerfs : journée plage et lagon.",
       activities: [
-        "Départ en bateau depuis Trou d'Eau Douce",
+        { text: "Départ en bateau depuis Trou d'Eau Douce", link: "https://www.google.com/maps/search/?api=1&query=Trou+d'Eau+Douce+Mauritius" },
         "Journée sur l'île aux Cerfs — baignade, transat, déjeuner les pieds dans l'eau",
         "Option snorkeling dans le lagon (sans effort intense)"
       ],
       beach: "Île aux Cerfs — plages de sable blanc et eau cristalline",
+      photos: [
+        {
+          url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Ile_aux_Cerfs.jpg/640px-Ile_aux_Cerfs.jpg",
+          caption: "Île aux Cerfs — sable blanc et lagon"
+        }
+      ],
+      links: [
+        {
+          label: "Trou d'Eau Douce (embarquement)",
+          url: "https://www.google.com/maps/search/?api=1&query=Trou+d'Eau+Douce+Mauritius",
+          description: "Village de départ des bateaux"
+        },
+        {
+          label: "Île aux Cerfs — Wikipédia",
+          url: "https://fr.wikipedia.org/wiki/%C3%8Ele_aux_Cerfs",
+          description: "Présentation du site"
+        }
+      ],
       locations: [
         { name: "Trou d'Eau Douce", lat: -20.2569, lng: 57.7878, type: "culture" },
         { name: "Île aux Cerfs", lat: -20.2747, lng: 57.8008, type: "plage" }
@@ -205,12 +243,31 @@ window.ITINERARY_DATA = {
       rhythm: "actif",
       effort: "modéré",
       categories: ["nature", "culture"],
+      summary: "Découverte du sud-ouest : terres colorées, cascade et rhumerie de Chamarel.",
       activities: [
-        "Terres des 7 couleurs de Chamarel — site géologique unique",
+        { text: "Terres des 7 couleurs de Chamarel", link: "https://www.google.com/maps/search/?api=1&query=Chamarel+Seven+Coloured+Earth" },
         "Cascade de Chamarel (vue depuis le belvédère, sans randonnée)",
-        "Rhumerie de Chamarel — visite et dégustation"
+        { text: "Rhumerie de Chamarel — visite et dégustation", link: "https://www.rhumeriedechamarel.com/" }
       ],
       beach: "Option plage de Tamarin en fin de journée si envie",
+      photos: [
+        {
+          url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Chamarel_Seven_Coloured_Earth%2C_Mauritius.JPG/640px-Chamarel_Seven_Coloured_Earth%2C_Mauritius.JPG",
+          caption: "Terres des 7 couleurs de Chamarel"
+        }
+      ],
+      links: [
+        {
+          label: "Rhumerie de Chamarel",
+          url: "https://www.rhumeriedechamarel.com/",
+          description: "Horaires et réservation visite"
+        },
+        {
+          label: "Chamarel sur Google Maps",
+          url: "https://www.google.com/maps/search/?api=1&query=Chamarel+Mauritius",
+          description: "Itinéraire depuis New Grove"
+        }
+      ],
       locations: [
         { name: "Terres 7 couleurs", lat: -20.4397, lng: 57.3736, type: "nature" },
         { name: "Cascade Chamarel", lat: -20.4453, lng: 57.3858, type: "nature" },
