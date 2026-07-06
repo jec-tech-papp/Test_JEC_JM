@@ -1,6 +1,11 @@
 (function () {
   "use strict";
 
+  if (typeof window.ITINERARY_DATA === "undefined") {
+    console.error("Données itinéraire manquantes.");
+    return;
+  }
+
   var D = window.ITINERARY_DATA;
   var BASE = D.BASE;
   var FILTERS = D.FILTERS;
@@ -190,7 +195,7 @@
       '<div class="day-card-body">' +
       '<section class="day-block">' +
       "<h3>Activités</h3>" +
-      "<ul class="activity-list">" +
+      '<ul class="activity-list">' +
       day.activities
         .map(function (activity) {
           return "<li>" + activity + "</li>";
@@ -222,7 +227,6 @@
   }
 
   function renderDays() {
-    var visible = ITINERARY.filter(matchesFilter);
     var visible = ITINERARY.filter(matchesFilter);
     els.dayCount.textContent = visible.length + " jour" + (visible.length > 1 ? "s" : "");
     els.daysGrid.innerHTML = ITINERARY.map(renderDayCard).join("");
