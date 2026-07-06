@@ -3,552 +3,322 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Programme du voyage - &Icirc;le Maurice</title>
+  <title>Programme 14 jours — &Icirc;le Maurice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"] },
+          colors: {
+            lagoon: { 300: "#67e8f9", 500: "#0e7490", 900: "#031b2f" },
+            sand: { 200: "#ffdd8a", 300: "#ffd166" }
+          }
+        }
+      }
+    };
+  </script>
   <style>
-    :root {
-      --bg-1: #031b2f;
-      --bg-2: #075985;
-      --bg-3: #0e7490;
-      --sun: #ffd166;
-      --coral: #ff8a7a;
-      --lagoon: #67e8f9;
-      --card: rgba(255, 255, 255, 0.16);
-      --card-border: rgba(255, 255, 255, 0.34);
-      --text: #ffffff;
-      --muted: rgba(255, 255, 255, 0.76);
-      --shadow: rgba(2, 8, 23, 0.32);
-      --accent: #ffdd8a;
-      font-family:
-        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-    }
-
-    * { box-sizing: border-box; }
-
     body {
-      min-height: 100vh;
-      margin: 0;
-      color: var(--text);
       background:
-        radial-gradient(circle at 18% 16%, rgba(255, 209, 102, 0.9), transparent 18rem),
-        radial-gradient(circle at 82% 18%, rgba(103, 232, 249, 0.72), transparent 23rem),
-        radial-gradient(circle at 68% 86%, rgba(255, 138, 122, 0.34), transparent 24rem),
-        linear-gradient(135deg, var(--bg-1), var(--bg-2) 52%, var(--bg-3));
+        radial-gradient(circle at 18% 16%, rgba(255, 209, 102, 0.55), transparent 18rem),
+        radial-gradient(circle at 82% 18%, rgba(103, 232, 249, 0.45), transparent 23rem),
+        linear-gradient(135deg, #031b2f, #075985 52%, #0e7490);
+      min-height: 100vh;
     }
 
-    a { color: inherit; }
-
-    .back-link {
-      position: fixed;
-      left: 1rem;
-      top: 1rem;
-      z-index: 20;
-      display: inline-flex;
-      gap: 0.45rem;
-      align-items: center;
-      padding: 0.7rem 0.95rem;
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      border-radius: 999px;
-      color: rgba(255, 255, 255, 0.86);
-      font-size: 0.9rem;
-      font-weight: 800;
-      text-decoration: none;
-      background: rgba(3, 27, 47, 0.28);
-      backdrop-filter: blur(14px);
-      transition: transform 180ms ease, background 180ms ease;
-    }
-
-    .back-link:hover,
-    .back-link:focus-visible {
-      transform: translateY(-0.12rem);
-      background: rgba(255, 255, 255, 0.16);
-      outline: none;
-    }
-
-    main {
-      max-width: 56rem;
-      margin: 0 auto;
-      padding: clamp(5rem, 10vw, 6rem) clamp(1rem, 3vw, 2rem) 3rem;
-    }
-
-    .page-header {
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      margin: 0 0 1rem;
-      padding: 0.55rem 0.95rem;
+    .glass {
       border: 1px solid rgba(255, 255, 255, 0.28);
+      background: linear-gradient(145deg, rgba(255,255,255,.2), rgba(255,255,255,.08));
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1.5rem 4rem rgba(2, 8, 23, 0.28);
+    }
+
+    .filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 0.9rem;
+      border: 1px solid rgba(255,255,255,.22);
       border-radius: 999px;
-      color: var(--accent);
-      font-size: 0.82rem;
+      color: rgba(255,255,255,.88);
+      font-size: 0.85rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.11);
+      background: rgba(255,255,255,.1);
+      cursor: pointer;
+      transition: all .18s ease;
     }
 
-    h1 {
-      margin: 0 0 0.75rem;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      line-height: 1.05;
-      letter-spacing: -0.05em;
+    .filter-btn:hover, .filter-btn.is-active {
+      border-color: rgba(255,255,255,.5);
+      background: rgba(255,255,255,.22);
+      transform: translateY(-1px);
     }
 
-    .intro {
-      max-width: 40rem;
-      margin: 0 auto;
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.7;
-    }
-
-    .days-list {
-      display: grid;
-      gap: 1.5rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
+    .filter-btn.is-active { color: #031b2f; background: linear-gradient(135deg, #ffd166, #fff3c4); }
 
     .day-card {
-      border: 1px solid var(--card-border);
-      border-radius: 1.6rem;
-      background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08)),
-        var(--card);
-      box-shadow: 0 1.5rem 4rem var(--shadow);
-      backdrop-filter: blur(20px);
-      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 1.25rem;
+      background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.07));
+      backdrop-filter: blur(16px);
+      padding: 1.25rem;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+      cursor: pointer;
     }
 
-    .day-photo {
-      width: 100%;
-      height: clamp(12rem, 32vw, 16rem);
-      object-fit: cover;
-      display: block;
-    }
+    .day-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.42); }
+    .day-card.is-selected { border-color: #ffd166; box-shadow: 0 0 0 2px rgba(255,209,102,.35); }
+    .day-card.hidden { display: none; }
 
-    .day-body {
-      padding: clamp(1rem, 3vw, 1.5rem);
-    }
-
-    .day-meta {
+    .day-card-header {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.65rem;
-      align-items: center;
-      margin-bottom: 0.75rem;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: .75rem;
     }
 
-    .day-badge {
-      padding: 0.45rem 0.75rem;
-      border-radius: 999px;
-      color: #031b2f;
-      font-size: 0.78rem;
-      font-weight: 850;
-      letter-spacing: 0.08em;
+    .day-number {
+      color: #ffdd8a;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      background: linear-gradient(135deg, var(--sun), #fff3c4);
+      margin: 0 0 .25rem;
     }
 
-    .day-date {
-      color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 700;
-    }
-
-    .day-title {
-      margin: 0 0 0.65rem;
-      font-size: clamp(1.35rem, 3vw, 1.8rem);
-      letter-spacing: -0.03em;
-    }
-
-    .day-description {
-      margin: 0 0 1rem;
-      color: rgba(255, 255, 255, 0.86);
-      line-height: 1.65;
-    }
-
-    .poi-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin: 0 0 1rem;
-      padding: 0;
-      list-style: none;
-    }
-
-    .poi-list li {
-      padding: 0.45rem 0.7rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 999px;
-      color: rgba(255, 255, 255, 0.88);
-      font-size: 0.82rem;
-      font-weight: 700;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .day-map {
-      width: 100%;
-      height: 14rem;
-      margin-bottom: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      border-radius: 1rem;
-      overflow: hidden;
-    }
-
-  .leaflet-container {
-      background: #0b3d56;
-      font-family: inherit;
-    }
-
-    .links-title {
-      margin: 0 0 0.65rem;
-      color: var(--accent);
-      font-size: 0.82rem;
-      font-weight: 850;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .external-links {
-      display: grid;
-      gap: 0.55rem;
+    .day-heading h2 {
       margin: 0;
-      padding: 0;
-      list-style: none;
+      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: #fff;
     }
 
-    .external-links a {
-      display: inline-flex;
-      gap: 0.45rem;
-      align-items: center;
-      padding: 0.65rem 0.85rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 0.85rem;
-      color: rgba(255, 255, 255, 0.92);
-      font-size: 0.92rem;
+    .day-date { margin: .35rem 0 0; color: rgba(255,255,255,.68); font-size: .88rem; }
+
+    .day-badges { display: flex; flex-wrap: wrap; gap: .45rem; }
+
+    .rhythm-badge, .effort-badge {
+      padding: .35rem .65rem;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 800;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      color: #fff;
+    }
+
+    .effort-badge { border-color: var(--effort-color, #4ade80); color: var(--effort-color, #4ade80); }
+
+    .cat-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .85rem; }
+
+    .cat-badge {
+      padding: .3rem .6rem;
+      border-radius: 999px;
+      font-size: .72rem;
       font-weight: 700;
-      text-decoration: none;
-      background: rgba(255, 255, 255, 0.1);
-      transition: transform 160ms ease, background 160ms ease;
+      color: var(--cat-color);
+      border: 1px solid color-mix(in srgb, var(--cat-color) 50%, transparent);
+      background: color-mix(in srgb, var(--cat-color) 14%, transparent);
     }
 
-    .external-links a:hover,
-    .external-links a:focus-visible {
-      transform: translateX(0.15rem);
-      background: rgba(255, 255, 255, 0.18);
-      outline: none;
+    .day-section { margin-bottom: .85rem; }
+    .day-section h3 { margin: 0 0 .45rem; font-size: .82rem; font-weight: 800; color: #ffdd8a; letter-spacing: .06em; text-transform: uppercase; }
+    .day-section ul { margin: 0; padding-left: 1.1rem; color: rgba(255,255,255,.88); line-height: 1.6; }
+    .day-section p { margin: 0; color: rgba(255,255,255,.86); line-height: 1.6; }
+
+    .beach-section {
+      padding: .75rem;
+      border-radius: .75rem;
+      background: rgba(56, 189, 248, .12);
+      border: 1px solid rgba(56, 189, 248, .25);
     }
 
-    @media (max-width: 640px) {
-      .back-link {
-        left: 0.75rem;
-        top: 0.75rem;
-      }
+    .tips-section {
+      padding: .75rem;
+      border-radius: .75rem;
+      background: rgba(255, 221, 138, .1);
+      border: 1px solid rgba(255, 221, 138, .22);
     }
+
+    .drive-time {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      margin: 0 0 .85rem;
+      padding: .6rem .75rem;
+      border-radius: .65rem;
+      font-size: .88rem;
+      color: rgba(255,255,255,.82);
+      background: rgba(3,27,47,.25);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+
+    .map-focus-btn {
+      width: 100%;
+      padding: .65rem;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: .65rem;
+      color: #fff;
+      font-weight: 700;
+      font-size: .85rem;
+      background: rgba(255,255,255,.1);
+      cursor: pointer;
+      transition: background .15s ease;
+    }
+
+    .map-focus-btn:hover { background: rgba(255,255,255,.2); }
+
+    #tripMap { height: clamp(16rem, 45vw, 24rem); border-radius: 1rem; z-index: 0; }
+
+    .marker-pin {
+      display: grid;
+      place-items: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 999px;
+      border: 2px solid #fff;
+      color: #031b2f;
+      font-size: .62rem;
+      font-weight: 900;
+      box-shadow: 0 .35rem .8rem rgba(0,0,0,.3);
+    }
+
+    .marker-pin.base { width: 2rem; height: 2rem; font-size: .9rem; background: #ffdd8a; }
+
+    .legend-item {
+      display: inline-flex;
+      padding: .3rem .55rem;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.85);
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+
+    .tip-card {
+      padding: 1rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.1);
+    }
+
+    .tip-icon { font-size: 1.5rem; display: block; margin-bottom: .5rem; }
+    .tip-card h3 { margin: 0 0 .35rem; font-size: .95rem; font-weight: 800; color: #ffdd8a; }
+    .tip-card p { margin: 0; font-size: .88rem; line-height: 1.55; color: rgba(255,255,255,.82); }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      color: rgba(255,255,255,.85);
+      font-size: .88rem;
+      font-weight: 600;
+    }
+
+    .toggle-row input { width: 1.1rem; height: 1.1rem; accent-color: #ffd166; }
   </style>
 </head>
-<body>
-  <a class="back-link" href="index.html">&#8592; Compte &agrave; rebours</a>
+<body class="text-white font-sans">
+  <a href="index.html" class="fixed left-4 top-4 z-50 inline-flex items-center gap-2 rounded-full border border-white/25 bg-lagoon-900/40 px-4 py-2 text-sm font-bold text-white/90 backdrop-blur-md transition hover:bg-white/15">
+    &larr; Compte &agrave; rebours
+  </a>
 
-  <main>
-    <header class="page-header">
-      <p class="eyebrow">&#127796; Itin&eacute;raire</p>
-      <h1>Programme du voyage</h1>
-      <p class="intro">
-        Du <strong>6 au 13 novembre 2026</strong>, d&eacute;couvrez l&apos;&icirc;le Maurice
-        jour apr&egrave;s jour : plages, montagnes, march&eacute;s et lagons.
+  <div class="mx-auto max-w-6xl px-4 pb-16 pt-20">
+    <!-- Hero -->
+    <header class="glass mb-8 rounded-3xl p-6 md:p-8 text-center">
+      <p class="mb-3 inline-block rounded-full border border-white/25 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-widest text-sand-200">
+        &#127796; Itin&eacute;raire d&eacute;taill&eacute;
       </p>
+      <h1 class="mb-3 text-3xl font-black tracking-tight md:text-5xl" id="tripTitle">Île Maurice — 14 jours</h1>
+      <p class="mx-auto mb-6 max-w-2xl text-white/75 leading-relaxed" id="tripDates">
+        Du 7 au 21 novembre 2026 &middot; Base &agrave; New Grove &middot; 6 adultes
+      </p>
+      <div class="flex flex-wrap justify-center gap-3 text-sm">
+        <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 font-semibold">&#9992;&#65039; Arriv&eacute;e 7 nov (matin)</span>
+        <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 font-semibold">&#127968; New Grove</span>
+        <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 font-semibold">&#128663; Voiture</span>
+        <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 font-semibold">&#129461; Genoux sensibles</span>
+        <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 font-semibold">&#127796; D&eacute;part 21 nov (soir)</span>
+      </div>
     </header>
 
-    <ol class="days-list" id="daysList"></ol>
-  </main>
+    <!-- Rhythm overview -->
+    <section class="glass mb-8 rounded-2xl p-5" aria-label="Rythme du voyage">
+      <h2 class="mb-3 text-sm font-extrabold uppercase tracking-widest text-sand-200">Alternance actif / chill</h2>
+      <div class="flex flex-wrap gap-2 text-xs font-bold">
+        <span class="rounded-lg bg-white/15 px-2 py-1">J1 &#127796; chill</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J2 &#128663; actif</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J3 &#128663; actif</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J4 &#127796; chill</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J5 &#128663; actif</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J6 &#128663; actif</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J7 &#127796; chill</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J8 &#128663; actif</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J9 &#128663; actif</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J10 &#127796; chill</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J11 &#128663; actif</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J12 &#128663; actif</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J13 &#128663; actif</span>
+        <span class="rounded-lg bg-white/15 px-2 py-1">J14 &#127796; chill</span>
+      </div>
+    </section>
 
+    <!-- Filters & controls -->
+    <section class="glass mb-6 rounded-2xl p-5">
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <h2 class="text-lg font-extrabold">Filtrer par activit&eacute;</h2>
+        <span id="dayCount" class="text-sm font-bold text-white/70">14 jours</span>
+      </div>
+      <div id="filterBar" class="mb-4 flex flex-wrap gap-2" role="toolbar" aria-label="Filtres d'activité"></div>
+      <label class="toggle-row">
+        <input type="checkbox" id="driveToggle" checked>
+        <span>&#128663; Temps de trajet depuis New Grove : <strong id="driveToggleLabel">Masquer</strong></span>
+      </label>
+    </section>
+
+    <!-- Map -->
+    <section class="glass mb-8 rounded-2xl p-5">
+      <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <h2 class="text-lg font-extrabold">&#128506;&#65039; Carte du circuit</h2>
+        <button type="button" id="resetMapBtn" class="rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-bold hover:bg-white/20">
+          Tout afficher
+        </button>
+      </div>
+      <div id="tripMap" class="mb-3 border border-white/20" aria-label="Carte interactive des lieux visités"></div>
+      <div id="mapLegend" class="flex flex-wrap gap-2"></div>
+    </section>
+
+    <!-- Days grid -->
+    <section aria-label="Programme jour par jour">
+      <h2 class="mb-4 text-xl font-extrabold">&#128197; Programme jour par jour</h2>
+      <div id="daysGrid" class="grid gap-5 md:grid-cols-2"></div>
+    </section>
+
+    <!-- Practical tips -->
+    <section class="mt-10" aria-label="Conseils pratiques">
+      <h2 class="mb-4 text-xl font-extrabold">&#128161; Conseils pratiques</h2>
+      <div id="tipsGrid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+  </div>
+
+  <script src="js/maurice-itinerary-data.js"></script>
+  <script src="js/maurice-itinerary-app.js"></script>
   <script>
-    const programme = [
-      {
-        day: 1,
-        date: "Jeudi 6 novembre 2026",
-        title: "Arriv\u00e9e & installation \u00e0 Grand Baie",
-        description:
-          "Accueil \u00e0 l'a\u00e9roport de Plaisance, transfert vers le nord de l'\u00eele et premi\u00e8re baignade au coucher du soleil.",
-        photo:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Grand_Baie%2C_Mauritius.jpg/1280px-Grand_Baie%2C_Mauritius.jpg",
-        pois: [
-          { name: "A\u00e9roport SSR", lat: -20.4302, lng: 57.6836 },
-          { name: "Grand Baie", lat: -20.0136, lng: 57.5806 }
-        ],
-        links: [
-          {
-            title: "Office du tourisme \u2013 Grand Baie",
-            url: "https://www.tourism-mauritius.mu/discover/grand-baie"
-          },
-          {
-            title: "Wikip\u00e9dia \u2013 Grand Baie",
-            url: "https://fr.wikipedia.org/wiki/Grand_Baie"
-          }
-        ]
-      },
-      {
-        day: 2,
-        date: "Vendredi 7 novembre 2026",
-        title: "Cap Malheureux & c\u00f4te nord",
-        description:
-          "Journ\u00e9e au nord : l'\u00e9glise rouge de Cap Malheureux, la baie de Grand Baie et d\u00e9jeuner de fruits de mer face au lagon.",
-        photo:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Cap_Malheureux_church.jpg/1280px-Cap_Malheureux_church.jpg",
-        pois: [
-          { name: "Cap Malheureux", lat: -19.9847, lng: 57.6142 },
-          { name: "Grand Baie", lat: -20.0136, lng: 57.5806 },
-          { name: "Pereyb\u00e8re", lat: -19.9953, lng: 57.5894 }
-        ],
-        links: [
-          {
-            title: "Cap Malheureux sur Lonely Planet",
-            url: "https://www.lonelyplanet.com/mauritius/north/attractions/cap-malheureux/a/poi-sig/1389631/358263"
-          },
-          {
-            title: "Wikip\u00e9dia \u2013 Cap Malheureux",
-            url: "https://fr.wikipedia.org/wiki/Cap_Malheureux"
-          }
-        ]
-      },
-      {
-        day: 3,
-        date: "Samedi 8 novembre 2026",
-        title: "Port-Louis & march\u00e9 central",
-        description:
-          "Exploration de la capitale : march\u00e9 central, Aapravasi Ghat (UNESCO) et vue panoramique depuis la forteresse du Caudan.",
-        photo:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Port_Louis_Skyline.jpg/1280px-Port_Louis_Skyline.jpg",
-        pois: [
-          { name: "March\u00e9 central", lat: -20.1609, lng: 57.5012 },
-          { name: "Aapravasi Ghat", lat: -20.1586, lng: 57.5025 },
-          { name: "Le Caudan", lat: -20.1617, lng: 57.4972 }
-        ],
-        links: [
-          {
-            title: "UNESCO \u2013 Aapravasi Ghat",
-            url: "https://whc.unesco.org/fr/list/1227/"
-          },
-          {
-            title: "Office du tourisme \u2013 Port-Louis",
-            url: "https://www.tourism-mauritius.mu/discover/port-louis"
-          }
-        ]
-      },
-      {
-        day: 4,
-        date: "Dimanche 9 novembre 2026",
-        title: "Chamarel & terres de couleurs",
-        description:
-          "Route vers le sud-ouest : cascade de Chamarel, terres aux 7 couleurs et d\u00e9gustation de rhum local.",
-        photo:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Chamarel_Waterfall%2C_Mauritius.jpg/1280px-Chamarel_Waterfall%2C_Mauritius.jpg",
-        pois: [
-          { name: "Cascade de Chamarel", lat: -20.4453, lng: 57.3858 },
-          { name: "Terres des 7 couleurs", lat: -20.4397, lng: 57.3736 }
-        ],
-        links: [
-          {
-            title: "Chamarel Seven Coloured Earth",
-            url: "https://www.chamarel7colouredearth.com/"
-          },
-          {
-            title: "Wikip\u00e9dia \u2013 Chamarel",
-            url: "https://fr.wikipedia.org/wiki/Chamarel"
-          }
-        ]
-      },
-      {
-        day: 5,
-        date: "Lundi 10 novembre 2026",
-        title: "Le Morne Brabant",
-        description:
-          "Randonn\u00e9e embl\u00e9matique au Morne Brabant, site class\u00e9 UNESCO, avec vue spectaculaire sur le lagon du sud-ouest.",
-        photo:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Le_Morne_Brabant%2C_Mauritius.jpg/1280px-Le_Morne_Brabant%2C_Mauritius.jpg",
-        pois: [{ name: "Le Morne Brabant", lat: -20.4519, lng: 57.3106 }],
-        links: [
-          {
-            title: "UNESCO \u2013 Le Morne",
-            url: "https://whc.unesco.org/fr/list/1259/"
-          },
-          {
-            title: "AllTrails \u2013 Le Morne Brabant",
-            url: "https://www.alltrails.com/trail/mauritius/black-river/le-morne-brabant-trail"
-          }
-        ]
-      },
-      {
-        day: 6,
-        date: "Mardi 11 novembre 2026",
-        title: "\u00cele aux Cerfs",
-        description:
-          "Excursion en bateau vers l'\u00eele aux Cerfs : snorkeling, plage de sable blanc et d\u00e9jeuner les pieds dans l'eau.",
-        photo:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Ile_aux_Cerfs%2C_Mauritius.jpg/1280px-Ile_aux_Cerfs%2C_Mauritius.jpg",
-        pois: [
-          { name: "Pointe de d\u00e9part (Trou d'Eau Douce)", lat: -20.2569, lng: 57.7878 },
-          { name: "\u00cele aux Cerfs", lat: -20.2747, lng: 57.8008 }
-        ],
-        links: [
-          {
-            title: "Office du tourisme \u2013 \u00cele aux Cerfs",
-            url: "https://www.tourism-mauritius.mu/discover/ile-aux-cerfs"
-          },
-          {
-            title: "Wikip\u00e9dia \u2013 \u00cele aux Cerfs",
-            url: "https://fr.wikipedia.org/wiki/%C3%8Ele_aux_Cerfs"
-          }
-        ]
-      },
-      {
-        day: 7,
-        date: "Mercredi 12 novembre 2026",
-        title: "Jardin de Pamplemousses",
-        description:
-          "Visite du jardin botanique Sir Seewoosagur Ramgoolam : lotus g\u00e9ants, palmiers royaux et flore tropicale.",
-        photo:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Pamplemousses_Botanical_Garden%2C_Mauritius.jpg/1280px-Pamplemousses_Botanical_Garden%2C_Mauritius.jpg",
-        pois: [{ name: "Jardin de Pamplemousses", lat: -20.1078, lng: 57.5772 }],
-        links: [
-          {
-            title: "Wikip\u00e9dia \u2013 Jardin botanique de Pamplemousses",
-            url: "https://fr.wikipedia.org/wiki/Jardin_botanique_de_Pamplemousses"
-          },
-          {
-            title: "Lonely Planet \u2013 SSR Botanic Garden",
-            url: "https://www.lonelyplanet.com/mauritius/north/attractions/sir-seewoosagur-ramgoolam-botanic-garden/a/poi-sig/1389633/358263"
-          }
-        ]
-      },
-      {
-        day: 8,
-        date: "Jeudi 13 novembre 2026",
-        title: "Derni\u00e8re matin\u00e9e & retour",
-        description:
-          "Matin\u00e9e libre sur la plage, derniers achats de souvenirs et transfert vers l'a\u00e9roport pour le vol retour.",
-        photo:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Trou_aux_Biches%2C_Mauritius.jpg/1280px-Trou_aux_Biches%2C_Mauritius.jpg",
-        pois: [
-          { name: "Trou aux Biches", lat: -20.0356, lng: 57.5456 },
-          { name: "A\u00e9roport SSR", lat: -20.4302, lng: 57.6836 }
-        ],
-        links: [
-          {
-            title: "Office du tourisme \u2013 Maurice",
-            url: "https://www.tourism-mauritius.mu/"
-          },
-          {
-            title: "A\u00e9roport SSR \u2013 informations",
-            url: "https://www.mauritius-airport.at/en"
-          }
-        ]
-      }
-    ];
-
-    const daysList = document.querySelector("#daysList");
-
-    programme.forEach((entry, index) => {
-      const item = document.createElement("li");
-      item.className = "day-card";
-      item.innerHTML =
-        '<img class="day-photo" src="' +
-        entry.photo +
-        '" alt="' +
-        entry.title +
-        '" loading="lazy">' +
-        '<div class="day-body">' +
-        '<div class="day-meta">' +
-        '<span class="day-badge">Jour ' +
-        entry.day +
-        "</span>" +
-        '<span class="day-date">' +
-        entry.date +
-        "</span>" +
-        "</div>" +
-        "<h2 class=\"day-title\">" +
-        entry.title +
-        "</h2>" +
-        '<p class="day-description">' +
-        entry.description +
-        "</p>" +
-        '<ul class="poi-list">' +
-        entry.pois.map(function (poi) {
-          return "<li>" + poi.name + "</li>";
-        }).join("") +
-        "</ul>" +
-        '<div class="day-map" id="map-day-' +
-        index +
-        '" aria-label="Carte jour ' +
-        entry.day +
-        '"></div>' +
-        '<p class="links-title">En savoir plus</p>' +
-        '<ul class="external-links">' +
-        entry.links.map(function (link) {
-          return (
-            '<li><a href="' +
-            link.url +
-            '" target="_blank" rel="noopener noreferrer">&#128279; ' +
-            link.title +
-            "</a></li>"
-          );
-        }).join("") +
-        "</ul>" +
-        "</div>";
-
-      daysList.appendChild(item);
-
-      window.setTimeout(function () {
-        initDayMap("map-day-" + index, entry.pois);
-      }, 0);
-    });
-
-    function initDayMap(containerId, pois) {
-      const container = document.getElementById(containerId);
-      if (!container || !window.L) {
-        return;
-      }
-
-      const map = L.map(containerId, {
-        scrollWheelZoom: false,
-        attributionControl: true
-      });
-
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "&copy; OpenStreetMap"
-      }).addTo(map);
-
-      const latLngs = pois.map(function (poi) {
-        return [poi.lat, poi.lng];
-      });
-
-      pois.forEach(function (poi) {
-        L.marker([poi.lat, poi.lng]).addTo(map).bindPopup(poi.name);
-      });
-
-      if (latLngs.length > 1) {
-        L.polyline(latLngs, {
-          color: "#ffd166",
-          weight: 4,
-          opacity: 0.85
-        }).addTo(map);
-        map.fitBounds(latLngs, { padding: [28, 28] });
-      } else {
-        map.setView(latLngs[0], 13);
-      }
-
-      window.setTimeout(function () {
-        map.invalidateSize();
-      }, 120);
-    }
+    (function () {
+      var meta = window.ITINERARY_DATA.TRIP_META;
+      document.getElementById("tripTitle").textContent = meta.title;
+      document.getElementById("tripDates").textContent =
+        meta.dates + " · Base à " + window.ITINERARY_DATA.BASE.name + " · " + meta.group;
+    })();
   </script>
 </body>
 </html>
