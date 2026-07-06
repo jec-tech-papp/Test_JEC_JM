@@ -4,12 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Programme 14 jours — Île Maurice</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌴</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
-  <style>
-    :root {
-      --bg-deep: #031b2f;
+  <style>      --bg-deep: #031b2f;
       --bg-mid: #075985;
       --bg-light: #0e7490;
       --text: #ffffff;
@@ -539,17 +538,20 @@
       }
 
       #tripMap { height: 320px; }
-    }
-  </style>
+
+.map-panel { margin-bottom: 0; }
+.tips-panel { margin-top: 1.25rem; }
+.day-card { cursor: pointer; }
+
+</style>
 </head>
 <body>
   <a class="back-link" href="index.html">&larr; Compte à rebours</a>
-
   <main class="page">
     <header class="panel hero">
       <p class="hero-kicker">🌴 Itinéraire détaillé</p>
-      <h1 id="tripTitle">Île Maurice — 14 jours</h1>
-      <p class="hero-sub" id="tripDates">Du 7 au 21 novembre 2026 · Base à New Grove · 6 adultes</p>
+      <h1>Île Maurice — 14 jours</h1>
+      <p class="hero-sub">7 → 21 novembre 2026 · Base à New Grove · 6 adultes</p>
       <div class="chip-row">
         <span class="chip">✈️ Arrivée 7 nov</span>
         <span class="chip">🏠 New Grove</span>
@@ -558,55 +560,46 @@
         <span class="chip">🌴 Départ 21 nov</span>
       </div>
     </header>
-
     <section class="panel" aria-label="Rythme du voyage">
       <p class="section-kicker">Vue d'ensemble</p>
       <h2 class="section-title">Alternance actif / chill</h2>
-      <div class="rhythm-grid" id="rhythmGrid"></div>
+      <div class="rhythm-grid" id="rhythmGrid"><button type="button" class="rhythm-chip rhythm-chill" data-goto-day="1" title="Jour 1"><span class="rhythm-chip-day">J1</span><span class="rhythm-chip-icon" aria-hidden="true">🌴</span></button><button type="button" class="rhythm-chip rhythm-actif" data-goto-day="2" title="Jour 2"><span class="rhythm-chip-day">J2</span><span class="rhythm-chip-icon" aria-hidden="true">🚗</span></button><button type="button" class="rhythm-chip rhythm-actif" data-goto-day="3" title="Jour 3"><span class="rhythm-chip-day">J3</span><span class="rhythm-chip-icon" aria-hidden="true">🚗</span></button><button type="button" class="rhythm-chip rhythm-chill" data-goto-day="4" title="Jour 4"><span class="rhythm-chip-day">J4</span><span class="rhythm-chip-icon" aria-hidden="true">🌴</span></button><button type="button" class="rhythm-chip rhythm-actif" data-goto-day="5" title="Jour 5"><span class="rhythm-chip-day">J5</span><span class="rhythm-chip-icon" aria-hidden="true">🚗</span></button><button type="button" class="rhythm-chip rhythm-actif" data-goto-day="6" title="Jour 6"><span class="rhythm-chip-day">J6</span><span class="rhythm-chip-icon" aria-hidden="true">🚗</span></button><button type="button" class="rhythm-chip rhythm-chill" data-goto-day="7" title="Jour 7"><span class="rhythm-chip-day">J7</span><span class="rhythm-chip-icon" aria-hidden="true">🌴</span></button><button type="button" class="rhythm-chip rhythm-actif" data-goto-day="8" title="Jour 8"><span class="rhythm-chip-day">J8</span><span class="rhythm-chip-icon" aria-hidden="true">🚗</span></button><button type="button" class="rhythm-chip rhythm-actif" data-goto-day="9" title="Jour 9"><span class="rhythm-chip-day">J9</span><span class="rhythm-chip-icon" aria-hidden="true">🚗</span></button><button type="button" class="rhythm-chip rhythm-chill" data-goto-day="10" title="Jour 10"><span class="rhythm-chip-day">J10</span><span class="rhythm-chip-icon" aria-hidden="true">🌴</span></button><button type="button" class="rhythm-chip rhythm-actif" data-goto-day="11" title="Jour 11"><span class="rhythm-chip-day">J11</span><span class="rhythm-chip-icon" aria-hidden="true">🚗</span></button><button type="button" class="rhythm-chip rhythm-actif" data-goto-day="12" title="Jour 12"><span class="rhythm-chip-day">J12</span><span class="rhythm-chip-icon" aria-hidden="true">🚗</span></button><button type="button" class="rhythm-chip rhythm-actif" data-goto-day="13" title="Jour 13"><span class="rhythm-chip-day">J13</span><span class="rhythm-chip-icon" aria-hidden="true">🚗</span></button><button type="button" class="rhythm-chip rhythm-chill" data-goto-day="14" title="Jour 14"><span class="rhythm-chip-day">J14</span><span class="rhythm-chip-icon" aria-hidden="true">🌴</span></button></div>
     </section>
-
     <section class="panel" aria-label="Filtres">
       <div class="toolbar-head">
         <h2 class="section-title" style="margin:0">Filtrer par activité</h2>
         <span class="day-count" id="dayCount">14 jours</span>
       </div>
-      <div id="filterBar" role="toolbar" aria-label="Filtres d'activité"></div>
+      <div id="filterBar" role="toolbar"><button type="button" class="filter-btn is-active" data-filter="all" aria-pressed="true"><span class="filter-icon" aria-hidden="true">🗺️</span><span>Tout voir</span></button><button type="button" class="filter-btn" data-filter="plage" aria-pressed="false"><span class="filter-icon" aria-hidden="true">🏖️</span><span>Plage</span></button><button type="button" class="filter-btn" data-filter="culture" aria-pressed="false"><span class="filter-icon" aria-hidden="true">🏛️</span><span>Culture</span></button><button type="button" class="filter-btn" data-filter="nature" aria-pressed="false"><span class="filter-icon" aria-hidden="true">🌿</span><span>Nature</span></button><button type="button" class="filter-btn" data-filter="repos" aria-pressed="false"><span class="filter-icon" aria-hidden="true">😌</span><span>Repos</span></button></div>
       <label class="toggle-row">
         <input type="checkbox" id="driveToggle" checked>
         <span>Temps de trajet depuis New Grove : <strong id="driveToggleLabel">affichés</strong></span>
       </label>
     </section>
-
     <div class="layout-with-map">
       <section aria-label="Programme jour par jour">
         <h2 class="section-title">📅 Programme jour par jour</h2>
-        <div id="daysGrid" class="days-list">
-          <p class="map-status" id="loadingMsg">Chargement du programme…</p>
-        </div>
+        <div id="daysGrid" class="days-list"><article class="day-card" id="day-1" data-day="1" data-categories="repos plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 1</p><h2>Arrivée &amp; détente</h2><p class="day-date">Vendredi 7 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Arrivée à l'aéroport SSR et installation à New Grove</li><li>Courses alimentaires et premiers repas locaux</li><li>Première baignade en fin d'après-midi</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Plage de Blue Bay — eau turquoise, snorkeling léger depuis la plage</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Récupérez la voiture à l'aéroport puis rejoignez New Grove. Blue Bay est à 15 min : parfait pour une première mise en jambes.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-2" data-day="2" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 2</p><h2>Sud sauvage &amp; falaises</h2><p class="day-date">Samedi 8 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Gris Gris — falaises battues par les vagues (vue sans descente difficile)</li><li>Roche Qui Pleure — spectacle naturel du sud</li><li>Village de Souillac et promenade côtière</li><li>Déjeuner local dans le sud</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Plage de Riambel — sable, baignade tranquille loin de la foule</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~30 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Restez sur les points de vue aménagés à Gris Gris. Pas de baignade aux falaises — la plage de Riambel est plus sûre.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-3" data-day="3" data-categories="culture plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 3</p><h2>Mahébourg &amp; marché</h2><p class="day-date">Dimanche 9 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-culture">🏛️ Culture</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Marché de Mahébourg (ambiance locale, fruits, épices)</li><li>Musée naval de Mahébourg — histoire maritime mauricienne</li><li>Balade dans le vieux quartier et café face au port</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Retour à Blue Bay pour snorkeling ou farniente</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~10 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Le marché est animé le lundi matin. Le musée est accessible et peu exigeant physiquement.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-4" data-day="4" data-categories="repos plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 4</p><h2>Journée repos</h2><p class="day-date">Lundi 10 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Matinée libre à la maison — lecture, sieste, piscine</li><li>Petite balade douce dans le quartier</li><li>Barbecue ou repas simple à New Grove</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pointe d'Esny — plage calme et peu fréquentée, accès facile</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~10 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée volontairement légère après deux jours actifs. Pointe d'Esny est proche et très agréable.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-5" data-day="5" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 5</p><h2>Île aux Cerfs</h2><p class="day-date">Mardi 11 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Départ en bateau depuis Trou d'Eau Douce</li><li>Journée sur l'île aux Cerfs — baignade, transat, déjeuner les pieds dans l'eau</li><li>Option snorkeling dans le lagon (sans effort intense)</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Île aux Cerfs — plages de sable blanc et eau cristalline</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~45 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Réservez le bateau la veille. Prévoyez de partir tôt pour profiter d'une plage moins bondée.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-6" data-day="6" data-categories="culture nature"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 6</p><h2>Grand Bassin &amp; thé</h2><p class="day-date">Mercredi 12 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-culture">🏛️ Culture</span><span class="cat-badge cat-nature">🌿 Nature</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Grand Bassin (Ganga Talao) — lac sacré hindou, visite respectueuse</li><li>Route des plages du sud puis ascension douce vers le plateau</li><li>Bois Chéri — visite de plantation de thé et dégustation</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pas de plage principale — journée culture &amp; nature en altitude</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~50 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Couvrez-vous légèrement au Grand Bassin (site religieux). La visite de la rhumerie Bois Chéri est accessible.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-7" data-day="7" data-categories="plage repos"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 7</p><h2>Plages de l'est</h2><p class="day-date">Jeudi 13 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-plage">🏖️ Plage</span><span class="cat-badge cat-repos">😌 Repos</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Route vers la côte est — paysages de canne à sucre</li><li>Belle Mare — longue plage de sable fin</li><li>Palmar — baignade et déjeuner en bord de mer</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Belle Mare &amp; Palmar — parmi les plus belles plages de l'île</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~50 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée plage pure. Louez des transats sur place et alternez ombre / soleil.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-8" data-day="8" data-categories="nature culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 8</p><h2>Chamarel &amp; rhumerie</h2><p class="day-date">Vendredi 14 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Terres des 7 couleurs de Chamarel — site géologique unique</li><li>Cascade de Chamarel (vue depuis le belvédère, sans randonnée)</li><li>Rhumerie de Chamarel — visite et dégustation</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Option plage de Tamarin en fin de journée si envie</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée la plus longue en voiture. Partez tôt. La cascade se voit sans descendre les marches.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-9" data-day="9" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 9</p><h2>Le Morne sans randonnée</h2><p class="day-date">Samedi 15 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Route vers Le Morne — panorama sur le Morne Brabant (UNESCO)</li><li>Photo depuis la plage publique, sans ascension</li><li>Déjeuner face au lagon du sud-ouest</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Plage du Morne — vue spectaculaire sur la montagne</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 10 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Ne pas tenter la randonnée pour les genoux sensibles. La plage offre déjà une vue magnifique.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-10" data-day="10" data-categories="repos plage culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 10</p><h2>Repos &amp; Flic en Flac</h2><p class="day-date">Dimanche 16 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Matinée détente à New Grove</li><li>Shopping souvenirs ou supermarché</li><li>Après-midi à Flic en Flac — longue plage animée</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Flic en Flac — plage populaire, restaurants et boutiques à proximité</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Journée chill idéale pour ralentir le rythme. Flic en Flac est parfait pour un coucher de soleil.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-11" data-day="11" data-categories="culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 11</p><h2>Port-Louis &amp; capitale</h2><p class="day-date">Lundi 17 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-modere">Modéré</span></div></header><div class="cat-badges"><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Marché central de Port-Louis — épices, légumes, street food</li><li>Aapravasi Ghat (UNESCO) — histoire de l'immigration</li><li>Waterfront Caudan — boutiques, cafés, vue sur le port</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pas de plage — journée urbaine et culturelle</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Garez-vous au Caudan. Marchez entre les sites : tout est proche. Goûtez les gâteaux piments au marché.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-12" data-day="12" data-categories="nature plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 12</p><h2>Pamplemousses &amp; nord-ouest</h2><p class="day-date">Mardi 18 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-nature">🌿 Nature</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Jardin botanique de Pamplemousses — lotus géants, palmiers royaux</li><li>Route vers le nord-ouest</li><li>Après-midi à Mont Choisy — plage familiale</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Mont Choisy — longue plage ombragée, eau calme</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 20 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Visitez le jardin tôt (chaleur + foule). Mont Choisy est l'une des plages les plus accessibles.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-13" data-day="13" data-categories="plage culture"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 13</p><h2>Grand Baie &amp; Pereybère</h2><p class="day-date">Mercredi 19 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-actif">🚗 Jour actif</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-plage">🏖️ Plage</span><span class="cat-badge cat-culture">🏛️ Culture</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Grand Baie — boutiques, galeries, ambiance animée</li><li>Déjeuner en bord de lagon</li><li>Pereybère — baignade dans une eau calme et protégée</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Pereybère — petite plage idéale pour une baignade tranquille</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~1 h 15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Pereybère est moins agitée que Grand Baie : parfait pour le groupe et les genoux sensibles.</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article><article class="day-card" id="day-14" data-day="14" data-categories="repos plage"><header class="day-card-top"><div class="day-title-block"><p class="day-kicker">Jour 14</p><h2>Journée libre &amp; départ</h2><p class="day-date">Jeudi 20 – Vendredi 21 novembre 2026</p></div><div class="day-meta-badges"><span class="meta-badge rhythm-chill">🌴 Jour chill</span><span class="meta-badge effort-facile">Facile</span></div></header><div class="cat-badges"><span class="cat-badge cat-repos">😌 Repos</span><span class="cat-badge cat-plage">🏖️ Plage</span></div><div class="day-card-body"><section class="day-block"><h3>Activités</h3><ul class="activity-list"><li>Jeudi 20 : matinée libre sur votre plage favorite</li><li>Derniers achats et préparation des valises</li><li>Vendredi 21 : dernière baignade, check-out et départ vers l'aéroport le soir</li></ul></section><section class="day-block highlight-beach"><h3>Plage du jour</h3><p>Votre plage favorite (Blue Bay, Pereybère ou Pointe d'Esny)</p></section><div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>~15 min aller simple</span></div></div><section class="day-block highlight-tip"><h3>Conseil</h3><p>Prévoyez 2 h avant le vol du 21/11 au soir pour le retour de la voiture. Un dernier dip dans le lagon !</p></section></div><footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article></div>
       </section>
-
-      <aside class="map-sticky" id="mapSection" aria-label="Carte du circuit">
-        <div class="panel" style="margin-bottom:0">
+      <aside class="map-sticky" id="mapSection">
+        <div class="panel map-panel">
           <div class="map-panel-head">
             <h2 class="section-title" style="margin:0">🗺️ Carte</h2>
             <button type="button" class="btn-ghost" id="resetMapBtn">Tout afficher</button>
           </div>
           <div id="tripMap"></div>
-          <p class="map-status" id="mapStatus" hidden>Chargement de la carte…</p>
+          <p class="map-status" id="mapStatus" hidden></p>
           <div id="mapLegend"></div>
         </div>
       </aside>
     </div>
-
-    <section class="panel" style="margin-top:1.25rem" aria-label="Conseils pratiques">
+    <section class="panel tips-panel" aria-label="Conseils pratiques">
       <h2 class="section-title">💡 Conseils pratiques</h2>
-      <div id="tipsGrid" class="tips-grid"></div>
+      <div id="tipsGrid" class="tips-grid"><div class="tip-card"><span class="tip-icon" aria-hidden="true">🚗</span><h3>Conduite à Maurice</h3><p>Circulation à gauche. Routes côtières parfois sinueuses : prévoir 15 à 20 min de marge. Stationnez à l'ombre quand c'est possible.</p></div><div class="tip-card"><span class="tip-icon" aria-hidden="true">🏖️</span><h3>Plages incontournables</h3><p>Blue Bay (snorkeling), Belle Mare (sable fin), Pereybère (eau calme), Le Morne (vue spectaculaire), Mont Choisy (familiale).</p></div><div class="tip-card"><span class="tip-icon" aria-hidden="true">🍛</span><h3>Spécialités locales</h3><p>Dholl puri, boulettes, cari de poisson, alouda, gâteau patate. Essayez un déjeuner créole à Mahébourg ou Port-Louis.</p></div><div class="tip-card"><span class="tip-icon" aria-hidden="true">🧴</span><h3>Soleil &amp; récifs</h3><p>Crème solaire indice 50+, chapeau et eau en permanence. Chaussures d'eau utiles sur les récifs coralliens.</p></div><div class="tip-card"><span class="tip-icon" aria-hidden="true">🦵</span><h3>Genoux sensibles</h3><p>Privilégier les accès plage faciles (Blue Bay, Pereybère, Mont Choisy). Éviter la montée du Morne : profiter de la plage en contrebas.</p></div><div class="tip-card"><span class="tip-icon" aria-hidden="true">⏰</span><h3>Horaires utiles</h3><p>Marché de Mahébourg : lundi. Marché central Port-Louis : tôt le matin. Grand Bassin : calme en matinée.</p></div></div>
     </section>
   </main>
-
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script>
-window.ITINERARY_DATA = {
+  <script>window.ITINERARY_DATA = {
   BASE: {
     name: "New Grove",
     lat: -20.4085,
@@ -965,32 +958,19 @@ window.ITINERARY_DATA = {
     "modéré": { label: "Modéré", color: "#fbbf24" }
   }
 };
-
-  </script>
-  <script>
-(function () {
+</script>
+  <script>(function () {
   "use strict";
 
   if (typeof window.ITINERARY_DATA === "undefined") {
-    console.error("Données itinéraire manquantes.");
     return;
   }
 
   var D = window.ITINERARY_DATA;
   var BASE = D.BASE;
-  var FILTERS = D.FILTERS;
-  var PRACTICAL_TIPS = D.PRACTICAL_TIPS;
   var ITINERARY = D.ITINERARY;
-  var CATEGORY_META = D.CATEGORY_META;
-  var RHYTHM_META = D.RHYTHM_META;
-  var EFFORT_META = D.EFFORT_META;
 
-  var state = {
-    filter: "all",
-    showDriveTimes: true,
-    selectedDay: null
-  };
-
+  var state = { filter: "all", showDriveTimes: true, selectedDay: null };
   var map = null;
   var markersLayer = null;
   var routeLayer = null;
@@ -998,259 +978,102 @@ window.ITINERARY_DATA = {
 
   var els = {};
 
+  function $(id) {
+    return document.getElementById(id);
+  }
+
   function cacheElements() {
-    els.daysGrid = document.getElementById("daysGrid");
-    els.filterBar = document.getElementById("filterBar");
-    els.driveToggle = document.getElementById("driveToggle");
-    els.driveToggleLabel = document.getElementById("driveToggleLabel");
-    els.dayCount = document.getElementById("dayCount");
-    els.tipsGrid = document.getElementById("tipsGrid");
-    els.mapLegend = document.getElementById("mapLegend");
-    els.mapStatus = document.getElementById("mapStatus");
-    els.rhythmGrid = document.getElementById("rhythmGrid");
+    els.filterBar = $("filterBar");
+    els.driveToggle = $("driveToggle");
+    els.driveToggleLabel = $("driveToggleLabel");
+    els.dayCount = $("dayCount");
+    els.mapLegend = $("mapLegend");
+    els.mapStatus = $("mapStatus");
+    els.dayCards = document.querySelectorAll(".day-card");
+    els.driveRows = document.querySelectorAll(".drive-row");
   }
 
-  function formatDriveTime(minutes) {
-    if (minutes < 60) {
-      return "~" + minutes + " min";
+  function matchesFilter(card) {
+    if (state.filter === "all") {
+      return true;
     }
-    var hours = Math.floor(minutes / 60);
-    var mins = minutes % 60;
-    return mins ? "~" + hours + " h " + mins + " min" : "~" + hours + " h";
+    var cats = (card.getAttribute("data-categories") || "").split(" ");
+    return cats.indexOf(state.filter) !== -1;
   }
 
-  function matchesFilter(day) {
-    return state.filter === "all" || day.categories.indexOf(state.filter) !== -1;
+  function applyFilter() {
+    var visible = 0;
+    Array.prototype.forEach.call(els.dayCards, function (card) {
+      var show = matchesFilter(card);
+      card.classList.toggle("is-hidden", !show);
+      if (show) {
+        visible += 1;
+      }
+    });
+    els.dayCount.textContent = visible + " jour" + (visible > 1 ? "s" : "");
+    updateMap();
   }
 
-  function renderRhythm() {
-    if (!els.rhythmGrid) {
-      return;
-    }
-    els.rhythmGrid.innerHTML = ITINERARY.map(function (day) {
-      var rhythm = RHYTHM_META[day.rhythm];
-      return (
-        '<button type="button" class="rhythm-chip rhythm-' +
-        day.rhythm +
-        '" data-goto-day="' +
-        day.day +
-        '" title="Jour ' +
-        day.day +
-        " : " +
-        day.title +
-        '">' +
-        '<span class="rhythm-chip-day">J' +
-        day.day +
-        "</span>" +
-        '<span class="rhythm-chip-icon" aria-hidden="true">' +
-        rhythm.icon +
-        "</span>" +
-        "</button>"
-      );
-    }).join("");
+  function applyDriveToggle() {
+    Array.prototype.forEach.call(els.driveRows, function (row) {
+      row.style.display = state.showDriveTimes ? "" : "none";
+    });
+    els.driveToggleLabel.textContent = state.showDriveTimes ? "affichés" : "masqués";
+  }
 
-    Array.prototype.forEach.call(els.rhythmGrid.querySelectorAll(".rhythm-chip"), function (chip) {
+  function initFilters() {
+    Array.prototype.forEach.call(els.filterBar.querySelectorAll(".filter-btn"), function (button) {
+      button.addEventListener("click", function () {
+        state.filter = button.getAttribute("data-filter");
+        Array.prototype.forEach.call(els.filterBar.querySelectorAll(".filter-btn"), function (btn) {
+          var active = btn.getAttribute("data-filter") === state.filter;
+          btn.classList.toggle("is-active", active);
+          btn.setAttribute("aria-pressed", String(active));
+        });
+        applyFilter();
+      });
+    });
+  }
+
+  function initRhythm() {
+    Array.prototype.forEach.call(document.querySelectorAll(".rhythm-chip"), function (chip) {
       chip.addEventListener("click", function () {
-        var dayNum = Number(chip.dataset.gotoDay);
-        var target = document.getElementById("day-" + dayNum);
+        var dayNum = chip.getAttribute("data-goto-day");
+        var target = $("day-" + dayNum);
         if (target) {
           target.scrollIntoView({ behavior: "smooth", block: "start" });
-          state.selectedDay = dayNum;
-          renderDays();
+          state.selectedDay = Number(dayNum);
+          Array.prototype.forEach.call(els.dayCards, function (card) {
+            card.classList.toggle("is-selected", Number(card.getAttribute("data-day")) === state.selectedDay);
+          });
           updateMap();
         }
       });
     });
   }
 
-  function renderFilters() {
-    els.filterBar.innerHTML = FILTERS.map(function (filter) {
-      var active = state.filter === filter.id;
-      return (
-        '<button type="button" class="filter-btn' +
-        (active ? " is-active" : "") +
-        '" data-filter="' +
-        filter.id +
-        '" aria-pressed="' +
-        active +
-        '">' +
-        '<span class="filter-icon" aria-hidden="true">' +
-        filter.icon +
-        "</span>" +
-        "<span>" +
-        filter.label +
-        "</span>" +
-        "</button>"
-      );
-    }).join("");
-
-    Array.prototype.forEach.call(els.filterBar.querySelectorAll(".filter-btn"), function (button) {
-      button.addEventListener("click", function () {
-        state.filter = button.dataset.filter;
-        renderFilters();
-        renderDays();
-        updateMap();
-      });
-    });
-  }
-
-  function renderCategoryBadges(categories) {
-    return categories
-      .map(function (cat) {
-        var meta = CATEGORY_META[cat];
-        return (
-          '<span class="cat-badge cat-' +
-          cat +
-          '">' +
-          meta.icon +
-          " " +
-          meta.label +
-          "</span>"
-        );
-      })
-      .join("");
-  }
-
-  function renderDayCard(day) {
-    var rhythm = RHYTHM_META[day.rhythm];
-    var effort = EFFORT_META[day.effort];
-    var hidden = matchesFilter(day) ? "" : " is-hidden";
-    var selected = state.selectedDay === day.day ? " is-selected" : "";
-
-    var driveBlock = state.showDriveTimes
-      ? '<div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>' +
-        formatDriveTime(day.driveMinutes) +
-        " aller simple</span></div></div>"
-      : "";
-
-    return (
-      '<article class="day-card' +
-      hidden +
-      selected +
-      '" data-day="' +
-      day.day +
-      '" id="day-' +
-      day.day +
-      '">' +
-      '<header class="day-card-top">' +
-      '<div class="day-title-block">' +
-      '<p class="day-kicker">Jour ' +
-      day.day +
-      "</p>" +
-      "<h2>" +
-      day.title +
-      "</h2>" +
-      '<p class="day-date">' +
-      day.date +
-      "</p>" +
-      "</div>" +
-      '<div class="day-meta-badges">' +
-      '<span class="meta-badge rhythm-' +
-      day.rhythm +
-      '">' +
-      rhythm.icon +
-      " " +
-      rhythm.label +
-      "</span>" +
-      '<span class="meta-badge effort-' +
-      (day.effort === "modéré" ? "modere" : day.effort) +
-      '">' +
-      effort.label +
-      "</span>" +
-      "</div>" +
-      "</header>" +
-      '<div class="cat-badges">' +
-      renderCategoryBadges(day.categories) +
-      "</div>" +
-      '<div class="day-card-body">' +
-      '<section class="day-block">' +
-      "<h3>Activités</h3>" +
-      '<ul class="activity-list">' +
-      day.activities
-        .map(function (activity) {
-          return "<li>" + activity + "</li>";
-        })
-        .join("") +
-      "</ul>" +
-      "</section>" +
-      '<section class="day-block highlight-beach">' +
-      "<h3>Plage du jour</h3>" +
-      "<p>" +
-      day.beach +
-      "</p>" +
-      "</section>" +
-      driveBlock +
-      '<section class="day-block highlight-tip">' +
-      "<h3>Conseil</h3>" +
-      "<p>" +
-      day.tips +
-      "</p>" +
-      "</section>" +
-      "</div>" +
-      '<footer class="day-card-footer">' +
-      '<button type="button" class="map-focus-btn" data-focus-day="' +
-      day.day +
-      '">Voir sur la carte</button>' +
-      "</footer>" +
-      "</article>"
-    );
-  }
-
-  function renderDays() {
-    var visible = ITINERARY.filter(matchesFilter);
-    els.dayCount.textContent = visible.length + " jour" + (visible.length > 1 ? "s" : "");
-    els.daysGrid.innerHTML = ITINERARY.map(renderDayCard).join("");
-
-    Array.prototype.forEach.call(els.daysGrid.querySelectorAll(".map-focus-btn"), function (button) {
-      button.addEventListener("click", function (event) {
-        event.stopPropagation();
-        focusDayOnMap(Number(button.dataset.focusDay));
-      });
-    });
-
-    Array.prototype.forEach.call(els.daysGrid.querySelectorAll(".day-card:not(.is-hidden)"), function (card) {
+  function initDayCards() {
+    Array.prototype.forEach.call(els.dayCards, function (card) {
       card.addEventListener("click", function (event) {
         if (event.target.closest(".map-focus-btn")) {
           return;
         }
-        var dayNum = Number(card.dataset.day);
+        var dayNum = Number(card.getAttribute("data-day"));
         state.selectedDay = state.selectedDay === dayNum ? null : dayNum;
-        renderDays();
+        Array.prototype.forEach.call(els.dayCards, function (c) {
+          c.classList.toggle("is-selected", state.selectedDay === Number(c.getAttribute("data-day")));
+        });
         updateMap();
       });
+
+      var mapBtn = card.querySelector(".map-focus-btn");
+      if (mapBtn) {
+        mapBtn.addEventListener("click", function (event) {
+          event.stopPropagation();
+          focusDayOnMap(Number(card.getAttribute("data-day")));
+        });
+      }
     });
-  }
-
-  function renderTips() {
-    els.tipsGrid.innerHTML = PRACTICAL_TIPS.map(function (tip) {
-      return (
-        '<div class="tip-card">' +
-        '<span class="tip-icon" aria-hidden="true">' +
-        tip.icon +
-        "</span>" +
-        "<h3>" +
-        tip.title +
-        "</h3>" +
-        "<p>" +
-        tip.text +
-        "</p>" +
-        "</div>"
-      );
-    }).join("");
-  }
-
-  function getVisibleDays() {
-    return ITINERARY.filter(matchesFilter);
-  }
-
-  function getMarkerColor(type) {
-    var colors = {
-      base: "#ffdd8a",
-      plage: "#38bdf8",
-      culture: "#fbbf24",
-      nature: "#4ade80"
-    };
-    return colors[type] || "#ffffff";
   }
 
   function setMapStatus(message, isError) {
@@ -1269,7 +1092,7 @@ window.ITINERARY_DATA = {
       return;
     }
     if (attempts > 50) {
-      setMapStatus("Carte indisponible (Leaflet non chargé). Le programme reste utilisable ci-dessous.", true);
+      setMapStatus("Carte indisponible. Le programme reste utilisable.", true);
       return;
     }
     window.setTimeout(function () {
@@ -1277,51 +1100,45 @@ window.ITINERARY_DATA = {
     }, 200);
   }
 
+  function getMarkerColor(type) {
+    return { base: "#ffdd8a", plage: "#38bdf8", culture: "#fbbf24", nature: "#4ade80" }[type] || "#fff";
+  }
+
+  function getVisibleDays() {
+    return ITINERARY.filter(function (day) {
+      if (state.filter !== "all" && day.categories.indexOf(state.filter) === -1) {
+        return false;
+      }
+      if (state.selectedDay !== null && state.selectedDay !== day.day) {
+        return false;
+      }
+      return true;
+    });
+  }
+
   function initMap() {
     if (mapReady || typeof L === "undefined") {
-      setMapStatus(
-        typeof L === "undefined"
-          ? "Carte indisponible (connexion requise pour charger Leaflet)."
-          : "",
-        typeof L === "undefined"
-      );
       return;
     }
-
     try {
-      map = L.map("tripMap", {
-        scrollWheelZoom: false,
-        attributionControl: true
-      });
-
+      map = L.map("tripMap", { scrollWheelZoom: false });
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "&copy; OpenStreetMap"
       }).addTo(map);
-
       markersLayer = L.layerGroup().addTo(map);
       routeLayer = L.layerGroup().addTo(map);
-
-      var baseIcon = L.divIcon({
-        className: "leaflet-marker-base",
-        html: '<div class="marker-pin base">🏠</div>',
-        iconSize: [32, 32],
-        iconAnchor: [16, 16]
-      });
-
-      L.marker([BASE.lat, BASE.lng], { icon: baseIcon })
-        .addTo(map)
-        .bindPopup("<strong>" + BASE.name + "</strong><br>Base du séjour");
-
+      L.marker([BASE.lat, BASE.lng], {
+        icon: L.divIcon({
+          className: "leaflet-marker-base",
+          html: '<div class="marker-pin base">🏠</div>',
+          iconSize: [32, 32],
+          iconAnchor: [16, 16]
+        })
+      }).addTo(map).bindPopup("<strong>" + BASE.name + "</strong><br>Base du séjour");
       mapReady = true;
-      setMapStatus("");
       updateMap();
-      window.setTimeout(function () {
-        map.invalidateSize();
-      }, 200);
-      window.setTimeout(function () {
-        map.invalidateSize();
-      }, 800);
-    } catch (error) {
+      window.setTimeout(function () { map.invalidateSize(); }, 300);
+    } catch (e) {
       setMapStatus("Impossible d'afficher la carte.", true);
     }
   }
@@ -1330,64 +1147,35 @@ window.ITINERARY_DATA = {
     if (!mapReady || !map) {
       return;
     }
-
     markersLayer.clearLayers();
     routeLayer.clearLayers();
-
-    var days = getVisibleDays();
     var bounds = [[BASE.lat, BASE.lng]];
-    var legendTypes = { base: true };
     var legendKeys = ["base"];
 
-    days.forEach(function (day) {
-      if (state.selectedDay !== null && state.selectedDay !== day.day) {
-        return;
-      }
-
+    getVisibleDays().forEach(function (day) {
       var dayPoints = [];
-
-      day.locations.forEach(function (location) {
-        if (location.type === "base") {
+      day.locations.forEach(function (loc) {
+        if (loc.type === "base") {
           return;
         }
-
-        if (!legendTypes[location.type]) {
-          legendTypes[location.type] = true;
-          legendKeys.push(location.type);
+        if (legendKeys.indexOf(loc.type) === -1) {
+          legendKeys.push(loc.type);
         }
-
-        var color = getMarkerColor(location.type);
-        var icon = L.divIcon({
-          className: "leaflet-marker-day",
-          html:
-            '<div class="marker-pin" style="background:' +
-            color +
-            '">J' +
-            day.day +
-            "</div>",
-          iconSize: [30, 30],
-          iconAnchor: [15, 15]
-        });
-
         markersLayer.addLayer(
-          L.marker([location.lat, location.lng], { icon: icon }).bindPopup(
-            "<strong>Jour " + day.day + " – " + location.name + "</strong><br>" + day.title
-          )
+          L.marker([loc.lat, loc.lng], {
+            icon: L.divIcon({
+              className: "leaflet-marker-day",
+              html: '<div class="marker-pin" style="background:' + getMarkerColor(loc.type) + '">J' + day.day + "</div>",
+              iconSize: [30, 30],
+              iconAnchor: [15, 15]
+            })
+          }).bindPopup("<strong>Jour " + day.day + " – " + loc.name + "</strong>")
         );
-
-        dayPoints.push([location.lat, location.lng]);
-        bounds.push([location.lat, location.lng]);
+        dayPoints.push([loc.lat, loc.lng]);
+        bounds.push([loc.lat, loc.lng]);
       });
-
       if (dayPoints.length > 1) {
-        routeLayer.addLayer(
-          L.polyline(dayPoints, {
-            color: "#ffd166",
-            weight: 3,
-            opacity: 0.85,
-            dashArray: "8 8"
-          })
-        );
+        routeLayer.addLayer(L.polyline(dayPoints, { color: "#ffd166", weight: 3, opacity: 0.85, dashArray: "8 8" }));
       }
     });
 
@@ -1397,102 +1185,51 @@ window.ITINERARY_DATA = {
       map.setView([BASE.lat, BASE.lng], 10);
     }
 
-    renderMapLegend(legendKeys);
-    window.setTimeout(function () {
-      map.invalidateSize();
-    }, 100);
-  }
-
-  function renderMapLegend(keys) {
-    var labels = {
-      base: "🏠 Base",
-      plage: "🏖️ Plage",
-      culture: "🏛️ Culture",
-      nature: "🌿 Nature"
-    };
-
-    els.mapLegend.innerHTML = keys
-      .map(function (type) {
-        return '<span class="legend-item">' + (labels[type] || type) + "</span>";
-      })
-      .join("");
+    var labels = { base: "🏠 Base", plage: "🏖️ Plage", culture: "🏛️ Culture", nature: "🌿 Nature" };
+    els.mapLegend.innerHTML = legendKeys.map(function (k) {
+      return '<span class="legend-item">' + (labels[k] || k) + "</span>";
+    }).join("");
   }
 
   function focusDayOnMap(dayNum) {
     state.selectedDay = dayNum;
-    renderDays();
-    updateMap();
-
-    var mapSection = document.getElementById("mapSection");
-    if (mapSection) {
-      mapSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    var day = ITINERARY.find(function (entry) {
-      return entry.day === dayNum;
+    Array.prototype.forEach.call(els.dayCards, function (card) {
+      card.classList.toggle("is-selected", Number(card.getAttribute("data-day")) === dayNum);
     });
-
+    updateMap();
+    var section = $("mapSection");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    var day = ITINERARY.find(function (d) { return d.day === dayNum; });
     if (!day || !map) {
       return;
     }
-
-    var points = day.locations.filter(function (loc) {
-      return loc.type !== "base";
-    });
-
+    var points = day.locations.filter(function (l) { return l.type !== "base"; });
     if (points.length) {
-      var bounds = points.map(function (p) {
-        return [p.lat, p.lng];
-      });
-      bounds.push([BASE.lat, BASE.lng]);
-      map.fitBounds(bounds, { padding: [48, 48], maxZoom: 12 });
+      var b = points.map(function (p) { return [p.lat, p.lng]; });
+      b.push([BASE.lat, BASE.lng]);
+      map.fitBounds(b, { padding: [48, 48], maxZoom: 12 });
     }
-  }
-
-  function initDriveToggle() {
-    els.driveToggle.checked = state.showDriveTimes;
-    els.driveToggleLabel.textContent = state.showDriveTimes ? "affichés" : "masqués";
-
-    els.driveToggle.addEventListener("change", function () {
-      state.showDriveTimes = els.driveToggle.checked;
-      els.driveToggleLabel.textContent = state.showDriveTimes ? "affichés" : "masqués";
-      renderDays();
-    });
-  }
-
-  function initResetMapButton() {
-    document.getElementById("resetMapBtn").addEventListener("click", function () {
-      state.selectedDay = null;
-      renderDays();
-      updateMap();
-    });
-  }
-
-  function initMeta() {
-    var meta = D.TRIP_META;
-    document.getElementById("tripTitle").textContent = meta.title;
-    document.getElementById("tripDates").textContent =
-      meta.dates + " · Base à " + BASE.name + " · " + meta.group;
   }
 
   function boot() {
-    try {
-      cacheElements();
-      initMeta();
-      renderRhythm();
-      renderFilters();
-      renderDays();
-      renderTips();
-      initDriveToggle();
-      initResetMapButton();
-      waitForLeaflet(initMap);
-    } catch (error) {
-      console.error("Erreur initialisation programme:", error);
-      if (els.daysGrid) {
-        els.daysGrid.innerHTML =
-          '<p class="map-status is-error">Erreur de chargement. Rechargez la page (Ctrl+F5).</p>';
-      }
-    }
+    cacheElements();
+    initFilters();
+    initRhythm();
+    initDayCards();
+    els.driveToggle.addEventListener("change", function () {
+      state.showDriveTimes = els.driveToggle.checked;
+      applyDriveToggle();
+    });
+    $("resetMapBtn").addEventListener("click", function () {
+      state.selectedDay = null;
+      Array.prototype.forEach.call(els.dayCards, function (c) { c.classList.remove("is-selected"); });
+      updateMap();
+    });
+    applyFilter();
+    applyDriveToggle();
+    waitForLeaflet(initMap);
   }
 
   if (document.readyState === "loading") {
@@ -1501,7 +1238,6 @@ window.ITINERARY_DATA = {
     boot();
   }
 })();
-
 </script>
 </body>
 </html>
