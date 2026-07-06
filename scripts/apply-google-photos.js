@@ -24,7 +24,7 @@ function photoList(entries) {
 const dayPhotos = {
   1: photoList([["blueBay", "Blue Bay — photo Google Maps"]]),
   2: photoList([["grisGris", "Gris Gris — falaises du sud"], ["riambel", "Plage de Riambel"]]),
-  3: photoList([["mahebourg", "Mahébourg — port et vieux quartier"], ["mahebourgCemetery", "Cimetière de Mahébourg — bord de mer"], ["blueBay", "Blue Bay"]]),
+  3: photoList([["mahebourg", "Marché de Mahébourg — fruits et épices"], ["mahebourgCemetery", "Cimetière de Mahébourg — bord de mer"], ["blueBay", "Blue Bay"]]),
   4: photoList([["pointeEsny", "Pointe d'Esny — plage calme"]]),
   5: photoList([["trouEauDouce", "Trou d'Eau Douce — départ bateau"], ["ileAuxCerfs", "Île aux Cerfs"]]),
   6: photoList([["grandBassin", "Grand Bassin — lac sacré"], ["boisCheri", "Bois Chéri — plantation de thé"]]),

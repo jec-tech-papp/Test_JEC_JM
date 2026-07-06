@@ -254,9 +254,9 @@ window.ITINERARY_DATA = {
       ],
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHJ5ketiVNSAUAIkfUvEMCNQQtuv-RjRJXC_JFTcSgtVABgCs_4PPx7dx8cUqwZsfEUwMFLmGyu76sELNtUUJ-P5LSZ4a9Y14KB1wu7mjGPYb2U2NL8gG6EpHsZhzKlXG0K9_Qg=w800-h500-k-no",
-          "caption": "Mahébourg — port et vieux quartier",
-          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mahebourg+Mauritius"
+          "url": "https://c8.alamy.com/compfr/frpdb0/stand-de-fruits-dans-la-halle-a-mahebourg-mauritius-frpdb0.jpg",
+          "caption": "Marché de Mahébourg — fruits et épices",
+          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mahebourg+Market+Mauritius"
         },
         {
           "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/31/8e/dc/fc/petit-bel-air-catholic.jpg?w=1200&h=1200&s=1",
