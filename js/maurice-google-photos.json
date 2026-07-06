@@ -78,5 +78,29 @@
   "trouEauDouce": {
     "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Trou%20d%20Eau%20Douce%20Mauritius",
     "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHsvrF4EmuNDqYO8Z2X6eAjit4rlpEwPmJrLN2A3N4POeGlPQnVNz-uD8UO7xXWtRWTih-r-KV6I8ZGG2jhlCJ_cb4KGKGBr5uGwrLKHEmlVwbukrbaYVmXHs84SBvyxJ3ksERyuQ=w800-h500-k-no"
+  },
+  "savannah": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Omnicane%20Sugar%20Estate%20Savannah%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHOedu_lfFfC-od4jG7OTZeTIFdmp17HUGoqAa1s4-r6efEE9rMP-01mECxOMImyCR1PNnvCH-ssrndqKhWKbSZ5K2ip2SYH4JMoHx95euszMffFFamWU8Qc7h6xOHegDvu67vB=w800-h500-k-no"
+  },
+  "alexandraFalls": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Alexandra%20Falls%20Mauritius%20Black%20River%20Gorges",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGpCe_KqveZEzU1S_3eLv3o6TRMuVTnRR4sgHYRkNxYR1bYGDIVdWjFHASEx9DenXV_gVoay02ea3L5EP2mhzSoQEl3uxNM0e2Vl_dz4Zn0vIlUtL8qCgVU4sgtDdD_MHrsMYta5qCgfKGz=w800-h500-k-no"
+  },
+  "laVanille": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=La%20Vanille%20Nature%20Park%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEAuEAgesMee3p7NE5SZMYlifkO9BQhv4_ROajFLckRLnEsnXEdbX8EkUpX_WticSUfEDt04A-u4uzuGc1jCteBSMdptxHevCZQaXCs-PMyjDazdTF8XOmYhMgeP5D530s42_dYcg=w800-h500-k-no"
+  },
+  "rochesterFalls": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rochester%20Falls%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAExzoTxKw3alX8U1-hbx9jl0WpZZ3HUEdkOBpH01gKOO-eradBZSw_F2irWyKIohjtowUK5Hn2RKDlpAkneNcxdywyDWsd4F0EufUIjB_IVHEOS8NONod5wMIKnILssldRHHHt92nJIvKBD=w800-h500-k-no"
+  },
+  "eauBleue": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Eau%20Bleue%20Waterfall%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGLzkBiuefUaR-ajuUOLXhLlsJFhfZARM_okvrfjXjjstyMJl5n8dyLdEUsTjv62kPQWjNQvsF6hmSs3J99tmcKr4hjoDLETiw4HRN0JUrlTpuFOeCmClFIpsY4EXulaKM9zCf7=w800-h500-k-no"
+  },
+  "cascadeChamarel": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chamarel%20Waterfall%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEE_sapMqMu2NKDnJnaH51K8DPmWZGIiaHvTSoY_St8k7hnnISIpZLMKKIhfqsV1wm5fkSMrj65zj7p1PA3QEAs3d7pfY-rFjUSY9I30W7fPUbm4VnmjS1fqY71b4aH0-0wsbx7=w800-h500-k-no"
   }
 }

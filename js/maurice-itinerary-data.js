@@ -71,6 +71,11 @@ window.ITINERARY_DATA = {
       "icon": "⏰",
       "title": "Horaires utiles",
       "text": "Marché de Mahébourg : lundi. Marché central Port-Louis : tôt le matin. Grand Bassin : calme en matinée."
+    },
+    {
+      "icon": "💦",
+      "title": "Bonus : Eau Bleue (Cluny)",
+      "text": "À ≈15 min de New Grove. Idéal sur un matin libre ou après une journée légère : la meilleure cascade baignable du séjour (eau turquoise, plusieurs bassins)."
     }
   ],
   "ITINERARY": [
@@ -273,12 +278,30 @@ window.ITINERARY_DATA = {
         }
       ],
       "driveMinutes": 10,
-      "tips": "Journée volontairement légère après deux jours actifs. Pointe d'Esny est proche et très agréable.",
+      "tips": "Journée volontairement légère. Option bonus : Eau Bleue à Cluny (≈15 min) le matin — eau turquoise et plusieurs bassins. Pointe d'Esny l'après-midi si envie de plage.",
       "photos": [
+        {
+          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGLzkBiuefUaR-ajuUOLXhLlsJFhfZARM_okvrfjXjjstyMJl5n8dyLdEUsTjv62kPQWjNQvsF6hmSs3J99tmcKr4hjoDLETiw4HRN0JUrlTpuFOeCmClFIpsY4EXulaKM9zCf7=w800-h500-k-no",
+          "caption": "Eau Bleue — cascade baignable",
+          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Eau%20Bleue%20Waterfall%20Mauritius"
+        },
         {
           "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEBzYh-5HtX_lmdnVjWmDAt1BvjJXX7tXJRMK0-sqvsHPYv3oACkAnIwYDpOO_XkwBxVyWUdT6-GYgFo6FIEWftEcN8f7MV7dQTLUYK2C3peNr0nhLDqfs1ocYaHk42eE7W2dyx=w800-h500-k-no",
           "caption": "Pointe d'Esny — plage calme",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pointe+d%27Esny+Mauritius"
+        }
+      ],
+      "summary": "Journée repos à New Grove. Option matin : cascade Eau Bleue (≈15 min) — meilleure cascade baignable du séjour.",
+      "links": [
+        {
+          "label": "Cascade Eau Bleue (Cluny)",
+          "url": "https://www.google.com/maps/search/?api=1&query=Eau+Bleue+Waterfall+Mauritius",
+          "description": "≈15 min de New Grove — cascade baignable"
+        },
+        {
+          "label": "Pointe d'Esny",
+          "url": "https://www.google.com/maps/search/?api=1&query=Pointe+d%27Esny+Mauritius",
+          "description": "Plage calme et peu fréquentée"
         }
       ]
     },
@@ -391,88 +414,124 @@ window.ITINERARY_DATA = {
     {
       "day": 7,
       "date": "Jeudi 13 novembre 2026",
-      "title": "Plages de l'est",
+      "title": "Moulin & détente sud",
       "rhythm": "chill",
       "effort": "facile",
       "categories": [
+        "culture",
         "plage",
         "repos"
       ],
       "activities": [
-        "Route vers la côte est — paysages de canne à sucre",
-        "Belle Mare — longue plage de sable fin",
-        "Palmar — baignade et déjeuner en bord de mer"
+        {
+          "text": "Domaine sucrier de Savannah (Omnicane Sugar Estate) — visite moulin / canne à sucre",
+          "link": "https://www.google.com/maps/search/?api=1&query=Omnicane+Sugar+Estate+Savannah+Mauritius"
+        },
+        "Déjeuner sur place, à Mahébourg ou Plaine Magnien",
+        {
+          "text": "Après-midi à Blue Bay Marine Park — eau calme et snorkeling facile",
+          "link": "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Marine+Park+Mauritius"
+        }
       ],
-      "beach": "Belle Mare & Palmar — parmi les plus belles plages de l'île",
+      "beach": "Plage de Blue Bay — eau calme, parfaite pour récupérer + snorkeling facile",
       "locations": [
         {
-          "name": "Belle Mare",
-          "lat": -20.1989,
-          "lng": 57.7814,
-          "type": "plage"
+          "name": "Savannah Sugar Estate",
+          "lat": -20.4617,
+          "lng": 57.5989,
+          "type": "culture"
         },
         {
-          "name": "Palmar",
-          "lat": -20.2103,
-          "lng": 57.7681,
+          "name": "Blue Bay",
+          "lat": -20.4442,
+          "lng": 57.7189,
           "type": "plage"
         }
       ],
-      "driveMinutes": 50,
-      "tips": "Journée plage pure. Louez des transats sur place et alternez ombre / soleil.",
+      "driveMinutes": 20,
+      "tips": "Vérifiez les horaires de visite du moulin la veille (visite guidée ou découverte du domaine selon disponibilité). Blue Bay en fin d'après-midi : idéal pour une journée chill.",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAH-e21IBBr5-2QYK-Qq4VX9JUFRaLYgue8d8bMzBeZSgM3Aqs4jXKxnsDIdAVboKZ-8wi6_tZad8XbYRQtYG76U8M9N1-LHKGt1IVA3tfUIkKO0XI8XhgNGpp4WKSvNs14TLv5vUovBkiIl=w800-h500-k-no",
-          "caption": "Belle Mare — plage de l'est",
-          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Belle+Mare+Beach+Mauritius"
+          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHOedu_lfFfC-od4jG7OTZeTIFdmp17HUGoqAa1s4-r6efEE9rMP-01mECxOMImyCR1PNnvCH-ssrndqKhWKbSZ5K2ip2SYH4JMoHx95euszMffFFamWU8Qc7h6xOHegDvu67vB=w800-h500-k-no",
+          "caption": "Savannah — domaine sucrier Omnicane",
+          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Omnicane%20Sugar%20Estate%20Savannah%20Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAE-kZGRqsLImU61jcO9EMA-HPYk1zzR6JqoPTdmaAW2cbL_niIqBc_8VMIRBNzj8bPTwkArRRy4KF21MnHHRZPrQRX7QIMFnLZc8EOYxNLD4qpcmFul5r7iqbIWdSknuYVLDbFLo3S5yhGT=w800-h500-k-no",
-          "caption": "Palmar — côte est",
-          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Palmar%20Beach%20Mauritius"
+          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHykWfI-KNqS3z8eGghvVTDa4K2jpI0-WAmyzf2ZmeVFsoZY48yS3b-lEqCJlyirppPl5DFpkqCGfbQk8rbev1fOkf016h7xhqyvi3CnSpmTQXdHCd5IYj7fbdInK-dKCkTIfvq=w800-h500-k-no",
+          "caption": "Blue Bay — détente et snorkeling",
+          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius"
+        }
+      ],
+      "summary": "Matinée au domaine sucrier de Savannah, déjeuner dans le coin, puis détente et snorkeling à Blue Bay l'après-midi.",
+      "links": [
+        {
+          "label": "Omnicane Sugar Estate",
+          "url": "https://www.google.com/maps/search/?api=1&query=Omnicane+Sugar+Estate+Savannah+Mauritius",
+          "description": "≈ 10–15 min depuis New Grove"
+        },
+        {
+          "label": "Blue Bay Marine Park",
+          "url": "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Marine+Park+Mauritius",
+          "description": "≈ 15 min — snorkeling et eau turquoise"
         }
       ]
     },
     {
       "day": 8,
       "date": "Vendredi 14 novembre 2026",
-      "title": "Chamarel & rhumerie",
+      "title": "Chamarel & cascade accessible",
       "rhythm": "actif",
       "effort": "modéré",
       "categories": [
         "nature",
         "culture"
       ],
-      "summary": "Découverte du sud-ouest : terres colorées, cascade et rhumerie de Chamarel.",
+      "summary": "Terres des 7 couleurs et cascade de Chamarel le matin, puis Alexandra Falls (vue panoramique, 1–2 min de marche). Journée « wahou » sans fatigue.",
       "activities": [
         {
           "text": "Terres des 7 couleurs de Chamarel",
           "link": "https://www.google.com/maps/search/?api=1&query=Chamarel+Seven+Coloured+Earth"
         },
-        "Cascade de Chamarel (vue depuis le belvédère, sans randonnée)",
         {
-          "text": "Rhumerie de Chamarel — visite et dégustation",
-          "link": "https://www.rhumeriedechamarel.com/"
-        }
+          "text": "Cascade de Chamarel — point de vue depuis le belvédère (sans descente)",
+          "link": "https://www.google.com/maps/search/?api=1&query=Chamarel+Waterfall+Mauritius"
+        },
+        {
+          "text": "Alexandra Falls — Black River Gorges (parking direct, 1–2 min de marche)",
+          "link": "https://www.google.com/maps/search/?api=1&query=Alexandra+Falls+Mauritius"
+        },
+        "Déjeuner à Chamarel ou pique-nique",
+        "Option : arrêts photo dans les gorges si l'énergie le permet",
+        "Retour tranquille vers New Grove"
       ],
-      "beach": "Option plage de Tamarin en fin de journée si envie",
+      "beach": "Pas de plage — journée nature et panoramas dans le sud-ouest",
       "photos": [
         {
           "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHqPdYRFcv-1GxndIWy2oStp1672Ud8qGIkICyQ3T957nBV4uabnubYpKjDVE4lVZOludxkaXjKPn-r6VbuLewUVUkL30_CDXyDrpRtwwWFO-hUOyju-qk7i-49-hOJVB7B2a7n1VZaxQsn=w800-h500-k-no",
           "caption": "Chamarel — terres des 7 couleurs",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chamarel+Seven+Coloured+Earth"
+        },
+        {
+          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEE_sapMqMu2NKDnJnaH51K8DPmWZGIiaHvTSoY_St8k7hnnISIpZLMKKIhfqsV1wm5fkSMrj65zj7p1PA3QEAs3d7pfY-rFjUSY9I30W7fPUbm4VnmjS1fqY71b4aH0-0wsbx7=w800-h500-k-no",
+          "caption": "Cascade de Chamarel",
+          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chamarel%20Waterfall%20Mauritius"
+        },
+        {
+          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGpCe_KqveZEzU1S_3eLv3o6TRMuVTnRR4sgHYRkNxYR1bYGDIVdWjFHASEx9DenXV_gVoay02ea3L5EP2mhzSoQEl3uxNM0e2Vl_dz4Zn0vIlUtL8qCgVU4sgtDdD_MHrsMYta5qCgfKGz=w800-h500-k-no",
+          "caption": "Alexandra Falls — panorama",
+          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Alexandra%20Falls%20Mauritius%20Black%20River%20Gorges"
         }
       ],
       "links": [
         {
-          "label": "Rhumerie de Chamarel",
-          "url": "https://www.rhumeriedechamarel.com/",
-          "description": "Horaires et réservation visite"
+          "label": "Alexandra Falls",
+          "url": "https://www.google.com/maps/search/?api=1&query=Alexandra+Falls+Mauritius",
+          "description": "Parking direct — 1 à 2 minutes de marche"
         },
         {
           "label": "Chamarel sur Google Maps",
           "url": "https://www.google.com/maps/search/?api=1&query=Chamarel+Mauritius",
-          "description": "Itinéraire depuis New Grove"
+          "description": "Terres des 7 couleurs et cascade"
         }
       ],
       "locations": [
@@ -489,20 +548,14 @@ window.ITINERARY_DATA = {
           "type": "nature"
         },
         {
-          "name": "Rhumerie Chamarel",
-          "lat": -20.4322,
-          "lng": 57.3914,
-          "type": "culture"
-        },
-        {
-          "name": "Tamarin",
-          "lat": -20.3256,
-          "lng": 57.3706,
-          "type": "plage"
+          "name": "Alexandra Falls",
+          "lat": -20.3783,
+          "lng": 57.4431,
+          "type": "nature"
         }
       ],
       "driveMinutes": 75,
-      "tips": "Journée la plus longue en voiture. Partez tôt. La cascade se voit sans descendre les marches."
+      "tips": "Tout est dans la même zone : enchaînement logique, zéro galère pour les genoux. Alexandra Falls est accessible en voiture avec une vue panoramique incroyable. Partez tôt."
     },
     {
       "day": 9,
@@ -678,45 +731,79 @@ window.ITINERARY_DATA = {
     {
       "day": 13,
       "date": "Mercredi 19 novembre 2026",
-      "title": "Grand Baie & Pereybère",
+      "title": "La Vanille & cascade baignade",
       "rhythm": "actif",
       "effort": "facile",
       "categories": [
-        "plage",
-        "culture"
+        "nature",
+        "plage"
       ],
       "activities": [
-        "Grand Baie — boutiques, galeries, ambiance animée",
-        "Déjeuner en bord de lagon",
-        "Pereybère — baignade dans une eau calme et protégée"
-      ],
-      "beach": "Pereybère — petite plage idéale pour une baignade tranquille",
-      "locations": [
         {
-          "name": "Grand Baie",
-          "lat": -20.0136,
-          "lng": 57.5806,
-          "type": "culture"
+          "text": "La Vanille Nature Park (Crocodile Park) — visite ombragée et accessible",
+          "link": "https://www.google.com/maps/search/?api=1&query=La+Vanille+Nature+Park+Mauritius"
+        },
+        "Déjeuner sur place ou snack dans le parc",
+        {
+          "text": "Rochester Falls — baignade possible (piste + 5 min de marche, roches volcaniques)",
+          "link": "https://www.google.com/maps/search/?api=1&query=Rochester+Falls+Mauritius"
         },
         {
-          "name": "Pereybère",
-          "lat": -19.9953,
-          "lng": 57.5894,
+          "text": "Fin d'après-midi : plage de Gris Gris ou Riambel — côte sud sauvage",
+          "link": "https://www.google.com/maps/search/?api=1&query=Gris+Gris+Mauritius"
+        }
+      ],
+      "beach": "Gris Gris ou Riambel — côte sud plus sauvage, parfait pour finir tranquille",
+      "locations": [
+        {
+          "name": "La Vanille",
+          "lat": -20.4019,
+          "lng": 57.5575,
+          "type": "nature"
+        },
+        {
+          "name": "Rochester Falls",
+          "lat": -20.4944,
+          "lng": 57.4567,
+          "type": "nature"
+        },
+        {
+          "name": "Gris Gris",
+          "lat": -20.4789,
+          "lng": 57.5214,
           "type": "plage"
         }
       ],
-      "driveMinutes": 75,
-      "tips": "Pereybère est moins agitée que Grand Baie : parfait pour le groupe et les genoux sensibles.",
+      "driveMinutes": 45,
+      "tips": "Allez à Rochester Falls en début d'après-midi (moins de monde). Baskets conseillées : accès court mais un peu irrégulier. Baignade possible aux chutes.",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFAUt5CaFItIcpun-1NJRnPebjE3gpjnmd0dpbI159QkrDoPBjyTJoxXLhpvClu5wVjDo8f4Yk4pT6GD5MeSveyDBwyCuDudwgz8vipSPK30HPKBj3Wy7KOaR21RK_hs1UTZmq6=w800-h500-k-no",
-          "caption": "Grand Baie — lagon du nord",
-          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Grand+Baie+Mauritius"
+          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEAuEAgesMee3p7NE5SZMYlifkO9BQhv4_ROajFLckRLnEsnXEdbX8EkUpX_WticSUfEDt04A-u4uzuGc1jCteBSMdptxHevCZQaXCs-PMyjDazdTF8XOmYhMgeP5D530s42_dYcg=w800-h500-k-no",
+          "caption": "La Vanille Nature Park",
+          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=La%20Vanille%20Nature%20Park%20Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAF56p0X-O0M5TdYC1TpwueYSAtJCNGXBEhlhcD6-JKSjRMOcP5ZNrNRsPIwStBMyGx_hIu5Uy0j3ElQjjmkwHsevbOuZZmhOdjnpLI9cO48k54QJcOym_gnr-ZpdfOTtiPz4bzrx2X0ZDQL=w800-h500-k-no",
-          "caption": "Pereybère — baignade tranquille",
-          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pereybere%20Beach%20Mauritius"
+          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAExzoTxKw3alX8U1-hbx9jl0WpZZ3HUEdkOBpH01gKOO-eradBZSw_F2irWyKIohjtowUK5Hn2RKDlpAkneNcxdywyDWsd4F0EufUIjB_IVHEOS8NONod5wMIKnILssldRHHHt92nJIvKBD=w800-h500-k-no",
+          "caption": "Rochester Falls — baignade",
+          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rochester%20Falls%20Mauritius"
+        },
+        {
+          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEtVoP2QC0tLyHO5YDB0asyc_XqhiG-Eee4zjLmqcgVw3iQbpAHeaYVYkGjFq6dEpoL0JZicgrpCZFLVE1gE-ZkaYhsqjF5-NtvggU42eL_AGuQgvn27OYP_B521Nbf-gX6gGuwwg=w800-h500-k-no",
+          "caption": "Gris Gris — côte sud sauvage",
+          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Gris+Gris+Mauritius"
+        }
+      ],
+      "summary": "La Vanille Nature Park le matin, baignade à Rochester Falls en début d'après-midi, fin de journée sauvage à Gris Gris ou Riambel.",
+      "links": [
+        {
+          "label": "La Vanille Nature Park",
+          "url": "https://www.google.com/maps/search/?api=1&query=La+Vanille+Nature+Park+Mauritius",
+          "description": "Rivière des Anguilles — parc ombragé"
+        },
+        {
+          "label": "Rochester Falls",
+          "url": "https://www.google.com/maps/search/?api=1&query=Rochester+Falls+Mauritius",
+          "description": "Baignade possible — Savanne, près de Souillac"
         }
       ]
     },
