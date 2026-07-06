@@ -9,7 +9,6 @@ const root = path.join(__dirname, "..");
 const dataJs = fs.readFileSync(path.join(root, "js/maurice-itinerary-data.js"), "utf8");
 const appJs = fs.readFileSync(path.join(root, "js/maurice-itinerary-app.js"), "utf8");
 const renderJs = fs.readFileSync(path.join(root, "js/maurice-itinerary-render.js"), "utf8");
-const editorJs = fs.readFileSync(path.join(root, "js/maurice-itinerary-editor.js"), "utf8");
 
 const sandbox = { window: {} };
 vm.createContext(sandbox);
@@ -69,18 +68,7 @@ const html = `<!doctype html>
 </head>
 <body>
   <a class="back-link" href="index.html">&larr; Compte à rebours</a>
-  <button type="button" class="editor-fab" id="editorUnlockBtn" title="Modifier le programme">✏️ Modifier le programme</button>
-  <p class="editor-toast" id="editorToast" hidden role="status"></p>
   <main class="page">
-    <div class="editor-toolbar" id="editorToolbar" hidden>
-    <p class="editor-toolbar-title">Mode édition</p>
-    <div class="editor-toolbar-actions">
-      <button type="button" class="btn-editor" id="editorSaveBtn">💾 Sauvegarder</button>
-      <button type="button" class="btn-editor" id="editorExportBtn">⬇️ Exporter</button>
-      <button type="button" class="btn-editor" id="editorImportBtn">⬆️ Importer</button>
-      <input type="file" id="editorImportFile" accept="application/json" hidden>
-      <button type="button" class="btn-editor btn-editor-danger" id="editorResetBtn">↩️ Réinitialiser</button>
-    </div>
     <header class="panel hero">
       <p class="hero-kicker">🌴 Itinéraire détaillé</p>
       <h1>${esc(D.TRIP_META.title)}</h1>
@@ -134,48 +122,8 @@ const html = `<!doctype html>
       <div id="tipsGrid" class="tips-grid">${renderTips()}</div>
     </section>
   </main>
-  <div class="editor-modal" id="passwordModal" hidden>
-    <div class="editor-modal-backdrop" data-close-modal></div>
-    <div class="editor-modal-card" role="dialog" aria-labelledby="passwordModalTitle">
-      <h2 id="passwordModalTitle">Accès édition</h2>
-      <p class="editor-modal-help">Entrez le mot de passe pour modifier le programme, ajouter des photos et des liens.</p>
-      <label class="editor-field">
-        <span>Mot de passe</span>
-        <input type="password" id="editorPassword" autocomplete="current-password">
-      </label>
-      <div class="editor-modal-actions">
-        <button type="button" class="btn-editor" id="passwordCancelBtn">Annuler</button>
-        <button type="button" class="btn-editor btn-editor-primary" id="passwordSubmitBtn">Déverrouiller</button>
-      </div>
-    </div>
-  </div>
-  <div class="editor-modal" id="dayEditorModal" hidden>
-    <div class="editor-modal-backdrop" data-close-modal></div>
-    <div class="editor-modal-card editor-modal-card-wide" role="dialog" aria-labelledby="editDayTitle">
-      <h2 id="editDayTitle">Modifier le jour</h2>
-      <form id="dayEditorForm">
-        <input type="hidden" id="editDayNum">
-        <div class="editor-form-grid">
-          <label class="editor-field"><span>Titre</span><input type="text" id="editTitle" required></label>
-          <label class="editor-field"><span>Date</span><input type="text" id="editDate" required></label>
-          <label class="editor-field editor-field-full"><span>En bref (résumé pour néophyte)</span><textarea id="editSummary" rows="2"></textarea></label>
-          <label class="editor-field editor-field-full"><span>Activités (une par ligne, option lien : texte | https://...)</span><textarea id="editActivities" rows="5"></textarea></label>
-          <label class="editor-field editor-field-full"><span>Plage du jour</span><textarea id="editBeach" rows="2"></textarea></label>
-          <label class="editor-field editor-field-full"><span>Photos (une par ligne : url | légende)</span><textarea id="editPhotos" rows="3" placeholder="https://... | Légende de la photo"></textarea></label>
-          <label class="editor-field editor-field-full"><span>Liens utiles (label | url | description)</span><textarea id="editLinks" rows="3" placeholder="Google Maps | https://... | Itinéraire"></textarea></label>
-          <label class="editor-field"><span>Conseil</span><textarea id="editTips" rows="2"></textarea></label>
-          <label class="editor-field"><span>Trajet (min)</span><input type="number" id="editDrive" min="0" step="5"></label>
-        </div>
-        <div class="editor-modal-actions">
-          <button type="button" class="btn-editor" id="dayEditorCancelBtn">Annuler</button>
-          <button type="submit" class="btn-editor btn-editor-primary">Enregistrer le jour</button>
-        </div>
-      </form>
-    </div>
-  </div>
   <script>${dataJs}<\/script>
   <script>${renderJs}<\/script>
-  <script>${editorJs}<\/script>
   <script>${appJs}<\/script>
 </body>
 </html>`;

@@ -62,20 +62,26 @@
       .map(function (photo) {
         return (
           '<figure class="day-photo">' +
+          '<a class="day-photo-link" href="' +
+          esc(photo.mapsUrl || photo.url) +
+          '" target="_blank" rel="noopener noreferrer">' +
           '<img src="' +
           esc(photo.url) +
           '" alt="' +
-          esc(photo.caption || "Photo du jour") +
-          '" loading="lazy">' +
-          (photo.caption ? '<figcaption>' + esc(photo.caption) + "</figcaption>" : "") +
-          "</figure>"
+          esc(photo.caption || "Photo du lieu") +
+          '" loading="lazy" referrerpolicy="no-referrer">' +
+          "</a>" +
+          '<figcaption>' +
+          esc(photo.caption || "Photo du lieu") +
+          (photo.mapsUrl ? ' · <a href="' + esc(photo.mapsUrl) + '" target="_blank" rel="noopener noreferrer">Google Maps</a>' : "") +
+          "</figcaption></figure>"
         );
       })
       .join("");
     if (!items) {
       return "";
     }
-    return '<section class="day-block day-photos"><h3>📷 Photos</h3><div class="photo-grid">' + items + "</div></section>";
+    return '<section class="day-block day-photos"><h3>📷 Aperçu Google Maps</h3><div class="photo-grid">' + items + "</div></section>";
   }
 
   function renderLinks(links) {
@@ -177,10 +183,7 @@
       esc(day.tips) +
       "</p></section>" +
       "</div>" +
-      '<footer class="day-card-footer">' +
-      '<button type="button" class="map-focus-btn">Voir sur la carte</button>' +
-      '<button type="button" class="edit-day-btn" hidden>Modifier ce jour</button>' +
-      "</footer></article>"
+      '<footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article>'
     );
   }
 

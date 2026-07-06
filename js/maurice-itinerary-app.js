@@ -451,9 +451,6 @@
   window.MauriceItineraryApp = { refresh: refresh };
 
   function boot() {
-    if (window.__ITINERARY_CUSTOM_LOADED__ && window.ItineraryRender && $("daysGrid")) {
-      $("daysGrid").innerHTML = window.ItineraryRender.renderAllDays(getItinerary(), D);
-    }
     cacheElements();
     initFilters();
     initRhythm();
