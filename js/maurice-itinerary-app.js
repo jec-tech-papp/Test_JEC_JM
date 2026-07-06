@@ -223,6 +223,7 @@
 
   function renderDays() {
     var visible = ITINERARY.filter(matchesFilter);
+    var visible = ITINERARY.filter(matchesFilter);
     els.dayCount.textContent = visible.length + " jour" + (visible.length > 1 ? "s" : "");
     els.daysGrid.innerHTML = ITINERARY.map(renderDayCard).join("");
 
@@ -285,6 +286,21 @@
     els.mapStatus.textContent = message;
     els.mapStatus.className = "map-status" + (isError ? " is-error" : "");
     els.mapStatus.hidden = !message;
+  }
+
+  function waitForLeaflet(callback, attempts) {
+    attempts = attempts || 0;
+    if (typeof L !== "undefined") {
+      callback();
+      return;
+    }
+    if (attempts > 50) {
+      setMapStatus("Carte indisponible (Leaflet non chargé). Le programme reste utilisable ci-dessous.", true);
+      return;
+    }
+    window.setTimeout(function () {
+      waitForLeaflet(callback, attempts + 1);
+    }, 200);
   }
 
   function initMap() {
@@ -486,15 +502,23 @@
   }
 
   function boot() {
-    cacheElements();
-    initMeta();
-    renderRhythm();
-    renderFilters();
-    renderDays();
-    renderTips();
-    initDriveToggle();
-    initResetMapButton();
-    initMap();
+    try {
+      cacheElements();
+      initMeta();
+      renderRhythm();
+      renderFilters();
+      renderDays();
+      renderTips();
+      initDriveToggle();
+      initResetMapButton();
+      waitForLeaflet(initMap);
+    } catch (error) {
+      console.error("Erreur initialisation programme:", error);
+      if (els.daysGrid) {
+        els.daysGrid.innerHTML =
+          '<p class="map-status is-error">Erreur de chargement. Rechargez la page (Ctrl+F5).</p>';
+      }
+    }
   }
 
   if (document.readyState === "loading") {

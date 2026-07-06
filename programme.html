@@ -6,8 +6,7 @@
   <title>Programme 14 jours — Île Maurice</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
   <style>
     :root {
       --bg-deep: #031b2f;
@@ -581,7 +580,9 @@
     <div class="layout-with-map">
       <section aria-label="Programme jour par jour">
         <h2 class="section-title">📅 Programme jour par jour</h2>
-        <div id="daysGrid" class="days-list"></div>
+        <div id="daysGrid" class="days-list">
+          <p class="map-status" id="loadingMsg">Chargement du programme…</p>
+        </div>
       </section>
 
       <aside class="map-sticky" id="mapSection" aria-label="Carte du circuit">
@@ -603,6 +604,7 @@
     </section>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
 window.ITINERARY_DATA = {
   BASE: {
@@ -1191,6 +1193,7 @@ window.ITINERARY_DATA = {
 
   function renderDays() {
     var visible = ITINERARY.filter(matchesFilter);
+    var visible = ITINERARY.filter(matchesFilter);
     els.dayCount.textContent = visible.length + " jour" + (visible.length > 1 ? "s" : "");
     els.daysGrid.innerHTML = ITINERARY.map(renderDayCard).join("");
 
@@ -1253,6 +1256,21 @@ window.ITINERARY_DATA = {
     els.mapStatus.textContent = message;
     els.mapStatus.className = "map-status" + (isError ? " is-error" : "");
     els.mapStatus.hidden = !message;
+  }
+
+  function waitForLeaflet(callback, attempts) {
+    attempts = attempts || 0;
+    if (typeof L !== "undefined") {
+      callback();
+      return;
+    }
+    if (attempts > 50) {
+      setMapStatus("Carte indisponible (Leaflet non chargé). Le programme reste utilisable ci-dessous.", true);
+      return;
+    }
+    window.setTimeout(function () {
+      waitForLeaflet(callback, attempts + 1);
+    }, 200);
   }
 
   function initMap() {
@@ -1454,15 +1472,23 @@ window.ITINERARY_DATA = {
   }
 
   function boot() {
-    cacheElements();
-    initMeta();
-    renderRhythm();
-    renderFilters();
-    renderDays();
-    renderTips();
-    initDriveToggle();
-    initResetMapButton();
-    initMap();
+    try {
+      cacheElements();
+      initMeta();
+      renderRhythm();
+      renderFilters();
+      renderDays();
+      renderTips();
+      initDriveToggle();
+      initResetMapButton();
+      waitForLeaflet(initMap);
+    } catch (error) {
+      console.error("Erreur initialisation programme:", error);
+      if (els.daysGrid) {
+        els.daysGrid.innerHTML =
+          '<p class="map-status is-error">Erreur de chargement. Rechargez la page (Ctrl+F5).</p>';
+      }
+    }
   }
 
   if (document.readyState === "loading") {
@@ -1472,6 +1498,6 @@ window.ITINERARY_DATA = {
   }
 })();
 
-  </script>
+</script>
 </body>
 </html>
