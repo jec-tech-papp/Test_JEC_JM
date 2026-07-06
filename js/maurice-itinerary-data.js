@@ -131,7 +131,7 @@ window.ITINERARY_DATA = {
         }
       ],
       "driveMinutes": 15,
-      "tips": "Récupérez la voiture à l'aéroport puis rejoignez New Grove. Blue Bay est à 15 min : parfait pour une première mise en jambes."
+      "tips": "Un proche de la famille — sans doute Ben — vous récupère à l'aéroport. Installez-vous à New Grove, puis Blue Bay est à 15 min : parfait pour une première mise en jambes."
     },
     {
       "day": 2,
