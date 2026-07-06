@@ -14,6 +14,7 @@
   var markersLayer = null;
   var routeLayer = null;
   var mapReady = false;
+  var usingFallback = false;
 
   var els = {};
 
@@ -28,6 +29,8 @@
     els.dayCount = $("dayCount");
     els.mapLegend = $("mapLegend");
     els.mapStatus = $("mapStatus");
+    els.tripMap = $("tripMap");
+    els.mapFallback = $("mapFallback");
     els.dayCards = document.querySelectorAll(".day-card");
     els.driveRows = document.querySelectorAll(".drive-row");
   }
@@ -38,6 +41,18 @@
     }
     var cats = (card.getAttribute("data-categories") || "").split(" ");
     return cats.indexOf(state.filter) !== -1;
+  }
+
+  function getVisibleDays() {
+    return ITINERARY.filter(function (day) {
+      if (state.filter !== "all" && day.categories.indexOf(state.filter) === -1) {
+        return false;
+      }
+      if (state.selectedDay !== null && state.selectedDay !== day.day) {
+        return false;
+      }
+      return true;
+    });
   }
 
   function applyFilter() {
@@ -124,43 +139,94 @@
     els.mapStatus.hidden = !message;
   }
 
-  function waitForLeaflet(callback, attempts) {
-    attempts = attempts || 0;
+  function collectMapPoints(days) {
+    var lats = [BASE.lat];
+    var lngs = [BASE.lng];
+    days.forEach(function (day) {
+      day.locations.forEach(function (loc) {
+        if (loc.type !== "base") {
+          lats.push(loc.lat);
+          lngs.push(loc.lng);
+        }
+      });
+    });
+    return { lats: lats, lngs: lngs };
+  }
+
+  function updateFallbackMap() {
+    if (!els.mapFallback) {
+      return;
+    }
+    var days = getVisibleDays();
+    var pts = collectMapPoints(days);
+    var minLat = Math.min.apply(null, pts.lats);
+    var maxLat = Math.max.apply(null, pts.lats);
+    var minLng = Math.min.apply(null, pts.lngs);
+    var maxLng = Math.max.apply(null, pts.lngs);
+    var pad = 0.04;
+    var bbox = [minLng - pad, minLat - pad, maxLng + pad, maxLat + pad].join("%2C");
+    els.mapFallback.src =
+      "https://www.openstreetmap.org/export/embed.html?bbox=" +
+      bbox +
+      "&layer=mapnik&marker=" +
+      BASE.lat +
+      "%2C" +
+      BASE.lng;
+    usingFallback = true;
+    els.mapFallback.classList.remove("is-hidden");
+    if (els.tripMap) {
+      els.tripMap.classList.remove("is-active");
+    }
+    setMapStatus("");
+  }
+
+  function loadLeafletScript(callback, onFail, index) {
+    index = index || 0;
     if (typeof L !== "undefined") {
       callback();
       return;
     }
-    if (attempts > 50) {
-      setMapStatus("Carte indisponible. Le programme reste utilisable.", true);
+    var urls = [
+      "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
+      "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"
+    ];
+    if (index >= urls.length) {
+      onFail();
       return;
     }
-    window.setTimeout(function () {
-      waitForLeaflet(callback, attempts + 1);
-    }, 200);
+    var existing = document.querySelector('script[data-leaflet-src="' + urls[index] + '"]');
+    if (existing) {
+      existing.addEventListener("load", function () {
+        callback();
+      });
+      existing.addEventListener("error", function () {
+        loadLeafletScript(callback, onFail, index + 1);
+      });
+      return;
+    }
+    var script = document.createElement("script");
+    script.src = urls[index];
+    script.setAttribute("data-leaflet-src", urls[index]);
+    script.onload = function () {
+      window.setTimeout(callback, 50);
+    };
+    script.onerror = function () {
+      loadLeafletScript(callback, onFail, index + 1);
+    };
+    document.head.appendChild(script);
   }
 
   function getMarkerColor(type) {
     return { base: "#ffdd8a", plage: "#38bdf8", culture: "#fbbf24", nature: "#4ade80" }[type] || "#fff";
   }
 
-  function getVisibleDays() {
-    return ITINERARY.filter(function (day) {
-      if (state.filter !== "all" && day.categories.indexOf(state.filter) === -1) {
-        return false;
-      }
-      if (state.selectedDay !== null && state.selectedDay !== day.day) {
-        return false;
-      }
-      return true;
-    });
-  }
-
-  function initMap() {
-    if (mapReady || typeof L === "undefined") {
+  function initLeafletMap() {
+    if (mapReady || typeof L === "undefined" || !els.tripMap) {
       return;
     }
     try {
-      map = L.map("tripMap", { scrollWheelZoom: false });
+      map = L.map(els.tripMap, { scrollWheelZoom: false });
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "&copy; OpenStreetMap"
       }).addTo(map);
@@ -175,14 +241,21 @@
         })
       }).addTo(map).bindPopup("<strong>" + BASE.name + "</strong><br>Base du séjour");
       mapReady = true;
-      updateMap();
-      window.setTimeout(function () { map.invalidateSize(); }, 300);
+      usingFallback = false;
+      if (els.mapFallback) {
+        els.mapFallback.classList.add("is-hidden");
+      }
+      els.tripMap.classList.add("is-active");
+      updateLeafletMap();
+      window.setTimeout(function () {
+        map.invalidateSize();
+      }, 300);
     } catch (e) {
-      setMapStatus("Impossible d'afficher la carte.", true);
+      updateFallbackMap();
     }
   }
 
-  function updateMap() {
+  function updateLeafletMap() {
     if (!mapReady || !map) {
       return;
     }
@@ -224,10 +297,35 @@
       map.setView([BASE.lat, BASE.lng], 10);
     }
 
+    renderMapLegend(legendKeys);
+  }
+
+  function renderMapLegend(keys) {
     var labels = { base: "🏠 Base", plage: "🏖️ Plage", culture: "🏛️ Culture", nature: "🌿 Nature" };
-    els.mapLegend.innerHTML = legendKeys.map(function (k) {
-      return '<span class="legend-item">' + (labels[k] || k) + "</span>";
-    }).join("");
+    els.mapLegend.innerHTML = keys
+      .map(function (k) {
+        return '<span class="legend-item">' + (labels[k] || k) + "</span>";
+      })
+      .join("");
+  }
+
+  function updateMap() {
+    var days = getVisibleDays();
+    var legendKeys = ["base"];
+    days.forEach(function (day) {
+      day.locations.forEach(function (loc) {
+        if (loc.type !== "base" && legendKeys.indexOf(loc.type) === -1) {
+          legendKeys.push(loc.type);
+        }
+      });
+    });
+    renderMapLegend(legendKeys);
+
+    if (mapReady) {
+      updateLeafletMap();
+    } else {
+      updateFallbackMap();
+    }
   }
 
   function focusDayOnMap(dayNum) {
@@ -240,16 +338,34 @@
     if (section) {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    var day = ITINERARY.find(function (d) { return d.day === dayNum; });
-    if (!day || !map) {
-      return;
+    if (mapReady && map) {
+      var day = ITINERARY.find(function (d) {
+        return d.day === dayNum;
+      });
+      if (!day) {
+        return;
+      }
+      var points = day.locations.filter(function (l) {
+        return l.type !== "base";
+      });
+      if (points.length) {
+        var b = points.map(function (p) {
+          return [p.lat, p.lng];
+        });
+        b.push([BASE.lat, BASE.lng]);
+        map.fitBounds(b, { padding: [48, 48], maxZoom: 12 });
+      }
     }
-    var points = day.locations.filter(function (l) { return l.type !== "base"; });
-    if (points.length) {
-      var b = points.map(function (p) { return [p.lat, p.lng]; });
-      b.push([BASE.lat, BASE.lng]);
-      map.fitBounds(b, { padding: [48, 48], maxZoom: 12 });
-    }
+  }
+
+  function initMap() {
+    updateFallbackMap();
+    loadLeafletScript(
+      initLeafletMap,
+      function () {
+        setMapStatus("Carte simplifiée (OpenStreetMap). Le programme complet est disponible.", false);
+      }
+    );
   }
 
   function boot() {
@@ -263,12 +379,14 @@
     });
     $("resetMapBtn").addEventListener("click", function () {
       state.selectedDay = null;
-      Array.prototype.forEach.call(els.dayCards, function (c) { c.classList.remove("is-selected"); });
+      Array.prototype.forEach.call(els.dayCards, function (c) {
+        c.classList.remove("is-selected");
+      });
       updateMap();
     });
     applyFilter();
     applyDriveToggle();
-    waitForLeaflet(initMap);
+    initMap();
   }
 
   if (document.readyState === "loading") {

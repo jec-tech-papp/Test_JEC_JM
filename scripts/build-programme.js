@@ -147,7 +147,10 @@ const html = `<!doctype html>
             <h2 class="section-title" style="margin:0">🗺️ Carte</h2>
             <button type="button" class="btn-ghost" id="resetMapBtn">Tout afficher</button>
           </div>
-          <div id="tripMap"></div>
+          <div class="map-wrap">
+            <div id="tripMap" class="map-leaflet"></div>
+            <iframe id="mapFallback" class="map-fallback" title="Carte île Maurice" loading="lazy"></iframe>
+          </div>
           <p class="map-status" id="mapStatus" hidden></p>
           <div id="mapLegend"></div>
         </div>
