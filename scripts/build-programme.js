@@ -161,7 +161,6 @@ const html = `<!doctype html>
       <div id="tipsGrid" class="tips-grid">${renderTips()}</div>
     </section>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"><\/script>
   <script>${dataJs}<\/script>
   <script>${appJs}<\/script>
 </body>
