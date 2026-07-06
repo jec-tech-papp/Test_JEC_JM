@@ -24,7 +24,7 @@ function photoList(entries) {
 const dayPhotos = {
   1: photoList([["blueBay", "Blue Bay — photo Google Maps"]]),
   2: photoList([["grisGris", "Gris Gris — falaises du sud"], ["riambel", "Plage de Riambel"]]),
-  3: photoList([["mahebourg", "Mahébourg — port et marché"], ["blueBay", "Blue Bay"]]),
+  3: photoList([["mahebourg", "Mahébourg — port et vieux quartier"], ["mahebourgCemetery", "Cimetière de Mahébourg — bord de mer"], ["blueBay", "Blue Bay"]]),
   4: photoList([["pointeEsny", "Pointe d'Esny — plage calme"]]),
   5: photoList([["trouEauDouce", "Trou d'Eau Douce — départ bateau"], ["ileAuxCerfs", "Île aux Cerfs"]]),
   6: photoList([["grandBassin", "Grand Bassin — lac sacré"], ["boisCheri", "Bois Chéri — plantation de thé"]]),
@@ -34,7 +34,7 @@ const dayPhotos = {
   10: photoList([["flicEnFlac", "Flic en Flac — plage de l'ouest"]]),
   11: photoList([["portLouis", "Port-Louis — marché central"]]),
   12: photoList([["pamplemousses", "Jardin de Pamplemousses"], ["montChoisy", "Mont Choisy — plage familiale"]]),
-  13: photoList([["grandBaie", "Grand Baie — lagon du nord"], ["pereybere", "Pereybère — baignade tranquille"]]),
+  13: photoList([["laVanille", "La Vanille Nature Park"], ["rochesterFalls", "Rochester Falls — baignade"], ["grisGris", "Gris Gris — côte sud sauvage"]]),
   14: photoList([["blueBay", "Blue Bay — une dernière baignade ?"]])
 };
 

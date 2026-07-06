@@ -206,9 +206,14 @@ window.ITINERARY_DATA = {
         "culture",
         "plage"
       ],
+      "summary": "Marché, musée naval, cimetière de Mahébourg et balade dans le vieux quartier, puis Blue Bay l'après-midi.",
       "activities": [
         "Marché de Mahébourg (ambiance locale, fruits, épices)",
         "Musée naval de Mahébourg — histoire maritime mauricienne",
+        {
+          "text": "Cimetière de Mahébourg — promenade au bord de l'eau, tombeaux historiques face au lagon",
+          "link": "https://www.google.com/maps/search/?api=1&query=Marine+Cemetery+Mahebourg+Mauritius"
+        },
         "Balade dans le vieux quartier et café face au port"
       ],
       "beach": "Retour à Blue Bay pour snorkeling ou farniente",
@@ -226,6 +231,12 @@ window.ITINERARY_DATA = {
           "type": "culture"
         },
         {
+          "name": "Cimetière de Mahébourg",
+          "lat": -20.4078,
+          "lng": 57.7058,
+          "type": "culture"
+        },
+        {
           "name": "Blue Bay",
           "lat": -20.4442,
           "lng": 57.7189,
@@ -233,12 +244,24 @@ window.ITINERARY_DATA = {
         }
       ],
       "driveMinutes": 10,
-      "tips": "Le marché est animé le lundi matin. Le musée est accessible et peu exigeant physiquement.",
+      "tips": "Le marché est animé le lundi matin. Le cimetière de Mahébourg (cimetière marin) est une promenade calme face au lagon, à deux pas du musée naval.",
+      "links": [
+        {
+          "label": "Cimetière de Mahébourg",
+          "url": "https://www.google.com/maps/search/?api=1&query=Marine+Cemetery+Mahebourg+Mauritius",
+          "description": "Cimetière marin — vue sur le lagon et l'histoire locale"
+        }
+      ],
       "photos": [
         {
           "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHJ5ketiVNSAUAIkfUvEMCNQQtuv-RjRJXC_JFTcSgtVABgCs_4PPx7dx8cUqwZsfEUwMFLmGyu76sELNtUUJ-P5LSZ4a9Y14KB1wu7mjGPYb2U2NL8gG6EpHsZhzKlXG0K9_Qg=w800-h500-k-no",
-          "caption": "Mahébourg — port et marché",
+          "caption": "Mahébourg — port et vieux quartier",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mahebourg+Mauritius"
+        },
+        {
+          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHJ5ketiVNSAUAIkfUvEMCNQQtuv-RjRJXC_JFTcSgtVABgCs_4PPx7dx8cUqwZsfEUwMFLmGyu76sELNtUUJ-P5LSZ4a9Y14KB1wu7mjGPYb2U2NL8gG6EpHsZhzKlXG0K9_Qg=w800-h500-k-no",
+          "caption": "Cimetière de Mahébourg — bord de mer",
+          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Marine+Cemetery+Mahebourg+Mauritius"
         },
         {
           "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHykWfI-KNqS3z8eGghvVTDa4K2jpI0-WAmyzf2ZmeVFsoZY48yS3b-lEqCJlyirppPl5DFpkqCGfbQk8rbev1fOkf016h7xhqyvi3CnSpmTQXdHCd5IYj7fbdInK-dKCkTIfvq=w800-h500-k-no",
