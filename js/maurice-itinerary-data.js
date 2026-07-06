@@ -199,7 +199,7 @@ window.ITINERARY_DATA = {
     {
       "day": 3,
       "date": "Dimanche 9 novembre 2026",
-      "title": "Mahébourg & marché",
+      "title": "Mahébourg, cimetière marin & marché",
       "rhythm": "actif",
       "effort": "facile",
       "categories": [
