@@ -3,312 +3,605 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Programme 14 jours — &Icirc;le Maurice</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <title>Programme 14 jours — Île Maurice</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"] },
-          colors: {
-            lagoon: { 300: "#67e8f9", 500: "#0e7490", 900: "#031b2f" },
-            sand: { 200: "#ffdd8a", 300: "#ffd166" }
-          }
-        }
-      }
-    };
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
+    :root {
+      --bg-deep: #031b2f;
+      --bg-mid: #075985;
+      --bg-light: #0e7490;
+      --text: #ffffff;
+      --text-soft: rgba(255, 255, 255, 0.82);
+      --text-muted: rgba(255, 255, 255, 0.62);
+      --accent: #ffdd8a;
+      --accent-strong: #ffd166;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --card-border: rgba(255, 255, 255, 0.22);
+      --radius: 1rem;
+      --radius-lg: 1.35rem;
+      --shadow: 0 1rem 2.5rem rgba(2, 8, 23, 0.28);
+      --content-width: 42rem;
+      --page-width: 52rem;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--text);
       background:
-        radial-gradient(circle at 18% 16%, rgba(255, 209, 102, 0.55), transparent 18rem),
-        radial-gradient(circle at 82% 18%, rgba(103, 232, 249, 0.45), transparent 23rem),
-        linear-gradient(135deg, #031b2f, #075985 52%, #0e7490);
+        radial-gradient(circle at 15% 12%, rgba(255, 209, 102, 0.35), transparent 16rem),
+        radial-gradient(circle at 85% 10%, rgba(103, 232, 249, 0.28), transparent 18rem),
+        linear-gradient(160deg, var(--bg-deep), var(--bg-mid) 55%, var(--bg-light));
       min-height: 100vh;
     }
 
-    .glass {
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      background: linear-gradient(145deg, rgba(255,255,255,.2), rgba(255,255,255,.08));
-      backdrop-filter: blur(20px);
-      box-shadow: 0 1.5rem 4rem rgba(2, 8, 23, 0.28);
+    a { color: inherit; text-decoration: none; }
+
+    .back-link {
+      position: fixed;
+      top: 0.85rem;
+      left: 0.85rem;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.55rem 0.9rem;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      background: rgba(3, 27, 47, 0.72);
+      backdrop-filter: blur(10px);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-soft);
+    }
+
+    .page {
+      width: min(100%, var(--page-width));
+      margin: 0 auto;
+      padding: 4.5rem 1rem 3rem;
+    }
+
+    .panel {
+      margin-bottom: 1.25rem;
+      padding: 1.15rem;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero { text-align: center; padding: 1.5rem 1.15rem; }
+
+    .hero-kicker {
+      display: inline-block;
+      margin: 0 0 0.75rem;
+      padding: 0.35rem 0.8rem;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .hero h1 {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.65rem, 5vw, 2.35rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .hero-sub {
+      margin: 0 auto 1rem;
+      max-width: 34rem;
+      color: var(--text-soft);
+      font-size: 0.98rem;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .chip {
+      padding: 0.4rem 0.7rem;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-soft);
+      white-space: nowrap;
+    }
+
+    .section-title {
+      margin: 0 0 0.85rem;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .section-kicker {
+      margin: 0 0 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .rhythm-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0.4rem;
+    }
+
+    .rhythm-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+      padding: 0.45rem 0.2rem;
+      border: 1px solid var(--card-border);
+      border-radius: 0.65rem;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .rhythm-chip:hover { background: rgba(255, 255, 255, 0.16); transform: translateY(-1px); }
+    .rhythm-chip-day { font-size: 0.72rem; font-weight: 800; }
+    .rhythm-chip-icon { font-size: 0.95rem; line-height: 1; }
+    .rhythm-actif { border-color: rgba(255, 209, 102, 0.45); }
+    .rhythm-chill { border-color: rgba(74, 222, 128, 0.4); }
+
+    .toolbar-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .day-count {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    #filterBar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 0.85rem;
     }
 
     .filter-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.55rem 0.9rem;
-      border: 1px solid rgba(255,255,255,.22);
+      gap: 0.35rem;
+      padding: 0.5rem 0.8rem;
+      border: 1px solid var(--card-border);
       border-radius: 999px;
-      color: rgba(255,255,255,.88);
-      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-soft);
+      font: inherit;
+      font-size: 0.82rem;
       font-weight: 700;
-      background: rgba(255,255,255,.1);
-      cursor: pointer;
-      transition: all .18s ease;
-    }
-
-    .filter-btn:hover, .filter-btn.is-active {
-      border-color: rgba(255,255,255,.5);
-      background: rgba(255,255,255,.22);
-      transform: translateY(-1px);
-    }
-
-    .filter-btn.is-active { color: #031b2f; background: linear-gradient(135deg, #ffd166, #fff3c4); }
-
-    .day-card {
-      border: 1px solid rgba(255,255,255,.24);
-      border-radius: 1.25rem;
-      background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.07));
-      backdrop-filter: blur(16px);
-      padding: 1.25rem;
-      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
       cursor: pointer;
     }
 
-    .day-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.42); }
-    .day-card.is-selected { border-color: #ffd166; box-shadow: 0 0 0 2px rgba(255,209,102,.35); }
-    .day-card.hidden { display: none; }
-
-    .day-card-header {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: .75rem;
+    .filter-btn.is-active {
+      color: var(--bg-deep);
+      background: linear-gradient(135deg, var(--accent-strong), #fff3c4);
+      border-color: transparent;
     }
-
-    .day-number {
-      color: #ffdd8a;
-      font-size: .75rem;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      margin: 0 0 .25rem;
-    }
-
-    .day-heading h2 {
-      margin: 0;
-      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
-      font-weight: 800;
-      letter-spacing: -.03em;
-      color: #fff;
-    }
-
-    .day-date { margin: .35rem 0 0; color: rgba(255,255,255,.68); font-size: .88rem; }
-
-    .day-badges { display: flex; flex-wrap: wrap; gap: .45rem; }
-
-    .rhythm-badge, .effort-badge {
-      padding: .35rem .65rem;
-      border-radius: 999px;
-      font-size: .75rem;
-      font-weight: 800;
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.2);
-      color: #fff;
-    }
-
-    .effort-badge { border-color: var(--effort-color, #4ade80); color: var(--effort-color, #4ade80); }
-
-    .cat-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .85rem; }
-
-    .cat-badge {
-      padding: .3rem .6rem;
-      border-radius: 999px;
-      font-size: .72rem;
-      font-weight: 700;
-      color: var(--cat-color);
-      border: 1px solid color-mix(in srgb, var(--cat-color) 50%, transparent);
-      background: color-mix(in srgb, var(--cat-color) 14%, transparent);
-    }
-
-    .day-section { margin-bottom: .85rem; }
-    .day-section h3 { margin: 0 0 .45rem; font-size: .82rem; font-weight: 800; color: #ffdd8a; letter-spacing: .06em; text-transform: uppercase; }
-    .day-section ul { margin: 0; padding-left: 1.1rem; color: rgba(255,255,255,.88); line-height: 1.6; }
-    .day-section p { margin: 0; color: rgba(255,255,255,.86); line-height: 1.6; }
-
-    .beach-section {
-      padding: .75rem;
-      border-radius: .75rem;
-      background: rgba(56, 189, 248, .12);
-      border: 1px solid rgba(56, 189, 248, .25);
-    }
-
-    .tips-section {
-      padding: .75rem;
-      border-radius: .75rem;
-      background: rgba(255, 221, 138, .1);
-      border: 1px solid rgba(255, 221, 138, .22);
-    }
-
-    .drive-time {
-      display: flex;
-      align-items: center;
-      gap: .4rem;
-      margin: 0 0 .85rem;
-      padding: .6rem .75rem;
-      border-radius: .65rem;
-      font-size: .88rem;
-      color: rgba(255,255,255,.82);
-      background: rgba(3,27,47,.25);
-      border: 1px solid rgba(255,255,255,.14);
-    }
-
-    .map-focus-btn {
-      width: 100%;
-      padding: .65rem;
-      border: 1px solid rgba(255,255,255,.24);
-      border-radius: .65rem;
-      color: #fff;
-      font-weight: 700;
-      font-size: .85rem;
-      background: rgba(255,255,255,.1);
-      cursor: pointer;
-      transition: background .15s ease;
-    }
-
-    .map-focus-btn:hover { background: rgba(255,255,255,.2); }
-
-    #tripMap { height: clamp(16rem, 45vw, 24rem); border-radius: 1rem; z-index: 0; }
-
-    .marker-pin {
-      display: grid;
-      place-items: center;
-      width: 1.75rem;
-      height: 1.75rem;
-      border-radius: 999px;
-      border: 2px solid #fff;
-      color: #031b2f;
-      font-size: .62rem;
-      font-weight: 900;
-      box-shadow: 0 .35rem .8rem rgba(0,0,0,.3);
-    }
-
-    .marker-pin.base { width: 2rem; height: 2rem; font-size: .9rem; background: #ffdd8a; }
-
-    .legend-item {
-      display: inline-flex;
-      padding: .3rem .55rem;
-      border-radius: 999px;
-      font-size: .75rem;
-      font-weight: 700;
-      color: rgba(255,255,255,.85);
-      background: rgba(255,255,255,.1);
-      border: 1px solid rgba(255,255,255,.18);
-    }
-
-    .tip-card {
-      padding: 1rem;
-      border-radius: 1rem;
-      border: 1px solid rgba(255,255,255,.2);
-      background: rgba(255,255,255,.1);
-    }
-
-    .tip-icon { font-size: 1.5rem; display: block; margin-bottom: .5rem; }
-    .tip-card h3 { margin: 0 0 .35rem; font-size: .95rem; font-weight: 800; color: #ffdd8a; }
-    .tip-card p { margin: 0; font-size: .88rem; line-height: 1.55; color: rgba(255,255,255,.82); }
 
     .toggle-row {
       display: flex;
       align-items: center;
-      gap: .65rem;
-      color: rgba(255,255,255,.85);
-      font-size: .88rem;
-      font-weight: 600;
+      gap: 0.55rem;
+      font-size: 0.88rem;
+      color: var(--text-soft);
     }
 
-    .toggle-row input { width: 1.1rem; height: 1.1rem; accent-color: #ffd166; }
+    .toggle-row input { width: 1rem; height: 1rem; accent-color: var(--accent-strong); }
+
+    .days-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: var(--content-width);
+      margin: 0 auto;
+    }
+
+    .day-card {
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .day-card.is-hidden { display: none; }
+    .day-card.is-selected {
+      border-color: var(--accent-strong);
+      box-shadow: 0 0 0 2px rgba(255, 209, 102, 0.28);
+    }
+
+    .day-card-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 1rem 1rem 0.65rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(3, 27, 47, 0.22);
+    }
+
+    .day-kicker {
+      margin: 0 0 0.2rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .day-title-block h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      max-width: 22rem;
+    }
+
+    .day-date {
+      margin: 0.3rem 0 0;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .day-meta-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      justify-content: flex-end;
+    }
+
+    .meta-badge {
+      padding: 0.3rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.08);
+      white-space: nowrap;
+    }
+
+    .meta-badge.rhythm-actif { color: #fde68a; border-color: rgba(253, 230, 138, 0.45); }
+    .meta-badge.rhythm-chill { color: #86efac; border-color: rgba(134, 239, 172, 0.4); }
+    .meta-badge.effort-facile { color: #86efac; }
+    .meta-badge.effort-modere { color: #fde68a; }
+
+    .cat-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      padding: 0.65rem 1rem 0;
+    }
+
+    .cat-badge {
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .cat-plage { color: #7dd3fc; }
+    .cat-culture { color: #fde68a; }
+    .cat-nature { color: #86efac; }
+    .cat-repos { color: #c4b5fd; }
+
+    .day-card-body { padding: 0.85rem 1rem; }
+
+    .day-block { margin-bottom: 0.85rem; }
+    .day-block:last-child { margin-bottom: 0; }
+
+    .day-block h3 {
+      margin: 0 0 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .activity-list {
+      margin: 0;
+      padding-left: 1.15rem;
+      color: var(--text-soft);
+    }
+
+    .activity-list li { margin-bottom: 0.35rem; }
+    .activity-list li:last-child { margin-bottom: 0; }
+
+    .day-block p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 0.94rem;
+    }
+
+    .highlight-beach {
+      padding: 0.7rem 0.8rem;
+      border-radius: 0.7rem;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+    }
+
+    .highlight-tip {
+      padding: 0.7rem 0.8rem;
+      border-radius: 0.7rem;
+      background: rgba(255, 221, 138, 0.1);
+      border: 1px solid rgba(255, 221, 138, 0.24);
+    }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      padding: 0.7rem 0.8rem;
+      border-radius: 0.7rem;
+      background: rgba(3, 27, 47, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    .info-row strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.82rem;
+    }
+
+    .info-row span { color: var(--text-muted); font-size: 0.84rem; }
+
+    .day-card-footer {
+      padding: 0 1rem 1rem;
+    }
+
+    .map-focus-btn {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--card-border);
+      border-radius: 0.65rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .map-focus-btn:hover { background: rgba(255, 255, 255, 0.18); }
+
+    .map-panel-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .btn-ghost {
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.16); }
+
+    #tripMap {
+      width: 100%;
+      height: 280px;
+      min-height: 220px;
+      border-radius: var(--radius);
+      border: 1px solid var(--card-border);
+      background: #0a3d56;
+      overflow: hidden;
+    }
+
+    .map-status {
+      margin: 0.5rem 0 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .map-status.is-error { color: #fca5a5; }
+
+    #mapLegend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.65rem;
+    }
+
+    .legend-item {
+      padding: 0.28rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-soft);
+    }
+
+    .marker-pin {
+      display: grid;
+      place-items: center;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 999px;
+      border: 2px solid #fff;
+      color: #031b2f;
+      font-size: 0.58rem;
+      font-weight: 900;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    .marker-pin.base {
+      width: 1.9rem;
+      height: 1.9rem;
+      font-size: 0.85rem;
+      background: #ffdd8a;
+    }
+
+    .leaflet-container { font-family: inherit; background: #0a3d56; }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .tip-card {
+      padding: 0.9rem;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .tip-icon { font-size: 1.35rem; display: block; margin-bottom: 0.35rem; }
+
+    .tip-card h3 {
+      margin: 0 0 0.3rem;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .tip-card p {
+      margin: 0;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+
+    @media (max-width: 640px) {
+      .page { padding-top: 4rem; }
+      .back-link { left: 0.5rem; top: 0.5rem; font-size: 0.78rem; }
+      .rhythm-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.25rem; }
+      .rhythm-chip { padding: 0.35rem 0.1rem; }
+      .rhythm-chip-day { font-size: 0.62rem; }
+      .day-card-top { flex-direction: column; }
+      .day-meta-badges { justify-content: flex-start; }
+      #tripMap { height: 240px; }
+    }
+
+    @media (min-width: 900px) {
+      .layout-with-map {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .map-sticky {
+        position: sticky;
+        top: 1rem;
+      }
+
+      #tripMap { height: 320px; }
+    }
   </style>
 </head>
-<body class="text-white font-sans">
-  <a href="index.html" class="fixed left-4 top-4 z-50 inline-flex items-center gap-2 rounded-full border border-white/25 bg-lagoon-900/40 px-4 py-2 text-sm font-bold text-white/90 backdrop-blur-md transition hover:bg-white/15">
-    &larr; Compte &agrave; rebours
-  </a>
+<body>
+  <a class="back-link" href="index.html">&larr; Compte à rebours</a>
 
-  <div class="mx-auto max-w-6xl px-4 pb-16 pt-20">
-    <!-- Hero -->
-    <header class="glass mb-8 rounded-3xl p-6 md:p-8 text-center">
-      <p class="mb-3 inline-block rounded-full border border-white/25 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-widest text-sand-200">
-        &#127796; Itin&eacute;raire d&eacute;taill&eacute;
-      </p>
-      <h1 class="mb-3 text-3xl font-black tracking-tight md:text-5xl" id="tripTitle">Île Maurice — 14 jours</h1>
-      <p class="mx-auto mb-6 max-w-2xl text-white/75 leading-relaxed" id="tripDates">
-        Du 7 au 21 novembre 2026 &middot; Base &agrave; New Grove &middot; 6 adultes
-      </p>
-      <div class="flex flex-wrap justify-center gap-3 text-sm">
-        <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 font-semibold">&#9992;&#65039; Arriv&eacute;e 7 nov (matin)</span>
-        <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 font-semibold">&#127968; New Grove</span>
-        <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 font-semibold">&#128663; Voiture</span>
-        <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 font-semibold">&#129461; Genoux sensibles</span>
-        <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 font-semibold">&#127796; D&eacute;part 21 nov (soir)</span>
+  <main class="page">
+    <header class="panel hero">
+      <p class="hero-kicker">🌴 Itinéraire détaillé</p>
+      <h1 id="tripTitle">Île Maurice — 14 jours</h1>
+      <p class="hero-sub" id="tripDates">Du 7 au 21 novembre 2026 · Base à New Grove · 6 adultes</p>
+      <div class="chip-row">
+        <span class="chip">✈️ Arrivée 7 nov</span>
+        <span class="chip">🏠 New Grove</span>
+        <span class="chip">🚗 Voiture</span>
+        <span class="chip">🦵 Genoux sensibles</span>
+        <span class="chip">🌴 Départ 21 nov</span>
       </div>
     </header>
 
-    <!-- Rhythm overview -->
-    <section class="glass mb-8 rounded-2xl p-5" aria-label="Rythme du voyage">
-      <h2 class="mb-3 text-sm font-extrabold uppercase tracking-widest text-sand-200">Alternance actif / chill</h2>
-      <div class="flex flex-wrap gap-2 text-xs font-bold">
-        <span class="rounded-lg bg-white/15 px-2 py-1">J1 &#127796; chill</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J2 &#128663; actif</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J3 &#128663; actif</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J4 &#127796; chill</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J5 &#128663; actif</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J6 &#128663; actif</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J7 &#127796; chill</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J8 &#128663; actif</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J9 &#128663; actif</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J10 &#127796; chill</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J11 &#128663; actif</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J12 &#128663; actif</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J13 &#128663; actif</span>
-        <span class="rounded-lg bg-white/15 px-2 py-1">J14 &#127796; chill</span>
-      </div>
+    <section class="panel" aria-label="Rythme du voyage">
+      <p class="section-kicker">Vue d'ensemble</p>
+      <h2 class="section-title">Alternance actif / chill</h2>
+      <div class="rhythm-grid" id="rhythmGrid"></div>
     </section>
 
-    <!-- Filters & controls -->
-    <section class="glass mb-6 rounded-2xl p-5">
-      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 class="text-lg font-extrabold">Filtrer par activit&eacute;</h2>
-        <span id="dayCount" class="text-sm font-bold text-white/70">14 jours</span>
+    <section class="panel" aria-label="Filtres">
+      <div class="toolbar-head">
+        <h2 class="section-title" style="margin:0">Filtrer par activité</h2>
+        <span class="day-count" id="dayCount">14 jours</span>
       </div>
-      <div id="filterBar" class="mb-4 flex flex-wrap gap-2" role="toolbar" aria-label="Filtres d'activité"></div>
+      <div id="filterBar" role="toolbar" aria-label="Filtres d'activité"></div>
       <label class="toggle-row">
         <input type="checkbox" id="driveToggle" checked>
-        <span>&#128663; Temps de trajet depuis New Grove : <strong id="driveToggleLabel">Masquer</strong></span>
+        <span>Temps de trajet depuis New Grove : <strong id="driveToggleLabel">affichés</strong></span>
       </label>
     </section>
 
-    <!-- Map -->
-    <section class="glass mb-8 rounded-2xl p-5">
-      <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
-        <h2 class="text-lg font-extrabold">&#128506;&#65039; Carte du circuit</h2>
-        <button type="button" id="resetMapBtn" class="rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-bold hover:bg-white/20">
-          Tout afficher
-        </button>
-      </div>
-      <div id="tripMap" class="mb-3 border border-white/20" aria-label="Carte interactive des lieux visités"></div>
-      <div id="mapLegend" class="flex flex-wrap gap-2"></div>
-    </section>
+    <div class="layout-with-map">
+      <section aria-label="Programme jour par jour">
+        <h2 class="section-title">📅 Programme jour par jour</h2>
+        <div id="daysGrid" class="days-list"></div>
+      </section>
 
-    <!-- Days grid -->
-    <section aria-label="Programme jour par jour">
-      <h2 class="mb-4 text-xl font-extrabold">&#128197; Programme jour par jour</h2>
-      <div id="daysGrid" class="grid gap-5 md:grid-cols-2"></div>
-    </section>
+      <aside class="map-sticky" id="mapSection" aria-label="Carte du circuit">
+        <div class="panel" style="margin-bottom:0">
+          <div class="map-panel-head">
+            <h2 class="section-title" style="margin:0">🗺️ Carte</h2>
+            <button type="button" class="btn-ghost" id="resetMapBtn">Tout afficher</button>
+          </div>
+          <div id="tripMap"></div>
+          <p class="map-status" id="mapStatus" hidden>Chargement de la carte…</p>
+          <div id="mapLegend"></div>
+        </div>
+      </aside>
+    </div>
 
-    <!-- Practical tips -->
-    <section class="mt-10" aria-label="Conseils pratiques">
-      <h2 class="mb-4 text-xl font-extrabold">&#128161; Conseils pratiques</h2>
-      <div id="tipsGrid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+    <section class="panel" style="margin-top:1.25rem" aria-label="Conseils pratiques">
+      <h2 class="section-title">💡 Conseils pratiques</h2>
+      <div id="tipsGrid" class="tips-grid"></div>
     </section>
-  </div>
+  </main>
 
   <script>
 window.ITINERARY_DATA = {
@@ -694,16 +987,21 @@ window.ITINERARY_DATA = {
   var map = null;
   var markersLayer = null;
   var routeLayer = null;
+  var mapReady = false;
 
-  var els = {
-    daysGrid: document.getElementById("daysGrid"),
-    filterBar: document.getElementById("filterBar"),
-    driveToggle: document.getElementById("driveToggle"),
-    driveToggleLabel: document.getElementById("driveToggleLabel"),
-    dayCount: document.getElementById("dayCount"),
-    tipsGrid: document.getElementById("tipsGrid"),
-    mapLegend: document.getElementById("mapLegend")
-  };
+  var els = {};
+
+  function cacheElements() {
+    els.daysGrid = document.getElementById("daysGrid");
+    els.filterBar = document.getElementById("filterBar");
+    els.driveToggle = document.getElementById("driveToggle");
+    els.driveToggleLabel = document.getElementById("driveToggleLabel");
+    els.dayCount = document.getElementById("dayCount");
+    els.tipsGrid = document.getElementById("tipsGrid");
+    els.mapLegend = document.getElementById("mapLegend");
+    els.mapStatus = document.getElementById("mapStatus");
+    els.rhythmGrid = document.getElementById("rhythmGrid");
+  }
 
   function formatDriveTime(minutes) {
     if (minutes < 60) {
@@ -715,10 +1013,47 @@ window.ITINERARY_DATA = {
   }
 
   function matchesFilter(day) {
-    if (state.filter === "all") {
-      return true;
+    return state.filter === "all" || day.categories.indexOf(state.filter) !== -1;
+  }
+
+  function renderRhythm() {
+    if (!els.rhythmGrid) {
+      return;
     }
-    return day.categories.indexOf(state.filter) !== -1;
+    els.rhythmGrid.innerHTML = ITINERARY.map(function (day) {
+      var rhythm = RHYTHM_META[day.rhythm];
+      return (
+        '<button type="button" class="rhythm-chip rhythm-' +
+        day.rhythm +
+        '" data-goto-day="' +
+        day.day +
+        '" title="Jour ' +
+        day.day +
+        " : " +
+        day.title +
+        '">' +
+        '<span class="rhythm-chip-day">J' +
+        day.day +
+        "</span>" +
+        '<span class="rhythm-chip-icon" aria-hidden="true">' +
+        rhythm.icon +
+        "</span>" +
+        "</button>"
+      );
+    }).join("");
+
+    Array.prototype.forEach.call(els.rhythmGrid.querySelectorAll(".rhythm-chip"), function (chip) {
+      chip.addEventListener("click", function () {
+        var dayNum = Number(chip.dataset.gotoDay);
+        var target = document.getElementById("day-" + dayNum);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          state.selectedDay = dayNum;
+          renderDays();
+          updateMap();
+        }
+      });
+    });
   }
 
   function renderFilters() {
@@ -732,10 +1067,12 @@ window.ITINERARY_DATA = {
         '" aria-pressed="' +
         active +
         '">' +
-        '<span aria-hidden="true">' +
+        '<span class="filter-icon" aria-hidden="true">' +
         filter.icon +
-        "</span> " +
+        "</span>" +
+        "<span>" +
         filter.label +
+        "</span>" +
         "</button>"
       );
     }).join("");
@@ -755,8 +1092,8 @@ window.ITINERARY_DATA = {
       .map(function (cat) {
         var meta = CATEGORY_META[cat];
         return (
-          '<span class="cat-badge" style="--cat-color:' +
-          meta.color +
+          '<span class="cat-badge cat-' +
+          cat +
           '">' +
           meta.icon +
           " " +
@@ -770,13 +1107,13 @@ window.ITINERARY_DATA = {
   function renderDayCard(day) {
     var rhythm = RHYTHM_META[day.rhythm];
     var effort = EFFORT_META[day.effort];
-    var hidden = matchesFilter(day) ? "" : " hidden";
+    var hidden = matchesFilter(day) ? "" : " is-hidden";
     var selected = state.selectedDay === day.day ? " is-selected" : "";
 
     var driveBlock = state.showDriveTimes
-      ? '<p class="drive-time"><span>🚗</span> Depuis New Grove : <strong>' +
+      ? '<div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>' +
         formatDriveTime(day.driveMinutes) +
-        "</strong> (aller simple)</p>"
+        " aller simple</span></div></div>"
       : "";
 
     return (
@@ -788,39 +1125,40 @@ window.ITINERARY_DATA = {
       '" id="day-' +
       day.day +
       '">' +
-      '<div class="day-card-header">' +
-      '<div class="day-heading">' +
-      '<p class="day-number">Jour ' +
+      '<header class="day-card-top">' +
+      '<div class="day-title-block">' +
+      '<p class="day-kicker">Jour ' +
       day.day +
       "</p>" +
-      "<h2>Jour " +
-      day.day +
-      " – " +
+      "<h2>" +
       day.title +
       "</h2>" +
       '<p class="day-date">' +
       day.date +
       "</p>" +
       "</div>" +
-      '<div class="day-badges">' +
-      '<span class="rhythm-badge">' +
+      '<div class="day-meta-badges">' +
+      '<span class="meta-badge rhythm-' +
+      day.rhythm +
+      '">' +
       rhythm.icon +
       " " +
       rhythm.label +
       "</span>" +
-      '<span class="effort-badge" style="--effort-color:' +
-      effort.color +
+      '<span class="meta-badge effort-' +
+      (day.effort === "modéré" ? "modere" : day.effort) +
       '">' +
       effort.label +
       "</span>" +
       "</div>" +
-      "</div>" +
+      "</header>" +
       '<div class="cat-badges">' +
       renderCategoryBadges(day.categories) +
       "</div>" +
-      '<section class="day-section">' +
-      "<h3>🎯 Activités principales</h3>" +
-      "<ul>" +
+      '<div class="day-card-body">' +
+      '<section class="day-block">' +
+      "<h3>Activités</h3>" +
+      "<ul class="activity-list">" +
       day.activities
         .map(function (activity) {
           return "<li>" + activity + "</li>";
@@ -828,22 +1166,25 @@ window.ITINERARY_DATA = {
         .join("") +
       "</ul>" +
       "</section>" +
-      '<section class="day-section beach-section">' +
-      "<h3>🏖️ Plage du jour</h3>" +
+      '<section class="day-block highlight-beach">' +
+      "<h3>Plage du jour</h3>" +
       "<p>" +
       day.beach +
       "</p>" +
       "</section>" +
       driveBlock +
-      '<section class="day-section tips-section">' +
-      "<h3>💡 Conseil du jour</h3>" +
+      '<section class="day-block highlight-tip">' +
+      "<h3>Conseil</h3>" +
       "<p>" +
       day.tips +
       "</p>" +
       "</section>" +
+      "</div>" +
+      '<footer class="day-card-footer">' +
       '<button type="button" class="map-focus-btn" data-focus-day="' +
       day.day +
-      '">📍 Voir sur la carte</button>' +
+      '">Voir sur la carte</button>' +
+      "</footer>" +
       "</article>"
     );
   }
@@ -860,7 +1201,7 @@ window.ITINERARY_DATA = {
       });
     });
 
-    Array.prototype.forEach.call(els.daysGrid.querySelectorAll(".day-card:not(.hidden)"), function (card) {
+    Array.prototype.forEach.call(els.daysGrid.querySelectorAll(".day-card:not(.is-hidden)"), function (card) {
       card.addEventListener("click", function (event) {
         if (event.target.closest(".map-focus-btn")) {
           return;
@@ -905,31 +1246,66 @@ window.ITINERARY_DATA = {
     return colors[type] || "#ffffff";
   }
 
+  function setMapStatus(message, isError) {
+    if (!els.mapStatus) {
+      return;
+    }
+    els.mapStatus.textContent = message;
+    els.mapStatus.className = "map-status" + (isError ? " is-error" : "");
+    els.mapStatus.hidden = !message;
+  }
+
   function initMap() {
-    map = L.map("tripMap", { scrollWheelZoom: false });
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap"
-    }).addTo(map);
+    if (mapReady || typeof L === "undefined") {
+      setMapStatus(
+        typeof L === "undefined"
+          ? "Carte indisponible (connexion requise pour charger Leaflet)."
+          : "",
+        typeof L === "undefined"
+      );
+      return;
+    }
 
-    markersLayer = L.layerGroup().addTo(map);
-    routeLayer = L.layerGroup().addTo(map);
+    try {
+      map = L.map("tripMap", {
+        scrollWheelZoom: false,
+        attributionControl: true
+      });
 
-    var baseIcon = L.divIcon({
-      className: "base-marker",
-      html: '<div class="marker-pin base">🏠</div>',
-      iconSize: [32, 32],
-      iconAnchor: [16, 16]
-    });
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap"
+      }).addTo(map);
 
-    L.marker([BASE.lat, BASE.lng], { icon: baseIcon })
-      .addTo(map)
-      .bindPopup("<strong>" + BASE.name + "</strong><br>Base du séjour");
+      markersLayer = L.layerGroup().addTo(map);
+      routeLayer = L.layerGroup().addTo(map);
 
-    updateMap();
+      var baseIcon = L.divIcon({
+        className: "leaflet-marker-base",
+        html: '<div class="marker-pin base">🏠</div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+
+      L.marker([BASE.lat, BASE.lng], { icon: baseIcon })
+        .addTo(map)
+        .bindPopup("<strong>" + BASE.name + "</strong><br>Base du séjour");
+
+      mapReady = true;
+      setMapStatus("");
+      updateMap();
+      window.setTimeout(function () {
+        map.invalidateSize();
+      }, 200);
+      window.setTimeout(function () {
+        map.invalidateSize();
+      }, 800);
+    } catch (error) {
+      setMapStatus("Impossible d'afficher la carte.", true);
+    }
   }
 
   function updateMap() {
-    if (!map) {
+    if (!mapReady || !map) {
       return;
     }
 
@@ -942,8 +1318,7 @@ window.ITINERARY_DATA = {
     var legendKeys = ["base"];
 
     days.forEach(function (day) {
-      var isSelected = state.selectedDay === null || state.selectedDay === day.day;
-      if (!isSelected) {
+      if (state.selectedDay !== null && state.selectedDay !== day.day) {
         return;
       }
 
@@ -961,7 +1336,7 @@ window.ITINERARY_DATA = {
 
         var color = getMarkerColor(location.type);
         var icon = L.divIcon({
-          className: "custom-marker",
+          className: "leaflet-marker-day",
           html:
             '<div class="marker-pin" style="background:' +
             color +
@@ -972,32 +1347,38 @@ window.ITINERARY_DATA = {
           iconAnchor: [15, 15]
         });
 
-        var marker = L.marker([location.lat, location.lng], { icon: icon }).bindPopup(
-          "<strong>Jour " + day.day + " – " + location.name + "</strong><br>" + day.title
+        markersLayer.addLayer(
+          L.marker([location.lat, location.lng], { icon: icon }).bindPopup(
+            "<strong>Jour " + day.day + " – " + location.name + "</strong><br>" + day.title
+          )
         );
 
-        markersLayer.addLayer(marker);
         dayPoints.push([location.lat, location.lng]);
         bounds.push([location.lat, location.lng]);
       });
 
       if (dayPoints.length > 1) {
-        L.polyline(dayPoints, {
-          color: "#ffd166",
-          weight: 3,
-          opacity: 0.75,
-          dashArray: "8 8"
-        }).addTo(routeLayer);
+        routeLayer.addLayer(
+          L.polyline(dayPoints, {
+            color: "#ffd166",
+            weight: 3,
+            opacity: 0.85,
+            dashArray: "8 8"
+          })
+        );
       }
     });
 
     if (bounds.length > 1) {
-      map.fitBounds(bounds, { padding: [36, 36], maxZoom: 11 });
+      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 11 });
     } else {
       map.setView([BASE.lat, BASE.lng], 10);
     }
 
     renderMapLegend(legendKeys);
+    window.setTimeout(function () {
+      map.invalidateSize();
+    }, 100);
   }
 
   function renderMapLegend(keys) {
@@ -1020,11 +1401,16 @@ window.ITINERARY_DATA = {
     renderDays();
     updateMap();
 
+    var mapSection = document.getElementById("mapSection");
+    if (mapSection) {
+      mapSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
     var day = ITINERARY.find(function (entry) {
       return entry.day === dayNum;
     });
 
-    if (!day) {
+    if (!day || !map) {
       return;
     }
 
@@ -1039,17 +1425,15 @@ window.ITINERARY_DATA = {
       bounds.push([BASE.lat, BASE.lng]);
       map.fitBounds(bounds, { padding: [48, 48], maxZoom: 12 });
     }
-
-    document.getElementById("tripMap").scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
   function initDriveToggle() {
     els.driveToggle.checked = state.showDriveTimes;
-    els.driveToggleLabel.textContent = state.showDriveTimes ? "Masquer" : "Afficher";
+    els.driveToggleLabel.textContent = state.showDriveTimes ? "affichés" : "masqués";
 
     els.driveToggle.addEventListener("change", function () {
       state.showDriveTimes = els.driveToggle.checked;
-      els.driveToggleLabel.textContent = state.showDriveTimes ? "Masquer" : "Afficher";
+      els.driveToggleLabel.textContent = state.showDriveTimes ? "affichés" : "masqués";
       renderDays();
     });
   }
@@ -1062,28 +1446,32 @@ window.ITINERARY_DATA = {
     });
   }
 
-  renderFilters();
-  renderDays();
-  renderTips();
-  initDriveToggle();
-  initResetMapButton();
+  function initMeta() {
+    var meta = D.TRIP_META;
+    document.getElementById("tripTitle").textContent = meta.title;
+    document.getElementById("tripDates").textContent =
+      meta.dates + " · Base à " + BASE.name + " · " + meta.group;
+  }
 
-  window.addEventListener("load", function () {
+  function boot() {
+    cacheElements();
+    initMeta();
+    renderRhythm();
+    renderFilters();
+    renderDays();
+    renderTips();
+    initDriveToggle();
+    initResetMapButton();
     initMap();
-    window.setTimeout(function () {
-      map.invalidateSize();
-    }, 150);
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 })();
 
-  </script>
-  <script>
-    (function () {
-      var meta = window.ITINERARY_DATA.TRIP_META;
-      document.getElementById("tripTitle").textContent = meta.title;
-      document.getElementById("tripDates").textContent =
-        meta.dates + " · Base à " + window.ITINERARY_DATA.BASE.name + " · " + meta.group;
-    })();
   </script>
 </body>
 </html>

@@ -19,16 +19,21 @@
   var map = null;
   var markersLayer = null;
   var routeLayer = null;
+  var mapReady = false;
 
-  var els = {
-    daysGrid: document.getElementById("daysGrid"),
-    filterBar: document.getElementById("filterBar"),
-    driveToggle: document.getElementById("driveToggle"),
-    driveToggleLabel: document.getElementById("driveToggleLabel"),
-    dayCount: document.getElementById("dayCount"),
-    tipsGrid: document.getElementById("tipsGrid"),
-    mapLegend: document.getElementById("mapLegend")
-  };
+  var els = {};
+
+  function cacheElements() {
+    els.daysGrid = document.getElementById("daysGrid");
+    els.filterBar = document.getElementById("filterBar");
+    els.driveToggle = document.getElementById("driveToggle");
+    els.driveToggleLabel = document.getElementById("driveToggleLabel");
+    els.dayCount = document.getElementById("dayCount");
+    els.tipsGrid = document.getElementById("tipsGrid");
+    els.mapLegend = document.getElementById("mapLegend");
+    els.mapStatus = document.getElementById("mapStatus");
+    els.rhythmGrid = document.getElementById("rhythmGrid");
+  }
 
   function formatDriveTime(minutes) {
     if (minutes < 60) {
@@ -40,10 +45,47 @@
   }
 
   function matchesFilter(day) {
-    if (state.filter === "all") {
-      return true;
+    return state.filter === "all" || day.categories.indexOf(state.filter) !== -1;
+  }
+
+  function renderRhythm() {
+    if (!els.rhythmGrid) {
+      return;
     }
-    return day.categories.indexOf(state.filter) !== -1;
+    els.rhythmGrid.innerHTML = ITINERARY.map(function (day) {
+      var rhythm = RHYTHM_META[day.rhythm];
+      return (
+        '<button type="button" class="rhythm-chip rhythm-' +
+        day.rhythm +
+        '" data-goto-day="' +
+        day.day +
+        '" title="Jour ' +
+        day.day +
+        " : " +
+        day.title +
+        '">' +
+        '<span class="rhythm-chip-day">J' +
+        day.day +
+        "</span>" +
+        '<span class="rhythm-chip-icon" aria-hidden="true">' +
+        rhythm.icon +
+        "</span>" +
+        "</button>"
+      );
+    }).join("");
+
+    Array.prototype.forEach.call(els.rhythmGrid.querySelectorAll(".rhythm-chip"), function (chip) {
+      chip.addEventListener("click", function () {
+        var dayNum = Number(chip.dataset.gotoDay);
+        var target = document.getElementById("day-" + dayNum);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          state.selectedDay = dayNum;
+          renderDays();
+          updateMap();
+        }
+      });
+    });
   }
 
   function renderFilters() {
@@ -57,10 +99,12 @@
         '" aria-pressed="' +
         active +
         '">' +
-        '<span aria-hidden="true">' +
+        '<span class="filter-icon" aria-hidden="true">' +
         filter.icon +
-        "</span> " +
+        "</span>" +
+        "<span>" +
         filter.label +
+        "</span>" +
         "</button>"
       );
     }).join("");
@@ -80,8 +124,8 @@
       .map(function (cat) {
         var meta = CATEGORY_META[cat];
         return (
-          '<span class="cat-badge" style="--cat-color:' +
-          meta.color +
+          '<span class="cat-badge cat-' +
+          cat +
           '">' +
           meta.icon +
           " " +
@@ -95,13 +139,13 @@
   function renderDayCard(day) {
     var rhythm = RHYTHM_META[day.rhythm];
     var effort = EFFORT_META[day.effort];
-    var hidden = matchesFilter(day) ? "" : " hidden";
+    var hidden = matchesFilter(day) ? "" : " is-hidden";
     var selected = state.selectedDay === day.day ? " is-selected" : "";
 
     var driveBlock = state.showDriveTimes
-      ? '<p class="drive-time"><span>🚗</span> Depuis New Grove : <strong>' +
+      ? '<div class="info-row drive-row"><span class="info-icon" aria-hidden="true">🚗</span><div><strong>Depuis New Grove</strong><span>' +
         formatDriveTime(day.driveMinutes) +
-        "</strong> (aller simple)</p>"
+        " aller simple</span></div></div>"
       : "";
 
     return (
@@ -113,39 +157,40 @@
       '" id="day-' +
       day.day +
       '">' +
-      '<div class="day-card-header">' +
-      '<div class="day-heading">' +
-      '<p class="day-number">Jour ' +
+      '<header class="day-card-top">' +
+      '<div class="day-title-block">' +
+      '<p class="day-kicker">Jour ' +
       day.day +
       "</p>" +
-      "<h2>Jour " +
-      day.day +
-      " – " +
+      "<h2>" +
       day.title +
       "</h2>" +
       '<p class="day-date">' +
       day.date +
       "</p>" +
       "</div>" +
-      '<div class="day-badges">' +
-      '<span class="rhythm-badge">' +
+      '<div class="day-meta-badges">' +
+      '<span class="meta-badge rhythm-' +
+      day.rhythm +
+      '">' +
       rhythm.icon +
       " " +
       rhythm.label +
       "</span>" +
-      '<span class="effort-badge" style="--effort-color:' +
-      effort.color +
+      '<span class="meta-badge effort-' +
+      (day.effort === "modéré" ? "modere" : day.effort) +
       '">' +
       effort.label +
       "</span>" +
       "</div>" +
-      "</div>" +
+      "</header>" +
       '<div class="cat-badges">' +
       renderCategoryBadges(day.categories) +
       "</div>" +
-      '<section class="day-section">' +
-      "<h3>🎯 Activités principales</h3>" +
-      "<ul>" +
+      '<div class="day-card-body">' +
+      '<section class="day-block">' +
+      "<h3>Activités</h3>" +
+      "<ul class="activity-list">" +
       day.activities
         .map(function (activity) {
           return "<li>" + activity + "</li>";
@@ -153,22 +198,25 @@
         .join("") +
       "</ul>" +
       "</section>" +
-      '<section class="day-section beach-section">' +
-      "<h3>🏖️ Plage du jour</h3>" +
+      '<section class="day-block highlight-beach">' +
+      "<h3>Plage du jour</h3>" +
       "<p>" +
       day.beach +
       "</p>" +
       "</section>" +
       driveBlock +
-      '<section class="day-section tips-section">' +
-      "<h3>💡 Conseil du jour</h3>" +
+      '<section class="day-block highlight-tip">' +
+      "<h3>Conseil</h3>" +
       "<p>" +
       day.tips +
       "</p>" +
       "</section>" +
+      "</div>" +
+      '<footer class="day-card-footer">' +
       '<button type="button" class="map-focus-btn" data-focus-day="' +
       day.day +
-      '">📍 Voir sur la carte</button>' +
+      '">Voir sur la carte</button>' +
+      "</footer>" +
       "</article>"
     );
   }
@@ -185,7 +233,7 @@
       });
     });
 
-    Array.prototype.forEach.call(els.daysGrid.querySelectorAll(".day-card:not(.hidden)"), function (card) {
+    Array.prototype.forEach.call(els.daysGrid.querySelectorAll(".day-card:not(.is-hidden)"), function (card) {
       card.addEventListener("click", function (event) {
         if (event.target.closest(".map-focus-btn")) {
           return;
@@ -230,31 +278,66 @@
     return colors[type] || "#ffffff";
   }
 
+  function setMapStatus(message, isError) {
+    if (!els.mapStatus) {
+      return;
+    }
+    els.mapStatus.textContent = message;
+    els.mapStatus.className = "map-status" + (isError ? " is-error" : "");
+    els.mapStatus.hidden = !message;
+  }
+
   function initMap() {
-    map = L.map("tripMap", { scrollWheelZoom: false });
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap"
-    }).addTo(map);
+    if (mapReady || typeof L === "undefined") {
+      setMapStatus(
+        typeof L === "undefined"
+          ? "Carte indisponible (connexion requise pour charger Leaflet)."
+          : "",
+        typeof L === "undefined"
+      );
+      return;
+    }
 
-    markersLayer = L.layerGroup().addTo(map);
-    routeLayer = L.layerGroup().addTo(map);
+    try {
+      map = L.map("tripMap", {
+        scrollWheelZoom: false,
+        attributionControl: true
+      });
 
-    var baseIcon = L.divIcon({
-      className: "base-marker",
-      html: '<div class="marker-pin base">🏠</div>',
-      iconSize: [32, 32],
-      iconAnchor: [16, 16]
-    });
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap"
+      }).addTo(map);
 
-    L.marker([BASE.lat, BASE.lng], { icon: baseIcon })
-      .addTo(map)
-      .bindPopup("<strong>" + BASE.name + "</strong><br>Base du séjour");
+      markersLayer = L.layerGroup().addTo(map);
+      routeLayer = L.layerGroup().addTo(map);
 
-    updateMap();
+      var baseIcon = L.divIcon({
+        className: "leaflet-marker-base",
+        html: '<div class="marker-pin base">🏠</div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+
+      L.marker([BASE.lat, BASE.lng], { icon: baseIcon })
+        .addTo(map)
+        .bindPopup("<strong>" + BASE.name + "</strong><br>Base du séjour");
+
+      mapReady = true;
+      setMapStatus("");
+      updateMap();
+      window.setTimeout(function () {
+        map.invalidateSize();
+      }, 200);
+      window.setTimeout(function () {
+        map.invalidateSize();
+      }, 800);
+    } catch (error) {
+      setMapStatus("Impossible d'afficher la carte.", true);
+    }
   }
 
   function updateMap() {
-    if (!map) {
+    if (!mapReady || !map) {
       return;
     }
 
@@ -267,8 +350,7 @@
     var legendKeys = ["base"];
 
     days.forEach(function (day) {
-      var isSelected = state.selectedDay === null || state.selectedDay === day.day;
-      if (!isSelected) {
+      if (state.selectedDay !== null && state.selectedDay !== day.day) {
         return;
       }
 
@@ -286,7 +368,7 @@
 
         var color = getMarkerColor(location.type);
         var icon = L.divIcon({
-          className: "custom-marker",
+          className: "leaflet-marker-day",
           html:
             '<div class="marker-pin" style="background:' +
             color +
@@ -297,32 +379,38 @@
           iconAnchor: [15, 15]
         });
 
-        var marker = L.marker([location.lat, location.lng], { icon: icon }).bindPopup(
-          "<strong>Jour " + day.day + " – " + location.name + "</strong><br>" + day.title
+        markersLayer.addLayer(
+          L.marker([location.lat, location.lng], { icon: icon }).bindPopup(
+            "<strong>Jour " + day.day + " – " + location.name + "</strong><br>" + day.title
+          )
         );
 
-        markersLayer.addLayer(marker);
         dayPoints.push([location.lat, location.lng]);
         bounds.push([location.lat, location.lng]);
       });
 
       if (dayPoints.length > 1) {
-        L.polyline(dayPoints, {
-          color: "#ffd166",
-          weight: 3,
-          opacity: 0.75,
-          dashArray: "8 8"
-        }).addTo(routeLayer);
+        routeLayer.addLayer(
+          L.polyline(dayPoints, {
+            color: "#ffd166",
+            weight: 3,
+            opacity: 0.85,
+            dashArray: "8 8"
+          })
+        );
       }
     });
 
     if (bounds.length > 1) {
-      map.fitBounds(bounds, { padding: [36, 36], maxZoom: 11 });
+      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 11 });
     } else {
       map.setView([BASE.lat, BASE.lng], 10);
     }
 
     renderMapLegend(legendKeys);
+    window.setTimeout(function () {
+      map.invalidateSize();
+    }, 100);
   }
 
   function renderMapLegend(keys) {
@@ -345,11 +433,16 @@
     renderDays();
     updateMap();
 
+    var mapSection = document.getElementById("mapSection");
+    if (mapSection) {
+      mapSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
     var day = ITINERARY.find(function (entry) {
       return entry.day === dayNum;
     });
 
-    if (!day) {
+    if (!day || !map) {
       return;
     }
 
@@ -364,17 +457,15 @@
       bounds.push([BASE.lat, BASE.lng]);
       map.fitBounds(bounds, { padding: [48, 48], maxZoom: 12 });
     }
-
-    document.getElementById("tripMap").scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
   function initDriveToggle() {
     els.driveToggle.checked = state.showDriveTimes;
-    els.driveToggleLabel.textContent = state.showDriveTimes ? "Masquer" : "Afficher";
+    els.driveToggleLabel.textContent = state.showDriveTimes ? "affichés" : "masqués";
 
     els.driveToggle.addEventListener("change", function () {
       state.showDriveTimes = els.driveToggle.checked;
-      els.driveToggleLabel.textContent = state.showDriveTimes ? "Masquer" : "Afficher";
+      els.driveToggleLabel.textContent = state.showDriveTimes ? "affichés" : "masqués";
       renderDays();
     });
   }
@@ -387,16 +478,28 @@
     });
   }
 
-  renderFilters();
-  renderDays();
-  renderTips();
-  initDriveToggle();
-  initResetMapButton();
+  function initMeta() {
+    var meta = D.TRIP_META;
+    document.getElementById("tripTitle").textContent = meta.title;
+    document.getElementById("tripDates").textContent =
+      meta.dates + " · Base à " + BASE.name + " · " + meta.group;
+  }
 
-  window.addEventListener("load", function () {
+  function boot() {
+    cacheElements();
+    initMeta();
+    renderRhythm();
+    renderFilters();
+    renderDays();
+    renderTips();
+    initDriveToggle();
+    initResetMapButton();
     initMap();
-    window.setTimeout(function () {
-      map.invalidateSize();
-    }, 150);
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 })();
