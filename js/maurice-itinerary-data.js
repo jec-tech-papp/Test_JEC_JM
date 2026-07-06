@@ -84,10 +84,10 @@ window.ITINERARY_DATA = {
         "repos",
         "plage"
       ],
-      "summary": "Journée d'installation : récupérer la voiture, s'installer à New Grove, puis première baignade à Blue Bay.",
+      "summary": "Journée d'installation : accueil à l'aéroport par la famille (sans doute Ben), installation à New Grove, puis première baignade à Blue Bay.",
       "activities": [
         {
-          "text": "Arrivée à l'aéroport SSR et installation à New Grove",
+          "text": "Arrivée à l'aéroport SSR — accueil par la famille et trajet vers New Grove",
           "link": "https://www.google.com/maps/search/?api=1&query=Sir+Seewoosagur+Ramgoolam+International+Airport"
         },
         "Courses alimentaires et premiers repas locaux",
@@ -113,7 +113,7 @@ window.ITINERARY_DATA = {
         {
           "label": "Aéroport SSR",
           "url": "https://www.google.com/maps/search/?api=1&query=SSR+Airport+Mauritius",
-          "description": "Point d'arrivée et location de voiture"
+          "description": "Point d'arrivée"
         }
       ],
       "locations": [
