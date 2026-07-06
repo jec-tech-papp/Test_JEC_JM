@@ -499,6 +499,12 @@ a { color: #ffffff; text-decoration: none; }
   color: var(--text-soft);
 }
 
+.legend-route {
+  border-color: rgba(255, 209, 102, 0.45);
+  color: #fde68a;
+}
+}
+
 .marker-pin {
   display: grid;
   place-items: center;
@@ -636,8 +642,8 @@ a { color: #ffffff; text-decoration: none; }
   <script>window.ITINERARY_DATA = {
   BASE: {
     name: "New Grove",
-    lat: -20.4085,
-    lng: 57.7182,
+    lat: -20.408611,
+    lng: 57.613611,
     description: "Hébergement au sud-est de l'île, idéal pour rayonner facilement en voiture."
   },
   TRIP_META: {
@@ -703,7 +709,7 @@ a { color: #ffffff; text-decoration: none; }
       ],
       beach: "Plage de Blue Bay — eau turquoise, snorkeling léger depuis la plage",
       locations: [
-        { name: "New Grove", lat: -20.4085, lng: 57.7182, type: "base" },
+        { name: "New Grove", lat: -20.408611, lng: 57.613611, type: "base" },
         { name: "Blue Bay", lat: -20.4442, lng: 57.7189, type: "plage" }
       ],
       driveMinutes: 15,
@@ -767,7 +773,7 @@ a { color: #ffffff; text-decoration: none; }
       ],
       beach: "Pointe d'Esny — plage calme et peu fréquentée, accès facile",
       locations: [
-        { name: "New Grove", lat: -20.4085, lng: 57.7182, type: "base" },
+        { name: "New Grove", lat: -20.408611, lng: 57.613611, type: "base" },
         { name: "Pointe d'Esny", lat: -20.4214, lng: 57.7286, type: "plage" }
       ],
       driveMinutes: 10,
@@ -787,7 +793,7 @@ a { color: #ffffff; text-decoration: none; }
       ],
       beach: "Île aux Cerfs — plages de sable blanc et eau cristalline",
       locations: [
-        { name: "Trou d'Eau Douce", lat: -20.2569, lng: 57.7878, type: "base" },
+        { name: "Trou d'Eau Douce", lat: -20.2569, lng: 57.7878, type: "culture" },
         { name: "Île aux Cerfs", lat: -20.2747, lng: 57.8008, type: "plage" }
       ],
       driveMinutes: 45,
@@ -889,7 +895,7 @@ a { color: #ffffff; text-decoration: none; }
       ],
       beach: "Flic en Flac — plage populaire, restaurants et boutiques à proximité",
       locations: [
-        { name: "New Grove", lat: -20.4085, lng: 57.7182, type: "base" },
+        { name: "New Grove", lat: -20.408611, lng: 57.613611, type: "base" },
         { name: "Flic en Flac", lat: -20.2833, lng: 57.3667, type: "plage" }
       ],
       driveMinutes: 60,
@@ -970,7 +976,7 @@ a { color: #ffffff; text-decoration: none; }
       ],
       beach: "Votre plage favorite (Blue Bay, Pereybère ou Pointe d'Esny)",
       locations: [
-        { name: "New Grove", lat: -20.4085, lng: 57.7182, type: "base" },
+        { name: "New Grove", lat: -20.408611, lng: 57.613611, type: "base" },
         { name: "Aéroport SSR", lat: -20.4302, lng: 57.6836, type: "culture" }
       ],
       driveMinutes: 15,
@@ -1216,6 +1222,68 @@ a { color: #ffffff; text-decoration: none; }
     return { base: "#ffdd8a", plage: "#38bdf8", culture: "#fbbf24", nature: "#4ade80" }[type] || "#fff";
   }
 
+  var DAY_ROUTE_COLORS = [
+    "#ffd166", "#38bdf8", "#4ade80", "#fbbf24", "#c4b5fd", "#fb923c",
+    "#2dd4bf", "#f472b6", "#a78bfa", "#34d399", "#60a5fa", "#fcd34d",
+    "#86efac", "#fda4af"
+  ];
+
+  function isHomeBase(loc) {
+    return loc.type === "base" && loc.name === BASE.name;
+  }
+
+  function buildDayRoute(day) {
+    var route = [[BASE.lat, BASE.lng]];
+    day.locations.forEach(function (loc) {
+      if (isHomeBase(loc)) {
+        return;
+      }
+      route.push([loc.lat, loc.lng]);
+    });
+    if (route.length > 1) {
+      route.push([BASE.lat, BASE.lng]);
+    }
+    return route;
+  }
+
+  function getDayRouteStyle(day) {
+    var isSelected = state.selectedDay === day.day;
+    var color = DAY_ROUTE_COLORS[(day.day - 1) % DAY_ROUTE_COLORS.length];
+    if (state.selectedDay !== null) {
+      return {
+        color: color,
+        weight: isSelected ? 5 : 2,
+        opacity: isSelected ? 0.95 : 0.2,
+        dashArray: isSelected ? null : "4 8"
+      };
+    }
+    return {
+      color: color,
+      weight: 3,
+      opacity: 0.8,
+      dashArray: "10 6"
+    };
+  }
+
+  function formatRoutePopup(day, route) {
+    var stops = [BASE.name];
+    day.locations.forEach(function (loc) {
+      if (!isHomeBase(loc)) {
+        stops.push(loc.name);
+      }
+    });
+    stops.push(BASE.name);
+    return (
+      "<strong>Jour " +
+      day.day +
+      " — " +
+      day.title +
+      "</strong><br>" +
+      stops.join(" → ") +
+      (day.driveMinutes ? "<br><em>~ " + day.driveMinutes + " min depuis " + BASE.name + "</em>" : "")
+    );
+  }
+
   function initLeafletMap() {
     if (mapReady || typeof L === "undefined" || !els.tripMap) {
       return;
@@ -1260,9 +1328,8 @@ a { color: #ffffff; text-decoration: none; }
     var legendKeys = ["base"];
 
     getVisibleDays().forEach(function (day) {
-      var dayPoints = [];
       day.locations.forEach(function (loc) {
-        if (loc.type === "base") {
+        if (isHomeBase(loc)) {
           return;
         }
         if (legendKeys.indexOf(loc.type) === -1) {
@@ -1278,11 +1345,15 @@ a { color: #ffffff; text-decoration: none; }
             })
           }).bindPopup("<strong>Jour " + day.day + " – " + loc.name + "</strong>")
         );
-        dayPoints.push([loc.lat, loc.lng]);
         bounds.push([loc.lat, loc.lng]);
       });
-      if (dayPoints.length > 1) {
-        routeLayer.addLayer(L.polyline(dayPoints, { color: "#ffd166", weight: 3, opacity: 0.85, dashArray: "8 8" }));
+
+      var route = buildDayRoute(day);
+      if (route.length > 2) {
+        var style = getDayRouteStyle(day);
+        routeLayer.addLayer(
+          L.polyline(route, style).bindPopup(formatRoutePopup(day, route))
+        );
       }
     });
 
@@ -1297,11 +1368,13 @@ a { color: #ffffff; text-decoration: none; }
 
   function renderMapLegend(keys) {
     var labels = { base: "🏠 Base", plage: "🏖️ Plage", culture: "🏛️ Culture", nature: "🌿 Nature" };
-    els.mapLegend.innerHTML = keys
-      .map(function (k) {
-        return '<span class="legend-item">' + (labels[k] || k) + "</span>";
-      })
-      .join("");
+    var items = keys.map(function (k) {
+      return '<span class="legend-item">' + (labels[k] || k) + "</span>";
+    });
+    if (mapReady) {
+      items.push('<span class="legend-item legend-route">〰️ Itinéraires (base → étapes → base)</span>');
+    }
+    els.mapLegend.innerHTML = items.join("");
   }
 
   function updateMap() {
@@ -1340,15 +1413,9 @@ a { color: #ffffff; text-decoration: none; }
       if (!day) {
         return;
       }
-      var points = day.locations.filter(function (l) {
-        return l.type !== "base";
-      });
-      if (points.length) {
-        var b = points.map(function (p) {
-          return [p.lat, p.lng];
-        });
-        b.push([BASE.lat, BASE.lng]);
-        map.fitBounds(b, { padding: [48, 48], maxZoom: 12 });
+      var route = buildDayRoute(day);
+      if (route.length > 1) {
+        map.fitBounds(route, { padding: [48, 48], maxZoom: 12 });
       }
     }
   }

@@ -1,8 +1,8 @@
 window.ITINERARY_DATA = {
   BASE: {
     name: "New Grove",
-    lat: -20.4085,
-    lng: 57.7182,
+    lat: -20.408611,
+    lng: 57.613611,
     description: "Hébergement au sud-est de l'île, idéal pour rayonner facilement en voiture."
   },
   TRIP_META: {
@@ -68,7 +68,7 @@ window.ITINERARY_DATA = {
       ],
       beach: "Plage de Blue Bay — eau turquoise, snorkeling léger depuis la plage",
       locations: [
-        { name: "New Grove", lat: -20.4085, lng: 57.7182, type: "base" },
+        { name: "New Grove", lat: -20.408611, lng: 57.613611, type: "base" },
         { name: "Blue Bay", lat: -20.4442, lng: 57.7189, type: "plage" }
       ],
       driveMinutes: 15,
@@ -132,7 +132,7 @@ window.ITINERARY_DATA = {
       ],
       beach: "Pointe d'Esny — plage calme et peu fréquentée, accès facile",
       locations: [
-        { name: "New Grove", lat: -20.4085, lng: 57.7182, type: "base" },
+        { name: "New Grove", lat: -20.408611, lng: 57.613611, type: "base" },
         { name: "Pointe d'Esny", lat: -20.4214, lng: 57.7286, type: "plage" }
       ],
       driveMinutes: 10,
@@ -152,7 +152,7 @@ window.ITINERARY_DATA = {
       ],
       beach: "Île aux Cerfs — plages de sable blanc et eau cristalline",
       locations: [
-        { name: "Trou d'Eau Douce", lat: -20.2569, lng: 57.7878, type: "base" },
+        { name: "Trou d'Eau Douce", lat: -20.2569, lng: 57.7878, type: "culture" },
         { name: "Île aux Cerfs", lat: -20.2747, lng: 57.8008, type: "plage" }
       ],
       driveMinutes: 45,
@@ -254,7 +254,7 @@ window.ITINERARY_DATA = {
       ],
       beach: "Flic en Flac — plage populaire, restaurants et boutiques à proximité",
       locations: [
-        { name: "New Grove", lat: -20.4085, lng: 57.7182, type: "base" },
+        { name: "New Grove", lat: -20.408611, lng: 57.613611, type: "base" },
         { name: "Flic en Flac", lat: -20.2833, lng: 57.3667, type: "plage" }
       ],
       driveMinutes: 60,
@@ -335,7 +335,7 @@ window.ITINERARY_DATA = {
       ],
       beach: "Votre plage favorite (Blue Bay, Pereybère ou Pointe d'Esny)",
       locations: [
-        { name: "New Grove", lat: -20.4085, lng: 57.7182, type: "base" },
+        { name: "New Grove", lat: -20.408611, lng: 57.613611, type: "base" },
         { name: "Aéroport SSR", lat: -20.4302, lng: 57.6836, type: "culture" }
       ],
       driveMinutes: 15,

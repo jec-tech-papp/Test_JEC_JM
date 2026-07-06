@@ -221,6 +221,68 @@
     return { base: "#ffdd8a", plage: "#38bdf8", culture: "#fbbf24", nature: "#4ade80" }[type] || "#fff";
   }
 
+  var DAY_ROUTE_COLORS = [
+    "#ffd166", "#38bdf8", "#4ade80", "#fbbf24", "#c4b5fd", "#fb923c",
+    "#2dd4bf", "#f472b6", "#a78bfa", "#34d399", "#60a5fa", "#fcd34d",
+    "#86efac", "#fda4af"
+  ];
+
+  function isHomeBase(loc) {
+    return loc.type === "base" && loc.name === BASE.name;
+  }
+
+  function buildDayRoute(day) {
+    var route = [[BASE.lat, BASE.lng]];
+    day.locations.forEach(function (loc) {
+      if (isHomeBase(loc)) {
+        return;
+      }
+      route.push([loc.lat, loc.lng]);
+    });
+    if (route.length > 1) {
+      route.push([BASE.lat, BASE.lng]);
+    }
+    return route;
+  }
+
+  function getDayRouteStyle(day) {
+    var isSelected = state.selectedDay === day.day;
+    var color = DAY_ROUTE_COLORS[(day.day - 1) % DAY_ROUTE_COLORS.length];
+    if (state.selectedDay !== null) {
+      return {
+        color: color,
+        weight: isSelected ? 5 : 2,
+        opacity: isSelected ? 0.95 : 0.2,
+        dashArray: isSelected ? null : "4 8"
+      };
+    }
+    return {
+      color: color,
+      weight: 3,
+      opacity: 0.8,
+      dashArray: "10 6"
+    };
+  }
+
+  function formatRoutePopup(day, route) {
+    var stops = [BASE.name];
+    day.locations.forEach(function (loc) {
+      if (!isHomeBase(loc)) {
+        stops.push(loc.name);
+      }
+    });
+    stops.push(BASE.name);
+    return (
+      "<strong>Jour " +
+      day.day +
+      " — " +
+      day.title +
+      "</strong><br>" +
+      stops.join(" → ") +
+      (day.driveMinutes ? "<br><em>~ " + day.driveMinutes + " min depuis " + BASE.name + "</em>" : "")
+    );
+  }
+
   function initLeafletMap() {
     if (mapReady || typeof L === "undefined" || !els.tripMap) {
       return;
@@ -265,9 +327,8 @@
     var legendKeys = ["base"];
 
     getVisibleDays().forEach(function (day) {
-      var dayPoints = [];
       day.locations.forEach(function (loc) {
-        if (loc.type === "base") {
+        if (isHomeBase(loc)) {
           return;
         }
         if (legendKeys.indexOf(loc.type) === -1) {
@@ -283,11 +344,15 @@
             })
           }).bindPopup("<strong>Jour " + day.day + " – " + loc.name + "</strong>")
         );
-        dayPoints.push([loc.lat, loc.lng]);
         bounds.push([loc.lat, loc.lng]);
       });
-      if (dayPoints.length > 1) {
-        routeLayer.addLayer(L.polyline(dayPoints, { color: "#ffd166", weight: 3, opacity: 0.85, dashArray: "8 8" }));
+
+      var route = buildDayRoute(day);
+      if (route.length > 2) {
+        var style = getDayRouteStyle(day);
+        routeLayer.addLayer(
+          L.polyline(route, style).bindPopup(formatRoutePopup(day, route))
+        );
       }
     });
 
@@ -302,11 +367,13 @@
 
   function renderMapLegend(keys) {
     var labels = { base: "🏠 Base", plage: "🏖️ Plage", culture: "🏛️ Culture", nature: "🌿 Nature" };
-    els.mapLegend.innerHTML = keys
-      .map(function (k) {
-        return '<span class="legend-item">' + (labels[k] || k) + "</span>";
-      })
-      .join("");
+    var items = keys.map(function (k) {
+      return '<span class="legend-item">' + (labels[k] || k) + "</span>";
+    });
+    if (mapReady) {
+      items.push('<span class="legend-item legend-route">〰️ Itinéraires (base → étapes → base)</span>');
+    }
+    els.mapLegend.innerHTML = items.join("");
   }
 
   function updateMap() {
@@ -345,15 +412,9 @@
       if (!day) {
         return;
       }
-      var points = day.locations.filter(function (l) {
-        return l.type !== "base";
-      });
-      if (points.length) {
-        var b = points.map(function (p) {
-          return [p.lat, p.lng];
-        });
-        b.push([BASE.lat, BASE.lng]);
-        map.fitBounds(b, { padding: [48, 48], maxZoom: 12 });
+      var route = buildDayRoute(day);
+      if (route.length > 1) {
+        map.fitBounds(route, { padding: [48, 48], maxZoom: 12 });
       }
     }
   }

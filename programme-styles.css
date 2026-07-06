@@ -489,6 +489,12 @@ a { color: #ffffff; text-decoration: none; }
   color: var(--text-soft);
 }
 
+.legend-route {
+  border-color: rgba(255, 209, 102, 0.45);
+  color: #fde68a;
+}
+}
+
 .marker-pin {
   display: grid;
   place-items: center;
