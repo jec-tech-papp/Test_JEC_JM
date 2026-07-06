@@ -259,7 +259,7 @@ window.ITINERARY_DATA = {
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mahebourg+Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHJ5ketiVNSAUAIkfUvEMCNQQtuv-RjRJXC_JFTcSgtVABgCs_4PPx7dx8cUqwZsfEUwMFLmGyu76sELNtUUJ-P5LSZ4a9Y14KB1wu7mjGPYb2U2NL8gG6EpHsZhzKlXG0K9_Qg=w800-h500-k-no",
+          "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/31/8e/dc/fc/petit-bel-air-catholic.jpg?w=1200&h=1200&s=1",
           "caption": "Cimetière de Mahébourg — bord de mer",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Marine+Cemetery+Mahebourg+Mauritius"
         },
@@ -303,11 +303,6 @@ window.ITINERARY_DATA = {
       "driveMinutes": 10,
       "tips": "Journée volontairement légère. Option bonus : Eau Bleue à Cluny (≈15 min) le matin — eau turquoise et plusieurs bassins. Pointe d'Esny l'après-midi si envie de plage.",
       "photos": [
-        {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGLzkBiuefUaR-ajuUOLXhLlsJFhfZARM_okvrfjXjjstyMJl5n8dyLdEUsTjv62kPQWjNQvsF6hmSs3J99tmcKr4hjoDLETiw4HRN0JUrlTpuFOeCmClFIpsY4EXulaKM9zCf7=w800-h500-k-no",
-          "caption": "Eau Bleue — cascade baignable",
-          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Eau%20Bleue%20Waterfall%20Mauritius"
-        },
         {
           "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEBzYh-5HtX_lmdnVjWmDAt1BvjJXX7tXJRMK0-sqvsHPYv3oACkAnIwYDpOO_XkwBxVyWUdT6-GYgFo6FIEWftEcN8f7MV7dQTLUYK2C3peNr0nhLDqfs1ocYaHk42eE7W2dyx=w800-h500-k-no",
           "caption": "Pointe d'Esny — plage calme",
