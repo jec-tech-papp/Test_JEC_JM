@@ -704,16 +704,21 @@ window.ITINERARY_DATA = {
     {
       "day": 12,
       "date": "Mardi 18 novembre 2026",
-      "title": "Pamplemousses & nord-ouest",
+      "title": "Pamplemousses, Cap Malheureux & nord-ouest",
       "rhythm": "actif",
       "effort": "facile",
       "categories": [
         "nature",
-        "plage"
+        "plage",
+        "culture"
       ],
+      "summary": "Jardin de Pamplemousses le matin, pause à l'église de Cap Malheureux sur la route du nord, puis Mont Choisy l'après-midi.",
       "activities": [
         "Jardin botanique de Pamplemousses — lotus géants, palmiers royaux",
-        "Route vers le nord-ouest",
+        {
+          "text": "Église Notre-Dame Auxiliatrice de Cap Malheureux — chapelle au toit rouge face au lagon",
+          "link": "https://www.google.com/maps/search/?api=1&query=Notre-Dame+Auxiliatrice+Cap+Malheureux+Mauritius"
+        },
         "Après-midi à Mont Choisy — plage familiale"
       ],
       "beach": "Mont Choisy — longue plage ombragée, eau calme",
@@ -725,19 +730,37 @@ window.ITINERARY_DATA = {
           "type": "nature"
         },
         {
+          "name": "Cap Malheureux",
+          "lat": -19.9847,
+          "lng": 57.6364,
+          "type": "culture"
+        },
+        {
           "name": "Mont Choisy",
           "lat": -20.0342,
           "lng": 57.5528,
           "type": "plage"
         }
       ],
-      "driveMinutes": 80,
-      "tips": "Visitez le jardin tôt (chaleur + foule). Mont Choisy est l'une des plages les plus accessibles.",
+      "driveMinutes": 85,
+      "tips": "Visitez le jardin tôt (chaleur + foule). Le détour par Cap Malheureux est logique quand vous êtes dans le nord : 10–15 min depuis Pamplemousses, arrêt photo facile. Mont Choisy est l'une des plages les plus accessibles.",
+      "links": [
+        {
+          "label": "Église de Cap Malheureux",
+          "url": "https://www.google.com/maps/search/?api=1&query=Notre-Dame+Auxiliatrice+Cap+Malheureux+Mauritius",
+          "description": "Chapelle emblématique au bord du lagon — détour naturel depuis le nord"
+        }
+      ],
       "photos": [
         {
           "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFggCZcmDQ7jPoAfSvLIjddVur2ketFz5DOBrDd5oFkOLzPChJ0wx6DBA_fq-aMWecQNn4T6nUuJXEw9kYdZjVh6GnFrMU1DfKODa-BMX7Do97_1dqTq8ZlxYbj0fIg2zkBDGkLO0Be1OXZ=w800-h500-k-no",
           "caption": "Jardin de Pamplemousses",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sir+Seewoosagur+Ramgoolam+Botanical+Garden"
+        },
+        {
+          "url": "https://ip1.orchestra-platform.com/sWjMvkfMjYBqFHPlvMjdoa5z30Msw29lSuqS3GjqT7-A/https://fairmoove-media-storage.s3.eu-west-3.amazonaws.com/photo/poi/ile-maurice/ile-maurice-cap-malheureux.jpeg",
+          "caption": "Église de Cap Malheureux — chapelle au toit rouge",
+          "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Notre-Dame+Auxiliatrice+Cap+Malheureux+Mauritius"
         },
         {
           "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGAv3krRt_oMinw4-Z_gpO36OGWTzCfAHVsCfFk4IZSq7Gq6G7l-354XJ9YTPtsWbIC1-Ecea3oEHIGswXyddALWG30IbtlmVM-Zb4gunKf3FnCAbuXF72rXudRqD56rZgyr69EjEw9uqmK=w800-h500-k-no",

@@ -33,7 +33,7 @@ const dayPhotos = {
   9: photoList([["leMorne", "Le Morne Brabant — panorama UNESCO"]]),
   10: photoList([["flicEnFlac", "Flic en Flac — plage de l'ouest"]]),
   11: photoList([["portLouis", "Port-Louis — marché central"]]),
-  12: photoList([["pamplemousses", "Jardin de Pamplemousses"], ["montChoisy", "Mont Choisy — plage familiale"]]),
+  12: photoList([["pamplemousses", "Jardin de Pamplemousses"], ["capMalheureux", "Église de Cap Malheureux — chapelle au toit rouge"], ["montChoisy", "Mont Choisy — plage familiale"]]),
   13: photoList([["laVanille", "La Vanille Nature Park"], ["rochesterFalls", "Rochester Falls — baignade"], ["grisGris", "Gris Gris — côte sud sauvage"]]),
   14: photoList([["blueBay", "Blue Bay — une dernière baignade ?"]])
 };
