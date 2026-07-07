@@ -27,12 +27,40 @@ function esc(text) {
     .replace(/"/g, "&quot;");
 }
 
+function shortDate(dateStr) {
+  const m = String(dateStr).match(/(\d{1,2})\s+(janvier|f[eé]vrier|mars|avril|mai|juin|juillet|ao[uû]t|septembre|octobre|novembre|d[eé]cembre)/i);
+  if (!m) {
+    return "";
+  }
+  const months = {
+    janvier: "jan",
+    février: "fév",
+    fevrier: "fév",
+    mars: "mar",
+    avril: "avr",
+    mai: "mai",
+    juin: "juin",
+    juillet: "juil",
+    août: "août",
+    aout: "août",
+    septembre: "sep",
+    octobre: "oct",
+    novembre: "nov",
+    décembre: "déc",
+    decembre: "déc"
+  };
+  const mon = months[m[2].toLowerCase()] || m[2].slice(0, 3);
+  return m[1] + " " + mon;
+}
+
 function renderRhythm() {
   return D.ITINERARY.map((day) => {
     const r = RHYTHM_META[day.rhythm];
+    const label = shortDate(day.date);
     return (
-      '<button type="button" class="rhythm-chip rhythm-' + day.rhythm + '" data-goto-day="' + day.day + '" title="Jour ' + day.day + '">' +
+      '<button type="button" class="rhythm-chip rhythm-' + day.rhythm + '" data-goto-day="' + day.day + '" title="Jour ' + day.day + " — " + esc(day.date) + '">' +
       '<span class="rhythm-chip-day">J' + day.day + "</span>" +
+      (label ? '<span class="rhythm-chip-date">' + esc(label) + "</span>" : "") +
       '<span class="rhythm-chip-icon" aria-hidden="true">' + r.icon + "</span></button>"
     );
   }).join("");
@@ -74,11 +102,11 @@ const html = `<!doctype html>
       <h1>${esc(D.TRIP_META.title)}</h1>
       <p class="hero-sub">${esc(D.TRIP_META.dates)} · Base à ${esc(D.BASE.name)} · ${esc(D.TRIP_META.group)}</p>
       <div class="chip-row">
-        <span class="chip">✈️ Arrivée 7 nov</span>
+        <span class="chip">✈️ ${esc(D.TRIP_META.arrival)}</span>
         <span class="chip">🏠 New Grove</span>
         <span class="chip">🚗 Voiture</span>
         <span class="chip">🦵 Genoux sensibles</span>
-        <span class="chip">🌴 Départ 21 nov</span>
+        <span class="chip">🌴 ${esc(D.TRIP_META.departure)}</span>
       </div>
     </header>
     <section class="panel" aria-label="Rythme du voyage">

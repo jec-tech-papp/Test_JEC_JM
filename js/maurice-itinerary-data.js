@@ -7,9 +7,9 @@ window.ITINERARY_DATA = {
   },
   "TRIP_META": {
     "title": "Île Maurice — 14 jours",
-    "dates": "7 → 21 novembre 2026",
-    "arrival": "Arrivée le matin du 7 novembre",
-    "departure": "Départ le soir du 21 novembre",
+    "dates": "7 → 20 novembre 2026",
+    "arrival": "Arrivée le 7 novembre à 13h45",
+    "departure": "Départ le 20 novembre à 20h50",
     "group": "6 adultes",
     "transport": "Voiture de location",
     "constraint": "2 personnes avec genoux sensibles — pas de longues randonnées"
@@ -89,10 +89,10 @@ window.ITINERARY_DATA = {
         "repos",
         "plage"
       ],
-      "summary": "Journée d'installation : accueil à l'aéroport par la famille (sans doute Ben), installation à New Grove, puis première baignade à Blue Bay.",
+      "summary": "Journée d'installation : arrivée à l'aéroport à 13h45, accueil par la famille (sans doute Ben), installation à New Grove, puis première baignade à Blue Bay.",
       "activities": [
         {
-          "text": "Arrivée à l'aéroport SSR — accueil par la famille et trajet vers New Grove",
+          "text": "Arrivée à l'aéroport SSR à 13h45 — accueil par la famille et trajet vers New Grove",
           "link": "https://www.google.com/maps/search/?api=1&query=Sir+Seewoosagur+Ramgoolam+International+Airport"
         },
         "Courses alimentaires et premiers repas locaux",
@@ -850,7 +850,7 @@ window.ITINERARY_DATA = {
     },
     {
       "day": 14,
-      "date": "Jeudi 20 – Vendredi 21 novembre 2026",
+      "date": "Jeudi 20 novembre 2026",
       "title": "Journée libre & départ",
       "rhythm": "chill",
       "effort": "facile",
@@ -858,10 +858,14 @@ window.ITINERARY_DATA = {
         "repos",
         "plage"
       ],
+      "summary": "Dernière journée libre le matin, puis préparation des valises et départ vers l'aéroport pour le vol de 20h50.",
       "activities": [
-        "Jeudi 20 : matinée libre sur votre plage favorite",
+        "Matinée libre sur votre plage favorite",
         "Derniers achats et préparation des valises",
-        "Vendredi 21 : dernière baignade, check-out et départ vers l'aéroport le soir"
+        {
+          "text": "Départ vers l'aéroport SSR — vol à 20h50",
+          "link": "https://www.google.com/maps/search/?api=1&query=Sir+Seewoosagur+Ramgoolam+International+Airport"
+        }
       ],
       "beach": "Votre plage favorite (Blue Bay, Pereybère ou Pointe d'Esny)",
       "locations": [
@@ -879,7 +883,7 @@ window.ITINERARY_DATA = {
         }
       ],
       "driveMinutes": 15,
-      "tips": "Prévoyez 2 h avant le vol du 21/11 au soir pour le retour de la voiture. Un dernier dip dans le lagon !",
+      "tips": "Prévoyez 2 h avant le vol de 20h50 pour le retour de la voiture et l'enregistrement. Un dernier dip dans le lagon le matin !",
       "photos": [
         {
           "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHykWfI-KNqS3z8eGghvVTDa4K2jpI0-WAmyzf2ZmeVFsoZY48yS3b-lEqCJlyirppPl5DFpkqCGfbQk8rbev1fOkf016h7xhqyvi3CnSpmTQXdHCd5IYj7fbdInK-dKCkTIfvq=w800-h500-k-no",
