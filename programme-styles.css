@@ -379,24 +379,29 @@ a:hover { color: var(--accent-strong); }
 
 /* Days list */
 .days-list {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1.15rem;
   width: 100%;
 }
 
+.days-list.has-selection .day-card:not(.is-selected) {
+  opacity: 0.82;
+}
+
 .day-card {
+  position: relative;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--surface);
   overflow: hidden;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out), border-color 0.25s ease;
+  scroll-margin-top: calc(var(--nav-height, 12rem) + 0.75rem);
+  transition: opacity 0.25s ease, box-shadow 0.35s var(--ease-out), border-color 0.25s ease;
 }
 
 .day-card:hover {
-  transform: translateY(-3px);
   box-shadow: var(--shadow);
   border-color: var(--border-strong);
 }
@@ -405,7 +410,20 @@ a:hover { color: var(--accent-strong); }
 
 .day-card.is-selected {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow);
+  box-shadow: 0 0 0 2px var(--accent-soft), var(--shadow);
+  opacity: 1;
+}
+
+.day-card.is-selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent);
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  z-index: 1;
 }
 
 .day-card.is-search-match {
@@ -910,21 +928,6 @@ a:hover { color: var(--accent-strong); }
 }
 
 @media (min-width: 1200px) {
-  .days-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .day-card.is-selected,
-  .day-card:has(+ .day-card.is-selected) {
-    /* keep selected card prominent - span full width when selected */
-  }
-
-  .day-card.is-selected {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (min-width: 1600px) {
   .sticky-nav-inner {
     display: grid;
     grid-template-columns: minmax(220px, 1fr) 2fr auto;

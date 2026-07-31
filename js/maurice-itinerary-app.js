@@ -133,13 +133,7 @@
         var dayNum = chip.getAttribute("data-goto-day");
         var target = $("day-" + dayNum);
         if (target) {
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-          state.selectedDay = Number(dayNum);
-          setActiveRhythmChip(dayNum);
-          Array.prototype.forEach.call(els.dayCards, function (card) {
-            card.classList.toggle("is-selected", Number(card.getAttribute("data-day")) === state.selectedDay);
-          });
-          updateMap();
+          selectDay(Number(dayNum), { scrollToCard: true });
         }
       });
     });
@@ -149,6 +143,41 @@
     Array.prototype.forEach.call(document.querySelectorAll(".rhythm-chip"), function (chip) {
       chip.classList.toggle("is-active", dayNum !== null && chip.getAttribute("data-goto-day") === String(dayNum));
     });
+  }
+
+  function updateSelectionUI() {
+    Array.prototype.forEach.call(els.dayCards, function (c) {
+      c.classList.toggle("is-selected", state.selectedDay === Number(c.getAttribute("data-day")));
+    });
+    if (els.daysGrid) {
+      els.daysGrid.classList.toggle("has-selection", state.selectedDay !== null);
+    }
+    setActiveRhythmChip(state.selectedDay);
+  }
+
+  function selectDay(dayNum, options) {
+    options = options || {};
+    state.selectedDay = dayNum;
+    updateSelectionUI();
+    updateMap();
+    if (options.scrollToCard) {
+      var card = $("day-" + dayNum);
+      if (card) {
+        card.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+    if (options.scrollToMap) {
+      var section = $("mapSection");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    }
+  }
+
+  function clearSelection() {
+    state.selectedDay = null;
+    updateSelectionUI();
+    updateMap();
   }
 
   function initSearch() {
@@ -257,15 +286,11 @@
     els.driveRows = document.querySelectorAll(".drive-row");
     Array.prototype.forEach.call(els.dayCards, function (card) {
       card.addEventListener("click", function (event) {
-        if (event.target.closest(".map-focus-btn")) {
+        if (event.target.closest("a, button, input, label")) {
           return;
         }
         var dayNum = Number(card.getAttribute("data-day"));
-        state.selectedDay = state.selectedDay === dayNum ? null : dayNum;
-        Array.prototype.forEach.call(els.dayCards, function (c) {
-          c.classList.toggle("is-selected", state.selectedDay === Number(c.getAttribute("data-day")));
-        });
-        updateMap();
+        selectDay(dayNum, { scrollToMap: true });
       });
 
       var mapBtn = card.querySelector(".map-focus-btn");
@@ -546,16 +571,7 @@
   }
 
   function focusDayOnMap(dayNum) {
-    state.selectedDay = dayNum;
-    setActiveRhythmChip(dayNum);
-    Array.prototype.forEach.call(els.dayCards, function (card) {
-      card.classList.toggle("is-selected", Number(card.getAttribute("data-day")) === dayNum);
-    });
-    updateMap();
-    var section = $("mapSection");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    selectDay(dayNum, { scrollToMap: true });
     if (mapReady && map) {
       var day = getItinerary().find(function (d) {
         return d.day === dayNum;
@@ -611,12 +627,7 @@
       applyDriveToggle();
     });
     $("resetMapBtn").addEventListener("click", function () {
-      state.selectedDay = null;
-      setActiveRhythmChip(null);
-      Array.prototype.forEach.call(els.dayCards, function (c) {
-        c.classList.remove("is-selected");
-      });
-      updateMap();
+      clearSelection();
     });
     applyFilter();
     applyDriveToggle();

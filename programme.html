@@ -389,24 +389,29 @@ a:hover { color: var(--accent-strong); }
 
 /* Days list */
 .days-list {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1.15rem;
   width: 100%;
 }
 
+.days-list.has-selection .day-card:not(.is-selected) {
+  opacity: 0.82;
+}
+
 .day-card {
+  position: relative;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--surface);
   overflow: hidden;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out), border-color 0.25s ease;
+  scroll-margin-top: calc(var(--nav-height, 12rem) + 0.75rem);
+  transition: opacity 0.25s ease, box-shadow 0.35s var(--ease-out), border-color 0.25s ease;
 }
 
 .day-card:hover {
-  transform: translateY(-3px);
   box-shadow: var(--shadow);
   border-color: var(--border-strong);
 }
@@ -415,7 +420,20 @@ a:hover { color: var(--accent-strong); }
 
 .day-card.is-selected {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow);
+  box-shadow: 0 0 0 2px var(--accent-soft), var(--shadow);
+  opacity: 1;
+}
+
+.day-card.is-selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent);
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  z-index: 1;
 }
 
 .day-card.is-search-match {
@@ -920,21 +938,6 @@ a:hover { color: var(--accent-strong); }
 }
 
 @media (min-width: 1200px) {
-  .days-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .day-card.is-selected,
-  .day-card:has(+ .day-card.is-selected) {
-    /* keep selected card prominent - span full width when selected */
-  }
-
-  .day-card.is-selected {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (min-width: 1600px) {
   .sticky-nav-inner {
     display: grid;
     grid-template-columns: minmax(220px, 1fr) 2fr auto;
@@ -2319,13 +2322,7 @@ a:hover { color: var(--accent-strong); }
         var dayNum = chip.getAttribute("data-goto-day");
         var target = $("day-" + dayNum);
         if (target) {
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-          state.selectedDay = Number(dayNum);
-          setActiveRhythmChip(dayNum);
-          Array.prototype.forEach.call(els.dayCards, function (card) {
-            card.classList.toggle("is-selected", Number(card.getAttribute("data-day")) === state.selectedDay);
-          });
-          updateMap();
+          selectDay(Number(dayNum), { scrollToCard: true });
         }
       });
     });
@@ -2335,6 +2332,41 @@ a:hover { color: var(--accent-strong); }
     Array.prototype.forEach.call(document.querySelectorAll(".rhythm-chip"), function (chip) {
       chip.classList.toggle("is-active", dayNum !== null && chip.getAttribute("data-goto-day") === String(dayNum));
     });
+  }
+
+  function updateSelectionUI() {
+    Array.prototype.forEach.call(els.dayCards, function (c) {
+      c.classList.toggle("is-selected", state.selectedDay === Number(c.getAttribute("data-day")));
+    });
+    if (els.daysGrid) {
+      els.daysGrid.classList.toggle("has-selection", state.selectedDay !== null);
+    }
+    setActiveRhythmChip(state.selectedDay);
+  }
+
+  function selectDay(dayNum, options) {
+    options = options || {};
+    state.selectedDay = dayNum;
+    updateSelectionUI();
+    updateMap();
+    if (options.scrollToCard) {
+      var card = $("day-" + dayNum);
+      if (card) {
+        card.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+    if (options.scrollToMap) {
+      var section = $("mapSection");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    }
+  }
+
+  function clearSelection() {
+    state.selectedDay = null;
+    updateSelectionUI();
+    updateMap();
   }
 
   function initSearch() {
@@ -2443,15 +2475,11 @@ a:hover { color: var(--accent-strong); }
     els.driveRows = document.querySelectorAll(".drive-row");
     Array.prototype.forEach.call(els.dayCards, function (card) {
       card.addEventListener("click", function (event) {
-        if (event.target.closest(".map-focus-btn")) {
+        if (event.target.closest("a, button, input, label")) {
           return;
         }
         var dayNum = Number(card.getAttribute("data-day"));
-        state.selectedDay = state.selectedDay === dayNum ? null : dayNum;
-        Array.prototype.forEach.call(els.dayCards, function (c) {
-          c.classList.toggle("is-selected", state.selectedDay === Number(c.getAttribute("data-day")));
-        });
-        updateMap();
+        selectDay(dayNum, { scrollToMap: true });
       });
 
       var mapBtn = card.querySelector(".map-focus-btn");
@@ -2732,16 +2760,7 @@ a:hover { color: var(--accent-strong); }
   }
 
   function focusDayOnMap(dayNum) {
-    state.selectedDay = dayNum;
-    setActiveRhythmChip(dayNum);
-    Array.prototype.forEach.call(els.dayCards, function (card) {
-      card.classList.toggle("is-selected", Number(card.getAttribute("data-day")) === dayNum);
-    });
-    updateMap();
-    var section = $("mapSection");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    selectDay(dayNum, { scrollToMap: true });
     if (mapReady && map) {
       var day = getItinerary().find(function (d) {
         return d.day === dayNum;
@@ -2797,12 +2816,7 @@ a:hover { color: var(--accent-strong); }
       applyDriveToggle();
     });
     $("resetMapBtn").addEventListener("click", function () {
-      state.selectedDay = null;
-      setActiveRhythmChip(null);
-      Array.prototype.forEach.call(els.dayCards, function (c) {
-        c.classList.remove("is-selected");
-      });
-      updateMap();
+      clearSelection();
     });
     applyFilter();
     applyDriveToggle();
