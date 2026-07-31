@@ -466,10 +466,27 @@
   }
 
   var DAY_ROUTE_COLORS = [
-    "#0f766e", "#9a3412", "#166534", "#b45309", "#7c3aed", "#0369a1",
-    "#0d9488", "#c2410c", "#4d7c0f", "#1d4ed8", "#be123c", "#0e7490",
-    "#15803d", "#a16207"
+    "#0f766e", "#b45309", "#7c3aed", "#be123c", "#0369a1",
+    "#a16207", "#15803d", "#c2410c", "#6d28d9", "#0e7490",
+    "#991b1b", "#4d7c0f", "#1d4ed8", "#9f1239"
   ];
+
+  function getDayRouteColor(dayNum) {
+    return DAY_ROUTE_COLORS[(dayNum - 1) % DAY_ROUTE_COLORS.length];
+  }
+
+  function getMapDays(days) {
+    if (state.selectedDay !== null) {
+      return days.filter(function (day) {
+        return day.day === state.selectedDay;
+      });
+    }
+    return days;
+  }
+
+  function isAllDaysMapView(mapDays) {
+    return state.selectedDay === null && mapDays.length > 1;
+  }
 
   function isHomeBase(loc) {
     return loc.type === "base" && loc.name === BASE.name;
@@ -491,7 +508,7 @@
 
   function getDayRouteStyle(day) {
     var isSelected = state.selectedDay === day.day;
-    var color = DAY_ROUTE_COLORS[(day.day - 1) % DAY_ROUTE_COLORS.length];
+    var color = getDayRouteColor(day.day);
     if (state.selectedDay !== null) {
       return {
         color: color,
@@ -502,10 +519,19 @@
     }
     return {
       color: color,
-      weight: 3,
-      opacity: 0.8,
-      dashArray: "10 6"
+      weight: 4,
+      opacity: 0.9,
+      dashArray: null,
+      lineCap: "round",
+      lineJoin: "round"
     };
+  }
+
+  function getDayMarkerColor(day) {
+    if (state.selectedDay === null) {
+      return getDayRouteColor(day.day);
+    }
+    return null;
   }
 
   function formatRoutePopup(day, route) {
@@ -572,13 +598,10 @@
     var bounds = [[BASE.lat, BASE.lng]];
     var legendKeys = ["base"];
     var days = getVisibleDays();
-    var mapDays = state.selectedDay !== null
-      ? days.filter(function (day) {
-          return day.day === state.selectedDay;
-        })
-      : days;
+    var mapDays = getMapDays(days);
 
     mapDays.forEach(function (day) {
+      var dayMarkerColor = getDayMarkerColor(day);
       day.locations.forEach(function (loc) {
         if (isHomeBase(loc)) {
           return;
@@ -590,7 +613,12 @@
           L.marker([loc.lat, loc.lng], {
             icon: L.divIcon({
               className: "leaflet-marker-day",
-              html: '<div class="marker-pin" style="background:' + getMarkerColor(loc.type) + '">J' + day.day + "</div>",
+              html:
+                '<div class="marker-pin" style="background:' +
+                (dayMarkerColor || getMarkerColor(loc.type)) +
+                '">J' +
+                day.day +
+                "</div>",
               iconSize: [30, 30],
               iconAnchor: [15, 15]
             })
@@ -614,22 +642,38 @@
       map.setView([BASE.lat, BASE.lng], 10);
     }
 
-    renderMapLegend(legendKeys);
+    renderMapLegend(legendKeys, mapDays);
   }
 
-  function renderMapLegend(keys) {
+  function renderMapLegend(keys, mapDays) {
+    mapDays = mapDays || [];
     var labels = { base: "🏠 Base", plage: "🏖️ Plage", culture: "🏛️ Culture", nature: "🌿 Nature" };
     var items = keys.map(function (k) {
       return '<span class="legend-item">' + (labels[k] || k) + "</span>";
     });
     if (mapReady) {
-      items.push('<span class="legend-item legend-route">〰️ Itinéraires (base → étapes → base)</span>');
+      if (isAllDaysMapView(mapDays)) {
+        mapDays.forEach(function (day) {
+          var color = getDayRouteColor(day.day);
+          items.push(
+            '<span class="legend-item legend-day-route">' +
+            '<span class="legend-swatch" style="background:' +
+            color +
+            '" aria-hidden="true"></span>J' +
+            day.day +
+            "</span>"
+          );
+        });
+      } else {
+        items.push('<span class="legend-item legend-route">〰️ Itinéraire du jour sélectionné</span>');
+      }
     }
     els.mapLegend.innerHTML = items.join("");
   }
 
   function updateMap() {
     var days = getVisibleDays();
+    var mapDays = getMapDays(days);
     var legendKeys = ["base"];
     days.forEach(function (day) {
       day.locations.forEach(function (loc) {
@@ -638,12 +682,12 @@
         }
       });
     });
-    renderMapLegend(legendKeys);
 
     if (mapReady) {
       updateLeafletMap();
     } else {
       updateFallbackMap();
+      renderMapLegend(legendKeys, mapDays);
     }
   }
 
