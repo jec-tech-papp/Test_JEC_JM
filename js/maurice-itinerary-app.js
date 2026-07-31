@@ -104,6 +104,9 @@
       }
     }
     updateMap();
+    if (state.selectedDay !== null) {
+      updateSelectionUI();
+    }
   }
 
   function applyDriveToggle() {
@@ -145,13 +148,54 @@
     });
   }
 
-  function updateSelectionUI() {
-    Array.prototype.forEach.call(els.dayCards, function (c) {
-      c.classList.toggle("is-selected", state.selectedDay === Number(c.getAttribute("data-day")));
+  function getVisibleDayCards() {
+    return Array.prototype.filter.call(els.dayCards, function (card) {
+      return !card.classList.contains("is-hidden");
     });
+  }
+
+  function resetCardGridPlacement() {
+    Array.prototype.forEach.call(els.dayCards, function (card) {
+      card.classList.remove("is-selected", "is-row-collapsed");
+      card.style.gridColumn = "";
+      card.style.gridRow = "";
+    });
+  }
+
+  function updateSelectionUI() {
+    resetCardGridPlacement();
+
     if (els.daysGrid) {
       els.daysGrid.classList.toggle("has-selection", state.selectedDay !== null);
     }
+
+    if (state.selectedDay === null) {
+      setActiveRhythmChip(null);
+      return;
+    }
+
+    var selected = $("day-" + state.selectedDay);
+    if (!selected || selected.classList.contains("is-hidden")) {
+      setActiveRhythmChip(state.selectedDay);
+      return;
+    }
+
+    selected.classList.add("is-selected");
+
+    if (window.matchMedia("(min-width: 1200px)").matches) {
+      var visible = getVisibleDayCards();
+      var index = visible.indexOf(selected);
+      if (index !== -1) {
+        var row = Math.floor(index / 2) + 1;
+        var partnerIndex = index % 2 === 0 ? index + 1 : index - 1;
+        selected.style.gridRow = String(row);
+        selected.style.gridColumn = "1 / -1";
+        if (partnerIndex >= 0 && partnerIndex < visible.length && Math.floor(partnerIndex / 2) === Math.floor(index / 2)) {
+          visible[partnerIndex].classList.add("is-row-collapsed");
+        }
+      }
+    }
+
     setActiveRhythmChip(state.selectedDay);
   }
 
@@ -290,7 +334,7 @@
           return;
         }
         var dayNum = Number(card.getAttribute("data-day"));
-        selectDay(dayNum, { scrollToMap: true });
+        selectDay(dayNum);
       });
 
       var mapBtn = card.querySelector(".map-focus-btn");
@@ -621,7 +665,12 @@
     initDayScrollSpy();
     initParallax();
     updateNavHeight();
-    window.addEventListener("resize", updateNavHeight);
+    window.addEventListener("resize", function () {
+      updateNavHeight();
+      if (state.selectedDay !== null) {
+        updateSelectionUI();
+      }
+    });
     els.driveToggle.addEventListener("change", function () {
       state.showDriveTimes = els.driveToggle.checked;
       applyDriveToggle();

@@ -385,8 +385,12 @@ a:hover { color: var(--accent-strong); }
   width: 100%;
 }
 
-.days-list.has-selection .day-card:not(.is-selected) {
+.days-list.has-selection .day-card:not(.is-selected):not(.is-row-collapsed) {
   opacity: 0.82;
+}
+
+.day-card.is-row-collapsed {
+  display: none !important;
 }
 
 .day-card {
@@ -928,6 +932,17 @@ a:hover { color: var(--accent-strong); }
 }
 
 @media (min-width: 1200px) {
+  .days-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.15rem;
+    align-items: start;
+  }
+
+  .day-card.is-selected {
+    z-index: 2;
+  }
+
   .sticky-nav-inner {
     display: grid;
     grid-template-columns: minmax(220px, 1fr) 2fr auto;
