@@ -74,8 +74,9 @@ function renderFilters() {
 }
 
 function renderTips() {
-  return D.PRACTICAL_TIPS.map((tip) => (
-    '<div class="tip-card"><span class="tip-icon" aria-hidden="true">' + tip.icon + "</span>" +
+  return D.PRACTICAL_TIPS.map((tip, i) => (
+    '<div class="tip-card reveal' + (i % 3 === 1 ? " reveal-delay-1" : i % 3 === 2 ? " reveal-delay-2" : "") + '">' +
+    '<span class="tip-icon" aria-hidden="true">' + tip.icon + "</span>" +
     "<h3>" + esc(tip.title) + "</h3><p>" + esc(tip.text) + "</p></div>"
   )).join("");
 }
@@ -90,50 +91,64 @@ const html = `<!doctype html>
   <title>Programme 14 jours — Île Maurice</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌴</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
   <style>${styles}</style>
 </head>
 <body>
+  <div class="parallax-bg" aria-hidden="true">
+    <div class="parallax-orb parallax-orb-1" data-parallax="0.12"></div>
+    <div class="parallax-orb parallax-orb-2" data-parallax="0.2"></div>
+    <div class="parallax-orb parallax-orb-3" data-parallax="0.06"></div>
+  </div>
+
   <a class="back-link" href="index.html">&larr; Compte à rebours</a>
-  <main class="page">
-    <header class="panel hero">
-      <p class="hero-kicker">🌴 Itinéraire détaillé</p>
-      <h1>${esc(D.TRIP_META.title)}</h1>
-      <p class="hero-sub">${esc(D.TRIP_META.dates)} · Base à ${esc(D.BASE.name)} · ${esc(D.TRIP_META.group)}</p>
-      <div class="chip-row">
-        <span class="chip">✈️ ${esc(D.TRIP_META.arrival)}</span>
-        <span class="chip">🏠 New Grove</span>
-        <span class="chip">🚗 Voiture</span>
-        <span class="chip">🦵 Genoux sensibles</span>
-        <span class="chip">🌴 ${esc(D.TRIP_META.departure)}</span>
+
+  <header class="hero-full reveal">
+    <p class="hero-kicker">🌴 Itinéraire détaillé</p>
+    <h1>${esc(D.TRIP_META.title)}</h1>
+    <p class="hero-sub">${esc(D.TRIP_META.dates)} · Base à ${esc(D.BASE.name)} · ${esc(D.TRIP_META.group)}</p>
+    <div class="chip-row">
+      <span class="chip">✈️ ${esc(D.TRIP_META.arrival)}</span>
+      <span class="chip">🏠 New Grove</span>
+      <span class="chip">🚗 Voiture</span>
+      <span class="chip">🦵 Genoux sensibles</span>
+      <span class="chip">🌴 ${esc(D.TRIP_META.departure)}</span>
+    </div>
+  </header>
+
+  <nav class="sticky-nav" id="stickyNav" aria-label="Navigation du programme">
+    <div class="sticky-nav-inner">
+      <div class="search-wrap">
+        <input class="search-input" type="search" id="daySearch" placeholder="Rechercher un jour, lieu, activité…" autocomplete="off" aria-label="Rechercher dans le programme">
       </div>
-    </header>
-    <section class="panel" aria-label="Rythme du voyage">
-      <p class="section-kicker">Vue d'ensemble</p>
-      <h2 class="section-title">Alternance actif / chill</h2>
-      <div class="rhythm-grid" id="rhythmGrid">${renderRhythm()}</div>
-    </section>
-    <section class="panel" aria-label="Filtres">
-      <div class="toolbar-head">
-        <h2 class="section-title" style="margin:0">Filtrer par activité</h2>
+      <div class="search-meta">
         <span class="day-count" id="dayCount">14 jours</span>
+        <span id="searchStatus" hidden></span>
       </div>
-      <div id="filterBar" role="toolbar">${renderFilters()}</div>
-      <label class="toggle-row">
-        <input type="checkbox" id="driveToggle" checked>
-        <span>Temps de trajet depuis New Grove : <strong id="driveToggleLabel">affichés</strong></span>
-      </label>
-    </section>
+      <div class="rhythm-scroll">
+        <div class="rhythm-grid" id="rhythmGrid">${renderRhythm()}</div>
+      </div>
+      <div class="toolbar-row">
+        <div id="filterBar" role="toolbar" aria-label="Filtrer par activité">${renderFilters()}</div>
+        <label class="toggle-row">
+          <input type="checkbox" id="driveToggle" checked>
+          <span>Trajets <strong id="driveToggleLabel">affichés</strong></span>
+        </label>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page">
     <div class="layout-with-map">
       <section aria-label="Programme jour par jour">
-        <h2 class="section-title">📅 Programme jour par jour</h2>
+        <h2 class="section-title reveal">📅 Programme jour par jour</h2>
         <div id="daysGrid" class="days-list">${Render.renderAllDays(D.ITINERARY, D)}</div>
       </section>
-      <aside class="map-sticky" id="mapSection">
+      <aside class="map-sticky reveal reveal-delay-1" id="mapSection">
         <div class="panel map-panel">
           <div class="map-panel-head">
-            <h2 class="section-title" style="margin:0">🗺️ Carte</h2>
+            <h2 class="section-title" style="margin:0">🗺️ Carte interactive</h2>
             <button type="button" class="btn-ghost" id="resetMapBtn">Tout afficher</button>
           </div>
           <div class="map-wrap">
@@ -145,7 +160,7 @@ const html = `<!doctype html>
         </div>
       </aside>
     </div>
-    <section class="panel tips-panel" aria-label="Conseils pratiques">
+    <section class="panel tips-panel reveal" aria-label="Conseils pratiques">
       <h2 class="section-title">💡 Conseils pratiques</h2>
       <div id="tipsGrid" class="tips-grid">${renderTips()}</div>
     </section>

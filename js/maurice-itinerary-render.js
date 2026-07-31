@@ -111,6 +111,23 @@
     return '<section class="day-block day-links"><h3>🔗 Liens utiles</h3><div class="links-list">' + items + "</div></section>";
   }
 
+  function buildSearchText(day) {
+    var parts = [
+      day.title,
+      day.date,
+      day.summary || "",
+      day.beach || "",
+      day.tips || ""
+    ];
+    (day.activities || []).forEach(function (a) {
+      parts.push(activityText(a));
+    });
+    (day.locations || []).forEach(function (loc) {
+      parts.push(loc.name);
+    });
+    return parts.join(" ").toLowerCase();
+  }
+
   function renderDayCard(day, meta) {
     var CATEGORY_META = meta.CATEGORY_META;
     var RHYTHM_META = meta.RHYTHM_META;
@@ -130,12 +147,14 @@
       : "";
 
     return (
-      '<article class="day-card" id="day-' +
+      '<article class="day-card reveal" id="day-' +
       day.day +
       '" data-day="' +
       day.day +
       '" data-categories="' +
       (day.categories || []).join(" ") +
+      '" data-search="' +
+      esc(buildSearchText(day)) +
       '">' +
       '<header class="day-card-top">' +
       '<div class="day-title-block">' +
@@ -172,6 +191,7 @@
       '<section class="day-block"><h3>Activités</h3><ul class="activity-list">' +
       activities +
       "</ul></section>" +
+      '<div class="day-info-grid">' +
       '<section class="day-block highlight-beach"><h3>Plage du jour</h3><p>' +
       esc(day.beach) +
       "</p></section>" +
@@ -182,6 +202,7 @@
       '<section class="day-block highlight-tip"><h3>Conseil</h3><p>' +
       esc(day.tips) +
       "</p></section>" +
+      "</div>" +
       "</div>" +
       '<footer class="day-card-footer"><button type="button" class="map-focus-btn">Voir sur la carte</button></footer></article>'
     );

@@ -12,7 +12,7 @@
     return D.ITINERARY;
   }
 
-  var state = { filter: "all", showDriveTimes: true, selectedDay: null };
+  var state = { filter: "all", showDriveTimes: true, selectedDay: null, searchQuery: "" };
   var map = null;
   var markersLayer = null;
   var routeLayer = null;
@@ -37,6 +37,24 @@
     els.dayCards = document.querySelectorAll(".day-card");
     els.driveRows = document.querySelectorAll(".drive-row");
     els.daysGrid = $("daysGrid");
+    els.daySearch = $("daySearch");
+    els.searchStatus = $("searchStatus");
+    els.stickyNav = $("stickyNav");
+  }
+
+  function normalizeSearch(text) {
+    return String(text || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function cardMatchesSearch(card) {
+    if (!state.searchQuery) {
+      return true;
+    }
+    var haystack = normalizeSearch(card.getAttribute("data-search") || card.textContent);
+    return haystack.indexOf(state.searchQuery) !== -1;
   }
 
   function matchesFilter(card) {
@@ -55,6 +73,12 @@
       if (state.selectedDay !== null && state.selectedDay !== day.day) {
         return false;
       }
+      if (state.searchQuery) {
+        var card = $("day-" + day.day);
+        if (card && card.classList.contains("is-hidden")) {
+          return false;
+        }
+      }
       return true;
     });
   }
@@ -62,13 +86,23 @@
   function applyFilter() {
     var visible = 0;
     Array.prototype.forEach.call(els.dayCards, function (card) {
-      var show = matchesFilter(card);
+      var show = matchesFilter(card) && cardMatchesSearch(card);
       card.classList.toggle("is-hidden", !show);
+      card.classList.toggle("is-search-match", Boolean(state.searchQuery) && show);
       if (show) {
         visible += 1;
       }
     });
     els.dayCount.textContent = visible + " jour" + (visible > 1 ? "s" : "");
+    if (els.searchStatus) {
+      if (state.searchQuery) {
+        els.searchStatus.hidden = false;
+        els.searchStatus.textContent = visible + " résultat" + (visible > 1 ? "s" : "");
+      } else {
+        els.searchStatus.hidden = true;
+        els.searchStatus.textContent = "";
+      }
+    }
     updateMap();
   }
 
@@ -101,6 +135,7 @@
         if (target) {
           target.scrollIntoView({ behavior: "smooth", block: "start" });
           state.selectedDay = Number(dayNum);
+          setActiveRhythmChip(dayNum);
           Array.prototype.forEach.call(els.dayCards, function (card) {
             card.classList.toggle("is-selected", Number(card.getAttribute("data-day")) === state.selectedDay);
           });
@@ -108,6 +143,113 @@
         }
       });
     });
+  }
+
+  function setActiveRhythmChip(dayNum) {
+    Array.prototype.forEach.call(document.querySelectorAll(".rhythm-chip"), function (chip) {
+      chip.classList.toggle("is-active", dayNum !== null && chip.getAttribute("data-goto-day") === String(dayNum));
+    });
+  }
+
+  function initSearch() {
+    if (!els.daySearch) {
+      return;
+    }
+    var debounceTimer = null;
+    els.daySearch.addEventListener("input", function () {
+      window.clearTimeout(debounceTimer);
+      debounceTimer = window.setTimeout(function () {
+        state.searchQuery = normalizeSearch(els.daySearch.value.trim());
+        applyFilter();
+      }, 180);
+    });
+    els.daySearch.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        els.daySearch.value = "";
+        state.searchQuery = "";
+        applyFilter();
+      }
+    });
+  }
+
+  function initScrollReveal() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      Array.prototype.forEach.call(document.querySelectorAll(".reveal"), function (el) {
+        el.classList.add("is-visible");
+      });
+      return;
+    }
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+    Array.prototype.forEach.call(document.querySelectorAll(".reveal"), function (el) {
+      observer.observe(el);
+    });
+  }
+
+  function initDayScrollSpy() {
+    if (!("IntersectionObserver" in window)) {
+      return;
+    }
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var dayNum = entry.target.getAttribute("data-day");
+            setActiveRhythmChip(dayNum);
+          }
+        });
+      },
+      { threshold: 0.35, rootMargin: "-20% 0px -55% 0px" }
+    );
+    Array.prototype.forEach.call(els.dayCards, function (card) {
+      observer.observe(card);
+    });
+  }
+
+  function initParallax() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+    var orbs = document.querySelectorAll("[data-parallax]");
+    if (!orbs.length) {
+      return;
+    }
+    var ticking = false;
+    function updateParallax() {
+      var scrollY = window.scrollY || window.pageYOffset;
+      Array.prototype.forEach.call(orbs, function (orb) {
+        var speed = parseFloat(orb.getAttribute("data-parallax")) || 0.1;
+        orb.style.transform = "translate3d(0, " + scrollY * speed + "px, 0)";
+      });
+      ticking = false;
+    }
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(updateParallax);
+        }
+      },
+      { passive: true }
+    );
+    updateParallax();
+  }
+
+  function updateNavHeight() {
+    if (!els.stickyNav) {
+      return;
+    }
+    document.documentElement.style.setProperty("--nav-height", els.stickyNav.offsetHeight + "px");
   }
 
   function initDayCards() {
@@ -224,13 +366,13 @@
   }
 
   function getMarkerColor(type) {
-    return { base: "#ffdd8a", plage: "#38bdf8", culture: "#fbbf24", nature: "#4ade80" }[type] || "#fff";
+    return { base: "#9a3412", plage: "#0f766e", culture: "#b45309", nature: "#166534" }[type] || "#44403c";
   }
 
   var DAY_ROUTE_COLORS = [
-    "#ffd166", "#38bdf8", "#4ade80", "#fbbf24", "#c4b5fd", "#fb923c",
-    "#2dd4bf", "#f472b6", "#a78bfa", "#34d399", "#60a5fa", "#fcd34d",
-    "#86efac", "#fda4af"
+    "#0f766e", "#9a3412", "#166534", "#b45309", "#7c3aed", "#0369a1",
+    "#0d9488", "#c2410c", "#4d7c0f", "#1d4ed8", "#be123c", "#0e7490",
+    "#15803d", "#a16207"
   ];
 
   function isHomeBase(loc) {
@@ -295,8 +437,10 @@
     }
     try {
       map = L.map(els.tripMap, { scrollWheelZoom: false });
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "&copy; OpenStreetMap"
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        attribution: "&copy; OpenStreetMap &copy; CARTO",
+        subdomains: "abcd",
+        maxZoom: 19
       }).addTo(map);
       markersLayer = L.layerGroup().addTo(map);
       routeLayer = L.layerGroup().addTo(map);
@@ -403,6 +547,7 @@
 
   function focusDayOnMap(dayNum) {
     state.selectedDay = dayNum;
+    setActiveRhythmChip(dayNum);
     Array.prototype.forEach.call(els.dayCards, function (card) {
       card.classList.toggle("is-selected", Number(card.getAttribute("data-day")) === dayNum);
     });
@@ -454,13 +599,20 @@
     cacheElements();
     initFilters();
     initRhythm();
+    initSearch();
     initDayCards();
+    initScrollReveal();
+    initDayScrollSpy();
+    initParallax();
+    updateNavHeight();
+    window.addEventListener("resize", updateNavHeight);
     els.driveToggle.addEventListener("change", function () {
       state.showDriveTimes = els.driveToggle.checked;
       applyDriveToggle();
     });
     $("resetMapBtn").addEventListener("click", function () {
       state.selectedDay = null;
+      setActiveRhythmChip(null);
       Array.prototype.forEach.call(els.dayCards, function (c) {
         c.classList.remove("is-selected");
       });
