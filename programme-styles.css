@@ -55,36 +55,117 @@ a:hover { color: var(--accent-strong); }
   overflow: hidden;
 }
 
-.parallax-orb {
+.parallax-layer-sky {
   position: absolute;
-  border-radius: 999px;
-  filter: blur(80px);
-  opacity: 0.55;
+  inset: -25% -10% 0;
+  background:
+    radial-gradient(ellipse 75% 55% at 12% 8%, rgba(255, 228, 196, 0.95), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 88% 12%, rgba(167, 243, 208, 0.55), transparent 58%),
+    radial-gradient(ellipse 80% 50% at 55% 95%, rgba(15, 92, 82, 0.12), transparent 65%),
+    linear-gradient(180deg, rgba(255, 253, 249, 0.5), rgba(250, 248, 245, 0));
+}
+
+.parallax-orb-wrap {
+  position: absolute;
   will-change: transform;
 }
 
+.parallax-orb {
+  border-radius: 999px;
+  filter: blur(56px);
+  will-change: transform;
+  animation: parallax-float 14s ease-in-out infinite;
+}
+
+.parallax-orb-wrap-1 { top: -6%; left: -2%; }
+.parallax-orb-wrap-2 { top: 22%; right: -4%; }
+.parallax-orb-wrap-3 { bottom: 6%; left: 22%; }
+.parallax-orb-wrap-4 { top: 48%; left: 58%; }
+
 .parallax-orb-1 {
-  top: -8%;
-  left: -4%;
-  width: min(42vw, 28rem);
-  height: min(42vw, 28rem);
-  background: radial-gradient(circle, rgba(232, 223, 208, 0.95), transparent 70%);
+  width: min(46vw, 30rem);
+  height: min(46vw, 30rem);
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.55), rgba(251, 191, 36, 0.08) 68%);
+  animation-delay: 0s;
 }
 
 .parallax-orb-2 {
-  top: 18%;
-  right: -6%;
-  width: min(36vw, 24rem);
-  height: min(36vw, 24rem);
-  background: radial-gradient(circle, rgba(255, 250, 240, 0.9), transparent 70%);
+  width: min(38vw, 26rem);
+  height: min(38vw, 26rem);
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.5), rgba(45, 212, 191, 0.06) 70%);
+  animation-delay: -4.5s;
 }
 
 .parallax-orb-3 {
-  bottom: 8%;
-  left: 28%;
-  width: min(48vw, 32rem);
-  height: min(48vw, 32rem);
-  background: radial-gradient(circle, rgba(15, 92, 82, 0.08), transparent 72%);
+  width: min(52vw, 34rem);
+  height: min(52vw, 34rem);
+  background: radial-gradient(circle, rgba(15, 92, 82, 0.28), rgba(15, 92, 82, 0.04) 72%);
+  animation-delay: -9s;
+}
+
+.parallax-orb-4 {
+  width: min(28vw, 18rem);
+  height: min(28vw, 18rem);
+  background: radial-gradient(circle, rgba(251, 146, 60, 0.35), transparent 72%);
+  animation-delay: -2s;
+}
+
+.parallax-wave {
+  position: absolute;
+  left: -12%;
+  width: 124%;
+  height: 14rem;
+  border-radius: 48%;
+  will-change: transform;
+}
+
+.parallax-wave-1 {
+  bottom: 20%;
+  background: linear-gradient(180deg, rgba(15, 92, 82, 0.14), rgba(15, 92, 82, 0.03));
+  filter: blur(1px);
+}
+
+.parallax-wave-2 {
+  bottom: 6%;
+  height: 11rem;
+  background: linear-gradient(180deg, rgba(180, 83, 9, 0.12), transparent);
+  opacity: 0.85;
+}
+
+.parallax-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.28;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* Hero */
+.hero-full {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 5rem var(--page-gutter) 2rem;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(250, 248, 245, 0.25) 100%);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.hero-parallax-inner {
+  will-change: transform;
+}
+
+@keyframes parallax-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(0, -22px, 0) scale(1.03); }
+  66% { transform: translate3d(0, 12px, 0) scale(0.98); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-orb { animation: none; }
+  .hero-parallax-inner { transform: none !important; }
 }
 
 .back-link {
@@ -121,8 +202,9 @@ a:hover { color: var(--accent-strong); }
   padding: 5rem var(--page-gutter) 2rem;
   text-align: center;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(250, 248, 245, 0.4) 100%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(250, 248, 245, 0.25) 100%);
   border-bottom: 1px solid var(--border);
+  overflow: hidden;
 }
 
 .hero-kicker {
