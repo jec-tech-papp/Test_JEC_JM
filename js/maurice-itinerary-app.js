@@ -293,7 +293,7 @@
       return;
     }
 
-    var layers = document.querySelectorAll("[data-parallax-y], [data-parallax-x], [data-parallax-mouse]");
+    var layers = document.querySelectorAll("[data-parallax-y], [data-mouse-x], [data-mouse-y]");
     if (!layers.length) {
       return;
     }
@@ -303,7 +303,7 @@
     var smoothX = 0;
     var smoothY = 0;
 
-    function readLayerSpeed(layer, attr, fallback) {
+    function readNumber(layer, attr, fallback) {
       var value = layer.getAttribute(attr);
       if (value === null || value === "") {
         return fallback;
@@ -311,38 +311,37 @@
       return parseFloat(value);
     }
 
+    function setPointer(clientX, clientY) {
+      var w = window.innerWidth || 1;
+      var h = window.innerHeight || 1;
+      pointerX = clientX / w - 0.5;
+      pointerY = clientY / h - 0.5;
+    }
+
     function renderParallax() {
       var scrollY = window.scrollY || window.pageYOffset;
-      smoothX += (pointerX - smoothX) * 0.08;
-      smoothY += (pointerY - smoothY) * 0.08;
+      smoothX += (pointerX - smoothX) * 0.14;
+      smoothY += (pointerY - smoothY) * 0.14;
 
       Array.prototype.forEach.call(layers, function (layer) {
-        var speedY = readLayerSpeed(layer, "data-parallax-y", readLayerSpeed(layer, "data-parallax", 0.2));
-        var speedX = readLayerSpeed(layer, "data-parallax-x", 0);
-        var mouseFactor = readLayerSpeed(layer, "data-parallax-mouse", speedX !== 0 ? Math.abs(speedX) : 0.06);
-        var offsetY = scrollY * speedY;
-        var offsetX = smoothX * mouseFactor * 42;
-        var offsetMouseY = smoothY * mouseFactor * 28;
+        var scrollSpeed = readNumber(layer, "data-parallax-y", 0);
+        var mouseX = readNumber(layer, "data-mouse-x", 0);
+        var mouseY = readNumber(layer, "data-mouse-y", Math.abs(mouseX) * 0.55);
+        var x = smoothX * mouseX;
+        var y = scrollY * scrollSpeed + smoothY * mouseY;
 
-        if (speedY < 0) {
-          offsetY = scrollY * speedY;
-        }
-
-        layer.style.transform =
-          "translate3d(" + offsetX + "px, " + (offsetY + offsetMouseY) + "px, 0)";
+        layer.style.transform = "translate3d(" + x + "px, " + y + "px, 0)";
       });
 
       window.requestAnimationFrame(renderParallax);
     }
 
-    window.addEventListener(
-      "mousemove",
-      function (event) {
-        pointerX = event.clientX / window.innerWidth - 0.5;
-        pointerY = event.clientY / window.innerHeight - 0.5;
-      },
-      { passive: true }
-    );
+    function onPointerMove(event) {
+      setPointer(event.clientX, event.clientY);
+    }
+
+    window.addEventListener("mousemove", onPointerMove, { passive: true });
+    document.addEventListener("mousemove", onPointerMove, { passive: true });
 
     window.addEventListener(
       "touchmove",
@@ -350,8 +349,7 @@
         if (!event.touches || !event.touches.length) {
           return;
         }
-        pointerX = event.touches[0].clientX / window.innerWidth - 0.5;
-        pointerY = event.touches[0].clientY / window.innerHeight - 0.5;
+        setPointer(event.touches[0].clientX, event.touches[0].clientY);
       },
       { passive: true }
     );
