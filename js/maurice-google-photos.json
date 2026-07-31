@@ -1,0 +1,114 @@
+{
+  "blueBay": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHykWfI-KNqS3z8eGghvVTDa4K2jpI0-WAmyzf2ZmeVFsoZY48yS3b-lEqCJlyirppPl5DFpkqCGfbQk8rbev1fOkf016h7xhqyvi3CnSpmTQXdHCd5IYj7fbdInK-dKCkTIfvq=w800-h500-k-no"
+  },
+  "grisGris": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Gris+Gris+Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEtVoP2QC0tLyHO5YDB0asyc_XqhiG-Eee4zjLmqcgVw3iQbpAHeaYVYkGjFq6dEpoL0JZicgrpCZFLVE1gE-ZkaYhsqjF5-NtvggU42eL_AGuQgvn27OYP_B521Nbf-gX6gGuwwg=w800-h500-k-no"
+  },
+  "mahebourg": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mahebourg+Market+Mauritius",
+    "photo": "https://c8.alamy.com/compfr/frpdb0/stand-de-fruits-dans-la-halle-a-mahebourg-mauritius-frpdb0.jpg"
+  },
+  "mahebourgCemetery": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Marine+Cemetery+Mahebourg+Mauritius",
+    "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/31/8e/dc/fc/petit-bel-air-catholic.jpg?w=1200&h=1200&s=1"
+  },
+  "pointeEsny": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pointe+d%27Esny+Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEBzYh-5HtX_lmdnVjWmDAt1BvjJXX7tXJRMK0-sqvsHPYv3oACkAnIwYDpOO_XkwBxVyWUdT6-GYgFo6FIEWftEcN8f7MV7dQTLUYK2C3peNr0nhLDqfs1ocYaHk42eE7W2dyx=w800-h500-k-no"
+  },
+  "ileAuxCerfs": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ile+aux+Cerfs+Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHq5bV9Q7N2BCaQEOXIIfGQZ8Rg5TFlMJZijJ_AtGezwTlvhMLujVreupKGQVIF_BMFC2sxjzy_jJ7kgDhjjPmoyKwLPDljUjvEljB-S0UslkNq7gDYu5T2nQ0q6ymGq_txLNehfxhFOk2y=w800-h500-k-no"
+  },
+  "grandBassin": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Grand+Bassin+Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEET47HR0VWFGigS20DxhvBJd4X-dNCUBmaqDdyJb2uhqty9sjlDV2VTRvvjD0cyqjlVtL2vDm5Wb0CyjHLtAVxs-jj0J9i3sOkRADTvm0ZBxk5CjmgIryXPyK4K0eqKRZsghcU-uOQzhA=w800-h500-k-no"
+  },
+  "belleMare": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Belle+Mare+Beach+Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAH-e21IBBr5-2QYK-Qq4VX9JUFRaLYgue8d8bMzBeZSgM3Aqs4jXKxnsDIdAVboKZ-8wi6_tZad8XbYRQtYG76U8M9N1-LHKGt1IVA3tfUIkKO0XI8XhgNGpp4WKSvNs14TLv5vUovBkiIl=w800-h500-k-no"
+  },
+  "chamarel": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chamarel+Seven+Coloured+Earth",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHqPdYRFcv-1GxndIWy2oStp1672Ud8qGIkICyQ3T957nBV4uabnubYpKjDVE4lVZOludxkaXjKPn-r6VbuLewUVUkL30_CDXyDrpRtwwWFO-hUOyju-qk7i-49-hOJVB7B2a7n1VZaxQsn=w800-h500-k-no"
+  },
+  "leMorne": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Le+Morne+Brabant",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAH25G3ryZZqCc7uevLC8sL7vsSsr-R55OeHkjdI2cMdJhcdiMrZvDBVwE10fbKY4zUZTVnVDB0jC8m8SqYhSANIQ2AqcqhzaE0IJczrjFQn0FOGotpYCW-Po5EEJWtSAL8kfOa1Qw=w800-h500-k-no"
+  },
+  "flicEnFlac": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Flic+en+Flac+Beach",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAF1z4eVx9J_1OBeuH6D4oSH8FT_ZUoxIZqNhpl14W0zvEq1xaF76Hne4yOivU1j44RdfUH1thdyt3Mxp0Sn2TQmdqbtfyfob06BOu09OLBohvQfDl8gAD7Vkg5utP5gaiOOs6k9iA=w800-h500-k-no"
+  },
+  "portLouis": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Port+Louis+Central+Market",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEg4X3kZKp8QfF_C80unhRlP9uoH4ewerjvAGdxDetW7qM36EfDfwsTCfZPPhtSRW7i2sFfKAin8ASwWV4ZawG5_4THiKSKHXwO20yPpI13UBTVPcL-C47AD-lVHr-jEl4ze2C07IVSzCvx=w800-h500-k-no"
+  },
+  "pamplemousses": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sir+Seewoosagur+Ramgoolam+Botanical+Garden",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFggCZcmDQ7jPoAfSvLIjddVur2ketFz5DOBrDd5oFkOLzPChJ0wx6DBA_fq-aMWecQNn4T6nUuJXEw9kYdZjVh6GnFrMU1DfKODa-BMX7Do97_1dqTq8ZlxYbj0fIg2zkBDGkLO0Be1OXZ=w800-h500-k-no"
+  },
+  "grandBaie": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Grand+Baie+Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFAUt5CaFItIcpun-1NJRnPebjE3gpjnmd0dpbI159QkrDoPBjyTJoxXLhpvClu5wVjDo8f4Yk4pT6GD5MeSveyDBwyCuDudwgz8vipSPK30HPKBj3Wy7KOaR21RK_hs1UTZmq6=w800-h500-k-no"
+  },
+  "pereybere": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pereybere%20Beach%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAF56p0X-O0M5TdYC1TpwueYSAtJCNGXBEhlhcD6-JKSjRMOcP5ZNrNRsPIwStBMyGx_hIu5Uy0j3ElQjjmkwHsevbOuZZmhOdjnpLI9cO48k54QJcOym_gnr-ZpdfOTtiPz4bzrx2X0ZDQL=w800-h500-k-no"
+  },
+  "riambel": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Riambel%20Beach%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFlAS6FBQC1FZGQEmQVjDtdtU7uUmHz9S3_Ma2DB6cSBCfRJHMtHSaTHLl9b2v0iZRaaaelMxk65a2hWhSxcMT-Wzj_aemfws2fLVm4pDr_13nGYwng8xaZuz5LNfoGAia6vT-IoQ=w800-h500-k-no"
+  },
+  "souillac": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Souillac%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHveYPCzOTEjA7eBJ-yC1Cr-BKPPEwtYeJWefvT18g9ySAYWLf2pjCCOjBFoUolfQP6RVFn8mSuBcVxWUZu8hCxSJ_RFXU-KUS5OKcv9wqptc7A5JzFWgKJpYZqKcuZvDG1-iw=w800-h500-k-no"
+  },
+  "boisCheri": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Bois%20Cheri%20Tea%20Plantation%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHfLYGdm7JZJyfQE_iAbpBofNJDOm9wXZoGf2Cl62dhyBm3cxOBArR2PmiNFk-5YSvm0ll1kW-eUZHEFPtvp2043ELb8TFaRCFNcqTor_v9jWYldmAaLKq9AK2gV5m8kp2BOmbBfQ=w800-h500-k-no"
+  },
+  "montChoisy": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mont%20Choisy%20Beach%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGAv3krRt_oMinw4-Z_gpO36OGWTzCfAHVsCfFk4IZSq7Gq6G7l-354XJ9YTPtsWbIC1-Ecea3oEHIGswXyddALWG30IbtlmVM-Zb4gunKf3FnCAbuXF72rXudRqD56rZgyr69EjEw9uqmK=w800-h500-k-no"
+  },
+  "palmar": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Palmar%20Beach%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAE-kZGRqsLImU61jcO9EMA-HPYk1zzR6JqoPTdmaAW2cbL_niIqBc_8VMIRBNzj8bPTwkArRRy4KF21MnHHRZPrQRX7QIMFnLZc8EOYxNLD4qpcmFul5r7iqbIWdSknuYVLDbFLo3S5yhGT=w800-h500-k-no"
+  },
+  "trouEauDouce": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Trou%20d%20Eau%20Douce%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHsvrF4EmuNDqYO8Z2X6eAjit4rlpEwPmJrLN2A3N4POeGlPQnVNz-uD8UO7xXWtRWTih-r-KV6I8ZGG2jhlCJ_cb4KGKGBr5uGwrLKHEmlVwbukrbaYVmXHs84SBvyxJ3ksERyuQ=w800-h500-k-no"
+  },
+  "savannah": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Omnicane%20Sugar%20Estate%20Savannah%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHOedu_lfFfC-od4jG7OTZeTIFdmp17HUGoqAa1s4-r6efEE9rMP-01mECxOMImyCR1PNnvCH-ssrndqKhWKbSZ5K2ip2SYH4JMoHx95euszMffFFamWU8Qc7h6xOHegDvu67vB=w800-h500-k-no"
+  },
+  "alexandraFalls": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Alexandra%20Falls%20Mauritius%20Black%20River%20Gorges",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGpCe_KqveZEzU1S_3eLv3o6TRMuVTnRR4sgHYRkNxYR1bYGDIVdWjFHASEx9DenXV_gVoay02ea3L5EP2mhzSoQEl3uxNM0e2Vl_dz4Zn0vIlUtL8qCgVU4sgtDdD_MHrsMYta5qCgfKGz=w800-h500-k-no"
+  },
+  "laVanille": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=La%20Vanille%20Nature%20Park%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEAuEAgesMee3p7NE5SZMYlifkO9BQhv4_ROajFLckRLnEsnXEdbX8EkUpX_WticSUfEDt04A-u4uzuGc1jCteBSMdptxHevCZQaXCs-PMyjDazdTF8XOmYhMgeP5D530s42_dYcg=w800-h500-k-no"
+  },
+  "rochesterFalls": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rochester%20Falls%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAExzoTxKw3alX8U1-hbx9jl0WpZZ3HUEdkOBpH01gKOO-eradBZSw_F2irWyKIohjtowUK5Hn2RKDlpAkneNcxdywyDWsd4F0EufUIjB_IVHEOS8NONod5wMIKnILssldRHHHt92nJIvKBD=w800-h500-k-no"
+  },
+  "eauBleue": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Eau%20Bleue%20Waterfall%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGLzkBiuefUaR-ajuUOLXhLlsJFhfZARM_okvrfjXjjstyMJl5n8dyLdEUsTjv62kPQWjNQvsF6hmSs3J99tmcKr4hjoDLETiw4HRN0JUrlTpuFOeCmClFIpsY4EXulaKM9zCf7=w800-h500-k-no"
+  },
+  "capMalheureux": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Notre-Dame+Auxiliatrice+Cap+Malheureux+Mauritius",
+    "photo": "https://ip1.orchestra-platform.com/sWjMvkfMjYBqFHPlvMjdoa5z30Msw29lSuqS3GjqT7-A/https://fairmoove-media-storage.s3.eu-west-3.amazonaws.com/photo/poi/ile-maurice/ile-maurice-cap-malheureux.jpeg"
+  },
+  "cascadeChamarel": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chamarel%20Waterfall%20Mauritius",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEE_sapMqMu2NKDnJnaH51K8DPmWZGIiaHvTSoY_St8k7hnnISIpZLMKKIhfqsV1wm5fkSMrj65zj7p1PA3QEAs3d7pfY-rFjUSY9I30W7fPUbm4VnmjS1fqY71b4aH0-0wsbx7=w800-h500-k-no"
+  }
+}
