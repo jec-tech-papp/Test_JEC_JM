@@ -292,30 +292,71 @@
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
-    var orbs = document.querySelectorAll("[data-parallax]");
-    if (!orbs.length) {
+
+    var layers = document.querySelectorAll("[data-parallax-y], [data-parallax-x], [data-parallax-mouse]");
+    if (!layers.length) {
       return;
     }
-    var ticking = false;
-    function updateParallax() {
-      var scrollY = window.scrollY || window.pageYOffset;
-      Array.prototype.forEach.call(orbs, function (orb) {
-        var speed = parseFloat(orb.getAttribute("data-parallax")) || 0.1;
-        orb.style.transform = "translate3d(0, " + scrollY * speed + "px, 0)";
-      });
-      ticking = false;
+
+    var pointerX = 0;
+    var pointerY = 0;
+    var smoothX = 0;
+    var smoothY = 0;
+
+    function readLayerSpeed(layer, attr, fallback) {
+      var value = layer.getAttribute(attr);
+      if (value === null || value === "") {
+        return fallback;
+      }
+      return parseFloat(value);
     }
-    window.addEventListener(
-      "scroll",
-      function () {
-        if (!ticking) {
-          ticking = true;
-          window.requestAnimationFrame(updateParallax);
+
+    function renderParallax() {
+      var scrollY = window.scrollY || window.pageYOffset;
+      smoothX += (pointerX - smoothX) * 0.08;
+      smoothY += (pointerY - smoothY) * 0.08;
+
+      Array.prototype.forEach.call(layers, function (layer) {
+        var speedY = readLayerSpeed(layer, "data-parallax-y", readLayerSpeed(layer, "data-parallax", 0.2));
+        var speedX = readLayerSpeed(layer, "data-parallax-x", 0);
+        var mouseFactor = readLayerSpeed(layer, "data-parallax-mouse", speedX !== 0 ? Math.abs(speedX) : 0.06);
+        var offsetY = scrollY * speedY;
+        var offsetX = smoothX * mouseFactor * 42;
+        var offsetMouseY = smoothY * mouseFactor * 28;
+
+        if (speedY < 0) {
+          offsetY = scrollY * speedY;
         }
+
+        layer.style.transform =
+          "translate3d(" + offsetX + "px, " + (offsetY + offsetMouseY) + "px, 0)";
+      });
+
+      window.requestAnimationFrame(renderParallax);
+    }
+
+    window.addEventListener(
+      "mousemove",
+      function (event) {
+        pointerX = event.clientX / window.innerWidth - 0.5;
+        pointerY = event.clientY / window.innerHeight - 0.5;
       },
       { passive: true }
     );
-    updateParallax();
+
+    window.addEventListener(
+      "touchmove",
+      function (event) {
+        if (!event.touches || !event.touches.length) {
+          return;
+        }
+        pointerX = event.touches[0].clientX / window.innerWidth - 0.5;
+        pointerY = event.touches[0].clientY / window.innerHeight - 0.5;
+      },
+      { passive: true }
+    );
+
+    renderParallax();
   }
 
   function updateNavHeight() {

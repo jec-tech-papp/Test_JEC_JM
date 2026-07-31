@@ -97,14 +97,28 @@ const html = `<!doctype html>
 </head>
 <body>
   <div class="parallax-bg" aria-hidden="true">
-    <div class="parallax-orb parallax-orb-1" data-parallax="0.12"></div>
-    <div class="parallax-orb parallax-orb-2" data-parallax="0.2"></div>
-    <div class="parallax-orb parallax-orb-3" data-parallax="0.06"></div>
+    <div class="parallax-layer-sky" data-parallax-y="0.18"></div>
+    <div class="parallax-orb-wrap parallax-orb-wrap-1" data-parallax-y="0.42" data-parallax-x="0.14">
+      <div class="parallax-orb parallax-orb-1"></div>
+    </div>
+    <div class="parallax-orb-wrap parallax-orb-wrap-2" data-parallax-y="0.28" data-parallax-x="-0.18">
+      <div class="parallax-orb parallax-orb-2"></div>
+    </div>
+    <div class="parallax-orb-wrap parallax-orb-wrap-3" data-parallax-y="0.55" data-parallax-x="0.1">
+      <div class="parallax-orb parallax-orb-3"></div>
+    </div>
+    <div class="parallax-orb-wrap parallax-orb-wrap-4" data-parallax-y="0.35" data-parallax-x="-0.12">
+      <div class="parallax-orb parallax-orb-4"></div>
+    </div>
+    <div class="parallax-wave parallax-wave-1" data-parallax-y="0.32"></div>
+    <div class="parallax-wave parallax-wave-2" data-parallax-y="0.48"></div>
+    <div class="parallax-grain" data-parallax-y="0.05"></div>
   </div>
 
   <a class="back-link" href="index.html">&larr; Compte à rebours</a>
 
   <header class="hero-full reveal">
+    <div class="hero-parallax-inner" data-parallax-y="-0.06" data-parallax-mouse="0.04">
     <p class="hero-kicker">🌴 Itinéraire détaillé</p>
     <h1>${esc(D.TRIP_META.title)}</h1>
     <p class="hero-sub">${esc(D.TRIP_META.dates)} · Base à ${esc(D.BASE.name)} · ${esc(D.TRIP_META.group)}</p>
@@ -114,6 +128,7 @@ const html = `<!doctype html>
       <span class="chip">🚗 Voiture</span>
       <span class="chip">🦵 Genoux sensibles</span>
       <span class="chip">🌴 ${esc(D.TRIP_META.departure)}</span>
+    </div>
     </div>
   </header>
 
