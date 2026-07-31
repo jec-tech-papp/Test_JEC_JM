@@ -70,9 +70,6 @@
       if (state.filter !== "all" && day.categories.indexOf(state.filter) === -1) {
         return false;
       }
-      if (state.selectedDay !== null && state.selectedDay !== day.day) {
-        return false;
-      }
       if (state.searchQuery) {
         var card = $("day-" + day.day);
         if (card && card.classList.contains("is-hidden")) {
@@ -157,8 +154,8 @@
   function resetCardGridPlacement() {
     Array.prototype.forEach.call(els.dayCards, function (card) {
       card.classList.remove("is-selected", "is-row-collapsed");
-      card.style.gridColumn = "";
-      card.style.gridRow = "";
+      card.style.removeProperty("grid-column");
+      card.style.removeProperty("grid-row");
     });
   }
 
@@ -274,6 +271,9 @@
     }
     var observer = new IntersectionObserver(
       function (entries) {
+        if (state.selectedDay !== null) {
+          return;
+        }
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             var dayNum = entry.target.getAttribute("data-day");
@@ -329,17 +329,40 @@
     els.dayCards = document.querySelectorAll(".day-card");
     els.driveRows = document.querySelectorAll(".drive-row");
     Array.prototype.forEach.call(els.dayCards, function (card) {
-      card.addEventListener("click", function (event) {
-        if (event.target.closest("a, button, input, label")) {
-          return;
-        }
-        var dayNum = Number(card.getAttribute("data-day"));
+      if (card.getAttribute("data-bound") === "1") {
+        return;
+      }
+      card.setAttribute("data-bound", "1");
+
+      function toggleCardSelection(dayNum) {
         if (state.selectedDay === dayNum) {
           clearSelection();
         } else {
           selectDay(dayNum);
         }
+      }
+
+      card.addEventListener("click", function (event) {
+        var dayNum = Number(card.getAttribute("data-day"));
+        if (state.selectedDay === dayNum) {
+          event.preventDefault();
+          event.stopPropagation();
+          clearSelection();
+          return;
+        }
+        if (event.target.closest("a, button, input, label")) {
+          return;
+        }
+        selectDay(dayNum);
       });
+
+      var header = card.querySelector(".day-card-top");
+      if (header) {
+        header.addEventListener("click", function (event) {
+          event.stopPropagation();
+          toggleCardSelection(Number(card.getAttribute("data-day")));
+        });
+      }
 
       var mapBtn = card.querySelector(".map-focus-btn");
       if (mapBtn) {
@@ -548,8 +571,14 @@
     routeLayer.clearLayers();
     var bounds = [[BASE.lat, BASE.lng]];
     var legendKeys = ["base"];
+    var days = getVisibleDays();
+    var mapDays = state.selectedDay !== null
+      ? days.filter(function (day) {
+          return day.day === state.selectedDay;
+        })
+      : days;
 
-    getVisibleDays().forEach(function (day) {
+    mapDays.forEach(function (day) {
       day.locations.forEach(function (loc) {
         if (isHomeBase(loc)) {
           return;
@@ -580,7 +609,7 @@
     });
 
     if (bounds.length > 1) {
-      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 11 });
+      map.fitBounds(bounds, { padding: [40, 40], maxZoom: state.selectedDay !== null ? 12 : 11 });
     } else {
       map.setView([BASE.lat, BASE.lng], 10);
     }
