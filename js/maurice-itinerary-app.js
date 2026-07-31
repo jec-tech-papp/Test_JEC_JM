@@ -334,7 +334,11 @@
           return;
         }
         var dayNum = Number(card.getAttribute("data-day"));
-        selectDay(dayNum);
+        if (state.selectedDay === dayNum) {
+          clearSelection();
+        } else {
+          selectDay(dayNum);
+        }
       });
 
       var mapBtn = card.querySelector(".map-focus-btn");
