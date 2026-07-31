@@ -104,6 +104,9 @@
       }
     }
     updateMap();
+    if (state.selectedDay !== null) {
+      updateSelectionUI();
+    }
   }
 
   function applyDriveToggle() {
