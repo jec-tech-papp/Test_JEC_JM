@@ -1,3 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Carte des bâtiments</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+
+<style>
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+#map {
+    width: 100%;
+    height: 100vh;
+}
+
+.popup-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.popup-line {
+    margin: 4px 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+<script>
+
+/* ==========================================================
+   1. Récupération des données
+   ========================================================== */
+
 const urlParams = new URLSearchParams(window.location.search);
 
 let pointsParam = urlParams.get("points");
@@ -11,7 +66,261 @@ let points = [];
 if (pointsParam) {
     try {
         points = JSON.parse(pointsParam);
-    } catch (e) {
-        console.error("Erreur JSON :", e);
+    } catch (error) {
+        console.error("Erreur lors de la lecture des données :", error);
     }
 }
+
+/* ==========================================================
+   2. Conversion et filtrage des coordonnées
+   ========================================================== */
+
+points = points
+    .map(function(point) {
+
+        return {
+            lat: Number(point.lat),
+            lng: Number(point.lng),
+            nom: point.nom || "",
+            SiteITIF: point.SiteITIF || "",
+            Immosis: point.Immosis || "",
+            Actif: point.Actif || "",
+            Effectif: point.Effectif || "",
+            Superficie: point.Superficie || ""
+        };
+
+    })
+    .filter(function(point) {
+
+        return Number.isFinite(point.lat) &&
+               Number.isFinite(point.lng) &&
+               point.lat >= -90 &&
+               point.lat <= 90 &&
+               point.lng >= -180 &&
+               point.lng <= 180;
+
+    });
+
+/* ==========================================================
+   3. Point de secours
+   ========================================================== */
+
+if (points.length === 0) {
+
+    points = [
+        {
+            lat: 48.8566,
+            lng: 2.3522,
+            nom: "Aucun bâtiment transmis"
+        }
+    ];
+
+}
+
+/* ==========================================================
+   4. Création de la carte
+   ========================================================== */
+
+const map = L.map("map", {
+    preferCanvas: true,
+    zoomControl: true
+}).setView(
+    [points[0].lat, points[0].lng],
+    10
+);
+
+/* ==========================================================
+   5. Fond OpenStreetMap
+   ========================================================== */
+
+L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+        maxZoom: 19,
+        attribution: "© OpenStreetMap contributors"
+    }
+).addTo(map);
+
+/* ==========================================================
+   6. Groupe de clusters
+   ========================================================== */
+
+const markers = L.markerClusterGroup({
+    chunkedLoading: true,
+    chunkInterval: 100,
+    chunkDelay: 20,
+    maxClusterRadius: 50,
+    showCoverageOnHover: false,
+    spiderfyOnMaxZoom: true,
+    removeOutsideVisibleBounds: true
+});
+
+/* ==========================================================
+   7. Création d'une icône
+   ========================================================== */
+
+function createIcon() {
+
+    return L.divIcon({
+        className: "custom-marker",
+        html:
+            "<div style=\"" +
+            "background:#2563EB;" +
+            "width:14px;" +
+            "height:14px;" +
+            "border-radius:50%;" +
+            "border:3px solid white;" +
+            "box-shadow:0 1px 4px rgba(0,0,0,0.45);" +
+            "\"></div>",
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+        popupAnchor: [0, -10]
+    });
+
+}
+
+/* ==========================================================
+   8. Construction de la fenêtre popup
+   ========================================================== */
+
+function buildPopup(point) {
+
+    let html =
+        "<div class=\"popup-title\">" +
+        "📍 " + escapeHtml(point.nom) +
+        "</div>";
+
+    if (point.SiteITIF) {
+
+        html +=
+            "<div class=\"popup-line\">" +
+            "<b>🏢 Site ITIF :</b> " +
+            escapeHtml(point.SiteITIF) +
+            "</div>";
+
+    }
+
+    if (point.Immosis) {
+
+        html +=
+            "<div class=\"popup-line\">" +
+            "<b>🆔 IMMOSIS :</b> " +
+            escapeHtml(point.Immosis) +
+            "</div>";
+
+    }
+
+    if (point.Actif) {
+
+        html +=
+            "<div class=\"popup-line\">" +
+            "<b>⚙️ Statut :</b> " +
+            escapeHtml(point.Actif) +
+            "</div>";
+
+    }
+
+    if (point.Effectif) {
+
+        html +=
+            "<div class=\"popup-line\">" +
+            "<b>👥 Effectif :</b> " +
+            escapeHtml(point.Effectif) +
+            "</div>";
+
+    }
+
+    if (point.Superficie) {
+
+        html +=
+            "<div class=\"popup-line\">" +
+            "<b>📐 Superficie :</b> " +
+            escapeHtml(point.Superficie) +
+            " m²</div>";
+
+    }
+
+    return html;
+
+}
+
+/* ==========================================================
+   9. Protection du contenu HTML
+   ========================================================== */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(/&/g, "&")
+        .replace(/</g, "<")
+        .replace(/>/g, ">")
+        .replace(/"/g, """)
+        .replace(/'/g, "&#039;");
+
+}
+
+/* ==========================================================
+   10. Ajout des bâtiments
+   ========================================================== */
+
+const bounds = [];
+
+points.forEach(function(point) {
+
+    const marker = L.marker(
+        [point.lat, point.lng],
+        {
+            icon: createIcon()
+        }
+    );
+
+    marker.bindPopup(
+        buildPopup(point),
+        {
+            maxWidth: 350,
+            closeButton: true
+        }
+    );
+
+    markers.addLayer(marker);
+
+    bounds.push([
+        point.lat,
+        point.lng
+    ]);
+
+});
+
+/* ==========================================================
+   11. Ajout des marqueurs sur la carte
+   ========================================================== */
+
+map.addLayer(markers);
+
+/* ==========================================================
+   12. Zoom automatique sur tous les bâtiments
+   ========================================================== */
+
+if (bounds.length === 1) {
+
+    map.setView(bounds[0], 15);
+
+} else if (bounds.length > 1) {
+
+    map.fitBounds(bounds, {
+        padding: [40, 40],
+        maxZoom: 16
+    });
+
+}
+
+/* ==========================================================
+   13. Nettoyage facultatif
+   ========================================================== */
+
+console.log(points.length + " bâtiment(s) chargé(s)");
+
+</script>
+
+</body>
+</html>
