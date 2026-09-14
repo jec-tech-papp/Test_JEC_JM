@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
 
 <style>
-
 html,
 body {
     margin: 0;
@@ -36,7 +35,6 @@ body {
 .popup-line {
     margin: 4px 0;
 }
-
 </style>
 </head>
 
@@ -49,9 +47,7 @@ body {
 
 <script>
 
-/* ==========================================================
-   1. Récupération des données
-   ========================================================== */
+/* Récupération des données */
 
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -71,13 +67,10 @@ if (pointsParam) {
     }
 }
 
-/* ==========================================================
-   2. Conversion et filtrage des coordonnées
-   ========================================================== */
+/* Conversion et filtrage des coordonnées */
 
 points = points
     .map(function(point) {
-
         return {
             lat: Number(point.lat),
             lng: Number(point.lng),
@@ -88,25 +81,19 @@ points = points
             Effectif: point.Effectif || "",
             Superficie: point.Superficie || ""
         };
-
     })
     .filter(function(point) {
-
         return Number.isFinite(point.lat) &&
                Number.isFinite(point.lng) &&
                point.lat >= -90 &&
                point.lat <= 90 &&
                point.lng >= -180 &&
                point.lng <= 180;
-
     });
 
-/* ==========================================================
-   3. Point de secours
-   ========================================================== */
+/* Point de secours */
 
 if (points.length === 0) {
-
     points = [
         {
             lat: 48.8566,
@@ -114,12 +101,9 @@ if (points.length === 0) {
             nom: "Aucun bâtiment transmis"
         }
     ];
-
 }
 
-/* ==========================================================
-   4. Création de la carte
-   ========================================================== */
+/* Création de la carte */
 
 const map = L.map("map", {
     preferCanvas: true,
@@ -129,9 +113,7 @@ const map = L.map("map", {
     10
 );
 
-/* ==========================================================
-   5. Fond OpenStreetMap
-   ========================================================== */
+/* Fond OpenStreetMap */
 
 L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -141,9 +123,7 @@ L.tileLayer(
     }
 ).addTo(map);
 
-/* ==========================================================
-   6. Groupe de clusters
-   ========================================================== */
+/* Groupe de clusters */
 
 const markers = L.markerClusterGroup({
     chunkedLoading: true,
@@ -155,12 +135,9 @@ const markers = L.markerClusterGroup({
     removeOutsideVisibleBounds: true
 });
 
-/* ==========================================================
-   7. Création d'une icône
-   ========================================================== */
+/* Création des icônes */
 
 function createIcon() {
-
     return L.divIcon({
         className: "custom-marker",
         html:
@@ -176,12 +153,9 @@ function createIcon() {
         iconAnchor: [10, 10],
         popupAnchor: [0, -10]
     });
-
 }
 
-/* ==========================================================
-   8. Construction de la fenêtre popup
-   ========================================================== */
+/* Construction des fenêtres popup */
 
 function buildPopup(point) {
 
@@ -191,77 +165,60 @@ function buildPopup(point) {
         "</div>";
 
     if (point.SiteITIF) {
-
         html +=
             "<div class=\"popup-line\">" +
             "<b>🏢 Site ITIF :</b> " +
             escapeHtml(point.SiteITIF) +
             "</div>";
-
     }
 
     if (point.Immosis) {
-
         html +=
             "<div class=\"popup-line\">" +
             "<b>🆔 IMMOSIS :</b> " +
             escapeHtml(point.Immosis) +
             "</div>";
-
     }
 
     if (point.Actif) {
-
         html +=
             "<div class=\"popup-line\">" +
             "<b>⚙️ Statut :</b> " +
             escapeHtml(point.Actif) +
             "</div>";
-
     }
 
     if (point.Effectif) {
-
         html +=
             "<div class=\"popup-line\">" +
             "<b>👥 Effectif :</b> " +
             escapeHtml(point.Effectif) +
             "</div>";
-
     }
 
     if (point.Superficie) {
-
         html +=
             "<div class=\"popup-line\">" +
             "<b>📐 Superficie :</b> " +
             escapeHtml(point.Superficie) +
             " m²</div>";
-
     }
 
     return html;
-
 }
 
-/* ==========================================================
-   9. Protection du contenu HTML
-   ========================================================== */
+/* Protection du contenu HTML */
 
 function escapeHtml(value) {
-
     return String(value)
         .replace(/&/g, "&")
         .replace(/</g, "<")
         .replace(/>/g, ">")
         .replace(/"/g, """)
         .replace(/'/g, "&#039;");
-
 }
 
-/* ==========================================================
-   10. Ajout des bâtiments
-   ========================================================== */
+/* Ajout des bâtiments */
 
 const bounds = [];
 
@@ -288,18 +245,13 @@ points.forEach(function(point) {
         point.lat,
         point.lng
     ]);
-
 });
 
-/* ==========================================================
-   11. Ajout des marqueurs sur la carte
-   ========================================================== */
+/* Ajout des marqueurs */
 
 map.addLayer(markers);
 
-/* ==========================================================
-   12. Zoom automatique sur tous les bâtiments
-   ========================================================== */
+/* Zoom automatique */
 
 if (bounds.length === 1) {
 
@@ -311,12 +263,7 @@ if (bounds.length === 1) {
         padding: [40, 40],
         maxZoom: 16
     });
-
 }
-
-/* ==========================================================
-   13. Nettoyage facultatif
-   ========================================================== */
 
 console.log(points.length + " bâtiment(s) chargé(s)");
 
