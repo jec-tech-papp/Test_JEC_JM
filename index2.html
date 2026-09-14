@@ -1,0 +1,17 @@
+const urlParams = new URLSearchParams(window.location.search);
+
+let pointsParam = urlParams.get("points");
+
+if (!pointsParam) {
+    pointsParam = localStorage.getItem("mapPoints2");
+}
+
+let points = [];
+
+if (pointsParam) {
+    try {
+        points = JSON.parse(pointsParam);
+    } catch (e) {
+        console.error("Erreur JSON :", e);
+    }
+}
