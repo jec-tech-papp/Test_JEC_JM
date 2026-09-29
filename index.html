@@ -1,230 +1,1213 @@
-<!DOCTYPE html>
-<html>
-
+<!doctype html>
+<html lang="fr">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compte &agrave; rebours - D&eacute;part &agrave; l'&icirc;le Maurice</title>
+  <style>
+    :root {
+      --bg-1: #031b2f;
+      --bg-2: #075985;
+      --bg-3: #0e7490;
+      --sun: #ffd166;
+      --coral: #ff8a7a;
+      --lagoon: #67e8f9;
+      --wave-1: rgba(103, 232, 249, 0.34);
+      --wave-2: rgba(255, 255, 255, 0.22);
+      --card: rgba(255, 255, 255, 0.16);
+      --card-strong: rgba(255, 255, 255, 0.24);
+      --card-border: rgba(255, 255, 255, 0.34);
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.76);
+      --shadow: rgba(2, 8, 23, 0.32);
+      --accent: #ffdd8a;
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
 
-<meta charset="utf-8"/>
+    body[data-theme="sunset"] {
+      --bg-1: #2f1238;
+      --bg-2: #b45309;
+      --bg-3: #f97316;
+      --sun: #ffe08a;
+      --coral: #ff7a90;
+      --lagoon: #fed7aa;
+      --wave-1: rgba(254, 215, 170, 0.28);
+      --wave-2: rgba(255, 255, 255, 0.2);
+      --accent: #ffe7a8;
+    }
 
-<title>Carte Points PowerApps</title>
+    body[data-theme="night"] {
+      --bg-1: #020617;
+      --bg-2: #172554;
+      --bg-3: #312e81;
+      --sun: #c4b5fd;
+      --coral: #38bdf8;
+      --lagoon: #a5f3fc;
+      --wave-1: rgba(125, 211, 252, 0.2);
+      --wave-2: rgba(255, 255, 255, 0.13);
+      --accent: #c4b5fd;
+    }
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    * {
+      box-sizing: border-box;
+    }
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text);
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(255, 209, 102, 0.9), transparent 18rem),
+        radial-gradient(circle at 82% 18%, rgba(103, 232, 249, 0.72), transparent 23rem),
+        radial-gradient(circle at 68% 86%, rgba(255, 138, 122, 0.34), transparent 24rem),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2) 52%, var(--bg-3));
+      transition: background 450ms ease;
+    }
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: 0;
+      width: 34rem;
+      height: 34rem;
+      border-radius: 999px;
+      content: "";
+      filter: blur(12px);
+      opacity: 0.32;
+      pointer-events: none;
+      animation: breathe 9s ease-in-out infinite alternate;
+    }
 
-<style>
+    body::before {
+      right: -12rem;
+      bottom: -16rem;
+      background: #ffedd5;
+    }
 
-body{
-margin:0;
-padding:0;
-}
+    body::after {
+      top: -14rem;
+      left: -12rem;
+      background: #67e8f9;
+      animation-delay: -4s;
+    }
 
-#map{
-width:100%;
-height:100vh;
-}
+    @keyframes breathe {
+      from {
+        transform: scale(0.96);
+      }
 
-</style>
+      to {
+        transform: scale(1.08);
+      }
+    }
 
+    main {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: clamp(1rem, 3vw, 2rem);
+    }
+
+    .countdown-card {
+      position: relative;
+      width: min(100%, 76rem);
+      padding: clamp(1.1rem, 3vw, 2rem);
+      border: 1px solid var(--card-border);
+      border-radius: clamp(1.5rem, 4vw, 2.6rem);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
+        var(--card);
+      box-shadow:
+        0 2.2rem 6rem var(--shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(28px);
+      overflow: hidden;
+    }
+
+    .countdown-card::before {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      content: "";
+      background:
+        linear-gradient(115deg, transparent 0 36%, rgba(255, 255, 255, 0.22) 42%, transparent 48% 100%);
+      transform: translateX(-70%);
+      animation: glass-sheen 8s ease-in-out infinite;
+    }
+
+    @keyframes glass-sheen {
+      0%,
+      46% {
+        transform: translateX(-74%);
+      }
+
+      72%,
+      100% {
+        transform: translateX(74%);
+      }
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+      gap: clamp(1.2rem, 3vw, 2rem);
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      padding: clamp(0.35rem, 1vw, 0.75rem);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 0.6rem;
+      align-items: center;
+      margin: 0 0 1.25rem;
+      padding: 0.58rem 0.95rem;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.11);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    }
+
+    h1 {
+      max-width: 12ch;
+      margin: 0;
+      font-size: clamp(3.2rem, 8vw, 7.7rem);
+      line-height: 0.88;
+      letter-spacing: -0.08em;
+      text-wrap: balance;
+    }
+
+    .highlight {
+      display: inline-block;
+      color: transparent;
+      background: linear-gradient(90deg, #ffffff, var(--accent) 42%, #bff7ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .intro {
+      max-width: 46rem;
+      margin: 1.35rem 0 2rem;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 1.7;
+    }
+
+    .theme-switcher {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin: 0 0 1.35rem;
+    }
+
+    .theme-button {
+      appearance: none;
+      padding: 0.7rem 0.95rem;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      color: var(--text);
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      cursor: pointer;
+      transition:
+        transform 160ms ease,
+        background 160ms ease,
+        border-color 160ms ease;
+    }
+
+    .theme-button:hover,
+    .theme-button.is-active {
+      transform: translateY(-0.12rem);
+      border-color: rgba(255, 255, 255, 0.52);
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .destination {
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .timer {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(0.75rem, 2vw, 1.25rem);
+      margin: 0 0 1.35rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .time-box {
+      position: relative;
+      min-height: 9.4rem;
+      padding: clamp(1rem, 3vw, 1.4rem);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 1.45rem;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)),
+        rgba(255, 255, 255, 0.13);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.24),
+        0 1rem 2.5rem rgba(2, 8, 23, 0.16);
+      overflow: hidden;
+      transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        background 180ms ease;
+    }
+
+    .time-box::after {
+      position: absolute;
+      right: -1.4rem;
+      bottom: -1.4rem;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 999px;
+      content: "";
+      background: rgba(255, 221, 138, 0.22);
+    }
+
+    .time-box:hover {
+      transform: translateY(-0.25rem);
+      border-color: rgba(255, 255, 255, 0.52);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .value {
+      display: block;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 850;
+      line-height: 1;
+      letter-spacing: -0.06em;
+      text-shadow: 0 0.8rem 2.2rem rgba(2, 8, 23, 0.22);
+    }
+
+    .label {
+      display: block;
+      margin-top: 0.75rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .footer-note {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 0.95rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      gap: 0.45rem;
+      align-items: center;
+      padding: 0.7rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .progress-card {
+      margin-bottom: 1.35rem;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 1.25rem;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .progress-meta {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .progress-track {
+      height: 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      display: block;
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--sun), var(--coral), var(--lagoon));
+      box-shadow: 0 0 1.4rem rgba(255, 221, 138, 0.55);
+      transition: width 600ms ease;
+    }
+
+    .trip-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin: 0 0 1.35rem;
+    }
+
+    .stat-card {
+      padding: 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-card strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 1.25rem;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .theme-switcher {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .theme-button {
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      padding: 0.65rem 0.9rem;
+      color: var(--text);
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+      transition:
+        transform 180ms ease,
+        background 180ms ease,
+        border-color 180ms ease;
+    }
+
+    .theme-button:hover,
+    .theme-button.is-active {
+      transform: translateY(-0.12rem);
+      border-color: rgba(255, 255, 255, 0.54);
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    .trip-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin: 0 0 1.35rem;
+    }
+
+    .stat-card {
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 1.25rem;
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .stat-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .stat-card strong {
+      display: block;
+      margin-top: 0.45rem;
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      letter-spacing: -0.04em;
+    }
+
+    .travel-panel {
+      position: relative;
+      display: grid;
+      align-content: space-between;
+      min-height: 100%;
+      padding: clamp(1.25rem, 3vw, 1.65rem);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 1.8rem;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(255, 221, 138, 0.32), transparent 9rem),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      overflow: hidden;
+    }
+
+    .travel-panel::before {
+      position: absolute;
+      inset: auto -10% 10% -10%;
+      height: 8rem;
+      content: "";
+      background:
+        radial-gradient(ellipse at center, rgba(255, 255, 255, 0.2) 0 34%, transparent 35%),
+        linear-gradient(180deg, transparent, rgba(103, 232, 249, 0.24));
+      opacity: 0.9;
+      transform: rotate(-4deg);
+    }
+
+    .ticket {
+      position: relative;
+      z-index: 1;
+      padding: 1.05rem;
+      border: 1px dashed rgba(255, 255, 255, 0.36);
+      border-radius: 1.35rem;
+      background: rgba(3, 27, 47, 0.2);
+    }
+
+    .ticket-label {
+      display: block;
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .ticket-route {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1rem 0;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-weight: 850;
+      letter-spacing: -0.06em;
+    }
+
+    .ticket-route span:nth-child(2) {
+      color: var(--accent);
+      font-size: 1.2rem;
+      letter-spacing: 0;
+    }
+
+    .ticket-date {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.95rem;
+    }
+
+    .weather-chip {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 0.35rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 1.25rem;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .weather-chip strong {
+      font-size: 1.2rem;
+    }
+
+    .checklist-card {
+      position: relative;
+      z-index: 1;
+      margin-top: 1rem;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 1.25rem;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .checklist-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      color: var(--accent);
+      font-weight: 850;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 0.55rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist label {
+      display: flex;
+      gap: 0.65rem;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.86);
+      cursor: pointer;
+    }
+
+    .checklist input {
+      width: 1.05rem;
+      height: 1.05rem;
+      accent-color: var(--sun);
+    }
+
+    .scene-decor {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .sun-orb {
+      position: absolute;
+      right: 9vw;
+      top: 8vh;
+      width: clamp(5rem, 10vw, 8.5rem);
+      height: clamp(5rem, 10vw, 8.5rem);
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--sun), rgba(255, 209, 102, 0.08) 68%);
+      box-shadow: 0 0 4rem rgba(255, 221, 138, 0.38);
+      animation: sun-pulse 6s ease-in-out infinite alternate;
+    }
+
+    .cloud {
+      position: absolute;
+      width: 9rem;
+      height: 3rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      filter: blur(0.3px);
+      animation: cloud-drift 28s linear infinite;
+    }
+
+    .cloud::before,
+    .cloud::after {
+      position: absolute;
+      bottom: 0.5rem;
+      content: "";
+      border-radius: 999px;
+      background: inherit;
+    }
+
+    .cloud::before {
+      left: 1.4rem;
+      width: 3.4rem;
+      height: 3.4rem;
+    }
+
+    .cloud::after {
+      right: 1.2rem;
+      width: 4.2rem;
+      height: 4.2rem;
+    }
+
+    .cloud-one {
+      left: -12rem;
+      top: 18vh;
+    }
+
+    .cloud-two {
+      left: -18rem;
+      top: 34vh;
+      transform: scale(0.78);
+      animation-delay: -12s;
+      animation-duration: 36s;
+    }
+
+    .flying-plane {
+      position: fixed;
+      left: -8rem;
+      top: 22vh;
+      z-index: 12;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      opacity: 0;
+      filter: drop-shadow(0 1rem 1.5rem rgba(2, 8, 23, 0.3));
+      pointer-events: none;
+    }
+
+    .flying-plane.is-flying {
+      animation: plane-cross 5.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .wave-layer {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 9rem;
+      opacity: 0.75;
+    }
+
+    .wave {
+      position: absolute;
+      right: -20%;
+      bottom: -4rem;
+      left: -20%;
+      height: 7rem;
+      border-radius: 50% 50% 0 0;
+      background:
+        radial-gradient(ellipse at 8% 0, transparent 0 2.2rem, var(--wave-1) 2.25rem 4.4rem, transparent 4.45rem),
+        linear-gradient(180deg, var(--wave-2), transparent);
+      animation: wave-roll 9s ease-in-out infinite alternate;
+    }
+
+    .wave-two {
+      bottom: -5.2rem;
+      opacity: 0.75;
+      animation-delay: -4s;
+      animation-duration: 12s;
+    }
+
+    @keyframes sun-pulse {
+      to {
+        transform: scale(1.08);
+        opacity: 0.84;
+      }
+    }
+
+    @keyframes cloud-drift {
+      to {
+        transform: translateX(calc(100vw + 24rem));
+      }
+    }
+
+    @keyframes plane-cross {
+      0% {
+        opacity: 0;
+        transform: translate3d(-8rem, 5vh, 0) rotate(-8deg);
+      }
+
+      12%,
+      82% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate3d(calc(100vw + 12rem), -8vh, 0) rotate(8deg);
+      }
+    }
+
+    @keyframes wave-roll {
+      to {
+        transform: translateX(4rem) translateY(-0.7rem);
+      }
+    }
+
+    .island {
+      position: absolute;
+      right: clamp(-4rem, -2vw, -1rem);
+      bottom: clamp(-4rem, -3vw, -1.5rem);
+      z-index: -1;
+      width: min(38vw, 18rem);
+      min-width: 12rem;
+      opacity: 0.72;
+      transform: rotate(-8deg);
+    }
+
+    .surprise-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .surprise {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      display: grid;
+      place-items: center;
+      width: var(--size);
+      height: var(--size);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      border-radius: 999px;
+      font-size: calc(var(--size) * 0.46);
+      background:
+        radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.22) 52%),
+        rgba(255, 255, 255, 0.14);
+      box-shadow:
+        0 1.25rem 3rem rgba(2, 8, 23, 0.22),
+        0 0 2.5rem rgba(255, 221, 138, 0.45);
+      text-shadow: 0 0.4rem 1rem rgba(2, 8, 23, 0.26);
+      animation: float-surprise var(--duration) ease-in-out forwards;
+      transform: translate(-50%, -50%) scale(0.35) rotate(var(--rotation));
+      backdrop-filter: blur(10px);
+    }
+
+    @keyframes float-surprise {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -30%) scale(0.35) rotate(var(--rotation));
+      }
+
+      14%,
+      72% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform:
+          translate(calc(-50% + var(--drift-x)), calc(-120% + var(--drift-y)))
+          scale(1.1)
+          rotate(calc(var(--rotation) + 28deg));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .surprise {
+        animation: fade-surprise var(--duration) ease-in-out forwards;
+      }
+    }
+
+    @keyframes fade-surprise {
+      0%,
+      100% {
+        opacity: 0;
+      }
+
+      18%,
+      78% {
+        opacity: 1;
+      }
+    }
+
+    .qr-page-link {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 15;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2.75rem;
+      height: 2.75rem;
+      padding: 0 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.9rem;
+      font-weight: 800;
+      text-decoration: none;
+      background: rgba(3, 27, 47, 0.18);
+      box-shadow: 0 1rem 2rem rgba(2, 8, 23, 0.16);
+      backdrop-filter: blur(14px);
+      transition:
+        transform 180ms ease,
+        color 180ms ease,
+        background 180ms ease,
+        border-color 180ms ease;
+    }
+
+    .qr-page-link:hover,
+    .qr-page-link:focus-visible {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.16);
+      transform: translateY(-0.12rem);
+      outline: none;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .travel-panel {
+        min-height: 18rem;
+      }
+    }
+
+    @media (max-width: 740px) {
+      main {
+        padding: 1rem;
+      }
+
+      .countdown-card {
+        border-radius: 1.35rem;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 10ch;
+      }
+
+      .timer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .time-box {
+        min-height: 7.5rem;
+      }
+
+      .travel-panel {
+        min-height: 18rem;
+      }
+
+      .footer-note {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .pill {
+        justify-content: center;
+      }
+
+    }
+  </style>
 </head>
-
 <body>
-
-<div id="map"></div>
-
-<script>
-
-/* récupération paramètre URL */
-
-var urlParams = new URLSearchParams(window.location.search);
-var pointsParam = urlParams.get("points");
-
-/* sinon LocalStorage */
-
-if(!pointsParam){
-pointsParam = localStorage.getItem("mapPoints");
-}
-
-var points = [];
-
-if(pointsParam){
-
-try{
-points = JSON.parse(decodeURIComponent(pointsParam));
-}
-catch(e){
-console.error("Erreur JSON :",e);
-}
-
-}
-
-/* filtrage coordonnées */
-
-points = points.filter(function(p){
-
-return p.lat !== null &&
-p.lng !== null &&
-!isNaN(p.lat) &&
-!isNaN(p.lng);
-
-});
-
-/* point par défaut */
-
-if(points.length === 0){
-
-points = [
-{
-lat:48.8566,
-lng:2.3522,
-nom:"Paris",
-distance:20,
-nbAgents:3,
-periode:"Test",
-duree:5,
-up:"UP1"
-}
-];
-
-}
-
-/* création carte */
-
-var map = L.map("map").setView(
-[points[0].lat,points[0].lng],
-7
-);
-
-/* fond de carte */
-
-L.tileLayer(
-"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-{
-attribution:"© OpenStreetMap contributors"
-}
-).addTo(map);
-
-/* groupe cluster */
-
-var markers = L.markerClusterGroup();
-
-/* couleur automatique */
-
-function getColor(p){
-
-if(p.color){
-return p.color;
-}
-
-if(p.nbAgents >= 10){
-return "#d73027";
-}
-
-if(p.nbAgents >= 5){
-return "#ff9800";
-}
-
-return "#2e7d32";
-
-}
-
-/* construction popup dynamique */
-
-function buildPopup(p){
-
-var html = "<b>📍 "+(p.nom || "")+"</b><br>";
-
-/* POPUP BESOIN */
-
-if(p.nbAgents !== undefined){
-
-html +=
-"📏 Rayon : "+(p.distance || 0)+" km<br>"+
-"📅 Période : "+(p.periode || "")+"<br>"+
-"⏱ Durée : "+(p.duree || "")+" jours<br>"+
-"👷 Agents : "+(p.nbAgents || "")+"<br>"+
-"🏢 UP : "+(p.up || "");
-
-}
-
-/* POPUP SITE IMMOBILIER */
-
-if(p.SiteITIF !== undefined){
-
-html +=
-"<br><b>🏢 Informations site</b><br>"+
-"🆔 IMMOSIS : "+(p.Immosis || "")+"<br>"+
-"📍 Site ITIF : "+(p.SiteITIF || "")+"<br>"+
-"⚙️ Statut : "+(p.Actif || "")+"<br>"+
-"👥 Effectif : "+(p.Effectif || "")+"<br>"+
-"📐 Superficie : "+(p.Superficie || "")+" m²";
-
-}
-
-return html;
-
-}
-
-/* limites carte */
-
-var bounds = [];
-
-/* ajout points */
-
-points.forEach(function(p){
-
-var color = getColor(p);
-
-var icon = L.divIcon({
-className:"custom-icon",
-html:'<div style="background:'+color+';width:14px;height:14px;border-radius:50%;border:2px solid white;"></div>',
-iconSize:[18,18]
-});
-
-var marker = L.marker(
-[p.lat,p.lng],
-{icon:icon}
-).bindPopup(
-buildPopup(p)
-);
-
-markers.addLayer(marker);
-
-bounds.push([p.lat,p.lng]);
-
-/* cercle distance */
-
-if(p.distance && p.distance > 0){
-
-L.circle(
-[p.lat,p.lng],
-{
-radius:p.distance*1000,
-color:color,
-fillColor:color,
-fillOpacity:0.15
-}
-).addTo(map);
-
-}
-
-});
-
-/* ajout cluster */
-
-map.addLayer(markers);
-
-/* zoom auto */
-
-if(bounds.length > 1){
-map.fitBounds(bounds,{padding:[40,40]});
-}
-
-</script>
-
+  <div class="scene-decor" aria-hidden="true">
+    <span class="sun-orb"></span>
+    <span class="cloud cloud-one"></span>
+    <span class="cloud cloud-two"></span>
+    <span class="flying-plane">&#9992;&#65039;</span>
+    <div class="wave-layer">
+      <span class="wave wave-one"></span>
+      <span class="wave wave-two"></span>
+    </div>
+  </div>
+  <div class="surprise-layer" aria-hidden="true"></div>
+
+  <a class="qr-page-link" href="qrcode.html">QR</a>
+
+  <main>
+    <section class="countdown-card" aria-labelledby="page-title">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">&#10024; Cap sur le soleil</p>
+          <h1 id="page-title">D&eacute;part &agrave; <span class="highlight">l'&icirc;le Maurice</span></h1>
+          <p class="intro">
+            Le compte &agrave; rebours est lanc&eacute; jusqu'au
+            <strong>6 novembre 2026</strong> : lagon turquoise, sable chaud et vacances
+            tropicales se rapprochent.
+          </p>
+
+          <div class="theme-switcher" aria-label="Choix de l'ambiance visuelle">
+            <button class="theme-button is-active" type="button" data-theme="lagoon" aria-pressed="true">
+              Lagon
+            </button>
+            <button class="theme-button" type="button" data-theme="sunset" aria-pressed="false">
+              Coucher de soleil
+            </button>
+            <button class="theme-button" type="button" data-theme="night" aria-pressed="false">
+              Nuit tropicale
+            </button>
+          </div>
+
+          <div class="progress-card" aria-label="Progression vers le d&eacute;part">
+            <div class="progress-meta">
+              <span>Objectif vacances</span>
+              <span id="progressPercent">--%</span>
+            </div>
+            <div class="progress-track">
+              <span class="progress-fill" id="progressFill"></span>
+            </div>
+          </div>
+
+          <ul class="timer" aria-live="polite" aria-label="Compte &agrave; rebours">
+            <li class="time-box">
+              <span class="value" id="days">--</span>
+              <span class="label">jours</span>
+            </li>
+            <li class="time-box">
+              <span class="value" id="hours">--</span>
+              <span class="label">heures</span>
+            </li>
+            <li class="time-box">
+              <span class="value" id="minutes">--</span>
+              <span class="label">minutes</span>
+            </li>
+            <li class="time-box">
+              <span class="value" id="seconds">--</span>
+              <span class="label">secondes</span>
+            </li>
+          </ul>
+
+          <div class="trip-stats" aria-label="Informations voyage">
+            <div class="trip-stat">
+              <span>Week-ends restants</span>
+              <strong id="weekendCount">--</strong>
+            </div>
+            <div class="trip-stat">
+              <span>Checklist</span>
+              <strong id="checklistCount">0/4</strong>
+            </div>
+            <div class="trip-stat trip-stat-wide">
+              <span>Ambiance</span>
+              <strong id="travelMood">Preparation en cours</strong>
+            </div>
+          </div>
+
+          <div class="footer-note">
+            <span class="pill">&#127796; Destination : <strong class="destination">&Icirc;le Maurice</strong></span>
+            <span class="pill">&#9992;&#65039; Date de d&eacute;part : <strong>06/11/2026</strong></span>
+          </div>
+        </div>
+
+        <aside class="travel-panel" aria-label="Billet de voyage">
+          <div class="ticket">
+            <span class="ticket-label">Boarding pass</span>
+            <div class="ticket-route">
+              <span>Home</span>
+              <span>&#9992;&#65039;</span>
+              <span>MRU</span>
+            </div>
+            <div class="ticket-date">
+              <span>D&eacute;part</span>
+              <strong>06 NOV 2026</strong>
+            </div>
+          </div>
+
+          <div class="weather-chip">
+            <span>&#127774; Ambiance attendue</span>
+            <strong>Lagon, soleil &amp; sable chaud</strong>
+          </div>
+
+          <div class="checklist-card">
+            <div class="checklist-head">
+              <span>Avant le d&eacute;part</span>
+              <strong>Checklist</strong>
+            </div>
+            <div class="checklist">
+              <label>
+                <input type="checkbox" value="passport">
+                Passeports
+              </label>
+              <label>
+                <input type="checkbox" value="tickets">
+                Billets
+              </label>
+              <label>
+                <input type="checkbox" value="suitcase">
+                Valises
+              </label>
+              <label>
+                <input type="checkbox" value="sunscreen">
+                Cr&egrave;me solaire
+              </label>
+            </div>
+          </div>
+
+          <svg class="island" viewBox="0 0 240 180" aria-hidden="true">
+            <path fill="rgba(255,255,255,.42)" d="M25 146c26-28 57-41 94-39 39 1 72 14 99 39H25Z"></path>
+            <path fill="rgba(255,221,138,.72)" d="M45 150c22-16 47-23 74-22 29 1 55 8 78 22H45Z"></path>
+            <path fill="none" stroke="rgba(255,255,255,.7)" stroke-linecap="round" stroke-width="9" d="M121 121c3-43 17-75 43-96"></path>
+            <path fill="rgba(255,255,255,.62)" d="M164 24c-30 1-50 10-61 29 30 1 51-9 61-29Z"></path>
+            <path fill="rgba(255,255,255,.52)" d="M169 24c3 29-6 50-27 63-3-30 6-51 27-63Z"></path>
+            <path fill="rgba(255,255,255,.56)" d="M163 22c-24-17-47-21-70-11 23 18 47 22 70 11Z"></path>
+          </svg>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const targetDate = new Date("2026-11-06T00:00:00");
+    const journeyStart = new Date("2026-05-03T00:00:00");
+    const storageKeys = {
+      theme: "mauritius-countdown-theme",
+      checklist: "mauritius-countdown-checklist"
+    };
+    const elements = {
+      days: document.querySelector("#days"),
+      hours: document.querySelector("#hours"),
+      minutes: document.querySelector("#minutes"),
+      seconds: document.querySelector("#seconds"),
+      progressFill: document.querySelector("#progressFill"),
+      progressPercent: document.querySelector("#progressPercent"),
+      weekendCount: document.querySelector("#weekendCount"),
+      checklistCount: document.querySelector("#checklistCount"),
+      travelMood: document.querySelector("#travelMood"),
+      intro: document.querySelector(".intro"),
+      themeButtons: document.querySelectorAll(".theme-button"),
+      checklistItems: document.querySelectorAll(".checklist input"),
+      airplane: document.querySelector(".flying-plane")
+    };
+    const surpriseSvgs = [
+      '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#0f766e" d="M30 24c-5-9-13-13-24-12 7 8 15 12 24 12Z"/><path fill="#14b8a6" d="M34 24c7-7 15-9 24-5-8 5-16 7-24 5Z"/><path fill="#7c4a1e" d="M29 22h7l-4 34h-7l4-34Z"/><path fill="#fde68a" d="M12 54h40l-6 5H18l-6-5Z"/></svg>',
+      '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="13" fill="#facc15"/><g stroke="#fde68a" stroke-linecap="round" stroke-width="5"><path d="M32 5v9M32 50v9M5 32h9M50 32h9M13 13l7 7M44 44l7 7M51 13l-7 7M20 44l-7 7"/></g></svg>',
+      '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#bae6fd" d="M8 39c8-8 16-8 24 0s16 8 24 0v10c-8 8-16 8-24 0S16 41 8 49V39Z"/><path fill="#67e8f9" d="M8 28c8-8 16-8 24 0s16 8 24 0v8c-8 8-16 8-24 0S16 28 8 36v-8Z"/></svg>',
+      '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#fb7185" d="M32 14c4-9 18-7 18 4 0 9-9 17-18 28-9-11-18-19-18-28 0-11 14-13 18-4Z"/><circle cx="32" cy="32" r="5" fill="#fde68a"/></svg>'
+    ];
+
+    function pad(value) {
+      return String(value).padStart(2, "0");
+    }
+
+    function randomBetween(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function getStoredChecklist() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKeys.checklist)) || {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveChecklist() {
+      const checkedItems = {};
+      elements.checklistItems.forEach((item) => {
+        checkedItems[item.value] = item.checked;
+      });
+      localStorage.setItem(storageKeys.checklist, JSON.stringify(checkedItems));
+    }
+
+    function updateChecklistCount() {
+      const checked = [...elements.checklistItems].filter((item) => item.checked).length;
+      elements.checklistCount.textContent = checked + "/" + elements.checklistItems.length;
+      elements.travelMood.textContent =
+        checked === elements.checklistItems.length
+          ? "Valise prete, cap sur le lagon."
+          : "Preparation en cours, le voyage prend forme.";
+    }
+
+    function initChecklist() {
+      const storedChecklist = getStoredChecklist();
+      elements.checklistItems.forEach((item) => {
+        item.checked = Boolean(storedChecklist[item.value]);
+        item.addEventListener("change", () => {
+          saveChecklist();
+          updateChecklistCount();
+        });
+      });
+      updateChecklistCount();
+    }
+
+    function setTheme(theme) {
+      document.body.dataset.theme = theme;
+      localStorage.setItem(storageKeys.theme, theme);
+      elements.themeButtons.forEach((button) => {
+        const isActive = button.dataset.theme === theme;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+    }
+
+    function initThemes() {
+      const savedTheme = localStorage.getItem(storageKeys.theme) || "lagoon";
+      setTheme(savedTheme);
+      elements.themeButtons.forEach((button) => {
+        button.addEventListener("click", () => setTheme(button.dataset.theme));
+      });
+    }
+
+    function countWeekendsUntil(target) {
+      const date = new Date();
+      date.setHours(0, 0, 0, 0);
+      let weekends = 0;
+
+      while (date < target) {
+        if (date.getDay() === 6) {
+          weekends += 1;
+        }
+        date.setDate(date.getDate() + 1);
+      }
+
+      return weekends;
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = Math.max(targetDate - now, 0);
+      const seconds = Math.floor(diff / 1000) % 60;
+      const minutes = Math.floor(diff / (1000 * 60)) % 60;
+      const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const progress = Math.min(
+        Math.max(((now - journeyStart) / (targetDate - journeyStart)) * 100, 0),
+        100
+      );
+
+      elements.days.textContent = days;
+      elements.hours.textContent = pad(hours);
+      elements.minutes.textContent = pad(minutes);
+      elements.seconds.textContent = pad(seconds);
+      elements.progressFill.style.width = progress + "%";
+      elements.progressPercent.textContent = Math.round(progress) + "%";
+      elements.weekendCount.textContent = countWeekendsUntil(targetDate);
+
+      if (diff === 0) {
+        elements.intro.textContent = "Bon voyage ! Le depart pour l'ile Maurice est arrive.";
+      }
+    }
+
+    function launchSurprise() {
+      const surprise = document.createElement("span");
+      const duration = randomBetween(4.5, 6.5);
+
+      surprise.className = "surprise";
+      surprise.innerHTML = surpriseSvgs[Math.floor(Math.random() * surpriseSvgs.length)];
+      surprise.style.setProperty("--x", randomBetween(12, 88) + "vw");
+      surprise.style.setProperty("--y", randomBetween(14, 82) + "vh");
+      surprise.style.setProperty("--size", randomBetween(3.4, 5.6) + "rem");
+      surprise.style.setProperty("--duration", duration + "s");
+      surprise.style.setProperty("--rotation", randomBetween(-18, 18) + "deg");
+      surprise.style.setProperty("--drift-x", randomBetween(-5, 5) + "rem");
+      surprise.style.setProperty("--drift-y", randomBetween(-2, 3) + "rem");
+
+      document.querySelector(".surprise-layer").appendChild(surprise);
+      window.setTimeout(() => surprise.remove(), duration * 1000);
+    }
+
+    function launchPlane() {
+      elements.airplane.classList.remove("is-flying");
+      void elements.airplane.offsetWidth;
+      elements.airplane.classList.add("is-flying");
+    }
+
+    function scheduleSurprise() {
+      window.setTimeout(() => {
+        launchSurprise();
+        if (Math.random() > 0.45) {
+          launchPlane();
+        }
+        scheduleSurprise();
+      }, randomBetween(10000, 15000));
+    }
+
+    initThemes();
+    initChecklist();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    launchSurprise();
+    window.setTimeout(launchSurprise, 1400);
+    window.setTimeout(launchPlane, 2400);
+    scheduleSurprise();
+  </script>
 </body>
-
 </html>
