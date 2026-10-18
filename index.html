@@ -801,6 +801,40 @@
       }
     }
 
+    .programme-button {
+      display: inline-flex;
+      gap: 0.6rem;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1.25rem;
+      padding: 0.95rem 1.35rem;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 999px;
+      color: #031b2f;
+      font: inherit;
+      font-size: 0.98rem;
+      font-weight: 850;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--sun), #fff3c4);
+      box-shadow:
+        0 1rem 2.4rem rgba(2, 8, 23, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease;
+    }
+
+    .programme-button:hover,
+    .programme-button:focus-visible {
+      transform: translateY(-0.14rem);
+      border-color: rgba(255, 255, 255, 0.62);
+      box-shadow:
+        0 1.2rem 2.8rem rgba(2, 8, 23, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
+      outline: none;
+    }
+
     .qr-page-link {
       position: fixed;
       right: 1rem;
@@ -975,6 +1009,10 @@
             <span class="pill">&#127796; Destination : <strong class="destination">&Icirc;le Maurice</strong></span>
             <span class="pill">&#9992;&#65039; Date de d&eacute;part : <strong>06/11/2026</strong></span>
           </div>
+
+          <a class="programme-button" href="programme.html">
+            &#128197; Programme du voyage
+          </a>
         </div>
 
         <aside class="travel-panel" aria-label="Billet de voyage">
