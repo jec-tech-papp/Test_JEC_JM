@@ -104,7 +104,7 @@ window.ITINERARY_DATA = {
       "beach": "Plage de Blue Bay — eau turquoise, snorkeling léger depuis la plage",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHykWfI-KNqS3z8eGghvVTDa4K2jpI0-WAmyzf2ZmeVFsoZY48yS3b-lEqCJlyirppPl5DFpkqCGfbQk8rbev1fOkf016h7xhqyvi3CnSpmTQXdHCd5IYj7fbdInK-dKCkTIfvq=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg/960px-Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg",
           "caption": "Blue Bay — photo Google Maps",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius"
         }
@@ -185,12 +185,12 @@ window.ITINERARY_DATA = {
       "tips": "Restez sur les points de vue aménagés à Gris Gris. Pas de baignade aux falaises — la plage de Riambel est plus sûre.",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEtVoP2QC0tLyHO5YDB0asyc_XqhiG-Eee4zjLmqcgVw3iQbpAHeaYVYkGjFq6dEpoL0JZicgrpCZFLVE1gE-ZkaYhsqjF5-NtvggU42eL_AGuQgvn27OYP_B521Nbf-gX6gGuwwg=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/2006-10-08_Gris_Gris_Beach%2C_Mauritius.jpg/960px-2006-10-08_Gris_Gris_Beach%2C_Mauritius.jpg",
           "caption": "Gris Gris — falaises du sud",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Gris+Gris+Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFlAS6FBQC1FZGQEmQVjDtdtU7uUmHz9S3_Ma2DB6cSBCfRJHMtHSaTHLl9b2v0iZRaaaelMxk65a2hWhSxcMT-Wzj_aemfws2fLVm4pDr_13nGYwng8xaZuz5LNfoGAia6vT-IoQ=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Mauritius_belle_mare_beach.jpg/960px-Mauritius_belle_mare_beach.jpg",
           "caption": "Plage de Riambel",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Riambel%20Beach%20Mauritius"
         }
@@ -264,7 +264,7 @@ window.ITINERARY_DATA = {
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Marine+Cemetery+Mahebourg+Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHykWfI-KNqS3z8eGghvVTDa4K2jpI0-WAmyzf2ZmeVFsoZY48yS3b-lEqCJlyirppPl5DFpkqCGfbQk8rbev1fOkf016h7xhqyvi3CnSpmTQXdHCd5IYj7fbdInK-dKCkTIfvq=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg/960px-Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg",
           "caption": "Blue Bay",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius"
         }
@@ -304,7 +304,7 @@ window.ITINERARY_DATA = {
       "tips": "Journée volontairement légère. Option bonus : Eau Bleue à Cluny (≈15 min) le matin — eau turquoise et plusieurs bassins. Pointe d'Esny l'après-midi si envie de plage.",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEBzYh-5HtX_lmdnVjWmDAt1BvjJXX7tXJRMK0-sqvsHPYv3oACkAnIwYDpOO_XkwBxVyWUdT6-GYgFo6FIEWftEcN8f7MV7dQTLUYK2C3peNr0nhLDqfs1ocYaHk42eE7W2dyx=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/Pointe_d%27esny_Mauritius_2019-10-01_5.jpg/960px-Pointe_d%27esny_Mauritius_2019-10-01_5.jpg",
           "caption": "Pointe d'Esny — plage calme",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pointe+d%27Esny+Mauritius"
         }
@@ -345,12 +345,12 @@ window.ITINERARY_DATA = {
       "beach": "Île aux Cerfs — plages de sable blanc et eau cristalline",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHsvrF4EmuNDqYO8Z2X6eAjit4rlpEwPmJrLN2A3N4POeGlPQnVNz-uD8UO7xXWtRWTih-r-KV6I8ZGG2jhlCJ_cb4KGKGBr5uGwrLKHEmlVwbukrbaYVmXHs84SBvyxJ3ksERyuQ=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Road_to_Trou_d%60Eau_Douce.jpg/960px-Road_to_Trou_d%60Eau_Douce.jpg",
           "caption": "Trou d'Eau Douce — départ bateau",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Trou%20d%20Eau%20Douce%20Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHq5bV9Q7N2BCaQEOXIIfGQZ8Rg5TFlMJZijJ_AtGezwTlvhMLujVreupKGQVIF_BMFC2sxjzy_jJ7kgDhjjPmoyKwLPDljUjvEljB-S0UslkNq7gDYu5T2nQ0q6ymGq_txLNehfxhFOk2y=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Mauritius_%C3%8Ele_aux_Cerfs.jpg/960px-Mauritius_%C3%8Ele_aux_Cerfs.jpg",
           "caption": "Île aux Cerfs",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ile+aux+Cerfs+Mauritius"
         }
@@ -418,12 +418,12 @@ window.ITINERARY_DATA = {
       "tips": "Couvrez-vous légèrement au Grand Bassin (site religieux). La visite de la rhumerie Bois Chéri est accessible.",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEET47HR0VWFGigS20DxhvBJd4X-dNCUBmaqDdyJb2uhqty9sjlDV2VTRvvjD0cyqjlVtL2vDm5Wb0CyjHLtAVxs-jj0J9i3sOkRADTvm0ZBxk5CjmgIryXPyK4K0eqKRZsghcU-uOQzhA=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Ganga_Talao_Hindu_Temple_2.JPG/960px-Ganga_Talao_Hindu_Temple_2.JPG",
           "caption": "Grand Bassin — lac sacré",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Grand+Bassin+Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHfLYGdm7JZJyfQE_iAbpBofNJDOm9wXZoGf2Cl62dhyBm3cxOBArR2PmiNFk-5YSvm0ll1kW-eUZHEFPtvp2043ELb8TFaRCFNcqTor_v9jWYldmAaLKq9AK2gV5m8kp2BOmbBfQ=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Tea_estate_%283007264690%29.jpg/960px-Tea_estate_%283007264690%29.jpg",
           "caption": "Bois Chéri — plantation de thé",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Bois%20Cheri%20Tea%20Plantation%20Mauritius"
         }
@@ -470,12 +470,12 @@ window.ITINERARY_DATA = {
       "tips": "Vérifiez les horaires de visite du moulin la veille (visite guidée ou découverte du domaine selon disponibilité). Blue Bay en fin d'après-midi : idéal pour une journée chill.",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHOedu_lfFfC-od4jG7OTZeTIFdmp17HUGoqAa1s4-r6efEE9rMP-01mECxOMImyCR1PNnvCH-ssrndqKhWKbSZ5K2ip2SYH4JMoHx95euszMffFFamWU8Qc7h6xOHegDvu67vB=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Sugar_cane_field_near_Roches_Noires_-_Mauritius_2007-09-09.jpg/960px-Sugar_cane_field_near_Roches_Noires_-_Mauritius_2007-09-09.jpg",
           "caption": "Savannah — domaine sucrier Omnicane",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Omnicane%20Sugar%20Estate%20Savannah%20Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHykWfI-KNqS3z8eGghvVTDa4K2jpI0-WAmyzf2ZmeVFsoZY48yS3b-lEqCJlyirppPl5DFpkqCGfbQk8rbev1fOkf016h7xhqyvi3CnSpmTQXdHCd5IYj7fbdInK-dKCkTIfvq=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg/960px-Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg",
           "caption": "Blue Bay — détente et snorkeling",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius"
         }
@@ -525,17 +525,17 @@ window.ITINERARY_DATA = {
       "beach": "Pas de plage — journée nature et panoramas dans le sud-ouest",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHqPdYRFcv-1GxndIWy2oStp1672Ud8qGIkICyQ3T957nBV4uabnubYpKjDVE4lVZOludxkaXjKPn-r6VbuLewUVUkL30_CDXyDrpRtwwWFO-hUOyju-qk7i-49-hOJVB7B2a7n1VZaxQsn=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Mauritius_Seven-Coloured-Earths-01.jpg/960px-Mauritius_Seven-Coloured-Earths-01.jpg",
           "caption": "Chamarel — terres des 7 couleurs",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chamarel+Seven+Coloured+Earth"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEE_sapMqMu2NKDnJnaH51K8DPmWZGIiaHvTSoY_St8k7hnnISIpZLMKKIhfqsV1wm5fkSMrj65zj7p1PA3QEAs3d7pfY-rFjUSY9I30W7fPUbm4VnmjS1fqY71b4aH0-0wsbx7=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/Chamarel_Falls_Mauritius_2.JPG/960px-Chamarel_Falls_Mauritius_2.JPG",
           "caption": "Cascade de Chamarel",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chamarel%20Waterfall%20Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGpCe_KqveZEzU1S_3eLv3o6TRMuVTnRR4sgHYRkNxYR1bYGDIVdWjFHASEx9DenXV_gVoay02ea3L5EP2mhzSoQEl3uxNM0e2Vl_dz4Zn0vIlUtL8qCgVU4sgtDdD_MHrsMYta5qCgfKGz=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/Alexandra_Falls%2C_Mauritius_2018_%2845641821862%29.jpg/960px-Alexandra_Falls%2C_Mauritius_2018_%2845641821862%29.jpg",
           "caption": "Alexandra Falls — panorama",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Alexandra%20Falls%20Mauritius%20Black%20River%20Gorges"
         }
@@ -609,7 +609,7 @@ window.ITINERARY_DATA = {
       "tips": "Ne pas tenter la randonnée pour les genoux sensibles. La plage offre déjà une vue magnifique.",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAH25G3ryZZqCc7uevLC8sL7vsSsr-R55OeHkjdI2cMdJhcdiMrZvDBVwE10fbKY4zUZTVnVDB0jC8m8SqYhSANIQ2AqcqhzaE0IJczrjFQn0FOGotpYCW-Po5EEJWtSAL8kfOa1Qw=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Le_Morne_Peninsula_in_Mauritius_%2853697779236%29.jpg/960px-Le_Morne_Peninsula_in_Mauritius_%2853697779236%29.jpg",
           "caption": "Le Morne Brabant — panorama UNESCO",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Le+Morne+Brabant"
         }
@@ -650,7 +650,7 @@ window.ITINERARY_DATA = {
       "tips": "Journée chill idéale pour ralentir le rythme. Flic en Flac est parfait pour un coucher de soleil.",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAF1z4eVx9J_1OBeuH6D4oSH8FT_ZUoxIZqNhpl14W0zvEq1xaF76Hne4yOivU1j44RdfUH1thdyt3Mxp0Sn2TQmdqbtfyfob06BOu09OLBohvQfDl8gAD7Vkg5utP5gaiOOs6k9iA=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/Plage_de_Flic-en-Flac_-_nuage.JPG/960px-Plage_de_Flic-en-Flac_-_nuage.JPG",
           "caption": "Flic en Flac — plage de l'ouest",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Flic+en+Flac+Beach"
         }
@@ -695,7 +695,7 @@ window.ITINERARY_DATA = {
       "tips": "Garez-vous au Caudan. Marchez entre les sites : tout est proche. Goûtez les gâteaux piments au marché.",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEg4X3kZKp8QfF_C80unhRlP9uoH4ewerjvAGdxDetW7qM36EfDfwsTCfZPPhtSRW7i2sFfKAin8ASwWV4ZawG5_4THiKSKHXwO20yPpI13UBTVPcL-C47AD-lVHr-jEl4ze2C07IVSzCvx=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Old_market_of_Port_Louis%2C_Mauritius.jpeg/960px-Old_market_of_Port_Louis%2C_Mauritius.jpeg",
           "caption": "Port-Louis — marché central",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Port+Louis+Central+Market"
         }
@@ -753,7 +753,7 @@ window.ITINERARY_DATA = {
       ],
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAFggCZcmDQ7jPoAfSvLIjddVur2ketFz5DOBrDd5oFkOLzPChJ0wx6DBA_fq-aMWecQNn4T6nUuJXEw9kYdZjVh6GnFrMU1DfKODa-BMX7Do97_1dqTq8ZlxYbj0fIg2zkBDGkLO0Be1OXZ=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Footbridge_at_Sir_Seewoosagur_Ramgoolam_Botanical_Garden.jpg/960px-Footbridge_at_Sir_Seewoosagur_Ramgoolam_Botanical_Garden.jpg",
           "caption": "Jardin de Pamplemousses",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sir+Seewoosagur+Ramgoolam+Botanical+Garden"
         },
@@ -763,7 +763,7 @@ window.ITINERARY_DATA = {
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Notre-Dame+Auxiliatrice+Cap+Malheureux+Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAGAv3krRt_oMinw4-Z_gpO36OGWTzCfAHVsCfFk4IZSq7Gq6G7l-354XJ9YTPtsWbIC1-Ecea3oEHIGswXyddALWG30IbtlmVM-Zb4gunKf3FnCAbuXF72rXudRqD56rZgyr69EjEw9uqmK=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Guests_enjoy_Mont_choisy_beach_Mauritius.jpg/960px-Guests_enjoy_Mont_choisy_beach_Mauritius.jpg",
           "caption": "Mont Choisy — plage familiale",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mont%20Choisy%20Beach%20Mauritius"
         }
@@ -819,17 +819,17 @@ window.ITINERARY_DATA = {
       "tips": "Allez à Rochester Falls en début d'après-midi (moins de monde). Baskets conseillées : accès court mais un peu irrégulier. Baignade possible aux chutes.",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEAuEAgesMee3p7NE5SZMYlifkO9BQhv4_ROajFLckRLnEsnXEdbX8EkUpX_WticSUfEDt04A-u4uzuGc1jCteBSMdptxHevCZQaXCs-PMyjDazdTF8XOmYhMgeP5D530s42_dYcg=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Goat_at_La_Vanille_Reserve_des_Mascareignes_%2823456147372%29.jpg/960px-Goat_at_La_Vanille_Reserve_des_Mascareignes_%2823456147372%29.jpg",
           "caption": "La Vanille Nature Park",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=La%20Vanille%20Nature%20Park%20Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAExzoTxKw3alX8U1-hbx9jl0WpZZ3HUEdkOBpH01gKOO-eradBZSw_F2irWyKIohjtowUK5Hn2RKDlpAkneNcxdywyDWsd4F0EufUIjB_IVHEOS8NONod5wMIKnILssldRHHHt92nJIvKBD=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Rochester_falls.jpg/960px-Rochester_falls.jpg",
           "caption": "Rochester Falls — baignade",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rochester%20Falls%20Mauritius"
         },
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAEtVoP2QC0tLyHO5YDB0asyc_XqhiG-Eee4zjLmqcgVw3iQbpAHeaYVYkGjFq6dEpoL0JZicgrpCZFLVE1gE-ZkaYhsqjF5-NtvggU42eL_AGuQgvn27OYP_B521Nbf-gX6gGuwwg=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/2006-10-08_Gris_Gris_Beach%2C_Mauritius.jpg/960px-2006-10-08_Gris_Gris_Beach%2C_Mauritius.jpg",
           "caption": "Gris Gris — côte sud sauvage",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Gris+Gris+Mauritius"
         }
@@ -886,7 +886,7 @@ window.ITINERARY_DATA = {
       "tips": "Prévoyez 2 h avant le vol de 20h50 pour le retour de la voiture et l'enregistrement. Un dernier dip dans le lagon le matin !",
       "photos": [
         {
-          "url": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHykWfI-KNqS3z8eGghvVTDa4K2jpI0-WAmyzf2ZmeVFsoZY48yS3b-lEqCJlyirppPl5DFpkqCGfbQk8rbev1fOkf016h7xhqyvi3CnSpmTQXdHCd5IYj7fbdInK-dKCkTIfvq=w800-h500-k-no",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg/960px-Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg",
           "caption": "Blue Bay — une dernière baignade ?",
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius"
         }

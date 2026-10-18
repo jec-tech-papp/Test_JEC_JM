@@ -51,6 +51,15 @@
     return "<li>" + esc(text) + "</li>";
   }
 
+  var PHOTO_PLACEHOLDER =
+    "data:image/svg+xml," +
+    encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">' +
+        '<rect fill="#f5f0e8" width="800" height="500"/>' +
+        '<text x="400" y="250" text-anchor="middle" fill="#78716c" font-family="system-ui,sans-serif" font-size="22">Photo indisponible</text>' +
+        "</svg>"
+    );
+
   function renderPhotos(photos) {
     if (!photos || !photos.length) {
       return "";
@@ -69,7 +78,9 @@
           esc(photo.url) +
           '" alt="' +
           esc(photo.caption || "Photo du lieu") +
-          '" loading="lazy" referrerpolicy="no-referrer">' +
+          '" loading="lazy" referrerpolicy="no-referrer" decoding="async" onerror="this.onerror=null;this.src=\'' +
+          PHOTO_PLACEHOLDER +
+          "'\">" +
           "</a>" +
           '<figcaption>' +
           esc(photo.caption || "Photo du lieu") +

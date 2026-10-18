@@ -598,11 +598,24 @@
     }
     try {
       map = L.map(els.tripMap, { scrollWheelZoom: false });
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      var osmTiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>",
+        maxZoom: 19
+      });
+      var cartoTiles = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
         attribution: "&copy; OpenStreetMap &copy; CARTO",
         subdomains: "abcd",
         maxZoom: 19
-      }).addTo(map);
+      });
+      osmTiles.addTo(map);
+      var tileErrors = 0;
+      osmTiles.on("tileerror", function () {
+        tileErrors += 1;
+        if (tileErrors === 3 && !map.hasLayer(cartoTiles)) {
+          map.removeLayer(osmTiles);
+          cartoTiles.addTo(map);
+        }
+      });
       markersLayer = L.layerGroup().addTo(map);
       routeLayer = L.layerGroup().addTo(map);
       L.marker([BASE.lat, BASE.lng], {
@@ -623,6 +636,30 @@
       window.setTimeout(function () {
         map.invalidateSize();
       }, 300);
+      if (typeof ResizeObserver !== "undefined" && els.tripMap) {
+        var mapResizeObserver = new ResizeObserver(function () {
+          if (map) {
+            map.invalidateSize();
+          }
+        });
+        mapResizeObserver.observe(els.tripMap);
+      }
+      var mapSection = $("mapSection");
+      if (mapSection && "IntersectionObserver" in window) {
+        var mapVisibilityObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting && map) {
+                window.setTimeout(function () {
+                  map.invalidateSize();
+                }, 100);
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        mapVisibilityObserver.observe(mapSection);
+      }
     } catch (e) {
       updateFallbackMap();
     }
@@ -751,7 +788,8 @@
     loadLeafletScript(
       initLeafletMap,
       function () {
-        setMapStatus("Carte simplifiée (OpenStreetMap). Le programme complet est disponible.", false);
+        updateFallbackMap();
+        setMapStatus("Carte simplifiée (OpenStreetMap intégrée).", false);
       }
     );
   }
