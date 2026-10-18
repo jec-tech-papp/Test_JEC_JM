@@ -1,0 +1,114 @@
+{
+  "blueBay": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg/960px-Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg"
+  },
+  "grisGris": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Gris+Gris+Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/2006-10-08_Gris_Gris_Beach%2C_Mauritius.jpg/960px-2006-10-08_Gris_Gris_Beach%2C_Mauritius.jpg"
+  },
+  "mahebourg": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mahebourg+Market+Mauritius",
+    "photo": "https://c8.alamy.com/compfr/frpdb0/stand-de-fruits-dans-la-halle-a-mahebourg-mauritius-frpdb0.jpg"
+  },
+  "mahebourgCemetery": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Marine+Cemetery+Mahebourg+Mauritius",
+    "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/31/8e/dc/fc/petit-bel-air-catholic.jpg?w=1200&h=1200&s=1"
+  },
+  "pointeEsny": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pointe+d%27Esny+Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/Pointe_d%27esny_Mauritius_2019-10-01_5.jpg/960px-Pointe_d%27esny_Mauritius_2019-10-01_5.jpg"
+  },
+  "ileAuxCerfs": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ile+aux+Cerfs+Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Mauritius_%C3%8Ele_aux_Cerfs.jpg/960px-Mauritius_%C3%8Ele_aux_Cerfs.jpg"
+  },
+  "grandBassin": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Grand+Bassin+Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Ganga_Talao_Hindu_Temple_2.JPG/960px-Ganga_Talao_Hindu_Temple_2.JPG"
+  },
+  "belleMare": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Belle+Mare+Beach+Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Mauritius_belle_mare_beach.jpg/960px-Mauritius_belle_mare_beach.jpg"
+  },
+  "chamarel": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chamarel+Seven+Coloured+Earth",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Mauritius_Seven-Coloured-Earths-01.jpg/960px-Mauritius_Seven-Coloured-Earths-01.jpg"
+  },
+  "leMorne": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Le+Morne+Brabant",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Le_Morne_Peninsula_in_Mauritius_%2853697779236%29.jpg/960px-Le_Morne_Peninsula_in_Mauritius_%2853697779236%29.jpg"
+  },
+  "flicEnFlac": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Flic+en+Flac+Beach",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/Plage_de_Flic-en-Flac_-_nuage.JPG/960px-Plage_de_Flic-en-Flac_-_nuage.JPG"
+  },
+  "portLouis": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Port+Louis+Central+Market",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Old_market_of_Port_Louis%2C_Mauritius.jpeg/960px-Old_market_of_Port_Louis%2C_Mauritius.jpeg"
+  },
+  "pamplemousses": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sir+Seewoosagur+Ramgoolam+Botanical+Garden",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Footbridge_at_Sir_Seewoosagur_Ramgoolam_Botanical_Garden.jpg/960px-Footbridge_at_Sir_Seewoosagur_Ramgoolam_Botanical_Garden.jpg"
+  },
+  "grandBaie": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Grand+Baie+Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Grand_Baie%2C_La_Cuvette_Beach.jpg/960px-Grand_Baie%2C_La_Cuvette_Beach.jpg"
+  },
+  "pereybere": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pereybere%20Beach%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Pereybere_Beach_Mauritius_2019-09-27.jpg/960px-Pereybere_Beach_Mauritius_2019-09-27.jpg"
+  },
+  "riambel": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Riambel%20Beach%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Mauritius_belle_mare_beach.jpg/960px-Mauritius_belle_mare_beach.jpg"
+  },
+  "souillac": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Souillac%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Mauritius_23.08.2009_10-27-31.jpg/960px-Mauritius_23.08.2009_10-27-31.jpg"
+  },
+  "boisCheri": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Bois%20Cheri%20Tea%20Plantation%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Tea_estate_%283007264690%29.jpg/960px-Tea_estate_%283007264690%29.jpg"
+  },
+  "montChoisy": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mont%20Choisy%20Beach%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Guests_enjoy_Mont_choisy_beach_Mauritius.jpg/960px-Guests_enjoy_Mont_choisy_beach_Mauritius.jpg"
+  },
+  "palmar": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Palmar%20Beach%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg/960px-Blue_Bay_Beach_in_Mauritius_%2853697979338%29.jpg"
+  },
+  "trouEauDouce": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Trou%20d%20Eau%20Douce%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Road_to_Trou_d%60Eau_Douce.jpg/960px-Road_to_Trou_d%60Eau_Douce.jpg"
+  },
+  "savannah": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Omnicane%20Sugar%20Estate%20Savannah%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Sugar_cane_field_near_Roches_Noires_-_Mauritius_2007-09-09.jpg/960px-Sugar_cane_field_near_Roches_Noires_-_Mauritius_2007-09-09.jpg"
+  },
+  "alexandraFalls": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Alexandra%20Falls%20Mauritius%20Black%20River%20Gorges",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/Alexandra_Falls%2C_Mauritius_2018_%2845641821862%29.jpg/960px-Alexandra_Falls%2C_Mauritius_2018_%2845641821862%29.jpg"
+  },
+  "laVanille": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=La%20Vanille%20Nature%20Park%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Goat_at_La_Vanille_Reserve_des_Mascareignes_%2823456147372%29.jpg/960px-Goat_at_La_Vanille_Reserve_des_Mascareignes_%2823456147372%29.jpg"
+  },
+  "rochesterFalls": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rochester%20Falls%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Rochester_falls.jpg/960px-Rochester_falls.jpg"
+  },
+  "eauBleue": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Eau%20Bleue%20Waterfall%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/Chamarel_Falls_Mauritius_2.JPG/960px-Chamarel_Falls_Mauritius_2.JPG"
+  },
+  "capMalheureux": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Notre-Dame+Auxiliatrice+Cap+Malheureux+Mauritius",
+    "photo": "https://ip1.orchestra-platform.com/sWjMvkfMjYBqFHPlvMjdoa5z30Msw29lSuqS3GjqT7-A/https://fairmoove-media-storage.s3.eu-west-3.amazonaws.com/photo/poi/ile-maurice/ile-maurice-cap-malheureux.jpeg"
+  },
+  "cascadeChamarel": {
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chamarel%20Waterfall%20Mauritius",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/Chamarel_Falls_Mauritius_2.JPG/960px-Chamarel_Falls_Mauritius_2.JPG"
+  }
+}
