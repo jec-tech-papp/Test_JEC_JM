@@ -36,19 +36,57 @@
     return activity.link || "";
   }
 
+  function isMealActivity(activity) {
+    if (!activity) {
+      return false;
+    }
+    if (typeof activity === "object" && activity.meal) {
+      return true;
+    }
+    var text = activityText(activity).toLowerCase();
+    return /(déjeuner|dejeuner|restaurant|snack|café|cafe|food truck|repas|barbecue|pique-nique|piquenique|messe|dégustation)/.test(text);
+  }
+
+  function mealEmoji(text) {
+    var t = String(text || "").toLowerCase();
+    if (t.indexOf("messe") !== -1) {
+      return "⛪";
+    }
+    if (t.indexOf("snack") !== -1 || t.indexOf("food truck") !== -1) {
+      return "🥙";
+    }
+    if (t.indexOf("café") !== -1 || t.indexOf("cafe") !== -1) {
+      return "☕";
+    }
+    if (t.indexOf("pique-nique") !== -1 || t.indexOf("piquenique") !== -1) {
+      return "🧺";
+    }
+    if (t.indexOf("dégustation") !== -1) {
+      return "🍵";
+    }
+    return "🍽️";
+  }
+
   function renderActivityItem(activity) {
     var text = activityText(activity);
     var link = activityLink(activity);
+    var meal = isMealActivity(activity);
+    var icon = meal
+      ? '<span class="activity-meal-icon" aria-hidden="true">' + mealEmoji(text) + "</span>"
+      : "";
+    var body;
     if (link) {
-      return (
-        '<li><a class="activity-link" href="' +
+      body =
+        '<a class="activity-link" href="' +
         esc(link) +
         '" target="_blank" rel="noopener noreferrer">' +
+        icon +
         esc(text) +
-        " ↗</a></li>"
-      );
+        " ↗</a>";
+    } else {
+      body = icon + esc(text);
     }
-    return "<li>" + esc(text) + "</li>";
+    return '<li' + (meal ? ' class="activity-meal"' : "") + ">" + body + "</li>";
   }
 
   var PHOTO_PLACEHOLDER =
