@@ -160,6 +160,12 @@
     return '<section class="day-block day-links"><h3>🔗 Liens utiles</h3><div class="links-list">' + items + "</div></section>";
   }
 
+  function dayHasMealActivities(day) {
+    return (day.activities || []).some(function (activity) {
+      return isMealActivity(activity);
+    });
+  }
+
   function buildSearchText(day) {
     var parts = [
       day.title,
@@ -202,6 +208,8 @@
       day.day +
       '" data-categories="' +
       (day.categories || []).join(" ") +
+      '" data-meals="' +
+      (dayHasMealActivities(day) ? "1" : "0") +
       '" data-search="' +
       esc(buildSearchText(day)) +
       '">' +
@@ -267,6 +275,8 @@
     esc: esc,
     formatDriveTime: formatDriveTime,
     activityText: activityText,
+    isMealActivity: isMealActivity,
+    dayHasMealActivities: dayHasMealActivities,
     renderDayCard: renderDayCard,
     renderAllDays: renderAllDays
   };

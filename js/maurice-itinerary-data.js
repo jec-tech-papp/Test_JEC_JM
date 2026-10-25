@@ -39,6 +39,11 @@ window.ITINERARY_DATA = {
       "id": "repos",
       "label": "Repos",
       "icon": "😌"
+    },
+    {
+      "id": "repas",
+      "label": "Repas",
+      "icon": "🍽️"
     }
   ],
   "PRACTICAL_TIPS": [
@@ -729,7 +734,14 @@ window.ITINERARY_DATA = {
         }
       ],
       "driveMinutes": 75,
-      "tips": "Garez-vous au Caudan. Marchez entre les sites : tout est proche. Goûtez les gâteaux piments au marché.",
+      "tips": "Partez tôt pour Eureka (Moka), puis enchaînez vers Port-Louis. Garez-vous au Caudan pour le centre : tout est proche à pied. Goûtez les gâteaux piments au marché.",
+      "links": [
+        {
+          "label": "Maison Créole Eureka",
+          "url": "https://www.google.com/maps/search/?api=1&query=Maison+Eureka+Moka+Mauritius",
+          "description": "Moka — halte en milieu de matinée avant Port-Louis"
+        }
+      ],
       "photos": [
         {
           "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Old_market_of_Port_Louis%2C_Mauritius.jpeg/960px-Old_market_of_Port_Louis%2C_Mauritius.jpeg",

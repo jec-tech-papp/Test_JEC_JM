@@ -642,6 +642,28 @@ a:hover { color: var(--accent-strong); }
   vertical-align: -0.05em;
 }
 
+/* Vue filtre « Repas » : cartes inchangées hors filtre ; focus sur les pauses repas */
+.days-list.filters-view-repas .day-card .day-summary,
+.days-list.filters-view-repas .day-card .day-photos,
+.days-list.filters-view-repas .day-card .day-links,
+.days-list.filters-view-repas .day-card .highlight-beach,
+.days-list.filters-view-repas .day-card .highlight-tip,
+.days-list.filters-view-repas .day-card .drive-row,
+.days-list.filters-view-repas .day-card .cat-badges {
+  display: none;
+}
+
+.days-list.filters-view-repas .day-card .day-block > h3 {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.days-list.filters-view-repas .activity-list li:not(.activity-meal) {
+  display: none;
+}
+
 .day-block p {
   margin: 0;
   color: var(--text-soft);

@@ -57,9 +57,19 @@
     return haystack.indexOf(state.searchQuery) !== -1;
   }
 
+  function dayHasMeals(day) {
+    if (window.ItineraryRender && window.ItineraryRender.dayHasMealActivities) {
+      return window.ItineraryRender.dayHasMealActivities(day);
+    }
+    return false;
+  }
+
   function matchesFilter(card) {
     if (state.filter === "all") {
       return true;
+    }
+    if (state.filter === "repas") {
+      return card.getAttribute("data-meals") === "1";
     }
     var cats = (card.getAttribute("data-categories") || "").split(" ");
     return cats.indexOf(state.filter) !== -1;
@@ -67,7 +77,11 @@
 
   function getVisibleDays() {
     return getItinerary().filter(function (day) {
-      if (state.filter !== "all" && day.categories.indexOf(state.filter) === -1) {
+      if (state.filter === "repas") {
+        if (!dayHasMeals(day)) {
+          return false;
+        }
+      } else if (state.filter !== "all" && day.categories.indexOf(state.filter) === -1) {
         return false;
       }
       if (state.searchQuery) {
@@ -90,7 +104,14 @@
         visible += 1;
       }
     });
-    els.dayCount.textContent = visible + " jour" + (visible > 1 ? "s" : "");
+    if (state.filter === "repas") {
+      els.dayCount.textContent = visible + " jour" + (visible > 1 ? "s" : "") + " avec repas";
+    } else {
+      els.dayCount.textContent = visible + " jour" + (visible > 1 ? "s" : "");
+    }
+    if (els.daysGrid) {
+      els.daysGrid.classList.toggle("filters-view-repas", state.filter === "repas");
+    }
     if (els.searchStatus) {
       if (state.searchQuery) {
         els.searchStatus.hidden = false;
