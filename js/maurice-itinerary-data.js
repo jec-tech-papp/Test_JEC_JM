@@ -152,6 +152,10 @@ window.ITINERARY_DATA = {
         "Gris Gris — falaises battues par les vagues (vue sans descente difficile)",
         "Roche Qui Pleure — spectacle naturel du sud",
         "Village de Souillac et promenade côtière",
+        {
+          "text": "Déjeuner au Restaurant Saveur Otentik (Souillac)",
+          "link": "https://www.google.com/maps/search/?api=1&query=Saveur+Otentik+Souillac+Mauritius"
+        },
         "Déjeuner local dans le sud"
       ],
       "beach": "Plage de Riambel — sable, baignade tranquille loin de la foule",
@@ -333,8 +337,12 @@ window.ITINERARY_DATA = {
         "nature",
         "plage"
       ],
-      "summary": "Excursion en bateau depuis Trou d'Eau Douce vers l'île aux Cerfs : journée plage et lagon.",
+      "summary": "Marché de Flacq le matin, puis excursion en bateau depuis Trou d'Eau Douce vers l'île aux Cerfs : journée plage et lagon.",
       "activities": [
+        {
+          "text": "Matinée au Marché de Flacq — fruits, légumes et ambiance locale avant de partir vers l'est",
+          "link": "https://www.google.com/maps/search/?api=1&query=Flacq+Market+Mauritius"
+        },
         {
           "text": "Départ en bateau depuis Trou d'Eau Douce",
           "link": "https://www.google.com/maps/search/?api=1&query=Trou+d'Eau+Douce+Mauritius"
@@ -518,6 +526,10 @@ window.ITINERARY_DATA = {
           "text": "Alexandra Falls — Black River Gorges (parking direct, 1–2 min de marche)",
           "link": "https://www.google.com/maps/search/?api=1&query=Alexandra+Falls+Mauritius"
         },
+        {
+          "text": "Déjeuner au Le Chamarel Restaurant — restaurant panoramique sur la région",
+          "link": "https://www.google.com/maps/search/?api=1&query=Le+Chamarel+Restaurant+Mauritius"
+        },
         "Déjeuner à Chamarel ou pique-nique",
         "Option : arrêts photo dans les gorges si l'énergie le permet",
         "Retour tranquille vers New Grove"
@@ -588,6 +600,10 @@ window.ITINERARY_DATA = {
       "activities": [
         "Route vers Le Morne — panorama sur le Morne Brabant (UNESCO)",
         "Photo depuis la plage publique, sans ascension",
+        {
+          "text": "Déjeuner ou snack chez Kot Zanane — face au lagon du Morne",
+          "link": "https://www.google.com/maps/search/?api=1&query=Kot+Zanane+Le+Morne+Mauritius"
+        },
         "Déjeuner face au lagon du sud-ouest"
       ],
       "beach": "Plage du Morne — vue spectaculaire sur la montagne",
@@ -627,6 +643,7 @@ window.ITINERARY_DATA = {
         "culture"
       ],
       "activities": [
+        "Messe à New Grove",
         "Matinée détente à New Grove",
         "Shopping souvenirs ou supermarché",
         "Après-midi à Flic en Flac — longue plage animée"
@@ -668,7 +685,15 @@ window.ITINERARY_DATA = {
       "activities": [
         "Marché central de Port-Louis — épices, légumes, street food",
         "Aapravasi Ghat (UNESCO) — histoire de l'immigration",
-        "Waterfront Caudan — boutiques, cafés, vue sur le port"
+        {
+          "text": "Déjeuner au Café l'Amical (Port-Louis)",
+          "link": "https://www.google.com/maps/search/?api=1&query=Cafe+l%27Amical+Port+Louis+Mauritius"
+        },
+        "Waterfront Caudan — boutiques, cafés, vue sur le port",
+        {
+          "text": "Après-midi à l'Océanarium Odysseo — visite près du Caudan",
+          "link": "https://www.google.com/maps/search/?api=1&query=Odysseo+Oceanarium+Port+Louis+Mauritius"
+        }
       ],
       "beach": "Pas de plage — journée urbaine et culturelle",
       "locations": [
@@ -712,14 +737,22 @@ window.ITINERARY_DATA = {
         "plage",
         "culture"
       ],
-      "summary": "Jardin de Pamplemousses le matin, pause à l'église de Cap Malheureux sur la route du nord, puis Mont Choisy l'après-midi.",
+      "summary": "Jardin de Pamplemousses le matin, Cap Malheureux (église et Casa Sandrine), puis Mont Choisy l'après-midi avec déjeuner sur la plage.",
       "activities": [
         "Jardin botanique de Pamplemousses — lotus géants, palmiers royaux",
         {
           "text": "Église Notre-Dame Auxiliatrice de Cap Malheureux — chapelle au toit rouge face au lagon",
           "link": "https://www.google.com/maps/search/?api=1&query=Notre-Dame+Auxiliatrice+Cap+Malheureux+Mauritius"
         },
-        "Après-midi à Mont Choisy — plage familiale"
+        {
+          "text": "Halte chez Casa Sandrine (Cap Malheureux)",
+          "link": "https://www.google.com/maps/search/?api=1&query=Casa+Sandrine+Cap+Malheureux+Mauritius"
+        },
+        "Après-midi à Mont Choisy — plage familiale",
+        {
+          "text": "Déjeuner sur la plage de Mont Choisy — food trucks Chez Meung ou Chez Vanessa",
+          "link": "https://www.google.com/maps/search/?api=1&query=Mont+Choisy+Beach+food+truck+Mauritius"
+        }
       ],
       "beach": "Mont Choisy — longue plage ombragée, eau calme",
       "locations": [
