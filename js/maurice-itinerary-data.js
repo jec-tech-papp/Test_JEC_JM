@@ -450,9 +450,10 @@ window.ITINERARY_DATA = {
       ],
       "activities": [
         {
-          "text": "Domaine sucrier de Savannah (Omnicane Sugar Estate) — visite moulin / canne à sucre",
+          "text": "Matinée — activité principale : visite du moulin à canne du Domaine de Savannah (Omnicane Sugar Estate)",
           "link": "https://www.google.com/maps/search/?api=1&query=Omnicane+Sugar+Estate+Savannah+Mauritius"
         },
+        "Domaine sucrier de Savannah — découverte du moulin, de la canne à sucre et du site Omnicane",
         "Déjeuner sur place, à Mahébourg ou Plaine Magnien",
         {
           "text": "Après-midi à Blue Bay Marine Park — eau calme et snorkeling facile",
@@ -475,7 +476,7 @@ window.ITINERARY_DATA = {
         }
       ],
       "driveMinutes": 20,
-      "tips": "Vérifiez les horaires de visite du moulin la veille (visite guidée ou découverte du domaine selon disponibilité). Blue Bay en fin d'après-midi : idéal pour une journée chill.",
+      "tips": "Réservez ou confirmez la veille la visite du moulin à canne (horaires et visites guidées). C'est le cœur de la matinée. Blue Bay en fin d'après-midi : idéal pour une journée chill.",
       "photos": [
         {
           "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Sugar_cane_field_near_Roches_Noires_-_Mauritius_2007-09-09.jpg/960px-Sugar_cane_field_near_Roches_Noires_-_Mauritius_2007-09-09.jpg",
@@ -488,12 +489,12 @@ window.ITINERARY_DATA = {
           "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blue+Bay+Beach+Mauritius"
         }
       ],
-      "summary": "Matinée au domaine sucrier de Savannah, déjeuner dans le coin, puis détente et snorkeling à Blue Bay l'après-midi.",
+      "summary": "Matinée consacrée à la visite du moulin à canne du Domaine de Savannah (activité phare), déjeuner dans le coin, puis détente et snorkeling à Blue Bay l'après-midi.",
       "links": [
         {
-          "label": "Omnicane Sugar Estate",
+          "label": "Moulin à canne — Domaine de Savannah",
           "url": "https://www.google.com/maps/search/?api=1&query=Omnicane+Sugar+Estate+Savannah+Mauritius",
-          "description": "≈ 10–15 min depuis New Grove"
+          "description": "Activité principale du matin — ≈ 10–15 min depuis New Grove"
         },
         {
           "label": "Blue Bay Marine Park",
@@ -682,7 +683,12 @@ window.ITINERARY_DATA = {
       "categories": [
         "culture"
       ],
+      "summary": "Maison Créole Eureka à Moka en milieu de matinée, puis Port-Louis : marché central, Aapravasi Ghat, déjeuner et après-midi au Caudan (Odysseo).",
       "activities": [
+        {
+          "text": "Milieu de matinée — visite de la Maison Créole Eureka (Moka)",
+          "link": "https://www.google.com/maps/search/?api=1&query=Maison+Eureka+Moka+Mauritius"
+        },
         "Marché central de Port-Louis — épices, légumes, street food",
         "Aapravasi Ghat (UNESCO) — histoire de l'immigration",
         {
@@ -697,6 +703,12 @@ window.ITINERARY_DATA = {
       ],
       "beach": "Pas de plage — journée urbaine et culturelle",
       "locations": [
+        {
+          "name": "Maison Eureka",
+          "lat": -20.2239,
+          "lng": 57.5225,
+          "type": "culture"
+        },
         {
           "name": "Marché central",
           "lat": -20.1609,
