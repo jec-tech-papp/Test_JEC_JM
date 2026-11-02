@@ -1,9 +1,33 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=Test_JEC_JM/store2.html">
-  <script>location.replace('Test_JEC_JM/store2.html' + location.search);</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chargement de la carte…</title>
 </head>
-<body></body>
+<body>
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var data = params.get('data');
+  if (data) {
+    try {
+      localStorage.setItem('mapPoints2', data);
+    } catch (e) {
+      console.error(e);
+    }
+  } else {
+    try {
+      var step1 = localStorage.getItem('mapPoints');
+      if (step1) {
+        localStorage.setItem('mapPoints2', step1);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  window.location.replace('index1.html');
+})();
+</script>
+</body>
 </html>
