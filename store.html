@@ -1,22 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url=Test_JEC_JM/store.html">
+  <script>location.replace('Test_JEC_JM/store.html' + location.search);</script>
 </head>
-<body>
-
-<script>
-
-const params = new URLSearchParams(window.location.search);
-const data = params.get("data");
-
-if(data){
-    localStorage.setItem("mapPoints", data);
-}
-
-window.location.href = "./";
-
-</script>
-
-</body>
+<body></body>
 </html>
