@@ -97,14 +97,24 @@
                         throw new Error("Les données reçues ne sont pas une liste valide.");
                     }
 
-                    const headers = ["ID", "Emplacement", "ContenuQr"];
+                    const columns = [
+                        { header: "Type", field: "Type" },
+                        { header: "Nom du bâtiment", field: "NmBatiment" },
+                        { header: "ID", field: "ID" },
+                        { header: "Nom", field: "Nom" },
+                        { header: "Volume / poids", field: "VolumePoids" },
+                        { header: "Unité", field: "Unite" },
+                        { header: "Étage", field: "Etage" },
+                        { header: "Contenu QR", field: "ContenuQr" }
+                    ];
+
                     const csvLines = [
-                        headers.map(csvCell).join(";"),
-                        ...rows.map(row => [
-                            csvCell(row.ID),
-                            csvCell(row.Emplacement),
-                            csvCell(row.ContenuQr)
-                        ].join(";"))
+                        columns.map(column => csvCell(column.header)).join(";"),
+                        ...rows.map(row =>
+                            columns
+                                .map(column => csvCell(row[column.field]))
+                                .join(";")
+                        )
                     ];
 
                     // BOM UTF-8 pour améliorer l’ouverture des accents dans Excel.
@@ -122,7 +132,6 @@
 
                     statusElement.textContent =
                         rows.length + " ligne(s) prête(s) pour l’export.";
-
                     statusElement.className = "success";
 
                     // Lancement automatique du téléchargement.
@@ -137,7 +146,6 @@
                 } catch (error) {
                     statusElement.textContent =
                         "Impossible de générer le CSV : " + error.message;
-
                     statusElement.className = "error";
                 }
             }
