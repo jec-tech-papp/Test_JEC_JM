@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=Test_JEC_JM/store.html">
-  <script>location.replace('Test_JEC_JM/store.html' + location.search);</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chargement…</title>
 </head>
-<body></body>
+<body>
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var data = params.get('data');
+  if (data) {
+    try {
+      localStorage.setItem('mapPoints', data);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  var next = new URL('store2.html', window.location.href);
+  if (data) {
+    next.searchParams.set('data', data);
+  }
+  window.location.replace(next.href);
+})();
+</script>
+</body>
 </html>
