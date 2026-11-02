@@ -1,21 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<meta charset="utf-8">
-<title>Chargement de la carte</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url=Test_JEC_JM/store2.html">
+  <script>location.replace('Test_JEC_JM/store2.html' + location.search);</script>
 </head>
-<body>
-
-<script>
-const params = new URLSearchParams(window.location.search);
-const data = params.get("data");
-
-if (data) {
-    localStorage.setItem("mapPoints2", data);
-}
-
-window.location.href = "./index2.html";
-</script>
-
-</body>
+<body></body>
 </html>
